@@ -182,7 +182,8 @@ export default {
     append(data) {
         const newChild = { value: '', label: '', children: [] };
         if (!data.children) {
-          this.$set(data, 'children', []);
+          data['children'] = []
+          //this.$set(data, 'children', []);
         }
         data.children.push(newChild);
     },

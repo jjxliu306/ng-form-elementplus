@@ -4,8 +4,7 @@
  * description 拖拽元素
  -->
 <template>
-	<div class="components-list">
-		list:: {{list.length}}
+	<div class="components-list"> 
 		<draggable
 	    tag="ul"
 	    :list="list"

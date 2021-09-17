@@ -237,8 +237,8 @@ export default {
      /* this.record.list.forEach(t=> {
         data_[t.model] = null
       })*/
-      
-      this.$set(this.models , this.record.model , [data_])
+      this.models[this.record.model] = [data_]
+      //this.$set(this.models , this.record.model , [data_])
     }
 
   },

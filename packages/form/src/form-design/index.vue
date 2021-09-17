@@ -132,8 +132,10 @@ export default {
           const jsonForm = JSON.stringify(this.selectForm.htmlModel)
           const jsonData = JSON.stringify(this.data)
           if(jsonForm != jsonData){
-            this.$set(this.selectForm , 'change' , true)
-            this.$set(this.selectForm , 'htmlModel' , cloneDeep(this.data))
+            this.selectForm['change'] = true
+            this.selectForm['htmlModel'] = cloneDeep(this.data)
+            // this.$set(this.selectForm , 'change' , true)
+            // this.$set(this.selectForm , 'htmlModel' , cloneDeep(this.data))
           } 
         }
       },
