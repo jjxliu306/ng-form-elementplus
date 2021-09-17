@@ -1,24 +1,11 @@
-# ng-form-elementplus2
+# form-design-elementplus
 
-## Project setup
-```
-npm install
-```
+#### 介绍
+基于vue+elementplus的动态表单,目前基础还在开发中，具体功能可以参考ng-form生态中其他组件库标准：
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+ 
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+element-ui版本地址 https://gitee.com/jjxliu306/ng-form-element
+iview 版本地址 https://gitee.com/jjxliu306/ng-form-iview
+ 
+ 
