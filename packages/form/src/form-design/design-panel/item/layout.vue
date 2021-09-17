@@ -30,20 +30,16 @@
             handle: '.drag-move'
           }"
           :force-fallback="true"
-          v-model="record.list"
+          :list="record.list"
           @start="$emit('dragStart', $event, record.list)"
           @add="$emit('handleColAdd', $event, record.list)"
         >
-          <template #title>
-          <span>dddd</span>
-      </template>
-          <transition-group tag="div" name="list" class="list-main">
-            <formNode
-              v-for="item in record.list"
-              :key="item.key"
+         <template #item="{element}">
+           <transition-group tag="div" name="list" class="list-main">
+            <formNode 
               class="drag-move"
               :selectItem="selectItem"
-              :record="item"
+              :record="element"
               :hideModel="hideModel"
               :config="config"
               @handleSelectItem="handleSelectItem"
@@ -53,6 +49,8 @@
               @handleDetele="$emit('handleDetele')"
             />
           </transition-group>
+         </template>
+         
         </draggable>
       
         <div
@@ -97,22 +95,18 @@
               }"
                header="ttt"
               :force-fallback="true"
-              v-model="colItem.list"
+              :list="colItem.list"
               @start="$emit('dragStart', $event, colItem.list)"
               @add="$emit('handleColAdd', $event, colItem.list)"
-            >
-              <template #title>
-          <span>dddd</span>
-      </template>
+            > 
+            <template #item="{element}">
               <transition-group tag="div" name="list" class="list-main">
                 <layoutItem
-                  class="drag-move"
-                  v-for="item in colItem.list"
-                  :key="item.key"
+                  class="drag-move" 
                   :selectItem="selectItem"
                   :startType="startType"
                   :insertAllowedType="insertAllowedType"
-                  :record="item"
+                  :record="element"
                   :hideModel="hideModel"
                   :config="config"
                   @handleSelectItem="handleSelectItem"
@@ -122,6 +116,8 @@
                   @handleDetele="$emit('handleDetele')"
                 />
               </transition-group>
+            </template>
+             
             </draggable>
           </el-col>
         </el-row>
@@ -166,31 +162,29 @@
             animation: 180,
             handle: '.drag-move'
           }"
-           header="ttt"
+            
           :force-fallback="true"
-          v-model="record.list"
+          :list="record.list"
           @start="$emit('dragStart', $event, record.list)"
           @add="$emit('handleColAdd', $event, record.list)"
-        >
-          <template #title>
-          <span>dddd</span>
-      </template>
-          <transition-group tag="div" name="list" class="list-main">
-            <formNode
-              v-for="item in record.list"
-              :key="item.key"
-              class="drag-move"
-              :selectItem="selectItem"
-              :record="item"
-              :hideModel="hideModel"
-              :config="config"
-              @handleSelectItem="handleSelectItem"
-              @handleColAdd="handleColAdd"
-              @handleCopy="$emit('handleCopy')"
-              @handleShowRightMenu="handleShowRightMenu"
-              @handleDetele="$emit('handleDetele')"
-            />
-          </transition-group>
+        > 
+          <template #item="{element}">
+            <transition-group tag="div" name="list" class="list-main">
+              <formNode 
+                class="drag-move"
+                :selectItem="selectItem"
+                :record="element"
+                :hideModel="hideModel"
+                :config="config"
+                @handleSelectItem="handleSelectItem"
+                @handleColAdd="handleColAdd"
+                @handleCopy="$emit('handleCopy')"
+                @handleShowRightMenu="handleShowRightMenu"
+                @handleDetele="$emit('handleDetele')"
+              />
+            </transition-group>
+          </template>
+         
         </draggable>
       
         <div
@@ -249,25 +243,20 @@
                   ghostClass: 'moving',
                   animation: 180,
                   handle: '.drag-move'
-                }"
-                 header="ttt"
+                }" 
                 :force-fallback="true"
-                v-model="tdItem.list"
+                :list="tdItem.list"
                 @start="$emit('dragStart', $event, tdItem.list)"
                 @add="$emit('handleColAdd', $event, tdItem.list)"
-              >
-                  <template #title>
-          <span>dddd</span>
-      </template>
-                <transition-group tag="div" name="list" class="list-main">
+              > 
+            <template #item="{element}">
+             <transition-group tag="div" name="list" class="list-main">
                   <layoutItem
-                    class="drag-move"
-                    v-for="item in tdItem.list"
-                    :key="item.key"
+                    class="drag-move" 
                     :selectItem="selectItem"
                     :startType="startType"
                     :insertAllowedType="insertAllowedType"
-                    :record="item"
+                    :record="element"
                     :hideModel="hideModel"
                     :config="config"
                     @handleSelectItem="handleSelectItem"
@@ -277,6 +266,8 @@
                     @handleDetele="$emit('handleDetele')"
                   />
                 </transition-group>
+          </template>
+               
               </draggable>
             </td>
           </tr>

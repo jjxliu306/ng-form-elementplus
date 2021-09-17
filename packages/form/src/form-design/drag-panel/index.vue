@@ -1,4 +1,4 @@
-<!--
+	<!--
  * author lyf
  * date 2020-07-06
  * description 可拖拽元素的列表 包含基础组件和布局组件
@@ -114,12 +114,18 @@ export default {
 	methods: {
 		generateKey(list, index) {
 	      // 生成key值 
+	      if(index === undefined) return 
 	      const key = list[index].type + "_" + new Date().getTime();
-	      this.$set(list, index, {
+	  	  list[index] = {
 	        ...list[index],
 	        key,
 	        model: key
-	      });
+	      }
+	      // this.$set(list, index, {
+	      //   ...list[index],
+	      //   key,
+	      //   model: key
+	      // });
 	      if (this.noModel.includes(list[index].type)) {
 	        // 删除不需要的model属性
 	        delete list[index].model;
@@ -153,9 +159,10 @@ export default {
 	     
 	    },
 	    handleStart(list,index) {
+	    	if(index === undefined) return
 	    	this.generateKey(list,index)
-	      const type = list[index].type
-	      this.startType = type;
+	      	const type = list[index].type
+	      	this.startType = type;
 
 	    },
 	}

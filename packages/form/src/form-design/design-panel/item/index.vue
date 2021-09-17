@@ -28,19 +28,15 @@
         }"
         header="ttt"
        :force-fallback="true"
-        v-model="data.list" 
+        :list="data.list" 
         @add="deepClone"
         @start="dragStart($event, data.list)"
-      >
-      <template #title>
-          <span>dddd</span>
-      </template>
-        <transition-group tag="div" name="list" class="list-main">
+      > 
+        <template #item="{element}">
+         <transition-group tag="div" name="list" class="list-main">
           <layoutItem
-            class="drag-move"
-            v-for="record in data.list"
-            :key="record.key"
-            :record="record"
+            class="drag-move" 
+            :record="element"
             :config="data.config"
             :selectItem="selectItem"
             :startType="startType"
@@ -54,6 +50,10 @@
             @handleShowRightMenu="handleShowRightMenu"
           />
         </transition-group>
+        </template>
+
+
+        
       </draggable>
     </el-form>
     <!-- 右键菜单 start -->

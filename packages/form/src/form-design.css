@@ -108,7 +108,7 @@
   overflow: auto;
 }
 .form-design .form-panel .draggable-box .list-main {
-  min-height: 100%;
+  min-height: 50px;
   padding: 5px;
   position: relative;
   background: #fafafa;

@@ -174,8 +174,8 @@ export default {
     checkList:{
       handler(val, oldVal){
           // 默认所有val 全部补一个id 标明顺序
-        //this.models[this.record.model] = val
-        this.$set(this.models , this.record.model , val)
+        this.models[this.record.model] = val
+        //this.$set(this.models , this.record.model , val)
       },
       deep:true
     }

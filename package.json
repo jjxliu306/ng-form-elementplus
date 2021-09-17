@@ -15,7 +15,7 @@
     "object-path": "^0.11.5",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",

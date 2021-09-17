@@ -5,9 +5,10 @@
  -->
 <template>
 	<div class="components-list">
+		list:: {{list.length}}
 		<draggable
 	    tag="ul"
-	    :value="list"
+	    :list="list"
 	    v-bind="{
 	      group: { name: 'form-draggable', pull: 'clone', put: false },
 	      sort: false,
@@ -15,16 +16,19 @@
 	      ghostClass: 'moving'
 	    }"
 	    :force-fallback="true"
-	    @start="handleStart($event, list)" >  
-		    <li
-		      class="form-edit-widget-label"
-		      v-for="(val, index) in list"
-		      :key="index" 
-		      @click="$emit('handleListPush', val)">
-	    		<a> 
-                	<span>{{val.label}}</span>
-            	</a> 
-	   	 	</li>
+	    @start="handleStart($event, list)" item-key="label">  
+	      	<template #item="{element}" >
+	      		 
+	      		<li
+			      class="form-edit-widget-label"
+			       
+			      @click="$emit('handleListPush', element)">
+		    		<a> 
+	                	<span>{{element.label}}</span>
+	            	</a> 
+		   	 	</li>
+	      	</template>
+		  
 	  </draggable>
 	</div>
   
