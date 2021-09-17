@@ -4,10 +4,9 @@
 <template>
   <el-dialog
     title="预览"
-    :model="visible" 
-    style="top:20px;" 
+    v-model="visible"  
     :append-to-body="true" 
-    :width="`${previewWidth}px`"
+    width="850px"
   > 
 
    <el-tabs v-model="active" type="card" class="form-render-preview form-design" >
