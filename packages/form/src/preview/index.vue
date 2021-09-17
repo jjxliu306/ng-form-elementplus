@@ -1,12 +1,11 @@
 <template>
   <el-dialog
     title="预览"
-    :model="visible" 
-    style="top:20px;"
+    v-model="visible"  
     :append-to-body="true"
     class="design-preview"
     :destroy-on-close="true"
-    :width="`${previewWidth}px`"
+    width="850px"
   > 
 
     <div class="item-main">
@@ -47,7 +46,10 @@ export default {
     PreviewCode,FormBuild,renderPreview
   },
   methods: {
-    
+    init(data ) {
+      this.jsonData = data 
+      this.visible = true
+    },
     handleGetData() {
       this.$refs.formBuild.getData()
         .then(res => { 

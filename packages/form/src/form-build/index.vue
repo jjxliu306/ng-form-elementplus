@@ -15,8 +15,7 @@
       :size="formTemplate.config.size"
       :id="randomId"
       :key="randomId"
-    > 
-    <template >
+    >  
       <ng-form-build-item
         ref="buildBlocks"
         @handleReset="reset"
@@ -32,7 +31,7 @@
         :key="record.model"
         @change="handleChange"
       />
-    </template>
+    
     </el-form>
   
 </template>
