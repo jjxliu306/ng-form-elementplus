@@ -6,6 +6,7 @@
     class="design-preview"
     :destroy-on-close="true"
     width="850px"
+    top="10px"
   > 
 
     <div class="item-main">

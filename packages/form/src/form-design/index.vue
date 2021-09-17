@@ -58,9 +58,9 @@
 
       <el-dialog
         title="模板数据" 
-        :model="importVisible"
+        v-model="importVisible"
         :append-to-body="true"
-        style="top:20px;"
+        top="10px"
         width="850px"
       >
 

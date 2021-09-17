@@ -6,6 +6,8 @@
     title="预览"
     v-model="visible"  
     :append-to-body="true" 
+    class="design-preview"
+    top="10px"
     width="850px"
   > 
 
