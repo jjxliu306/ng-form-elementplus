@@ -23,8 +23,7 @@
         v-for="record in formTemplate.list"
         :renderPreview="renderPreview"
         :record="record"
-        :models="models" 
-        
+        :models="models"  
         :config="config"
         :disabled="disabled"
         :formConfig="formTemplate.config"

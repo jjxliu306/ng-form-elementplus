@@ -4,13 +4,12 @@
 <template>
   <el-dialog
     title="JSON数据" 
-    :model="visible"
-    :append-to-body="true"
-    style="top:20px;"
+    v-model="visible"
+    :append-to-body="true" 
     width="850px"
   >
      <div class="json-box"> 
-      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;" autosize  readonly ref="myEditor" type="textarea" :value="editorJson"> 
+      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;"  readonly ref="myEditor" type="textarea" :autosize="{ minRows: 4}" :value="editorJson"> 
       </el-input> 
     </div>
     <div class="copy-btn-box"> 
@@ -38,11 +37,7 @@ export default {
       fileFormat: 'json',
       jsonData: {}
     };
-  },
-  
-  components: {
-     
-  },
+  }, 
   methods: {
     init(model){
       this.visible = true 
