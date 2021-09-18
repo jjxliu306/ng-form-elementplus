@@ -8,11 +8,11 @@
       <span v-for="(val, index) in value" :key="index">
         <div class="option-change-box"  >
           <el-col :span="21" >
-            <template>
+           
               {{index+1}}、
               <el-radio v-model="val.vtype" :label="1">本地</el-radio>
               <el-radio v-model="val.vtype" :label="2">远程</el-radio>
-            </template>
+            
           </el-col>
           <el-col :span="21" >
             <el-input size="mini" v-model="val.model" placeholder="关联字段">
@@ -69,28 +69,25 @@ export default {
   methods: {
      
     handleAdd() {
-      if(!this.value) {
-        this.value = []
-      }
-      let addData = [
-        ...this.value,
-        {
-          vtype: 1,
-          //validator: 'validatorFiled',
-          model: "",
-          script: "",
-          queryKey: "",
-          queryValue: ""
-        }
-      ]; 
-      this.$emit("input", addData);
+      console.log('thisvalue' , this.value)
+      this.value.push( {
+        vtype: 1,
+        //validator: 'validatorFiled',
+        model: "",
+        script: "",
+        queryKey: "",
+        queryValue: ""
+      })
+      this.$emit("update:value", this.value);
     },
     handleDelete(deleteIndex) {
       // 删除
+      
+      this.value.splice(deleteIndex,1)
       this.$emit(
-        "input",
-        this.value.filter((val, index) => index !== deleteIndex)
-      );
+        "update:value",
+        this.value
+      )
     },
       
   }

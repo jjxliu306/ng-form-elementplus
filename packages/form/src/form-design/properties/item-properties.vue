@@ -147,11 +147,13 @@
             <el-switch
               v-model="options.linkage"
               active-text="是"
-              inactive-text="否">
+              inactive-text="否"
+              @change="linkageChange">
             </el-switch> 
           </el-form-item>
           <template v-if="options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
+            options.linkData:: {{options.linkData}}
             <Linkage :value="options.linkData" />
           </template>
           <el-divider ></el-divider>
@@ -229,7 +231,8 @@
             <el-switch
               v-model="options.linkage"
               active-text="是"
-              inactive-text="否">
+              inactive-text="否"
+              @change="linkageChange">
             </el-switch> 
           </el-form-item>
           <template v-if="options.linkage">
@@ -292,7 +295,8 @@
             <el-switch
               v-model="options.linkage"
               active-text="是"
-              inactive-text="否">
+              inactive-text="否"
+              @change="linkageChange">
             </el-switch> 
           </el-form-item>
           <template v-if="options.linkage">
@@ -917,7 +921,10 @@ export default {
   },
   watch: {
     selectItem(val) { 
-      this.options = val.options || {}; 
+      if(!val.options) {
+        val.options = {}
+      }
+      this.options = val.options; 
     }
   },
   props: {
@@ -937,6 +944,13 @@ export default {
   },
   components: {
     Option , Linkage
+  },
+  methods: {
+    linkageChange(v) {
+      if(v) {
+        this.options.linkData = []
+      }
+    }
   }
 };
 </script>

@@ -167,7 +167,7 @@ export default {
     },
     handleDelete(deleteIndex) {
       // 删除
-      this.value = this.value.filter((val, index) => index !== deleteIndex)
+      this.value.splice(deleteIndex,1)
       this.$emit(
         "update:value",
         this.value
