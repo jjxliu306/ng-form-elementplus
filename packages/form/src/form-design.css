@@ -252,7 +252,7 @@
 .form-design .properties-centent .properties-body {
   overflow: auto;
   height: 500px;
-  padding: 8px 16px;
+  padding: 8px;
 }
 
 .form-design .properties-centent .properties-body .el-form .el-form-item {
@@ -493,6 +493,7 @@
 
 .form-design .option-change-container {
   width: calc(100% - 8px); 
+  padding-top: 10px;
 }
 .form-design .option-change-container .el-tree-node__content { 
   height: 35px;

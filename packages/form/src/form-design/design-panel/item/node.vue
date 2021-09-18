@@ -39,7 +39,7 @@ export default {
     }, 
     selectItem: {
       type: Object,
-      default: () => {}
+      default: () => {return {}}
     },
     config: {
       type: Object,

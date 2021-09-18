@@ -12,6 +12,7 @@
         'select',
         'keyvalue'
         ].includes(type)" :gutter="8">
+ 
       <div class="option-change-box" v-for="(val, index) in value" :key="index">
         <el-col :span="9">
           <el-input v-if="keyNumber" v-model="val.value"  type="number" placeholder="值"/>
@@ -112,8 +113,7 @@
     </el-row> 
   </div>
 </template>
-<script>
- 
+<script> 
 export default {
   name: "ChangeOption",
   props: {
@@ -138,46 +138,40 @@ export default {
   },
   methods: {
     handleAdd() {
-      // 添加
-      let addData = [
-        ...this.value,
-        {
+      // 添加 
+      this.value.push( {
           value: "",
           label: ""
-        }
-      ];
-      this.$emit("input", addData);
+        })
+      //console.log('addData' , addData)
+      this.$emit("update:value", this.value);
     },
     handleAddCol() {
-      // 添加栅格Col
-      let addData = [
-        ...this.value,
-        {
-          span: 12,
-          list: []
-        }
-      ];
-      this.$emit("input", addData);
+      // 添加栅格Col 
+      this.value.push( {
+        span: 12,
+        list: []
+      })
+      this.$emit("update:value", this.value);
     },
     handleAddRules() {
-      let addData = [
-        ...this.value,
-        {
-          vtype: 1,
-          //validator: 'validatorFiled',
-          pattern: "",
-          script: "",
-          message: ""
-        }
-      ];
-      this.$emit("input", addData);
+    
+      this.value.push( {
+        vtype: 1,
+        //validator: 'validatorFiled',
+        pattern: "",
+        script: "",
+        message: ""
+      })
+      this.$emit("update:value", this.value);
     },
     handleDelete(deleteIndex) {
       // 删除
+      this.value = this.value.filter((val, index) => index !== deleteIndex)
       this.$emit(
-        "input",
-        this.value.filter((val, index) => index !== deleteIndex)
-      );
+        "update:value",
+        this.value
+      )
     },
     append(data) {
         const newChild = { value: '', label: '', children: [] };
