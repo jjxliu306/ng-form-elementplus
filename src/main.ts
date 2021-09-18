@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css' 
 
  // 导入组件库
-import  {setupFormDesign} from '../packages/index'
+import  FormDesign from '../packages/index'
 import '../packages/form/src/form-design.css';
 // 注册组件库
 //Vue.use(FormDesign)
@@ -17,10 +17,8 @@ import '../packages/form/src/form-design.css';
 const app = createApp(App)
 
 
-app.use(ElementPlus) 
 
-setupFormDesign(app)
-//app.use(FormDesign)
+app.use(ElementPlus) 
+app.use(FormDesign) 
 
 app.mount('#app')
-

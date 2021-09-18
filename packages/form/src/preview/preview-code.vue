@@ -9,7 +9,7 @@
     width="850px"
   >
      <div class="json-box"> 
-      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;"  readonly ref="myEditor" type="textarea" :autosize="{ minRows: 4}" :value="editorJson"> 
+      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;"  readonly ref="myEditor" type="textarea" :autosize="{ minRows: 8}" :value="editorJson"> 
       </el-input> 
     </div>
     <div class="copy-btn-box"> 

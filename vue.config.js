@@ -10,7 +10,7 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
       cdn: {
         css: [
-         // 'https://unpkg.com/element-plus/dist/index.css'
+          //'https://unpkg.com/element-plus/dist/index.css'
         ],
         js: [
           
@@ -26,7 +26,7 @@ module.exports = {
   configureWebpack: {
     // 打包忽略文件
     externals: {
-     // "element-plus": "ELEMENT-PLUS",
+      //"element-plus": "ElementPlus",
       
       "vue-router": "VueRouter",
       vuex: "Vuex", 

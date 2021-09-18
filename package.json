@@ -1,11 +1,12 @@
 {
-  "name": "ng-form-elementplus2",
+  "name": "ng-form-elementplus",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name NgFormElementplus --dest lib packages/index.ts"
   },
   "dependencies": {
     "axios": "^0.20.0",
@@ -31,5 +32,31 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "typescript": "~4.1.5"
-  }
+  }, 
+  "private": false,
+  "description": "ng-form-elementplus",
+  "main": "lib/ng-form-elementplus.umd.min.js",
+  "directories": {
+    "example": "src",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/jjxliu306/ng-form-elementplus.git"
+  },
+  "author": "liuyufeng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitee.com/jjxliu306/ng-form-elementplus/issues"
+  },
+  "homepage": "https://gitee.com/jjxliu306/ng-form-elementplus#readme",
+  "keywords": [
+    "ng-form",
+    "ng-form-elementplus",
+    "vue-form-design",
+    "form-build-element",
+    "formdesign",
+    "动态表单",
+    "表单"
+  ]
 }
