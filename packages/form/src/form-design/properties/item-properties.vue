@@ -122,7 +122,9 @@
               <el-radio-button :label="0">静态数据</el-radio-button>
               <el-radio-button :label="1">动态数据</el-radio-button> 
             </el-radio-group>
-   
+    
+          </el-form-item>
+          <el-form-item label-width="0px" >
             <!-- 远程赋值配置 --> 
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
@@ -153,7 +155,6 @@
           </el-form-item>
           <template v-if="options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
-            options.linkData:: {{options.linkData}}
             <Linkage :value="options.linkData" />
           </template>
           <el-divider ></el-divider>
@@ -200,11 +201,11 @@
           <el-form-item  label="选项配置" >
             <el-radio-group   v-model="options.dynamic">
               <el-radio-button :label="0">静态数据</el-radio-button>
-              <el-radio-button :label="1">动态数据</el-radio-button>
-             
-            </el-radio-group>
-   
-            <!-- 远程赋值配置 --> 
+              <el-radio-button :label="1">动态数据</el-radio-button> 
+            </el-radio-group>  
+          </el-form-item>
+          <el-form-item label-width="0px" >
+             <!-- 远程赋值配置 --> 
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -218,13 +219,10 @@
                 <el-input size="mini" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
                 </el-input> 
-            </div> 
-           
-
+            </div>  
             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
           </el-form-item>
-
            <el-divider ></el-divider>
           <!-- 联动配置 2021-03-12 lyf -->
           <el-form-item label="联动关联">
@@ -235,10 +233,11 @@
               @change="linkageChange">
             </el-switch> 
           </el-form-item>
-          <template v-if="options.linkage">
-            <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
+          <el-form-item label-width="0px" v-if="options.linkage">
+             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
             <Linkage :value="options.linkData" />
-          </template>
+          </el-form-item>
+          
           <el-divider ></el-divider>
 
           <!-- select 本地配置才有默认值 -->
@@ -267,10 +266,11 @@
               <el-radio-button :label="0">静态数据</el-radio-button>
               <el-radio-button :label="1">动态数据</el-radio-button>
              
-            </el-radio-group>
-   
-            <!-- 远程赋值配置 --> 
-            <div v-if="options.dynamic == 1">
+            </el-radio-group> 
+          </el-form-item>
+          <el-form-item label-width="0px">
+             <!-- 远程赋值配置 --> 
+            <div  v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
                 </el-input>
@@ -284,11 +284,9 @@
                   <template #prepend>标签字段</template>
                 </el-input> 
             </div> 
-            
-            <!-- 本地赋值 -->
+             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
           </el-form-item>
-
            <el-divider ></el-divider>
           <!-- 联动配置 2021-03-12 lyf -->
           <el-form-item label="联动关联">
@@ -488,9 +486,10 @@
             <el-radio-group   v-model="options.dynamic">
               <el-radio-button :label="0">静态数据</el-radio-button>
               <el-radio-button :label="1">动态数据</el-radio-button> 
-            </el-radio-group>
-   
-            <!-- 远程赋值配置 --> 
+            </el-radio-group> 
+          </el-form-item>
+          <el-form-item label-width="0px" >
+             <!-- 远程赋值配置 --> 
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -511,7 +510,8 @@
 
             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
-          </el-form-item>
+
+          </el-form-item> 
              <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
