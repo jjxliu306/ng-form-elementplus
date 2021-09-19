@@ -4,7 +4,7 @@ module.exports = {
   
   pages: {
     index: {
-      entry: 'src/main.ts',
+      entry: 'example/main.ts',
       template: 'public/index.html',
       filename: 'index.html',
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
@@ -26,8 +26,8 @@ module.exports = {
   configureWebpack: {
     // 打包忽略文件
     externals: {
-      //"element-plus": "ElementPlus",
-      
+      "element-plus": "ElementPlus",
+      'vue': 'vue',
       "vue-router": "VueRouter",
       vuex: "Vuex", 
       moment: "moment" 

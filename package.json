@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name NgFormElementplus --dest lib packages/index.ts"
+    "lib": "vue-cli-service build --target lib --name ng-form-elementplus --dest lib packages/index.ts"
   },
   "dependencies": {
     "axios": "^0.20.0",
@@ -37,7 +37,7 @@
   "description": "ng-form-elementplus",
   "main": "lib/ng-form-elementplus.umd.min.js",
   "directories": {
-    "example": "src",
+    "example": "example",
     "lib": "lib"
   },
   "repository": {

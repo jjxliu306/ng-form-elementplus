@@ -2,6 +2,7 @@ import type { App } from 'vue'
 
 // 导入组件
 import components from './form/src' 
+require('./form/src/form-design.css')
 
 // 存储组件列表 
 let installed = false
