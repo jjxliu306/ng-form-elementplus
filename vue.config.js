@@ -26,8 +26,8 @@ module.exports = {
   configureWebpack: {
     // 打包忽略文件
     externals: {
-      "element-plus": "ElementPlus",
-      'vue': 'vue',
+      //"element-plus": "ElementPlus",
+      //'vue': 'vue',
       "vue-router": "VueRouter",
       vuex: "Vuex", 
       moment: "moment" 
@@ -42,10 +42,10 @@ module.exports = {
     //    .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     config.module
       .rule('js')
+		
       .include
         .add('/packages')
-        .end()
-
+        .end() 
       .use('babel')
         .loader('babel-loader')
         .tap(options => {

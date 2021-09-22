@@ -1,7 +1,7 @@
 {
   "name": "ng-form-elementplus",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,6 +19,7 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.173",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -32,8 +33,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "typescript": "~4.1.5"
-  }, 
-  "private": false,
+  },
   "description": "ng-form-elementplus",
   "main": "lib/ng-form-elementplus.umd.min.js",
   "directories": {

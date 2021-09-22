@@ -11,13 +11,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": false,
-    "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
+    "baseUrl": ".", 
+    "typeRoots": ["/@types", "./node_modules/@types"],
+    "types": ["webpack-env"],
     "paths": {
       "@/*": [
-        "example/*"
+        "example/*" 
       ]
     },
     "lib": [
@@ -31,7 +30,6 @@
     "example/**/*.ts",
     "example/**/*.tsx",
     "example/**/*.vue",
-    
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
