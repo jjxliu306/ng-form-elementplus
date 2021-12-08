@@ -1,22 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": false,
-    "baseUrl": ".", 
-    "typeRoots": ["/@types", "./node_modules/@types"],
-    "types": ["webpack-env"],
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
     "paths": {
       "@/*": [
-        "example/*" 
+        "packages/*",
+        "example/*"
       ]
     },
     "lib": [
@@ -27,6 +30,9 @@
     ]
   },
   "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.vue",
     "example/**/*.ts",
     "example/**/*.tsx",
     "example/**/*.vue",

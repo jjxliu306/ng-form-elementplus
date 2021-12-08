@@ -1,51 +1,11 @@
 {
   "name": "ng-form-elementplus",
-  "version": "0.1.0",
-  "private": false,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name ng-form-elementplus --dest lib packages/index.ts"
-  },
-  "dependencies": {
-    "axios": "^0.20.0",
-    "core-js": "^3.6.5",
-    "default-passive-events": "^1.0.10",
-    "element-plus": "^1.1.0-beta.10",
-    "object-path": "^0.11.5",
-    "vue": "^3.0.0",
-    "vue-class-component": "^8.0.0-0",
-    "vuedraggable": "^4.1.0"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.173",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "typescript": "~4.1.5"
-  },
+  "version": "1.0.0",
   "description": "ng-form-elementplus",
-  "main": "lib/ng-form-elementplus.umd.min.js",
-  "directories": {
-    "example": "example",
-    "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitee.com/jjxliu306/ng-form-elementplus.git"
-  },
-  "author": "liuyufeng",
+  "private": false,
   "license": "MIT",
+  "author": "liuyufneg",
+  "main": "./packages/index.ts",
   "bugs": {
     "url": "https://gitee.com/jjxliu306/ng-form-elementplus/issues"
   },
@@ -58,5 +18,41 @@
     "formdesign",
     "动态表单",
     "表单"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/jjxliu306/ng-form-elementplus.git"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --dest lib ./packages/index.ts"
+  },
+  "dependencies": {
+    "axios": "^0.21.2",
+    "element-plus": "^1.1.0-beta.10",
+    "lodash": "^4.17.21",
+    "object-path": "^0.11.5",
+    "vue": "^3.2.13",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.177",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vue/cli-plugin-eslint": "~5.0.0-rc.1",
+    "@vue/cli-plugin-typescript": "~5.0.0-rc.1",
+    "@vue/cli-service": "~5.0.0-rc.1",
+    "@vue/eslint-config-standard": "^6.1.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "typescript": "~4.1.5"
+  }
 }

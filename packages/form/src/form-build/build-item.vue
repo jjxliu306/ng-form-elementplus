@@ -167,7 +167,7 @@
       
    
 </template>
-<script  lang="ts">
+<script >
 import cloneDeep from 'lodash/cloneDeep'
 import  FormItem  from "../form-item";
 import {dynamicFun} from '../utils'
@@ -399,8 +399,8 @@ export default {
 
     },
     handleRemoveRightMenu() {
-      // 取消右键菜单
-      this.showRightMenu = false;
+      // 取消右键菜单 
+      //this.showRightMenu = false;
     }
   }
 };
