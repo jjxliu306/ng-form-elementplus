@@ -3,7 +3,7 @@
  -->
 <template>
  
-  <div v-if="renderPreview">
+  <div v-if="renderPreview" class="base-item">
     <template v-if=" [
           'input',
           'textarea',
@@ -14,17 +14,24 @@
           'rate',
           'switch',
           'slider' 
-        ].includes(record.type)">
-     
-      <span   v-if="record.options.prepend" v-html="transformAppend(record.options.prepend)">
-         
+        ].includes(record.type)"> 
+      <span  class="base-item-span" v-if="record.options.prepend" v-html="transformAppend(record.options.prepend)"> 
       </span>
-       <span v-if="!loading">{{models[record.model]}} </span>
-      <span  v-if="record.options.append" v-html="transformAppend(record.options.append)">
-       
-      </span> 
- 
+       <span class="base-item-span" v-if="!loading">{{models[record.model]}} </span>
+      <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)"> 
+      </span>  
     </template>
+    <!-- 区划三级联动选择 -->
+     <ng-state
+      v-else-if="record.type == 'state'"
+      v-model="models[record.model]" 
+      :renderPreview="renderPreview"
+      :models="models"
+      :record="record"
+      :config="formConfig"
+      :parentDisabled="disabled" 
+      :disabled="disabled || record.options.disabled"  
+    /> 
     <template v-else-if="[
           'radio',
           'checkbox',
@@ -91,14 +98,11 @@
       v-model="models[record.model]" 
     >
       <template #prepend v-if="record.options.prepend">
-        <span    v-html="transformAppend(record.options.prepend)"> 
-      </span>
+        <span  v-html="transformAppend(record.options.prepend)"> </span>
       </template>
       <template #append v-if="record.options.append">
-        <span  v-html="transformAppend(record.options.append)"> 
-      </span>
+        <span  v-html="transformAppend(record.options.append)"></span>
       </template>
-      
     </el-input>
     <!-- 多行文本 -->
     <el-input
@@ -243,6 +247,7 @@
     <template v-else-if="record.type === 'date'" > 
       <!-- 区分时间段选择 和单个时间选择 -->
       <el-date-picker 
+        :style="`width:${record.options.width}`"
         v-if="record.options.range"
         v-model="checkList"
         align="right"
@@ -257,6 +262,7 @@
       </el-date-picker>
       <el-date-picker 
         v-else
+        :style="`width:${record.options.width}`"
         v-model="models[record.model]"
         align="right"
         type="date"
@@ -276,6 +282,7 @@
       <!-- 区分时间段选择 和单个时间选择 -->
       <el-date-picker 
         v-if="record.options.range"
+        :style="`width:${record.options.width}`"
         v-model="checkList"
         align="right"
         type="datetimerange"
@@ -289,6 +296,7 @@
       </el-date-picker>
       <el-date-picker 
         v-else
+        :style="`width:${record.options.width}`"
         v-model="models[record.model]"
         align="right"
         type="datetime"
@@ -306,6 +314,7 @@
     <!-- 时间选择 -->
     <el-time-select
       v-else-if="record.type === 'time'"
+      :style="`width:${record.options.width}`"
       v-model="models[record.model]"
       @change="handleChange($event, record.model)"
       :clearable="record.options.clearable"
@@ -320,6 +329,7 @@
  
     <!-- 评分 -->
     <el-rate
+      :style="`width:${record.options.width}`"
       v-model="models[record.model]"
       v-else-if="record.type === 'rate'"
       :max="record.options.max"
@@ -398,8 +408,21 @@
       @change="handleChange($event, record.model)"
      
     />
+    <!-- 区划三级联动选择 -->
+     <ng-state
+       :style="`width:${record.options.width}`"
+      v-else-if="record.type == 'state'"
+      v-model="models[record.model]" 
+      :renderPreview="renderPreview"
+      :models="models"
+      :record="record"
+      :config="formConfig"
+      :parentDisabled="disabled" 
+      :disabled="disabled || record.options.disabled"  
+    /> 
     <!-- 自定义组件 -->
     <customComponent
+      :style="`width:${record.options.width}`"
       :models="models"
       v-else-if="customList.includes(record.type)"
       :record="record"
@@ -414,8 +437,9 @@
 <script> 
 import request from '../utils/request.js'
 //import FileUpload from './file-upload'
-import {dynamicFun} from '../utils' 
+import {dynamicFun,dateFormater} from '../utils' 
 import CustomComponent from "./custom";
+import NgState from './state'
 import {objectPath} from "object-path";
 export default {
   name: "ng-form-item-base",
@@ -471,8 +495,14 @@ export default {
       default: false
     } 
   },
+  inject: {
+    customComponents: {
+      from: 'customC',
+      default: ()=>[]
+    },
+  },
   components: {
-     /*FileUpload,*/CustomComponent
+     /*FileUpload,*/CustomComponent,NgState
   }, 
   computed: {
     sliderMarks() {
@@ -494,8 +524,8 @@ export default {
     },
     customList() {
      
-      if (window.customComponents) {
-        return window.customComponents.map(item => item.type);
+      if (this.customComponents) {
+        return this.customComponents.map(item => item.type);
       } else {
         return [];
       }
@@ -607,7 +637,6 @@ export default {
           if( (this.record.type === 'select' && this.record.options.multiple) || this.record.type === 'checkbox') {
             this.checkList = []
           } else {
-            //this.models[this.record.model] = null
              this.$set(this.models , this.record.model , null)
           }
     
@@ -667,10 +696,8 @@ export default {
       this.getRemoteData()
     },
     // 获取远程数据
-    getRemoteData() { 
+    getRemoteData() {  
 
-     
-      
       const dataPath = this.record.options.dataPath
 
       request({
@@ -788,8 +815,6 @@ export default {
 
         }
 
-        console.log('this' , this)
-
         const modelLabel = this.record.model + '_label'
         //this.models[modelLabel] = labels.join(',')
         this.$set(this.models , modelLabel , labels.join(','))
@@ -835,7 +860,7 @@ export default {
     if(this.record.options.cbColumn && !this.isDragPanel) {
       this.loading = true
       const value = this.data[this.record.options.cbColumn] 
-      //this.models[this.record.model] = value  
+     // this.models[this.record.model] = value  
       this.$set(this.models , this.record.model , value)
       this.loading = false
       return
@@ -868,7 +893,6 @@ export default {
         if(!(modelValue instanceof Array)){
           modelValue = modelValue.split(',')
           this.$set(this.models , this.record.model , modelValue)
-          //this.models[this.record.model] = modelValue
         }
   
         //this.models[this.record.model] = vs
@@ -878,13 +902,20 @@ export default {
       return ;
     }
 
-    const defaultValue = this.record.options.defaultValue
-    if(defaultValue) {
+    let defaultValue = this.record.options.defaultValue
+    if(defaultValue != null) {
       if(this.record.type == 'checkbox' || this.record.type == 'cascader'){
         this.checkList = defaultValue
       } else {
-        //this.models[this.record.model] = defaultValue
+        if((this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker' ) && defaultValue == 'now') { 
+
+          defaultValue = dateFormater(new Date() ,this.record.options.format)
+ 
+        }  
+        
         this.$set(this.models , this.record.model , defaultValue)
+         
+        
       } 
 
       this.handleChange(defaultValue , this.record.model)
@@ -900,15 +931,12 @@ export default {
           || (this.record.type == 'select' && this.record.options.multiple)) {
           // 多选
           this.$set(this.models , this.record.model , [])
-          //this.models[this.record.model] = []
         } else if(this.record.type == 'number') {
           // 数字
           this.$set(this.models , this.record.model , null)
-          //this.models[this.record.model] = null
         } else {
           // 字符串
           this.$set(this.models , this.record.model , '')
-          //this.models[this.record.model] = ''
         } 
       } else if(this.record.type == 'checkbox' ||  this.record.type == 'cascader'
           || (this.record.type == 'select' && this.record.options.multiple)){
@@ -918,11 +946,9 @@ export default {
 
         if(typeof mv == 'string') {
           if(mv == "") {
-            //this.models[this.record.model] = []
             this.$set(this.models , this.record.model , [])
           } else {
             const mvs = mv.split(',')
-            //this.models[this.record.model] = mvs
             this.$set(this.models , this.record.model , mvs)
           }
           
@@ -930,12 +956,8 @@ export default {
 
       }
 
-    }
-
-      
-  
- 
+    } 
   }
-};
+}
 </script>
  
