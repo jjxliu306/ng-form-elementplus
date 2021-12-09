@@ -14,8 +14,7 @@
                       <slot name="formName">表单面板</slot>
                     </span>
                     <span style="float: right;">
-                      <slot name="controlButton">
-                        
+                      <slot name="controlButton"> 
                       </slot>
                       <el-button v-if="clear" type="text" size="medium" icon="el-icon-delete" @click="handleClear">清空</el-button>
                       <el-button v-if="preview" type="text" size="medium" icon="el-icon-view" @click="handlePreview">预览</el-button>
@@ -25,15 +24,13 @@
                     </span> 
                   </div> 
                 </template>
-               
-                <DesignPanel :data="data" ref="dragPanel" :selectForm="selectForm" @changeSelectItem="changeSelectItem"/> 
-               
+                <DesignPanel :data="data" ref="dragPanel" :selectForm="selectForm" @changeSelectItem="changeSelectItem"/>  
               </el-card> 
             </el-col>
             <el-col :span="6" class="height-all">
               <el-card  header="属性配置"  class="box-card form-properties"> 
                 <Properties :data="data" :selectItem="selectItem"> 
-                  <template #custom-properties :selectItem="selectItem">
+                   <template #custom-properties :selectItem="selectItem">
                         <slot name="custom-properties" :selectItem="selectItem"></slot>
                   </template>
                    <template #form-extend-properties :data="data">
@@ -55,27 +52,22 @@
      
       <previewCode ref="model" v-if="modelVisible" />
           
-
       <el-dialog
         title="模板数据" 
         v-model="importVisible"
         :append-to-body="true"
         top="10px"
         width="850px"
-      >
-
-        <el-input type="textarea" :rows="3" v-model="importText">
-
+      > 
+        <el-input type="textarea" :rows="3" v-model="importText"> 
         </el-input>
         <template #footer>
           <span class="dialog-footer">
             <el-button size="mini" @click="importVisible = false">取 消</el-button>
             <el-button size="mini" type="primary" @click="importModel">确 定</el-button>
           </span>
-        </template>
-        
-      </el-dialog>
-
+        </template> 
+      </el-dialog> 
     </el-container> 
 </template>
 
@@ -132,10 +124,8 @@ export default {
           const jsonForm = JSON.stringify(this.selectForm.htmlModel)
           const jsonData = JSON.stringify(this.data)
           if(jsonForm != jsonData){
-            this.selectForm['change'] = true
-            this.selectForm['htmlModel'] = cloneDeep(this.data)
-            // this.$set(this.selectForm , 'change' , true)
-            // this.$set(this.selectForm , 'htmlModel' , cloneDeep(this.data))
+            this.$set(this.selectForm , 'change' , true)
+            this.$set(this.selectForm , 'htmlModel' , cloneDeep(this.data))
           } 
         }
       },
@@ -194,14 +184,18 @@ export default {
       default: true
     }
   },
-   
+  provide: function () {
+    return {
+     customC: this.customComponents 
+    }
+   },
   components: {
     DesignPanel,DragPanel,Properties,Preview,previewCode,renderPreview
   },
   created(){  
-    if( this.customComponents && this.customComponents.length > 0) {
-      window.customComponents = this.customComponents
-    }
+    // if( this.customComponents && this.customComponents.length > 0) {
+    //   window.customComponents = this.customComponents
+    // }
     if(this.config.httpConfig) {
       window.httpConfig = this.config.httpConfig
     }
@@ -211,14 +205,13 @@ export default {
       this.selectItem = item
     },
     handlePreview () { 
-      console.log('previewVisible')
+
           this.previewVisible = true
           
           this.$nextTick(() => {
-            this.$refs.preview.init(this.data)
-            // this.$refs.preview.jsonData = this.data;
-            // this.$refs.preview.previewWidth = this.previewOptions.width;
-            // this.$refs.preview.visible = true;
+            this.$refs.preview.jsonData = this.data
+            this.$refs.preview.previewWidth = this.previewOptions.width
+            this.$refs.preview.visible = true
           }) 
          
     },
