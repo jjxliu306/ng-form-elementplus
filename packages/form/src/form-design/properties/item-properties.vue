@@ -57,7 +57,7 @@
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
             <el-checkbox v-model="options.disabled"  label="禁用" /> 
-            <el-checkbox v-model="options.clearable" label="可清除" /> 
+            <el-checkbox v-if="selectItem.type == 'input'" v-model="options.clearable" label="可清除" /> 
           </el-form-item>
         </template>
         <!-- input textarea end -->
@@ -342,7 +342,7 @@
               v-if="selectItem.type == 'time' || !options.range"
               v-model="options.defaultValue"
               :placeholder="
-                typeof options.format === 'undefined' ? '' : options.format
+                (typeof options.format === 'undefined' ? '' : options.format) + ',当前日期使用now'
               "
             />
             <el-input
@@ -805,7 +805,36 @@
           </el-form-item> 
         </template> 
         <!-- 容器 end -->
- 
+          <!-- 区划选择 start -->
+        <template v-if="selectItem.type == 'state'">
+          <el-form-item  label="宽度">
+            <el-input placeholder="请输入" v-model="options.width" />
+          </el-form-item> 
+          <el-divider ></el-divider> 
+          <el-form-item  label="区划层级">
+            <el-select v-model="options.maxLevel"  placeholder="请选择区划层级" >
+              <el-option
+                v-for="item in [{value:1 , label: '省'},{value:2 , label: '地市'},{value:3 , label: '区县'}]"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option> 
+            </el-select>
+          </el-form-item>
+           
+          <el-divider ></el-divider>
+
+          <el-form-item   label="操作属性" >
+            <el-checkbox v-model="options.hidden"  label="隐藏" />
+            <el-checkbox v-model="options.disabled"  label="禁用" />   
+            <el-checkbox v-model="options.oneByOne" label="递进式显示" /> 
+            <el-checkbox v-model="options.showAllPath" label="回显所有路径" /> 
+          </el-form-item> 
+          <el-form-item v-if="options.showAllPath" label="路径分隔符">
+             <el-input  v-model="options.separator" max-length="10"/> 
+          </el-form-item> 
+        </template> 
+        <!-- 区划选择 end --> 
         <!-- ############# 为自定义组件预备的插槽 start ############### -->
 
         <slot name="custom-properties"></slot>
@@ -921,10 +950,7 @@ export default {
   },
   watch: {
     selectItem(val) { 
-      if(!val.options) {
-        val.options = {}
-      }
-      this.options = val.options; 
+      this.options = val.options || {}; 
     }
   },
   props: {
