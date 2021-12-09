@@ -108,7 +108,7 @@
   overflow: auto;
 }
 .form-design .form-panel .draggable-box .list-main {
-  min-height: 50px;
+  min-height: 100%;
   padding: 5px;
   position: relative;
   background: #fafafa;
@@ -252,7 +252,7 @@
 .form-design .properties-centent .properties-body {
   overflow: auto;
   height: 500px;
-  padding: 8px;
+  padding: 8px 16px;
 }
 
 .form-design .properties-centent .properties-body .el-form .el-form-item {
@@ -311,7 +311,7 @@
   transition: all 0.3s;
   overflow: hidden;
   min-height: 30px;
-  overflow: auto;
+  overflow: hidden;
 }
 .form-design .batch-box .form-item-box,
 .form-design .grid-box .form-item-box,
@@ -493,7 +493,6 @@
 
 .form-design .option-change-container {
   width: calc(100% - 8px); 
-  padding-top: 10px;
 }
 .form-design .option-change-container .el-tree-node__content { 
   height: 35px;
@@ -504,6 +503,9 @@
 
 .form-design .base-item .slider-box {
   display: flex;
+}
+.form-design .base-item .base-item-span {
+  white-space: pre-wrap;
 }
 .form-design .base-item .slider-box > .slider {
   flex: 1;
@@ -602,6 +604,10 @@
 }
 .form-design .form-item{ 
   height: 100%;  
+}
+
+.form-design .form-item .el-collapse-item__content {
+  padding-bottom: 0px;
 }
 .form-design {
   height: 100%;

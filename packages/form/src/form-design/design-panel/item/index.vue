@@ -26,12 +26,11 @@
           animation: 180,
           handle: '.drag-move'
         }"
-        header="ttt"
        :force-fallback="true"
         :list="data.list" 
         @add="deepClone"
         @start="dragStart($event, data.list)"
-      > 
+      >
         <template #item="{element}">
          <transition-group tag="div" name="list" class="list-main">
           <layoutItem
@@ -52,8 +51,6 @@
         </transition-group>
         </template>
 
-
-        
       </draggable>
     </el-form>
     <!-- 右键菜单 start -->
@@ -94,16 +91,14 @@
         </el-form-item>
         <el-form-item  label="style" >
           <el-input type="textarea" :rows="3" v-model="tdStyle.style" placeholder="请输入css样式" />
-        </el-form-item>
-
-      </el-form>
-     <template #footer>
+        </el-form-item> 
+      </el-form> 
+      <template #footer>
         <span class="dialog-footer">
           <el-button @click="styleVisible = false">取 消</el-button> 
           <el-button type="primary" @click="settingStyle">确 定</el-button>
         </span>
      </template>
-     
    
     </el-dialog>
 
@@ -125,9 +120,8 @@ export default {
         "input",
         "textarea",
         "number",
-        
         "select",
-         "batch",
+        "batch",
         "checkbox",
         "radio",
         "date",
@@ -140,7 +134,8 @@ export default {
         "treeSelect",
         "switch",
         "text",
-        "html"
+        "html",
+        "control"
       ],
       rightMenuSelectValue: {},
       showRightMenu: false,
@@ -207,16 +202,11 @@ export default {
      // }
       const key = columns[newIndex].type + "_" + new Date().getTime();
       if (columns[newIndex].key === "" || isCopy) {
-        columns[newIndex] = {
+        this.$set(columns, newIndex, {
           ...columns[newIndex],
           key,
           model: key
-        }
-        // this.$set(columns, newIndex, {
-        //   ...columns[newIndex],
-        //   key,
-        //   model: key
-        // });
+        });
         if (this.noModel.includes(columns[newIndex].type)) {
           // 删除不需要的model属性
           delete columns[newIndex].model;

@@ -15,7 +15,8 @@
       :size="formTemplate.config.size"
       :id="randomId"
       :key="randomId"
-    >  
+    >   
+    <template >
       <ng-form-build-item
         ref="buildBlocks"
         @handleReset="reset"
@@ -23,14 +24,15 @@
         v-for="record in formTemplate.list"
         :renderPreview="renderPreview"
         :record="record"
-        :models="models"  
+        :models="models" 
+        
         :config="config"
         :disabled="disabled"
         :formConfig="formTemplate.config"
         :key="record.model"
         @change="handleChange"
       />
-    
+    </template>
     </el-form>
   
 </template>
@@ -75,6 +77,11 @@ export default {
       default: ()=>[]
     }, 
   },
+  provide: function () {
+    return {
+     customC: this.customComponents 
+    }
+  },
   watch: {
     formTemplate: {
       handler (val, oldVal) {
@@ -93,7 +100,9 @@ export default {
       // 重置表单
       this.$refs.form.resetFields();
 
-      this.models = {} 
+      this.initModelKey(true)
+
+      this.randomId = 'vue_form_design' + parseInt(Math.random() * 1000000)
 
     },
     forceUpdate(){ 
@@ -125,13 +134,7 @@ export default {
           })
  
       });
-    },
-    // 初始化验证规则
-    initRules(weights , key){
-      if(!weights) return
- 
-
-    },
+    }, 
     // 2021-03-12 清理没有显示的组件的数据
     clearHiddenValue() {
       // 根据组件ID 是否隐藏为准
@@ -155,31 +158,59 @@ export default {
 
       
     },  
-   /* setData(json) { 
-      this.models = json
- 
-    },*/ 
     handleChange(value, key) {
       // 触发change事件
       this.$emit("change", value, key);
+    },
+    // 2021-11-05 lyf 初始化每个组件的key 防止后面通过动态显隐等方式无法绑定
+    initModelKey(update) {
+      // 根据模板迭代一圈 每个组件赋予初值
+      const list_ = this.formTemplate.list 
+      if(!list_ || list_.length == 0) return 
+
+      const fs_ = (n)=> {
+        if(n instanceof Array) {
+          n.forEach(t=> {
+            fs_(t)
+          })
+        } else {
+          if(n.model && (update || !Object.prototype.hasOwnProperty.call(this.models, n.model))) {
+
+            if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
+              || (n.type == 'select' && n.options.multiple)) {
+              // 多选
+              this.$set(this.models , n.model , [])
+            } else if(n.type != 'control'){ 
+              // 字符串
+              this.$set(this.models , n.model , null)
+            }
+   
+          } 
+
+          for(let i in n) {
+            if(n[i] instanceof Array)
+              fs_(n[i])
+          }
+
+        }
+      }
+
+      fs_(list_)
     }
   },
-  mounted() {  
+  created() {  
     this.randomId = 'vue_form_design' + parseInt(Math.random() * 1000000)
-    this.$nextTick(() => {
-      const list = this.formTemplate.list
-      this.initRules(list)   
 
-      if(!window.customComponents && this.customComponents && this.customComponents.length > 0) {
-        window.customComponents = this.customComponents
-      } 
+    // if(!window.customComponents && this.customComponents && this.customComponents.length > 0) {
+    //   window.customComponents = this.customComponents
+    // } 
 
-      if(this.config.httpConfig && !window.httpConfig) {
-        window.httpConfig = this.config.httpConfig
-      }
-      
+    if(this.config.httpConfig && !window.httpConfig) {
+      window.httpConfig = this.config.httpConfig
+    }
 
-    });
+    this.initModelKey()
+ 
   }
 };
 </script>

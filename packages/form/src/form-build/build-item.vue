@@ -128,13 +128,11 @@
         effect="light" 
         :enterable="false"
         :open-delay="500"
-        v-else-if="dynamicVisibleItem && record.options.tooptip && record.options.tooptip.trim()"
-          
+        v-else-if="dynamicVisibleItem && record.options.tooptip && record.options.tooptip.trim()" 
         placement="top-start">
         <template #content>
             <div  class="tooltip-content"> {{record.options.tooptip}}</div>
         </template>
-      
         <form-item
           ref="nestedComponents"
           @handleReset="$emit('handleReset')"
@@ -167,7 +165,7 @@
       
    
 </template>
-<script >
+<script>
 import cloneDeep from 'lodash/cloneDeep'
 import  FormItem  from "../form-item";
 import {dynamicFun} from '../utils'
@@ -237,8 +235,8 @@ export default {
      /* this.record.list.forEach(t=> {
         data_[t.model] = null
       })*/
-      this.models[this.record.model] = [data_]
-      //this.$set(this.models , this.record.model , [data_])
+      
+      this.$set(this.models , this.record.model , [data_])
     }
 
   },
@@ -399,8 +397,8 @@ export default {
 
     },
     handleRemoveRightMenu() {
-      // 取消右键菜单 
-      //this.showRightMenu = false;
+      // 取消右键菜单
+      this.showRightMenu = false;
     }
   }
 };
