@@ -2,7 +2,7 @@
   <el-dialog
     :title="!dataForm._id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :append-to-body="true" 
+     :append-to-body="true" 
     :lock-scroll="false"
     :model="visible"
     :id="randomId">  
@@ -55,53 +55,42 @@
         :open-delay="500"
         v-if="item.options.tooptip && item.options.tooptip.trim()" 
         placement="top-start">
-        <template #content>
+          <template #content>
            <div class="tooltip-content"> {{item.options.tooptip}}</div>
-        </template>
-         
+          </template>
           <BaseItem 
             :models="dataForm"  
             :formConfig="formTemplate.config"
-            :renderPreview="renderPreview"
-            
+            :renderPreview="renderPreview" 
             :record="item"
-            :disabled="disabled || item.options.disabled"
-
+            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )" 
             /> 
         </el-tooltip>  
         <BaseItem 
           v-else
             :models="dataForm"  
             :formConfig="formTemplate.config"
-            :renderPreview="renderPreview"
-            
+            :renderPreview="renderPreview" 
             :record="item"
-            :disabled="disabled || item.options.disabled"
-
+            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )" 
             /> 
       </el-form-item>
-
-      
     </template>
-     <el-form-item label="排序" prop="seq">
+    <el-form-item label="排序" prop="seq">
           <template v-if="renderPreview">
             {{dataForm.seq}}
           </template>
           <template v-else>
             <el-input-number v-model="dataForm.seq" controls-position="right" :min="0" label="排序号" :disabled="renderPreview"></el-input-number>
           </template>
-         
-      </el-form-item>
-      
-  </el-form>
-    
-   <template #footer>
+    </el-form-item>
+    </el-form>
+    <template #footer>
      <div  class="mod-footer">
       <el-button @click="visible = false">取消</el-button>
       <el-button :disabled="loading" v-if="!renderPreview" type="primary" @click="dataFormSubmit()">确定</el-button>
     </div>
    </template>
-   
  <!--  </div> -->
   </el-dialog> 
 </template>
@@ -130,10 +119,16 @@
         }
       }
     },
+    inject: {
+      customComponents: {
+        from: 'customC',
+        default: ()=>[]
+      },
+    },
     computed: {
      customList() {
-      if (window.customComponents) {
-        return window.customComponents.map(item => item.type);
+      if (this.customComponents) {
+        return this.customComponents.map(item => item.type);
       } else {
         return [];
       }
