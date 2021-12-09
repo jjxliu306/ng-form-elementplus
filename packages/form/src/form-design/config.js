@@ -283,7 +283,7 @@ export const basicsList = [
     type: "rate", // 表单类型
     label: "评分", // 标题文字  
     options: {
-      defaultValue: 0,
+      defaultValue: null,
       max: 5, // 最大值
       tooptip: '', // 提示
       disabled: false, // 是否禁用
@@ -517,7 +517,33 @@ export const basicsList = [
       key: ""
   },
 ];
- 
+
+// 2021-09-29 lyf 增加个性化组件 
+export const personalList = [
+  {
+    type: "state", // 表单类型
+    label: "区划选择", // 标题文字   
+    options: {
+      defaultValue: '', // 默认值 Boolean 类型
+      maxLevel: 3 , // 级别 1-省 2-地市 3-区县
+      showAllPath: true , // 是否在label中回显所有路径
+      separator: '-' , // 显示所有路径的时候分隔符
+      oneByOne: true , // 递进式显示区划选择
+      tooptip: '', // 提示
+      hidden: false, // 是否隐藏，false显示，true隐藏
+      disabled: false // 是否禁用
+    },
+    model: "",
+    key: "",
+    rules: [
+      {
+        required: false,
+        message: "必填项"
+      }
+    ]
+  },
+
+]
   
 // 布局控件
 export const layoutList = [
