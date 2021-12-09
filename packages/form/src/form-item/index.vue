@@ -21,7 +21,8 @@
           'slider',
           'uploadImg',
           'uploadFile',
-          'cascader'
+          'cascader',
+          'state'
         ].includes(record.type) || customList.includes(record.type) ) && dynamicVisibleItem && !(record.type == 'select' && renderPreview &&  record.options.previewHidden )
     "
     :label="formConfig.labelWidth > 0 ? record.label : null " 
@@ -46,13 +47,12 @@
  
   <el-form-item
     :id="record.model" :name="record.model"
-    v-else-if="(record.type === 'batch' || record.type === 'editor') && dynamicVisibleItem"
+    v-else-if="record.type === 'batch' && dynamicVisibleItem"
     :label="!record.options.showLabel ? '' : record.label" :label-width="record.options.showLabel ? null : '0px'"
   >
     <!-- 动态表格 -->
     <TableBatch
-      v-model="models[record.model]"
-      v-if="record.type === 'batch'"
+      v-model="models[record.model]" 
       ref="TableBatch"
       :renderPreview="renderPreview"
       :models="models"
@@ -65,7 +65,7 @@
     />  
      
   </el-form-item> 
-      
+
   <!-- button按钮 -->
   <el-form-item
     v-else-if="record.type === 'button' && dynamicVisibleItem" 
@@ -122,7 +122,6 @@
 <script> 
 import TableBatch from "./table"; 
 import BaseItem from './base' 
- 
 import {dynamicFun} from '../utils'
 
 export default {
@@ -168,7 +167,13 @@ export default {
     } 
   },
   components: {
-     TableBatch,BaseItem 
+     TableBatch,BaseItem
+  },
+  inject: {
+      customComponents: {
+        from: 'customC',
+        default: ()=>[]
+      },
   },
   watch: {
     checkList:{
@@ -182,8 +187,8 @@ export default {
   },
   computed: {
     customList() {
-      if (window.customComponents) {
-        return window.customComponents.map(item => item.type);
+      if (this.customComponents) {
+        return this.customComponents.map(item => item.type);
       } else {
         return [];
       }
@@ -341,9 +346,7 @@ export default {
     if(defaultValue) {
       if(this.record.type == 'checkbox'){
         this.checkList = defaultValue
-      } else {
-        //this.models[this.record.model] = defaultValue
-
+      } else { 
         this.$set(this.models , this.record.model , defaultValue)
       } 
     } 
