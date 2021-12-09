@@ -93,23 +93,23 @@ new Vue({
 **详情可参考项目中 form-cdn.html**
  -->
 </div>
-<!--
+ 
 ## 安装
 ```
-npm install --save  ng-form-element
+npm install --save  ng-form-elementplus
 
 ```
 ## 引用
 ```
  // 导入组件库
-import NgFormElement  from 'ng-form-element'
-import 'ng-form-element/lib/ng-form-element.css'
+import NgFormElementPlus  from 'ng-form-elementplus'
+import 'ng-form-elementplus/lib/ng-form-elementplus.css'
 ```
 
 ## 注册
 ``` 
 // 注册组件库
-Vue.use(NgFormElement) 
+Vue.use(NgFormElementPlus) 
 
 ```
 
@@ -119,14 +119,14 @@ Vue.use(NgFormElement)
     <ng-form-design  />
 </div>
 ```
- -->
+ 
 ### API 说明
 # 1. 表单绘制组件  ng-form-design 
 
 方法:
 
-方法名称 | 参数| 说明   
-- | :-: | -:
+|方法名称 | 参数| 说明|   
+|----|-----|---------------|
  initModel | json |  初始化动态表单内容，参数为动态表单json模板
  getModel| N/A|  返回当前正在编辑得动态表单信息
 
