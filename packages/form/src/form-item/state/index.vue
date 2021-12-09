@@ -91,10 +91,7 @@ export default {
       		 
     	}
   	},
-  	methods: {
-  		validator() {
-
-  		},
+  	methods: { 
       // 更新区划label
       updateStateLabel(val) {
        
@@ -125,7 +122,8 @@ export default {
           str_ = address.length > 0 ? address[address.length - 1] : ''
         }
    
-        this.$set(this.models , this.record.model + '_label' , str_)
+        //this.$set(this.models , this.record.model + '_label' , str_)
+        this.models[this.record.model+ '_label'] = str_
             
       },
   		init() {

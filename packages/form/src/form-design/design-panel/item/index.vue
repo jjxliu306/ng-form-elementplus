@@ -202,11 +202,16 @@ export default {
      // }
       const key = columns[newIndex].type + "_" + new Date().getTime();
       if (columns[newIndex].key === "" || isCopy) {
-        this.$set(columns, newIndex, {
+        // this.$set(columns, newIndex, {
+        //   ...columns[newIndex],
+        //   key,
+        //   model: key
+        // });
+        columns[newIndex] = {
           ...columns[newIndex],
           key,
           model: key
-        });
+        }
         if (this.noModel.includes(columns[newIndex].type)) {
           // 删除不需要的model属性
           delete columns[newIndex].model;

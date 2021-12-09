@@ -117,8 +117,8 @@ export default {
       // value 需要深度监听及默认先执行handler函数
       handler(val) { 
         if(val instanceof Array){ 
-           //this.models[this.record.model] = val || [];
-           this.$set(this.models  , this.record.model , val || [])
+           this.models[this.record.model] = val || [];
+           //this.$set(this.models  , this.record.model , val || [])
         }
   
       },
@@ -158,8 +158,8 @@ export default {
   mounted(){ 
     // 2021-05-10 lyf 只要没有默认值都先给回填一个  这个可以处理初始化么有值，导致后面很多联动没法做，必须要通过v-if刷新 
     if(!Object.prototype.hasOwnProperty.call(this.models, this.record.model)  ) {
-      this.$set(this.models , this.record.model , [])
-      //this.models[this.record.model] = []
+      //this.$set(this.models , this.record.model , [])
+      this.models[this.record.model] = []
     }
 
   },
@@ -244,8 +244,8 @@ export default {
         } else {
           domains.push(itemObject)  
         }
-        //this.models[this.record.model] = domains
-        this.$set(this.models , this.record.model , domains)
+        this.models[this.record.model] = domains
+        //this.$set(this.models , this.record.model , domains)
          this.isVisible = true 
       } 
     },
@@ -254,8 +254,8 @@ export default {
       let domains = this.models[this.record.model] 
       if(!domains) {
         const ds = [form]
-        this.$set(this.models , this.record.model , ds)
-        //this.models[this.record.model]  = ds
+        //this.$set(this.models , this.record.model , ds)
+        this.models[this.record.model]  = ds
         domains = this.models[this.record.model]
       } else {
         domains.push(form)  

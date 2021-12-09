@@ -179,10 +179,12 @@ export default {
             if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
               || (n.type == 'select' && n.options.multiple)) {
               // 多选
-              this.$set(this.models , n.model , [])
+              this.models[n.model] = []
+              //this.$set(this.models , n.model , [])
             } else if(n.type != 'control'){ 
               // 字符串
-              this.$set(this.models , n.model , null)
+              this.models[n.model] = null
+              //this.$set(this.models , n.model , null)
             }
    
           } 

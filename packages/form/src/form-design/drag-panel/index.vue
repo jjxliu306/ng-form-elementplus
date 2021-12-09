@@ -138,12 +138,19 @@ export default {
 	methods: {
 		generateKey(list, index) {
 	      // 生成key值 
+	      // const key = list[index].type + "_" + new Date().getTime();
+	      // this.$set(list, index, {
+	      //   ...list[index],
+	      //   key,
+	      //   model: key
+	      // });
+	      if(index === undefined) return 
 	      const key = list[index].type + "_" + new Date().getTime();
-	      this.$set(list, index, {
+	  	  list[index] = {
 	        ...list[index],
 	        key,
 	        model: key
-	      });
+	      }
 	      if (this.noModel.includes(list[index].type)) {
 	        // 删除不需要的model属性
 	        delete list[index].model;

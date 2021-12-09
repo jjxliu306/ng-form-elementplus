@@ -586,8 +586,8 @@ export default {
     checkList:{
       handler(val, oldVal){
           // 默认所有val 全部补一个id 标明顺序
-        //this.models[this.record.model] = val
-        this.$set(this.models , this.record.model , val)
+        this.models[this.record.model] = val
+        //this.$set(this.models , this.record.model , val)
       },
       deep:true
     },
@@ -637,7 +637,8 @@ export default {
           if( (this.record.type === 'select' && this.record.options.multiple) || this.record.type === 'checkbox') {
             this.checkList = []
           } else {
-             this.$set(this.models , this.record.model , null)
+             //this.$set(this.models , this.record.model , null)
+             this.models[this.record.model] = null
           }
     
 
@@ -816,8 +817,8 @@ export default {
         }
 
         const modelLabel = this.record.model + '_label'
-        //this.models[modelLabel] = labels.join(',')
-        this.$set(this.models , modelLabel , labels.join(','))
+        this.models[modelLabel] = labels.join(',')
+        //this.$set(this.models , modelLabel , labels.join(','))
 
 
         // 2020-08-01 如果有远程调用并且有选择回调 再这里进行回调 
@@ -860,8 +861,8 @@ export default {
     if(this.record.options.cbColumn && !this.isDragPanel) {
       this.loading = true
       const value = this.data[this.record.options.cbColumn] 
-     // this.models[this.record.model] = value  
-      this.$set(this.models , this.record.model , value)
+      this.models[this.record.model] = value  
+      //this.$set(this.models , this.record.model , value)
       this.loading = false
       return
     }
@@ -913,8 +914,8 @@ export default {
  
         }  
         
-        this.$set(this.models , this.record.model , defaultValue)
-         
+        //this.$set(this.models , this.record.model , defaultValue)
+        this.models[this.record.model] = defaultValue
         
       } 
 
@@ -930,13 +931,16 @@ export default {
         if(this.record.type == 'checkbox' ||  this.record.type == 'cascader'
           || (this.record.type == 'select' && this.record.options.multiple)) {
           // 多选
-          this.$set(this.models , this.record.model , [])
+          //this.$set(this.models , this.record.model , [])
+          this.models[this.record.model] = []
         } else if(this.record.type == 'number') {
           // 数字
-          this.$set(this.models , this.record.model , null)
+          //this.$set(this.models , this.record.model , null)
+          this.models[this.record.model] = null
         } else {
           // 字符串
-          this.$set(this.models , this.record.model , '')
+          //this.$set(this.models , this.record.model , '')
+          this.models[this.record.model] = ''
         } 
       } else if(this.record.type == 'checkbox' ||  this.record.type == 'cascader'
           || (this.record.type == 'select' && this.record.options.multiple)){
@@ -946,10 +950,12 @@ export default {
 
         if(typeof mv == 'string') {
           if(mv == "") {
-            this.$set(this.models , this.record.model , [])
+            //this.$set(this.models , this.record.model , [])
+            this.models[this.record.model] = []
           } else {
             const mvs = mv.split(',')
-            this.$set(this.models , this.record.model , mvs)
+            //this.$set(this.models , this.record.model , mvs)
+            this.models[this.record.model] = mvs
           }
           
         }
