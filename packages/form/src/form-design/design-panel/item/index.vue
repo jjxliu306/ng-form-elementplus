@@ -32,7 +32,7 @@
         @start="dragStart($event, data.list)"
       >
         <template #item="{element}">
-         <transition-group tag="div" name="list" class="list-main">
+         <transition-group tag="div" name="list"  >
           <layoutItem
             class="drag-move" 
             :record="element"
