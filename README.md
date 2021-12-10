@@ -103,7 +103,7 @@ npm install --save  ng-form-elementplus
 ```
  // 导入组件库
 import NgFormElementPlus  from 'ng-form-elementplus'
-import 'ng-form-elementplus/lib/ng-form-elementplus.css'
+import 'ng-form-elementplus/packages/form/src/form-design.css'
 ```
 
 ## 注册
