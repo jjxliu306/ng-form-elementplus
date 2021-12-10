@@ -146,11 +146,15 @@ export default {
 	      // });
 	      if(index === undefined) return 
 	      const key = list[index].type + "_" + new Date().getTime();
-	  	  list[index] = {
-	        ...list[index],
-	        key,
-	        model: key
-	      }
+	    	  // list[index] = {
+	     //    ...list[index],
+	     //    key:key,
+	     //    model: key
+	     //  }
+
+	      list[index]['key'] = key 
+	      list[index]['model'] = key 
+
 	      if (this.noModel.includes(list[index].type)) {
 	        // 删除不需要的model属性
 	        delete list[index].model;
@@ -185,8 +189,8 @@ export default {
 	    },
 	    handleStart(list,index) {
 	    	this.generateKey(list,index)
-	      const type = list[index].type
-	      this.startType = type;
+	      	const type = list[index].type
+	      	this.startType = type;
 
 	    },
 	}

@@ -200,7 +200,8 @@ export default {
      // if(!this.columns || this.columns.length < newIndex ){
      //   return
      // }
-      const key = columns[newIndex].type + "_" + new Date().getTime();
+      const key = columns[newIndex].type + "_" + new Date().getTime()
+    
       if (columns[newIndex].key === "" || isCopy) {
         // this.$set(columns, newIndex, {
         //   ...columns[newIndex],
