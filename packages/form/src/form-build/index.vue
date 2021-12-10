@@ -16,7 +16,11 @@
       :id="randomId"
       :key="randomId"
     >   
-    <template >
+
+     <!--  <template   v-for="record in formTemplate.list">
+         record: {{record}}
+      </template> -->
+
       <ng-form-build-item
         ref="buildBlocks"
         @handleReset="reset"
@@ -32,7 +36,7 @@
         :key="record.model"
         @change="handleChange"
       />
-    </template>
+   
     </el-form>
   
 </template>

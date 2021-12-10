@@ -1,5 +1,7 @@
 <template>
   <!-- 栅格布局 -->
+
+  <div>
   <el-row
     v-if="record.type === 'grid' && dynamicVisibleItem"
     class="grid-row"
@@ -162,8 +164,8 @@
         :formConfig="formConfig"
        
       />
-      
-   
+       
+   </div>
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'

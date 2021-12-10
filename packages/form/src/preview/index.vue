@@ -48,7 +48,8 @@ export default {
   },
   methods: {
     init(data ) {
-      this.jsonData = data 
+      console.log('data' , data )
+      this.jsonData = JSON.parse(data) 
       this.visible = true
     },
     handleGetData() {

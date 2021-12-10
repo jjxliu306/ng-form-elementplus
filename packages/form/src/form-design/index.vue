@@ -213,9 +213,9 @@ export default {
           this.previewVisible = true
           
           this.$nextTick(() => {
-            this.$refs.preview.jsonData = this.data
-            this.$refs.preview.previewWidth = this.previewOptions.width
-            this.$refs.preview.visible = true
+            this.$refs.preview.init(JSON.stringify(this.data) )
+            //this.$refs.preview.previewWidth = this.previewOptions.width
+            //this.$refs.preview.visible = true
           }) 
          
     },
