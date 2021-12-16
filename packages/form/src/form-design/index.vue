@@ -210,13 +210,10 @@ export default {
     },
     handlePreview () { 
 
-          this.previewVisible = true
-          
-          this.$nextTick(() => {
-            this.$refs.preview.init(JSON.stringify(this.data) )
-            //this.$refs.preview.previewWidth = this.previewOptions.width
-            //this.$refs.preview.visible = true
-          }) 
+      this.previewVisible = true
+      this.$nextTick(() => {
+        this.$refs.preview.init(this.data)
+      }) 
          
     },
     handleClear () {

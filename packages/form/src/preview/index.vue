@@ -47,10 +47,14 @@ export default {
     PreviewCode,FormBuild,renderPreview
   },
   methods: {
-    init(data ) {
-      console.log('data' , data )
-      this.jsonData = JSON.parse(data) 
+    init(data ) { 
       this.visible = true
+
+      this.jsonData = data
+      // 重置表单
+      this.$nextTick(()=>{
+        this.$refs.formBuild.reset()
+      }) 
     },
     handleGetData() {
       this.$refs.formBuild.getData()
