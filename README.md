@@ -15,6 +15,9 @@ NG-FORM-ELEMENTPLUS
   
 
 ##示例
+ **引用示例代码**
+https://gitee.com/jjxliu306/ng-form-elementplus-sample
+
 
  **基础表单** 
  ![基础表单](https://s3.ax1x.com/2020/12/22/rrcpkT.gif "basic.gif")
