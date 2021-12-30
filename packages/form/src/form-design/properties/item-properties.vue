@@ -950,6 +950,9 @@ export default {
   },
   watch: {
     selectItem(val) { 
+      if(val.type == 'batch' && !val.options.colWidth) { 
+        val.options.colWidth = {}
+      }
       this.options = val.options || {}; 
     }
   },
