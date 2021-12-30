@@ -16,7 +16,7 @@
             title="测试表单预览"
             type="warning">
           </el-alert>
-          models:: {{models}}
+         
             <ng-form-build ref="formbuild" :formTemplate="formTemplate" :models="models"  :config="formConfig"/>
 
              <el-button   type="primary" size="mini"  @click="validator()">验证</el-button>
