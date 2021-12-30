@@ -28,6 +28,7 @@
             animation: 180,
             handle: '.drag-move'
           }"
+          item-key="key"
           :force-fallback="true"
           :list="record.list"
           @start="$emit('dragStart', $event, record.list)"
@@ -36,6 +37,7 @@
           <template #item="{element}">
               <transition-group tag="div" name="list" class="list-main">
                 <layoutItem
+                  :key="element.key"
                   class="drag-move" 
                   :selectItem="selectItem"
                   :startType="startType"
@@ -93,6 +95,7 @@
                 animation: 180,
                 handle: '.drag-move'
               }"
+              item-key="key"
               :force-fallback="true"
               :list="colItem.list"
               @start="$emit('dragStart', $event, colItem.list)"
@@ -102,6 +105,7 @@
                 <transition-group tag="div" name="list" class="list-main">
                   <formNode 
                     class="drag-move"
+                    :key="element.key"
                     :selectItem="selectItem"
                     :record="element"
                     :hideModel="hideModel"
@@ -158,6 +162,7 @@
             animation: 180,
             handle: '.drag-move'
           }"
+          item-key="key"
           :force-fallback="true"
           v-model="record.list"
           @start="$emit('dragStart', $event, record.list)"
@@ -166,6 +171,7 @@
           <template #item="{element}">
             <transition-group tag="div" name="list" class="list-main">
               <formNode 
+                :key="element.key"
                 class="drag-move"
                 :selectItem="selectItem"
                 :record="element"
@@ -238,6 +244,7 @@
                   animation: 180,
                   handle: '.drag-move'
                 }"
+                item-key="key"
                 :force-fallback="true"
                 v-model="tdItem.list"
                 @start="$emit('dragStart', $event, tdItem.list)"
@@ -247,6 +254,7 @@
                    <transition-group tag="div" name="list" class="list-main">
                         <layoutItem
                           class="drag-move" 
+                          :key="element.key"
                           :selectItem="selectItem"
                           :startType="startType"
                           :insertAllowedType="insertAllowedType"

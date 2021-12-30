@@ -26,7 +26,8 @@
           animation: 180,
           handle: '.drag-move'
         }"
-       :force-fallback="true"
+        :force-fallback="true"
+        item-key="key"
         :list="data.list" 
         @add="deepClone"
         @start="dragStart($event, data.list)"
@@ -34,6 +35,7 @@
         <template #item="{element}">
          <transition-group tag="div" name="list"  >
           <layoutItem
+            :key="element.key"
             class="drag-move" 
             :record="element"
             :config="data.config"
@@ -81,7 +83,7 @@
 
     <el-dialog
       title="表内单元格样式配置"
-      :model="styleVisible" 
+      :model-value="styleVisible" 
       style="top:20px;" 
       :append-to-body="true"  
     > 

@@ -32,7 +32,7 @@
 <script >  
  
 import {  ref , onMounted} from 'vue'
-
+import { ElMessage } from 'element-plus'
 
 export default  ({
   	components: { 
@@ -43,10 +43,10 @@ export default  ({
 	    const formDesign = ref(null)
 	    const formbuild = ref(null)
 
-	    onMounted(() => {
-	       console.log(formDesign) // 打印一下，就可以获取dom了
-	       console.log(formbuild) // 打印一下，就可以获取dom了
-	    })
+	    // onMounted(() => {
+	    //    console.log(formDesign) // 打印一下，就可以获取dom了
+	    //    console.log(formbuild) // 打印一下，就可以获取dom了
+	    // })
 
 	    const activeName = ref('first')
 	    const models = ref({})
@@ -77,13 +77,15 @@ export default  ({
 	    }
 
 	    const validator = ()=> {
+	    	 
 	    	formbuild.value.validator().then((valid)=>{
-	        if(valid){
-	          this.$message.info('验证通过')
-	        } else {
-	          this.$message.error('验证不通过')
-	        }
-	      })
+	    		 
+		        if(valid){
+		           ElMessage({ message: '验证通过.',type: 'success'})
+		        } else { 
+		           ElMessage({ message: '验证不通过.',type: 'error'})
+		        }
+	      	})
 	    }
 
 	    const changeTab = (v)=> {
@@ -112,6 +114,7 @@ export default  ({
 
 	    const getData = ()=> {
 	      formbuild.value.getData().then((data)=>{
+	      	ElMessage({ message: '获取的数据从控制台查看.',type: 'success'})
 	        console.log('data' , data)
 	      })
 	    }
@@ -127,6 +130,7 @@ export default  ({
 	      	formConfig, 
 
 	      	initDemo,
+	      	validator,
 	      	reset,
 	      	getData,
 	      	changeTab
