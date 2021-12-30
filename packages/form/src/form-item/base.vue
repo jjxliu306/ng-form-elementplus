@@ -7,9 +7,9 @@
     <template v-if=" [
           'input',
           'textarea',
-          'date',
+          //'date',
           'time',
-          'datePicker',
+          //'datePicker',
           'number', 
           'rate',
           'switch',
@@ -20,6 +20,14 @@
        <span class="base-item-span" v-if="!loading">{{models[record.model]}} </span>
       <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)"> 
       </span>  
+    </template>
+     <template v-if="record.type == 'date' || record.type == 'datePicker'">
+      <span v-if="record.options.range && models[record.model] instanceof Array">
+        {{models[record.model].join(' ~ ')}}
+      </span>
+      <span v-else>
+         {{models[record.model]}}
+      </span>
     </template>
     <!-- 区划三级联动选择 -->
      <ng-state
@@ -223,7 +231,7 @@
       <el-date-picker 
         :style="`width:${record.options.width}`"
         v-if="record.options.range"
-        v-model="checkList"
+        v-model="models[record.model]"
         align="right"
         type="daterange"
         :clearable="record.options.clearable"
@@ -257,7 +265,7 @@
       <el-date-picker 
         v-if="record.options.range"
         :style="`width:${record.options.width}`"
-        v-model="checkList"
+        v-model="models[record.model]"
         align="right"
         type="datetimerange"
         :clearable="record.options.clearable"
@@ -286,7 +294,7 @@
     
  
     <!-- 时间选择 -->
-    <el-time-select
+    <el-time-picker
       v-else-if="record.type === 'time'"
       :style="`width:${record.options.width}`"
       v-model="models[record.model]"
@@ -296,7 +304,7 @@
       :placeholder="record.options.placeholder" 
       :format="record.options.format"
       :value-format="record.options.format">
-    </el-time-select> 
+    </el-time-picker> 
 
 
 

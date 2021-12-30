@@ -189,8 +189,11 @@ export default {
 	    },
 	    handleStart(list,index) {
 	    	this.generateKey(list,index)
-	      	const type = list[index].type
-	      	this.startType = type;
+	    	if(list[index]) {
+	    		const type = list[index].type
+	      		this.startType = type
+	    	}
+	      
 
 	    },
 	}

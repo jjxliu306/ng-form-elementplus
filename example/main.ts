@@ -7,10 +7,13 @@ import '../packages/form/src/form-design.css'
 
 // 导入element-ui    
 import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css' 
 
 createApp(App) 
   .component('ng-form-build', NgFormBuild) 
   .component('ng-form-design', NgFormDesign) 
-  .use(ElementPlus) 
+  .use(ElementPlus, {
+	  locale: zhCn
+	}) 
   .mount('#app')

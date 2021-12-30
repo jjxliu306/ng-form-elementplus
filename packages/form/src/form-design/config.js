@@ -220,7 +220,7 @@ export const basicsList = [
       tooptip: '', // 提示
       rangeStartPlaceholder: "开始时间",
       rangeEndPlaceholder: "结束时间",
-      format: "yyyy-MM-dd" // 展示格式  （请按照这个规则写 YYYY-MM-DD HH:mm:ss，区分大小写）
+      format: "YYYY-MM-DD" // 展示格式  （请按照这个规则写 YYYY-MM-DD HH:mm:ss，区分大小写）
     },
     model: "",
     key: "",
@@ -268,7 +268,7 @@ export const basicsList = [
       tooptip: '', // 提示
       rangeStartPlaceholder: "开始时间",
       rangeEndPlaceholder: "结束时间",
-      format: "yyyy-MM-dd HH:mm:ss" // 展示格式
+      format: "YYYY-MM-DD HH:mm:ss" // 展示格式
     },
     model: "",
     key: "",
