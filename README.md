@@ -12,7 +12,19 @@ NG-FORM-ELEMENTPLUS
  **iview版本地址**
  https://gitee.com/jjxliu306/ng-form-iview
 
-  
+ 
+ 
+## 后端服务
+**ngtool 后端解析和校验功能** 
+https://gitee.com/jjxliu306/ngtool
+
+
+## 集成示例
+**基于springboot + vue 的前后端分离集成案例**
+
+后端springboot: https://gitee.com/jjxliu306/ng-server
+
+前端vue: https://gitee.com/jjxliu306/ng-ui
 
 ##示例
  **引用示例代码**
