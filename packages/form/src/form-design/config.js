@@ -340,19 +340,23 @@ export const basicsList = [
       }
     ]
   },
- /* {
+  { 
     type: "uploadFile", // 表单类型
     label: "上传文件", // 标题文字  
     options: {
-      defaultValue: "[]",
+      defaultValue: [],
       multiple: false,
       disabled: false,
       tooptip: '', // 提示
       hidden: false, // 是否隐藏，false显示，true隐藏 
-      width: "100%",
-      limit: 3, 
-      headers: {},
-      action: http_upload_file_url,
+      width: "100%", 
+      limit: 3,  
+      limitSize: 10, // 文件大小限制 单位MB
+      accept:"", // 接受上传的文件类型
+      name:"file" , //上传的文件字段名
+      headers: [{"label":"token" , "value":"64685b8ab1aa962eab779b62716ee84d"}], //上传携带的头信息
+      action: 'http://localhost:8990/ng-server/file/upload',
+      responseFileUrl: 'data.url' , // 上传完成后需要从返回结果中获取文件地址的url
       placeholder: "上传"
     },
     model: "",
@@ -368,16 +372,19 @@ export const basicsList = [
     type: "uploadImg",
     label: "上传图片",  
     options: {
-      defaultValue: "[]",
+      defaultValue: [ ],
       multiple: false,
       hidden: false, // 是否隐藏，false显示，true隐藏
       disabled: false,
       width: "100%", 
       tooptip: '', // 提示
       limit: 3,
-      placeholder: "上传", 
-      headers: {},
-      action: http_upload_file_url,
+      placeholder: "上传图片",  
+      limitSize: 10, // 文件大小限制 单位MB 
+      name:"file" , //上传的文件字段名
+      headers: [],
+      action: '',
+      responseFileUrl: '' , // 上传完成后需要从返回结果中获取文件地址的url
       listType: "picture-card"
     },
     model: "",
@@ -388,7 +395,7 @@ export const basicsList = [
         message: "必填项"
       }
     ]
-  }, */
+  }, 
   {
     type: "cascader", // 表单类型
     label: "级联选择器", // 标题文字  

@@ -435,20 +435,43 @@
         <!-- date end -->
 
         <!-- 上传文件 start -->
-        <template v-if="selectItem.type == 'uploadFile'">
+        <template v-if="selectItem.type == 'uploadFile'"> 
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
-          <!-- 上传数量 -->
-          <el-form-item  label="最大上传数量" >
-            <el-input-number :min="1" v-model="options.limit" />
+          <el-form-item  label="上传地址"  > 
           </el-form-item>
-           <el-divider ></el-divider>
+           <el-form-item  prop="options.action"  >
+            <el-input placeholder="上传地址" v-model="selectItem.options.action" />
+          </el-form-item>
+          <!--required error="返回文件url地址不能为空"-->
+          <el-form-item  label="上传成功后解析文件url的epl地址"  >
+          
+          </el-form-item>
+          <el-form-item prop="options.responseFileUrl" >
+            <el-input placeholder="上传成功后解析文件url的epl地址" v-model="selectItem.options.responseFileUrl" />
+          </el-form-item>
+           <el-form-item  label="文件类型">
+            <el-input placeholder="文件类型" v-model="options.accept" />
+          </el-form-item>
+           <el-form-item  label="大小限制(Mb)">
+             <el-input-number v-model="options.limitSize" placeholder="大小限制(Mb)" />
+          </el-form-item>
+           <el-divider >携带信息</el-divider>
+          <el-form-item>
+             <Option type="keyvalue" :value="options.headers" /> 
+          </el-form-item>
+         
+          
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
             <el-checkbox v-model="options.disabled"  label="禁用" /> 
             <el-checkbox v-model="options.multiple"  label="多选" />
           </el-form-item> 
+           <!-- 上传数量 -->
+          <el-form-item  label="最大上传数量" v-if="options.multiple">
+            <el-input-number :min="1" v-model="options.limit" />
+          </el-form-item>
         </template> 
         <!-- 上传文件 end -->
 
@@ -462,6 +485,27 @@
           <el-form-item  label="最大上传数量" >
             <el-input-number :min="1" v-model="options.limit" />
           </el-form-item>
+          <el-form-item  label="上传地址"> 
+          </el-form-item>
+            <el-form-item >
+            <el-input placeholder="上传地址" v-model="options.action" />
+          </el-form-item>
+           <el-form-item  label="上传成功后解析文件url的epl地址">
+          </el-form-item>
+           <el-form-item >
+            <el-input placeholder="上传成功后解析文件url的epl地址" v-model="options.responseFileUrl" />
+          </el-form-item>
+          <!--  <el-form-item  label="文件类型">
+            <el-input placeholder="文件类型" v-model="options.accept" />
+          </el-form-item> -->
+           <el-form-item  label="大小限制(Mb)">
+             <el-input-number v-model="options.limitSize" placeholder="大小限制(Mb)" />
+          </el-form-item>
+          <el-divider >携带信息</el-divider>
+          <el-form-item>
+             <Option type="keyvalue" :value="options.headers" /> 
+          </el-form-item>
+           
            <el-divider ></el-divider>
           <!-- 上传图片样式 -->
           <el-form-item  label="样式">
