@@ -29,6 +29,30 @@
          {{models[record.model]}}
       </span>
     </template>
+     <template v-else-if="[
+          'uploadImg',
+          'uploadFile'
+        ].includes(record.type)"> 
+
+      <!-- 上传图片 -->
+      <FileUpload
+        v-if="record.type == 'uploadImg'"
+        :style="`width:${record.options.width}`" 
+        v-model="models[record.model]" 
+        accept="image/*" 
+        :list-type="record.options.listType" 
+        :readOnly="true"  
+        :record="record"
+      />  
+      <!-- 上传文件 --> 
+      <FileUpload
+        v-else
+        :style="`width:${record.options.width}`" 
+        v-model="models[record.model]" 
+        :readOnly="true"  
+         :record="record"  
+      />  
+    </template>
     <!-- 区划三级联动选择 -->
      <ng-state
       v-else-if="record.type == 'state'"
