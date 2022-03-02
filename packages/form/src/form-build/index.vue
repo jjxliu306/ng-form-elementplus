@@ -166,7 +166,7 @@ export default {
       // 触发change事件
       this.$emit("change", value, key);
     },
-    // 2021-11-05 lyf 初始化每个组件的key 防止后面通过动态显隐等方式无法绑定
+     // 2021-11-05 lyf 初始化每个组件的key 防止后面通过动态显隐等方式无法绑定
     initModelKey(update) {
       // 根据模板迭代一圈 每个组件赋予初值
       const list_ = this.formTemplate.list 
@@ -183,17 +183,16 @@ export default {
             if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
               || (n.type == 'select' && n.options.multiple)) {
               // 多选
-              this.models[n.model] = []
-              //this.$set(this.models , n.model , [])
-            } else if(n.type != 'control'){ 
+              this.$set(this.models , n.model , [])
+            } else if(n.type != 'control' && n.type != 'table' && n.type != 'divider' && n.type != 'grid'){ 
               // 字符串
-              this.models[n.model] = null
-              //this.$set(this.models , n.model , null)
+              this.$set(this.models , n.model , null)
             }
    
           } 
-
-          for(let i in n) {
+          
+          if(n.type != 'batch')
+          for(let i in n) { 
             if(n[i] instanceof Array)
               fs_(n[i])
           }
