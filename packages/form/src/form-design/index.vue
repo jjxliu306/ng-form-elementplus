@@ -2,7 +2,7 @@
     <el-container class="form-design">
       <el-aside width="260px">
           <slot name="drag"></slot>
-          <DragPanel > </DragPanel> 
+          <DragPanel :basic-item="basicItem" :personal-item="personalItem" :layout-item="layoutItem"> </DragPanel> 
       </el-aside>
       <el-main>
         <el-row class="form-design" :gutter="20"> 
@@ -186,7 +186,22 @@ export default {
     exp: {
       type: Boolean ,
       default: true
-    }
+    },
+     // 基础组件需要展示的列表 或者false全部不展示
+    basicItem: {
+      type: [Boolean , Array] ,
+      default: true
+    }, 
+    // 个性化组件需要展示的列表 或者false全部不展示
+    personalItem: {
+      type: [Boolean , Array] ,
+      default: true
+    },
+     //布局组件需要展示的列表 或者false全部不展示
+    layoutItem: {
+      type: [Boolean , Array] ,
+      default: true
+    } 
   },
   provide: function () {
     return {
