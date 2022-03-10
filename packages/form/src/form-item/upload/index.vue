@@ -15,14 +15,14 @@
 	  :on-remove="handleRemove"
 	  :on-preview="handlePreview"
 	  :auto-upload="autoUpload"
-	  :file-list="fileList">
-	   
-	  	<el-button v-if="listType != 'picture-card'" size="small" type="primary">选取文件</el-button>
-	  	<i v-else class="el-icon-plus"></i>
-	   <template #tip v-if="tip != undefined" >
+	  :file-list="fileList"> 
+	    <template v-if="!renderPreview">
+	  		<el-button v-if="listType != 'picture-card'" size="small" type="primary">选取文件</el-button>
+	  		<i v-else class="el-icon-plus"></i> 
+	  	</template> 
+	   	<template #tip v-if="tip != undefined && !renderPreview" >
 	   		<div  class="el-upload__tip">请选择图片，且不超过500kb</div>
-	   </template>
-	  
+	   	</template>
 	</el-upload>
 </div>
 </template>
@@ -86,6 +86,10 @@ export default {
 	    },
 	    record: {
 	    	type: Object
+	    },
+	    renderPreview: {
+	    	type: Boolean,
+	    	default: false
 	    }
 	},
 	watch: {
