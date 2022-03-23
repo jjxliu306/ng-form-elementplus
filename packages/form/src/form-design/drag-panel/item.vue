@@ -15,7 +15,9 @@
 	      ghostClass: 'moving'
 	    }"
 	    :force-fallback="true"
-	    @start="handleStart($event, list)" item-key="label">  
+	    @start="handleStart($event, list)" 
+	    @end="handleEnd"
+	    item-key="label">  
 	      	<template #item="{element}" >
 	      		 
 	      		<li
@@ -49,6 +51,9 @@ export default {
     handleStart(e, list) {
       //this.$emit("start", list ,[e.oldIndex].type);
       this.$emit('start', list, e.oldIndex)
+    },
+    handleEnd(){
+    	this.$emit('end')
     }
   }
 };

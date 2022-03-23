@@ -41,7 +41,7 @@
                   class="drag-move" 
                   :selectItem="selectItem"
                   :startType="startType"
-                  :insertAllowedType="insertAllowedType"
+                   
                   :record="element"
                   :hideModel="hideModel"
                   :config="config"
@@ -257,7 +257,7 @@
                           :key="element.key"
                           :selectItem="selectItem"
                           :startType="startType"
-                          :insertAllowedType="insertAllowedType"
+                           
                           :record="element"
                           :hideModel="hideModel"
                           :config="config"
@@ -336,11 +336,26 @@ export default {
     hideModel: {
       type: Boolean,
       default: false
+    },
+    // 当前拖拽的组件类型
+    dragType: {
+      type: String
     }
   },
   computed: {
     insertAllowed() {
-      return this.insertAllowedType.includes(this.startType);
+      if(this.record.type == 'batch') {
+        const disabledType = ['control' , 'batch' , 'batch' ,'divider', 'table']
+        
+        // 判断当前是在从原始组件拖拽还是从面板内组件拖拽
+        if(this.dragType) {
+          return !disabledType.includes(this.dragType)
+        } else {
+          return !disabledType.includes(this.startType)
+        } 
+        
+      }
+      return true ;//this.insertAllowedType.includes(this.startType);
     }
   },
   components: {

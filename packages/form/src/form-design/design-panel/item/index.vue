@@ -41,7 +41,7 @@
             :config="data.config"
             :selectItem="selectItem"
             :startType="startType"
-            :insertAllowedType="insertAllowedType"
+            :dragType="dragType"
             :hideModel="hideModel"
             @dragStart="dragStart"
             @handleSelectItem="handleSelectItem"
@@ -118,27 +118,27 @@ export default {
   data() {
     return {
       form: this.$refs.form,
-      insertAllowedType: [
-        "input",
-        "textarea",
-        "number",
-        "select",
-        "batch",
-        "checkbox",
-        "radio",
-        "date",
-        "time",
-        "rate",
-        "slider",
-        "uploadFile",
-        "uploadImg",
-        "cascader",
-        "treeSelect",
-        "switch",
-        "text",
-        "html",
-        "control"
-      ],
+      // insertAllowedType: [
+      //   "input",
+      //   "textarea",
+      //   "number",
+      //   "select",
+      //   "batch",
+      //   "checkbox",
+      //   "radio",
+      //   "date",
+      //   "time",
+      //   "rate",
+      //   "slider",
+      //   "uploadFile",
+      //   "uploadImg",
+      //   "cascader",
+      //   "treeSelect",
+      //   "switch",
+      //   "text",
+      //   "html",
+      //   "control"
+      // ],
       rightMenuSelectValue: {},
       showRightMenu: false,
       isMergeCol: false,
@@ -174,6 +174,9 @@ export default {
     hideModel: {
       type: Boolean,
       default: false
+    },
+    dragType: {
+      type: String
     }
   },
   components: {

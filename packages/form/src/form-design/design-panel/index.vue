@@ -7,6 +7,7 @@
             :hideModel="hideModel"
             :selectForm="selectForm"
             :startType="startType" 
+            :dragType="dragType"
             @handleSetSelectItem="handleSetSelectItem"> 
 		</FormPanel> 
  
@@ -35,6 +36,9 @@ export default {
 		},
 		selectForm: {
 			type: Object
+		},
+		dragType: {
+			type: String
 		}
 	}, 
 	methods: {
