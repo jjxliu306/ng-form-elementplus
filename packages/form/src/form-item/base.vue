@@ -593,6 +593,25 @@ export default {
 
       } 
       return false  
+    },
+    // 2022-03-14 lyf 针对select radio checkbox这些数据的动态来源修改后进行刷新
+    dynamicOption() {
+
+      // 只在表单模板拖拽绘制的时候生效
+
+      if(this.isDragPanel || !['select','radio','checkbox'].includes(this.record.type)) {
+        return null 
+      }
+      if(this.record.options.dynamic == 0){
+        return null
+      }
+      if(this.record.options.dynamic == 1) {
+        return this.record.options.dynamic + this.record.options.remoteFunc + this.record.options.dataPath + this.record.options.remoteValue + this.record.options.remoteLabel
+      } else if(this.record.options.dynamic == 2) {
+        return this.record.options.dynamic + this.record.options.dictType
+      }
+      
+      return null
     }
   },
   watch: {
@@ -611,6 +630,13 @@ export default {
         this.handleChange(value ,this.record.model , 1)
       },
       deep:true
+    },
+     // 2022-03-14 lyf 监听下拉、多选、单选配置变化后如果当前是表单模板编辑状态 则刷新
+    dynamicOption: {
+      handler(val, oldVal){
+         this.initDynamicValue()
+      },
+      deep:true 
     },
     // 监听关联字段
     linkageData: {
@@ -857,14 +883,36 @@ export default {
               
             })
            
-          }
+          } 
+        } 
+      }
+    },
+     // 初始化远程数据或者数据字典 针对select radio checkbox
+    initDynamicValue() {
+      if(this.record.options.dynamic == 1 && this.record.options.remoteFunc) {
+        const url =  this.record.options.remoteFunc 
+        this.remoteUrl = url 
+        
 
+        this.getRemoteData()
+   
 
+        this.itemProp.label = this.record.options.remoteLabel
+        this.itemProp.value = this.record.options.remoteValue
+        this.itemProp.children = this.record.options.remoteChildren
+      } else if(this.record.options.dynamic == 2 && this.record.options.dictType ) {
+
+        // 2022-02-26 lyf  引入数据字典后判断数据字典
          
+        //console.log('ngConfig' , this.ngConfig)
+        if(this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0) {
+          const fsDict = this.ngConfig.dict.filter(t=>t.type == this.record.options.dictType)
+          this.checkValues = cloneDeep(fsDict)
 
-        }
-
-
+          this.itemProp.label = 'label'
+          this.itemProp.value = 'value'
+          this.itemProp.children = 'children'
+        }  
       }
     }
   }, 
@@ -880,34 +928,8 @@ export default {
       return
     }
 
-     // 判断如果是远程方法的话 远程请求数据
-    if(this.record.options.dynamic == 1 && this.record.options.remoteFunc) {
-      const url =  this.record.options.remoteFunc 
-      this.remoteUrl = url 
-      
-
-      this.getRemoteData()
- 
-
-      this.itemProp.label = this.record.options.remoteLabel
-      this.itemProp.value = this.record.options.remoteValue
-      this.itemProp.children = this.record.options.remoteChildren
-    } else if(this.record.options.dynamic == 2 && this.record.options.dictType ) {
-
-      // 2022-02-26 lyf  引入数据字典后判断数据字典
-       
-      //console.log('ngConfig' , this.ngConfig)
-      if(this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0) {
-        const fsDict = this.ngConfig.dict.filter(t=>t.type == this.record.options.dictType)
-        this.checkValues = cloneDeep(fsDict)
-
-        this.itemProp.label = 'label'
-        this.itemProp.value = 'value'
-        this.itemProp.children = 'children'
-      } 
-      
-
-    }
+    // 判断如果是远程方法的话 远程请求数据
+    this.initDynamicValue()
 
     
     // 如果已经赋值了 则不管默认值了 
