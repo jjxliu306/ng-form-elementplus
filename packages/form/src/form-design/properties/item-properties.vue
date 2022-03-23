@@ -1064,8 +1064,14 @@ export default {
   },
   computed: {
     hasDict() {
-      return window.ng_dict_
+      return this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0
     }
+  },
+  inject: {
+      ngConfig: {
+        from: 'ngConfigC',
+        default: ()=>({})
+      },
   },
   methods: {
     linkageChange(v) {
@@ -1074,7 +1080,7 @@ export default {
       }
     },
     queryDictSearch(queryString, cb) {
-      const dicts = window.ng_dict_ 
+      const dicts = this.ngConfig && this.ngConfig.dict ? this.ngConfig.dict : null
       if(!dicts || dicts.length == 0) {
         cb([])
       }

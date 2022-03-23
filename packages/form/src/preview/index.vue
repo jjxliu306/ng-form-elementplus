@@ -10,7 +10,7 @@
   > 
 
     <div class="item-main">
-      <FormBuild :formTemplate="jsonData" :models="models" ref="formBuild" />
+      <FormBuild :formTemplate="jsonData"  :custom-components="customComponents"   :config="ngConfig"   :models="models" ref="formBuild" />
       <PreviewCode ref="previewCode" />
       <renderPreview ref="renderPreview" v-if="renderVisisble"/> 
     </div> 
@@ -45,6 +45,16 @@ export default {
   },
   components: {
     PreviewCode,FormBuild,renderPreview
+  },
+  inject: {
+    customComponents: {
+      from: 'customC',
+      default: ()=>[]
+    },
+    ngConfig: {
+      from: 'ngConfigC',
+      default: ()=>({})
+    } 
   },
   methods: {
     init(data ) { 
