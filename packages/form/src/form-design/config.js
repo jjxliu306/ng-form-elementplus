@@ -7,8 +7,7 @@ import {http_get_file_list_url,http_upload_file_url} from '../utils'
 export const noModelList = [
   "button",
             "divider",
-            "card",
-            'control',
+            "card", 
             "grid",
             "table",
             "alert",

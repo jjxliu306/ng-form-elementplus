@@ -133,7 +133,8 @@ export default {
 
           this.$refs.form.validate((valid,values)=>{ 
             if (!valid) { 
-              reject('验证失败');
+              console.log('验证失败' , values)
+              reject('验证失败' );
             } 
             this.clearHiddenValue()
             resolve(this.models); 
@@ -185,10 +186,12 @@ export default {
             if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
               || (n.type == 'select' && n.options.multiple)) {
               // 多选
-              this.$set(this.models , n.model , [])
+              this.models[n.model] = []
+              //this.$set(this.models , n.model , [])
             } else if(n.type != 'control' && n.type != 'table' && n.type != 'divider' && n.type != 'grid'){ 
               // 字符串
-              this.$set(this.models , n.model , null)
+              this.models[n.model] = null
+              //this.$set(this.models , n.model , null)
             }
    
           } 
