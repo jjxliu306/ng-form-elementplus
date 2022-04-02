@@ -133,7 +133,7 @@ export default {
 
           this.$refs.form.validate((valid,values)=>{ 
             if (!valid) { 
-              console.log('验证失败' , values)
+              //console.log('验证失败' , values)
               reject('验证失败' );
             } 
             this.clearHiddenValue()
