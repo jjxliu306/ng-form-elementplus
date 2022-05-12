@@ -17,6 +17,8 @@
       ref="dataForm" 
       :model="dataForm"  
       size="mini"
+      :label-width="(item.options.labelWidth >= 0 ? item.options.labelWidth : formTemplate.config.labelWidth) + 'px'"
+ 
     > 
     <template
       v-for="(item,index) in formTemplate.list"  

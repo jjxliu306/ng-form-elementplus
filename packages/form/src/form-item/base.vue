@@ -973,6 +973,23 @@ export default {
     }
 
 
+    // 2022-05-12 lyf 如果当前是时间范围或者日期范围 则从rangeDefaultValue 中取默认值
+    if( (this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker') 
+      && this.record.options.range) {
+      let defaultRangeValue = this.record.options.rangeDefaultValue 
+      if(defaultRangeValue && defaultRangeValue.length == 2) {
+         // 判断有么有设置为now的
+        if(defaultRangeValue[0] == 'now'){
+          defaultRangeValue[0] = dateFormater(new Date() ,this.record.options.format)
+        }
+        if(defaultRangeValue[1] == 'now'){
+          defaultRangeValue[1] = dateFormater(new Date() ,this.record.options.format)
+        }
+      }
+    }
+   
+
+
     // 2021-03-16 lyf 判断当前没有值并且类型是input 或者textarea 给初始化model
     // 2021-08-05 lyf 为不同的组件初始化不同类型的初始值，防止类型不同后端解析异常
     if(!this.isDragPanel) {

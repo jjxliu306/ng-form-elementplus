@@ -328,11 +328,7 @@ export default {
     startType: {
       type: String,
       required: true
-    },
-    insertAllowedType: {
-      type: Array,
-      required: true
-    },
+    }, 
     hideModel: {
       type: Boolean,
       default: false
