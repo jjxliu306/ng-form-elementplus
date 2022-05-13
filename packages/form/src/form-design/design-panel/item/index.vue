@@ -1,20 +1,20 @@
 <!--
- 表单设计器内容展示操作组件 
+ 表单设计器内容展示操作组件
 -->
 <template>
- 
-  <div class="form-panel" > 
-    
+
+  <div class="form-panel" >
+
     <p class="hint-text" v-show="data.list.length === 0">
       从左侧选择组件添加
     </p>
-    <el-form 
-      :label-width="data.config.labelWidth + 'px'" 
+    <el-form
+      :label-width="data.config.labelWidth + 'px'"
       class="a-form-box form-build"
       :label-position="data.config.labelPosition"
-      :hide-required-asterisk="data.config.hideRequiredMark" 
-      ref="form" 
-      :style="data.config.customStyle" 
+      :hide-required-asterisk="data.config.hideRequiredMark"
+      ref="form"
+      :style="data.config.customStyle"
       :size="data.config.size"
     >
       <draggable
@@ -28,7 +28,7 @@
         }"
         :force-fallback="true"
         item-key="key"
-        :list="data.list" 
+        :list="data.list"
         @add="deepClone"
         @start="dragStart($event, data.list)"
       >
@@ -36,7 +36,7 @@
          <transition-group tag="div" name="list"  >
           <layoutItem
             :key="element.key"
-            class="drag-move" 
+            class="drag-move"
             :record="element"
             :config="data.config"
             :selectItem="selectItem"
@@ -63,12 +63,12 @@
       id="rightMenu"
     >
       <ul>
-        <li @click="handleSettingStyle" ><i class="el-icon-magic-stick" />样式配置</li> 
+        <li @click="handleSettingStyle" ><i class="el-icon-magic-stick" />样式配置</li>
          <hr>
         <template v-if="isMergeCol">
-          <li @click="handleDropMerge" ><i class="el-icon-delete" />解除合并</li> 
+          <li @click="handleDropMerge" ><i class="el-icon-delete" />解除合并</li>
           <hr>
-        </template> 
+        </template>
         <li @click="handleDownMerge"><i class="el-icon-bottom" />向下合并</li>
         <li @click="handleRightMerge"><i class="el-icon-right" />向右合并</li>
         <li @click="handleAddCol"><i class="el-icon-zoom-in" />增加一列</li>
@@ -83,25 +83,25 @@
 
     <el-dialog
       title="表内单元格样式配置"
-      :model-value="styleVisible" 
-      style="top:20px;" 
-      :append-to-body="true"  
-    > 
-      <el-form size="mini" :model="tdStyle" label-width="80px"> 
+      :model-value="styleVisible"
+      style="top:20px;"
+      :append-to-body="true"
+    >
+      <el-form size="mini" :model="tdStyle" label-width="80px">
         <el-form-item  label="class" >
           <el-input v-model="tdStyle.class" placeholder="请输入class名称" />
         </el-form-item>
         <el-form-item  label="style" >
           <el-input type="textarea" :rows="3" v-model="tdStyle.style" placeholder="请输入css样式" />
-        </el-form-item> 
-      </el-form> 
+        </el-form-item>
+      </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="styleVisible = false">取 消</el-button> 
+          <el-button @click="styleVisible = false">取 消</el-button>
           <el-button type="primary" @click="settingStyle">确 定</el-button>
         </span>
      </template>
-   
+
     </el-dialog>
 
 
@@ -110,7 +110,7 @@
 </template>
 <script>
 import draggable from "vuedraggable";
-import layoutItem from "./layout";
+import layoutItem from "./layout.vue";
 import cloneDeep from 'lodash/cloneDeep'
 //import "codemirror/mode/javascript/javascript";
 export default {
@@ -183,22 +183,22 @@ export default {
     draggable,
     layoutItem
   },
-  methods: { 
-    deepClone(evt) { 
-      const newIndex = evt.newIndex; 
+  methods: {
+    deepClone(evt) {
+      const newIndex = evt.newIndex;
 
       // json深拷贝一次
       const listString = JSON.stringify(this.data.list);
       this.data.list = JSON.parse(listString);
       // 删除icon及compoent属性
-      
+
       if(this.data.list && this.data.list.length > newIndex) {
         delete this.data.list[newIndex].icon;
         delete this.data.list[newIndex].component;
         this.$emit("handleSetSelectItem", this.data.list[newIndex]);
       }
-      
-    }, 
+
+    },
     handleColAdd(evt, columns, isCopy = false) {
       // 重置或者生成key值
       const newIndex = evt.newIndex;
@@ -206,7 +206,7 @@ export default {
      //   return
      // }
       const key = columns[newIndex].type + "_" + new Date().getTime()
-    
+
       if (columns[newIndex].key === "" || isCopy) {
         // this.$set(columns, newIndex, {
         //   ...columns[newIndex],
@@ -251,7 +251,7 @@ export default {
                   t.key = t.key + 1
                 });
               }
-            
+
           });
         }
         if (columns[newIndex].type === "table") {
@@ -268,7 +268,7 @@ export default {
                   t.key = t.key + 1
                 });
               }
-             
+
             });
           });
         }
@@ -278,10 +278,10 @@ export default {
       columns[newIndex] = JSON.parse(listString);
       this.$emit("handleSetSelectItem", columns[newIndex]);
     },
-    dragStart(evt, list) { 
+    dragStart(evt, list) {
       // if(!this.selectForm || !this.selectForm.id) {
       //   this.$message.error('请先选择具体的表单')
-      //   return  
+      //   return
       // }
 
       // 拖拽结束,自动选择拖拽的控件项
@@ -291,13 +291,13 @@ export default {
       // 修改选择Item
       this.$emit("handleSetSelectItem", record);
     },
-    handleCopy(isCopy = true, data) { 
+    handleCopy(isCopy = true, data) {
       const traverse = array => {
-        array.forEach((element, index) => { 
+        array.forEach((element, index) => {
           if (element.key === this.selectItem.key) {
             if (isCopy) {
               // 复制添加到选择节点后面
-              array.splice(index + 1, 0, cloneDeep(element)); 
+              array.splice(index + 1, 0, cloneDeep(element));
             } else {
               // 双击添加到选择节点后面
               array.splice(index + 1, 0, cloneDeep(data));
@@ -325,7 +325,7 @@ export default {
               });
             });
           }
-        
+
         });
       };
       traverse(this.data.list);
@@ -369,10 +369,10 @@ export default {
       this.data.list = traverse(this.data.list);
     },
     // 解除合并
-    handleDropMerge(){ 
+    handleDropMerge(){
 
       const td = this.rightMenuSelectValue.trs[this.trIndex].tds[this.tdIndex]
- 
+
       const colspan = td.colspan
       const rowspan = td.rowspan
 
@@ -382,26 +382,26 @@ export default {
 
         // 开始拆解
         let cols = []
-        if(colspan > 1) { 
+        if(colspan > 1) {
           for(var i = 0 ; i < colspan - 1 ; i++){
             cols.push({colspan:1 , rowspan:1,list:[]})
           }
 
           this.rightMenuSelectValue.trs[this.trIndex].tds.splice(this.tdIndex + 1, 0 ,...cols )
 
-        } 
+        }
         if(rowspan > 1) {
-          //cols + 1 
-          cols.push({colspan:1 , rowspan:1,list:[]})  
-          
+          //cols + 1
+          cols.push({colspan:1 , rowspan:1,list:[]})
+
           for(var j = this.trIndex + 1 ; j < this.trIndex + rowspan ; j++){
-             
+
             this.rightMenuSelectValue.trs[j].tds.splice(this.tdIndex + 1, 0 ,...cols )
           }
-        
+
         }
 
-      
+
       }
 
 
@@ -447,7 +447,7 @@ export default {
       // 可能会存在rowspan
 
 
-      // 获取当前得rowspan 
+      // 获取当前得rowspan
       let rowspan =  this.rightMenuSelectValue.trs[this.trIndex].tds[ this.tdIndex ].rowspan
 
       // 获取当前要合并得row
@@ -561,7 +561,7 @@ export default {
       // 删除一列
       const tdi = this.tdIndex
       // 存在任意行中的列数 <= 1 不允许删除
-      
+
       for(let i in  this.rightMenuSelectValue.trs){
         let tds = this.rightMenuSelectValue.trs[i].tds
         if(tds.length <= 1){
@@ -569,7 +569,7 @@ export default {
           return
         }
       }
-        
+
       this.rightMenuSelectValue.trs.forEach(t=>{
         t.tds.splice(tdi , 1)
       })
@@ -579,8 +579,8 @@ export default {
       // 样式配置
       const td = this.rightMenuSelectValue.trs[this.trIndex].tds[this.tdIndex]
 
-      const class_ = td.class 
-      const style_ = td.style 
+      const class_ = td.class
+      const style_ = td.style
 
       this.tdStyle.style = style_
       this.tdStyle.class = class_
@@ -606,7 +606,7 @@ export default {
       // this.fileItem = item
       // 显示
       this.showRightMenu = true;
- 
+
 
       // 计算rightMenu得高度和宽度 和当前屏幕对比 来决定菜单出现得起始位置
       let height = 210;// document.getElementById('rightMenu').clientHeight ;
@@ -615,9 +615,9 @@ export default {
       // 获取屏幕高度和宽度 比对
       const bodyHeight = document.body.clientHeight  ;
       const bodyWidth = document.body.clientWidth ;
- 
-        
-      // 定位 
+
+
+      // 定位
       if(e.clientY + height > bodyHeight) {
         this.menuTop = e.clientY - height;
       } else {
@@ -629,7 +629,7 @@ export default {
       } else {
         this.menuLeft = e.clientX + 20 ;
       }
-       
+
 
       // this.rightMenuType = type
       // this.rightId = id
@@ -639,7 +639,7 @@ export default {
       this.tdIndex = tdIndex;
 
 
-      // 判断是否是已经合并过的单元格 isMergeCol 
+      // 判断是否是已经合并过的单元格 isMergeCol
       this.isMergeCol = mergeCol
 
 

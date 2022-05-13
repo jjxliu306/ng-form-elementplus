@@ -2,7 +2,7 @@
 传入record数据，通过判断record.type，来渲染对应的组件
   -->
 <template>
-   
+
   <el-form-item
     v-if="
       !(record.options.hidden === true) &&
@@ -25,74 +25,74 @@
           'state'
         ].includes(record.type) || customList.includes(record.type) ) && dynamicVisibleItem && !(record.type == 'select' && renderPreview &&  record.options.previewHidden )
     "
-    :label="formConfig.labelWidth > 0 ? record.label : null " 
+    :label="formConfig.labelWidth > 0 ? record.label : null "
     :rules="recordRules"
     :prop="recordProps"
     :id="record.model" :name="record.model"
     :label-width="(record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px'"
 
-  >    
-    <BaseItem 
-      :models="models"  
+  >
+    <BaseItem
+      :models="models"
       :formConfig="formConfig"
-      :renderPreview="renderPreview" 
+      :renderPreview="renderPreview"
       :record="record"
       :disabled="disabled"
       @forceUpdate="forceUpdate"
       :isDragPanel="isDragPanel"
-      /> 
-  
-  
+      />
+
+
   </el-form-item>
   <!-- 可隐藏label -->
- 
+
   <el-form-item
     :id="record.model" :name="record.model"
     v-else-if="record.type === 'batch' && dynamicVisibleItem"
-    :label="!record.options.showLabel ? '' : record.label" 
+    :label="!record.options.showLabel ? '' : record.label"
      :label-width="record.options.showLabel ? ((record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px') : '0px'"
 
   >
     <!-- 动态表格 -->
     <TableBatch
-      v-model="models[record.model]" 
+      v-model="models[record.model]"
       ref="TableBatch"
       :renderPreview="renderPreview"
       :models="models"
       :style="`width:${record.options.width}`"
       :record="record"
       :config="formConfig"
-      :parentDisabled="disabled" 
+      :parentDisabled="disabled"
       @change="handleChange($event, record.model)"
-      
-    />  
-     
-  </el-form-item> 
+
+    />
+
+  </el-form-item>
 
   <!-- button按钮 -->
   <el-form-item
-    v-else-if="record.type === 'button' && dynamicVisibleItem" 
+    v-else-if="record.type === 'button' && dynamicVisibleItem"
     :style="{ 'textAlign': record.options.textAlign }"
     :label-width="(record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px'"
- 
-  > 
+
+  >
     <el-button
-      :disabled="disabled || record.options.disabled" 
-      :type="record.options.type" 
+      :disabled="disabled || record.options.disabled"
+      :type="record.options.type"
       @click="buttonClick"
       v-text="record.label"
     ></el-button>
   </el-form-item>
-  
+
   <!-- 文本 -->
-  <div class="form-label" v-else-if="record.type === 'text' && dynamicVisibleItem " :style="{ textAlign: record.options.textAlign }" > 
+  <div class="form-label" v-else-if="record.type === 'text' && dynamicVisibleItem " :style="{ textAlign: record.options.textAlign }" >
       <label
         :class="{ 'is-required': record.options.showRequiredMark || showRequiredMark }"
         v-text="record.label"
       ></label>
   </div>
    <!-- 提示 -->
-  <div class="form-label" v-else-if="record.type === 'alert' && dynamicVisibleItem " :style="{ textAlign: record.options.textAlign }" > 
+  <div class="form-label" v-else-if="record.type === 'alert' && dynamicVisibleItem " :style="{ textAlign: record.options.textAlign }" >
        <el-alert
         :title="record.options.title"
         :type="record.options.type"
@@ -109,10 +109,10 @@
     :id="record.model" :name="record.model"
     v-else-if="record.type === 'html' && dynamicVisibleItem"
     v-html="record.options.defaultValue"
-  ></div> 
+  ></div>
 
   <div v-else-if="dynamicVisibleItem">
-    <!-- 分割线 --> 
+    <!-- 分割线 -->
     <el-divider
       v-if=" record.type === 'divider' && record.label !== '' && record.options.orientation "
       :content-position="record.options.orientation" :direction="record.options.direction ? record.options.direction : 'horizontal'">
@@ -124,17 +124,17 @@
     <el-divider v-else-if="record.type === 'divider' && record.label === ''" :direction="record.options.direction ? record.options.direction : 'horizontal'" />
   </div>
 </template>
-<script> 
-import TableBatch from "./table"; 
-import BaseItem from './base' 
+<script>
+import TableBatch from "./table/index.vue";
+import BaseItem from './base.vue'
 import {dynamicFun} from '../utils'
 
 export default {
-  name: "ng-form-item", 
-  data(){  
+  name: "ng-form-item",
+  data(){
     return{
       checkList: [] ,
- 
+
     }
   },
   props: {
@@ -159,7 +159,7 @@ export default {
     models: {
       type: Object,
       required: true
-    }, 
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -173,7 +173,7 @@ export default {
     isDragPanel: {
       type: Boolean ,
       default: false
-    } 
+    }
   },
   components: {
      TableBatch,BaseItem
@@ -209,9 +209,9 @@ export default {
         return false
       }
 
-      const mark = dynamicFun(fstr , this.models)  
+      const mark = dynamicFun(fstr , this.models)
 
-      return mark 
+      return mark
     },
     // 校验的prop值 动态计算
     recordProps() {
@@ -224,14 +224,14 @@ export default {
       }
       return null
     },
-    // 是否动态显示当前元素 
-     // 是否动态显示当前元素 
+    // 是否动态显示当前元素
+     // 是否动态显示当前元素
     // 返回true 显示 false 不显示
-    dynamicVisibleItem(){ 
+    dynamicVisibleItem(){
       if(this.isDragPanel) {
         return true
       }
-      
+
       if(!this.record.options || !this.record.options.dynamicVisible){
         return true
       }
@@ -257,38 +257,38 @@ export default {
       // 循环判断
       for(var i = 0 ; i < rules.length ; i++){
         const t = rules[i]
-        
+
         t.required = isRequire
         // 2021-08-12 lyf 针对必填而且是文本输入的组件增加纯空格校验
         if(t.required && (this.record.type == 'input' || this.record.type == 'textarea') ){
           t.whitespace = true
         }
 
-        if(t.vtype == 1 || t.vtype == 2){ 
-          t.validator =  this.validatorFiled 
-        } 
+        if(t.vtype == 1 || t.vtype == 2){
+          t.validator =  this.validatorFiled
+        }
 
         // 判断trigger
         if(!t.trigger) {
           t.trigger =  ['change','blur']
         }
       }
-     
+
       //2020-12-08 lyf 如果是batch类型的话增加一个内部校验的标记
 
       if(this.record.type == 'batch') {
         rules.push({vtype: 3,trigger:['change','blur'] ,validator: this.validatorFiled ,message: '待完善'  })
-      }  
+      }
 
-      
-      return rules 
+
+      return rules
 
     }
   },
   methods: {
     validatorFiled (rule , value , callback) {
-      
-        // 判断rule类型 
+
+        // 判断rule类型
         if(rule.vtype == 1) {
           // 正则
           if(!rule.pattern) {
@@ -300,9 +300,9 @@ export default {
           //document.write(patt1.test("free"));
 
           if(patt1.test(value)) {
-            callback() 
+            callback()
            } else {
-            callback(new Error(rule.message)) 
+            callback(new Error(rule.message))
            }
 
            return
@@ -312,7 +312,7 @@ export default {
 
           // 打开了开关 这里获取函数内容
          const fvalue =  dynamicFun(script , this.models)
-          
+
           if (!fvalue) {
             callback(new Error(rule.message))
           } else {
@@ -334,44 +334,44 @@ export default {
             }
 
           }
-          
+
         }
 
-       
+
       } ,
-    forceUpdate(){ 
+    forceUpdate(){
        this.$emit("forceUpdate" );
     },
     handleChange(value, key) {
       // change事件
       this.$emit("change", value, key);
- 
+
     },
     // 按钮点击事件 2021-02-17 lyf
-    buttonClick() { 
+    buttonClick() {
       if(this.record.type != 'button' || !this.record.options.dynamicFun) {
-        return 
-      } 
+        return
+      }
       // 有回调函数 去执行
       dynamicFun(this.record.options.dynamicFun , this.models)
 
     }
   },
-  mounted() {  
+  mounted() {
     // 如果已经赋值了 则不管默认值了
-    if(this.models[this.record.model]) 
+    if(this.models[this.record.model])
       return ;
 
     const defaultValue = this.record.options.defaultValue
     if(defaultValue) {
       if(this.record.type == 'checkbox'){
         this.checkList = defaultValue
-      } else { 
+      } else {
         //this.$set(this.models , this.record.model , defaultValue)
         this.models[this.record.model] = defaultValue
-      } 
-    } 
- 
+      }
+    }
+
   }
 };
 </script>

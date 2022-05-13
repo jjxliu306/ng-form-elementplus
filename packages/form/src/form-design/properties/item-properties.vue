@@ -3,17 +3,17 @@
 -->
 <template>
   <div class="properties-centent">
-   
-    <div class="properties-body"> 
+
+    <div class="properties-body">
       <p class="hint-box" v-show="!selectItem.key">未选择控件</p>
       <el-form v-show="selectItem.key" size="mini" :disabled="disabled">
- 
+
 
         <!-- 公共部分 标签 字段key 数据key start -->
         <el-form-item  label="标签" v-if="!hideModel">
           <el-input v-model="selectItem.label" placeholder="请输入" />
         </el-form-item>
-       
+
         <el-form-item  label="数据字段" v-if="!hideModel && !noModel.includes(selectItem.type)" >
           <el-input v-model="selectItem.model" placeholder="请输入" :disabled="(selectItem.item != undefined && selectItem.item.id != undefined) "/>
         </el-form-item>
@@ -28,39 +28,39 @@
           <el-form-item  label="占位内容"  >
             <el-input placeholder="请输入" v-model="options.placeholder" />
           </el-form-item>
-          
+
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
-           
+
           <el-form-item label="默认值" >
             <el-input  v-model="options.defaultValue"  :type="selectItem.type"
               :placeholder=" typeof options.format === 'undefined' ? '请输入' : options.format"
             />
-          </el-form-item>  
-            
-          <el-form-item  label="最大长度"  >
-            <el-input-number  v-model="options.maxLength" placeholder="最大长度,为0表示不限制"  :min="0"/>  
-           
           </el-form-item>
-          
+
+          <el-form-item  label="最大长度"  >
+            <el-input-number  v-model="options.maxLength" placeholder="最大长度,为0表示不限制"  :min="0"/>
+
+          </el-form-item>
+
           <el-form-item  label="前后缀"  v-if="selectItem.type === 'input'">
             <el-input placeholder="前缀标签" v-model="options.prepend">
               <template #prepend>前缀</template>
             </el-input>
             <el-input placeholder="后缀标签" v-model="options.append"  >
                <template #append>后缀</template>
-            </el-input> 
+            </el-input>
           </el-form-item>
            <el-divider ></el-divider>
           <el-form-item  v-if="selectItem.type === 'textarea'" label="输入框行数" >
-            <el-input-number  style="width:100%" v-model="options.rows" placeholder="输入框行数"  /> 
+            <el-input-number  style="width:100%" v-model="options.rows" placeholder="输入框行数"  />
           </el-form-item>
-          
+
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
-            <el-checkbox v-if="selectItem.type == 'input'" v-model="options.clearable" label="可清除" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+            <el-checkbox v-if="selectItem.type == 'input'" v-model="options.clearable" label="可清除" />
           </el-form-item>
         </template>
         <!-- input textarea end -->
@@ -85,13 +85,13 @@
           </el-form-item>
           <el-form-item  label="数值精度" >
             <el-input-number :min="0"  :max="5"  v-model="options.precision"  placeholder="请输入" />
-          </el-form-item> 
+          </el-form-item>
           <el-form-item  label="默认值" >
             <el-input-number
               :step="options.step"
               :min="options.min || -Infinity"
               :max="options.max || Infinity"
-              v-model="options.defaultValue" 
+              v-model="options.defaultValue"
             />
           </el-form-item>
           <el-divider ></el-divider>
@@ -106,7 +106,7 @@
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />  
+            <el-checkbox v-model="options.disabled"  label="禁用" />
           </el-form-item>
         </template>
         <!-- number end -->
@@ -123,13 +123,13 @@
           <el-form-item  label="选项配置" >
             <el-radio-group   v-model="options.dynamic">
               <el-radio-button :label="0">静态数据</el-radio-button>
-              <el-radio-button :label="1">动态数据</el-radio-button> 
+              <el-radio-button :label="1">动态数据</el-radio-button>
               <el-radio-button :label="2" v-if="hasDict">数据字典</el-radio-button>
             </el-radio-group>
-    
+
           </el-form-item>
           <el-form-item label-width="0px" >
-            <!-- 远程赋值配置 --> 
+            <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -142,22 +142,22 @@
                 </el-input>
                 <el-input size="mini" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
-                </el-input> 
-            </div> 
+                </el-input>
+            </div>
             <div v-else-if="selectItem.options.dynamic == 2">
-              <el-autocomplete 
+              <el-autocomplete
                 v-model="selectItem.options.dictType"
                 :fetch-suggestions="queryDictSearch"
                 value-key="type"
                 placeholder="请输入"
-                
+
               >
                 <template #prepend>字典分类</template>
                 <template #default="{ item }">
-                  <span class="name">{{ item.type }}</span> 
+                  <span class="name">{{ item.type }}</span>
                 </template>
               </el-autocomplete>
-            </div> 
+            </div>
             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
           </el-form-item>
@@ -169,7 +169,7 @@
               active-text="是"
               inactive-text="否"
               @change="linkageChange">
-            </el-switch> 
+            </el-switch>
           </el-form-item>
           <template v-if="options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
@@ -190,7 +190,7 @@
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.clearable" label="可清除" />
             <el-checkbox v-model="options.multiple" label="多选" />
             <el-checkbox v-model="options.showSearch" label="可搜索" @change="(v)=>{
@@ -199,18 +199,18 @@
               }
             }"/>
             <el-checkbox v-model="options.onlineSearch" v-if="options.showSearch" label="实时搜索"  />
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
-          <el-form-item   label="实时搜索回调" v-if="options.showSearch && options.onlineSearch"> 
+          <el-form-item   label="实时搜索回调" v-if="options.showSearch && options.onlineSearch">
              <el-input type="textarea" placeholder="搜索带参,eg: name=$, $表示当前输入关键字" v-model="options.onlineParams" />
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
-          <el-form-item   label="选择后回调"  > 
+          <el-form-item   label="选择后回调"  >
              <el-input type="textarea" placeholder="选择后回调方法,eg: $.A004=$select.name, $表示当前表单数据,$select标示当前选择元素实体" v-model="options.selectCb" />
-          </el-form-item> 
-          <el-form-item  v-if="selectItem.options.clearable" label="清除后回调"  > 
+          </el-form-item>
+          <el-form-item  v-if="selectItem.options.clearable" label="清除后回调"  >
              <el-input type="textarea" placeholder="清除后回调方法,eg: $.A004= '', $表示当前表单数据" v-model="selectItem.options.clearCb" />
-          </el-form-item> 
+          </el-form-item>
         </template>
          <!-- select end -->
 
@@ -219,12 +219,12 @@
           <el-form-item  label="选项配置" >
             <el-radio-group   v-model="options.dynamic">
               <el-radio-button :label="0">静态数据</el-radio-button>
-              <el-radio-button :label="1">动态数据</el-radio-button> 
+              <el-radio-button :label="1">动态数据</el-radio-button>
               <el-radio-button :label="2" v-if="hasDict">数据字典</el-radio-button>
-            </el-radio-group>  
+            </el-radio-group>
           </el-form-item>
           <el-form-item label-width="0px" >
-             <!-- 远程赋值配置 --> 
+             <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -237,22 +237,22 @@
                 </el-input>
                 <el-input size="mini" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
-                </el-input> 
-            </div>  
+                </el-input>
+            </div>
             <div v-else-if="selectItem.options.dynamic == 2">
-              <el-autocomplete 
+              <el-autocomplete
                 v-model="selectItem.options.dictType"
                 :fetch-suggestions="queryDictSearch"
                 value-key="type"
                 placeholder="请输入"
-                
+
               >
                 <template #prepend>字典分类</template>
                 <template #default="{ item }">
-                  <span class="name">{{ item.type }}</span> 
+                  <span class="name">{{ item.type }}</span>
                 </template>
               </el-autocomplete>
-            </div> 
+            </div>
             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
           </el-form-item>
@@ -264,13 +264,13 @@
               active-text="是"
               inactive-text="否"
               @change="linkageChange">
-            </el-switch> 
+            </el-switch>
           </el-form-item>
           <el-form-item label-width="0px" v-if="options.linkage">
              <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
             <Linkage :value="options.linkData" />
           </el-form-item>
-          
+
           <el-divider ></el-divider>
 
           <!-- select 本地配置才有默认值 -->
@@ -279,7 +279,7 @@
               :options="options.options"
               v-model="options.defaultValue"
             >
-              <el-checkbox  v-for="(checkitem,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index"> 
+              <el-checkbox  v-for="(checkitem,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index">
                 {{checkitem.label}}
               </el-checkbox>
           </el-checkbox-group>
@@ -287,8 +287,8 @@
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />    
-          </el-form-item> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+          </el-form-item>
         </template>
         <!-- checkbox end -->
 
@@ -299,10 +299,10 @@
               <el-radio-button :label="0">静态数据</el-radio-button>
               <el-radio-button :label="1">动态数据</el-radio-button>
               <el-radio-button :label="2" v-if="hasDict">数据字典</el-radio-button>
-            </el-radio-group> 
+            </el-radio-group>
           </el-form-item>
           <el-form-item label-width="0px">
-             <!-- 远程赋值配置 --> 
+             <!-- 远程赋值配置 -->
             <div  v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -315,22 +315,22 @@
                 </el-input>
                 <el-input size="mini" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
-                </el-input> 
-            </div> 
+                </el-input>
+            </div>
             <div v-else-if="selectItem.options.dynamic == 2">
-              <el-autocomplete 
+              <el-autocomplete
                 v-model="selectItem.options.dictType"
                 :fetch-suggestions="queryDictSearch"
                 value-key="type"
                 placeholder="请输入"
-                
+
               >
                 <template #prepend>字典分类</template>
                 <template #default="{item}">
-                  <span class="name">{{ item.type }}</span> 
+                  <span class="name">{{ item.type }}</span>
                 </template>
               </el-autocomplete>
-            </div> 
+            </div>
              <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
           </el-form-item>
@@ -342,7 +342,7 @@
               active-text="是"
               inactive-text="否"
               @change="linkageChange">
-            </el-switch> 
+            </el-switch>
           </el-form-item>
           <template v-if="options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
@@ -356,7 +356,7 @@
               :options="options.options"
               v-model="options.defaultValue"
             >
-              <el-radio  v-for="(item,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index"> 
+              <el-radio  v-for="(item,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index">
                 {{checkitem.label}}
               </el-radio>
           </el-radio-group>
@@ -364,14 +364,14 @@
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />    
-          </el-form-item> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+          </el-form-item>
         </template>
         <!-- radio end -->
 
          <!-- date start -->
         <template v-if="selectItem.type == 'date' || selectItem.type == 'time' || selectItem.type == 'datePicker'">
-          
+
           <el-form-item  v-if=" (selectItem.type == 'date' || selectItem.type == 'datePicker' ) && options.range " label="占位内容" >
           <el-input placeholder="请输入" v-model="options.rangeStartPlaceholder" />
           <el-input placeholder="请输入" v-model="options.rangeEndPlaceholder" />
@@ -382,7 +382,7 @@
 
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
-          </el-form-item> 
+          </el-form-item>
            <el-divider ></el-divider>
           <el-form-item label="默认值" >
             <el-input
@@ -405,19 +405,19 @@
               :placeholder="
                 '结束时间' + ( typeof options.format === 'undefined' ? '' : options.format)
               "
-            /> 
+            />
             <!-- <el-input  v-model="options.defaultValue"
               :placeholder=" typeof options.format === 'undefined' ? '请输入' : options.format"
             /> -->
-          </el-form-item> 
+          </el-form-item>
           <el-form-item  label="时间格式" >
             <el-input  v-model="options.format"  :placeholder="selectItem.type == 'date' ? 'YYYY-MM-DD' : (selectItem.type == 'datePicker' ? 'YYYY-MM-DD HH:mm:ss' : 'HH:mm:ss' )" />
           </el-form-item>
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
-            <el-checkbox v-model="options.clearable" label="可清除" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+            <el-checkbox v-model="options.clearable" label="可清除" />
             <el-checkbox v-if="selectItem.type == 'date' || selectItem.type == 'datePicker'" v-model="options.range" label="范围选择" />
           </el-form-item>
         </template>
@@ -426,20 +426,20 @@
         <!-- rate start -->
         <template v-if="selectItem.type == 'rate'">
           <el-form-item v-if="typeof options.max !== 'undefined'" label="最大值">
-          <el-input-number v-model="options.max" placeholder="请输入" @change="(v)=>{  
+          <el-input-number v-model="options.max" placeholder="请输入" @change="(v)=>{
                 if(options.defaultValue > v){
                   options.defaultValue = v
-                } 
+                }
             }"/>
           </el-form-item>
           <el-form-item label="默认值">
             <el-rate  v-model="options.defaultValue"  :allowHalf="options.allowHalf" :max="options.max"  />
           </el-form-item>
-        
+
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.allowHalf" label="允许半选" />
           </el-form-item>
         </template>
@@ -470,30 +470,30 @@
           <el-form-item   label="标记marks">
             <br>
             <Option style="width: 100%;" :keyNumber="true" type="keyvalue" :value="options.marks" />
-          </el-form-item> 
-            
+          </el-form-item>
+
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.showInput"  label="显示输入框" />
           </el-form-item>
         </template>
         <!-- date end -->
 
         <!-- 上传文件 start -->
-        <template v-if="selectItem.type == 'uploadFile'"> 
+        <template v-if="selectItem.type == 'uploadFile'">
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
-          <el-form-item  label="上传地址"  > 
+          <el-form-item  label="上传地址"  >
           </el-form-item>
            <el-form-item  prop="options.action"  >
             <el-input placeholder="上传地址" v-model="selectItem.options.action" />
           </el-form-item>
           <!--required error="返回文件url地址不能为空"-->
           <el-form-item  label="上传成功后解析文件url的epl地址"  >
-          
+
           </el-form-item>
           <el-form-item prop="options.responseFileUrl" >
             <el-input placeholder="上传成功后解析文件url的epl地址" v-model="selectItem.options.responseFileUrl" />
@@ -506,20 +506,20 @@
           </el-form-item>
            <el-divider >携带信息</el-divider>
           <el-form-item>
-             <Option type="keyvalue" :value="options.headers" /> 
+             <Option type="keyvalue" :value="options.headers" />
           </el-form-item>
-         
-          
+
+
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.multiple"  label="多选" />
-          </el-form-item> 
+          </el-form-item>
            <!-- 上传数量 -->
           <el-form-item  label="最大上传数量" v-if="options.multiple">
             <el-input-number :min="1" v-model="options.limit" />
           </el-form-item>
-        </template> 
+        </template>
         <!-- 上传文件 end -->
 
 
@@ -532,7 +532,7 @@
           <el-form-item  label="最大上传数量" >
             <el-input-number :min="1" v-model="options.limit" />
           </el-form-item>
-          <el-form-item  label="上传地址"> 
+          <el-form-item  label="上传地址">
           </el-form-item>
             <el-form-item >
             <el-input placeholder="上传地址" v-model="options.action" />
@@ -550,9 +550,9 @@
           </el-form-item>
           <el-divider >携带信息</el-divider>
           <el-form-item>
-             <Option type="keyvalue" :value="options.headers" /> 
+             <Option type="keyvalue" :value="options.headers" />
           </el-form-item>
-           
+
            <el-divider ></el-divider>
           <!-- 上传图片样式 -->
           <el-form-item  label="样式">
@@ -565,10 +565,10 @@
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.multiple"  label="多选" />
-          </el-form-item> 
-        </template> 
+          </el-form-item>
+        </template>
         <!-- 上传图片 end -->
 
         <!-- 级联选择器 start -->
@@ -576,11 +576,11 @@
           <el-form-item  label="选项配置" >
             <el-radio-group   v-model="options.dynamic">
               <el-radio-button :label="0">静态数据</el-radio-button>
-              <el-radio-button :label="1">动态数据</el-radio-button> 
-            </el-radio-group> 
+              <el-radio-button :label="1">动态数据</el-radio-button>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label-width="0px" >
-             <!-- 远程赋值配置 --> 
+             <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
                 <el-input size="mini" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
@@ -593,24 +593,24 @@
                 </el-input>
                 <el-input size="mini" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
-                </el-input> 
+                </el-input>
                 <el-input size="mini" v-model="options.remoteChildren" >
                   <template #prepend>下级字段</template>
                 </el-input>
-            </div>  
+            </div>
 
             <!-- 本地赋值 -->
             <Option v-show="options.dynamic == 0" :type="selectItem.type" :value="options.options" />
 
-          </el-form-item> 
+          </el-form-item>
              <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />   
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.clearable" label="可清除" />
             <el-checkbox v-model="options.multiple" label="多选" />
-            <el-checkbox v-model="options.showSearch" label="可搜索" /> 
-          </el-form-item> 
+            <el-checkbox v-model="options.showSearch" label="可搜索" />
+          </el-form-item>
         </template>
         <!-- 级联选择器 end -->
 
@@ -641,7 +641,7 @@
           <el-form-item  label="表格样式Class名称">
             <el-input v-model="selectItem.options.customClass" />
           </el-form-item>
-            
+
           <el-form-item  label="表格样式CSS">
             <el-input type="textarea" v-model="selectItem.options.customStyle" />
           </el-form-item>
@@ -649,11 +649,11 @@
             <el-form-item  label="新增行方式">
              <el-radio-group v-model="options.addType">
               <el-radio  label="line">增加行</el-radio>
-              <el-radio  label="dialog">弹出框</el-radio> 
+              <el-radio  label="dialog">弹出框</el-radio>
             </el-radio-group>
           </el-form-item>
-         
-         
+
+
           <el-divider class="divider-center" > {{options.addType == 'dialog' ? '外部展示字段' : '字段宽度'}} </el-divider>
           <el-form-item  >
               <el-checkbox-group v-model="selectItem.options.showItem" >
@@ -665,35 +665,35 @@
                   </el-col>
                    <el-col :span="12">
                      <el-input   placeholder="宽度" v-model="selectItem.options.colWidth[item.model]" />
-                  </el-col> 
-                </el-row> 
+                  </el-col>
+                </el-row>
 
               </el-checkbox-group>
-          </el-form-item> 
-           
+          </el-form-item>
+
           <el-divider ></el-divider>
 
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.showLabel" label="显示Label" />
              <el-checkbox v-model="options.showBorder" label="显示边框" />
             <el-checkbox v-model="options.hideSequence" label="隐藏序号" />
             <el-checkbox v-model="options.copyRow" label="行复制" />
-             
-          </el-form-item> 
-        </template> 
+
+          </el-form-item>
+        </template>
         <!-- 动态表格 end -->
 
 
          <!-- 开关 switch start-->
-        <template v-if="selectItem.type == 'switch'"> 
+        <template v-if="selectItem.type == 'switch'">
           <!-- 开关的label -->
           <el-form-item   label="打开标签值">
-            <el-input placeholder="请输入" v-model="options.activeText" /> 
+            <el-input placeholder="请输入" v-model="options.activeText" />
           </el-form-item>
            <el-form-item   label="关闭标签值" >
-            <el-input placeholder="请输入" v-model="options.inactiveText" /> 
+            <el-input placeholder="请输入" v-model="options.inactiveText" />
           </el-form-item>
           <el-form-item  label="默认值">
             <el-switch v-model="options.defaultValue" />
@@ -701,14 +701,14 @@
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />  
-          </el-form-item> 
-        </template> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+          </el-form-item>
+        </template>
         <!-- 开关 switch  end -->
 
 
          <!-- 按钮 start-->
-        <template v-if="selectItem.type == 'button'"> 
+        <template v-if="selectItem.type == 'button'">
           <!-- 按钮类型 -->
           <el-form-item label="类型">
             <el-radio-group v-model="options.type">
@@ -725,21 +725,21 @@
               <el-radio-button label="center">居中</el-radio-button>
               <el-radio-button label="right">右</el-radio-button>
             </el-radio-group>
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
-          <el-form-item  label="按钮操作"> 
+          <el-form-item  label="按钮操作">
             <el-input type="textarea" v-model="options.dynamicFun" placeholder="动态JS,表单数据绑定值符号$" ></el-input>
           </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />   
-          </el-form-item> 
-        </template> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+          </el-form-item>
+        </template>
         <!-- 按钮  end -->
 
         <!-- 标签 start-->
-        <template v-if="selectItem.type == 'text'"> 
+        <template v-if="selectItem.type == 'text'">
           <!-- 按钮类型 -->
           <el-form-item  label="文字对齐方式">
             <el-radio-group v-model="options.textAlign">
@@ -747,82 +747,82 @@
               <el-radio-button label="center">居中</el-radio-button>
               <el-radio-button label="right">右</el-radio-button>
             </el-radio-group>
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
-            <el-checkbox v-model="options.hidden"  label="隐藏" /> 
+            <el-checkbox v-model="options.hidden"  label="隐藏" />
             <el-checkbox v-model="options.showRequiredMark" label="显示必选标记" />
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="动态必选" >
            <el-input type="textarea" v-model="options.showRequiredMarkScript" :rows="4" placeholder="请输入表达式或者动态函数,数据实体以$标识"/>
-          </el-form-item> 
-        </template> 
+          </el-form-item>
+        </template>
         <!-- 标签  end -->
 
          <!-- 标签 start-->
-        <template v-if="selectItem.type == 'alert'"> 
+        <template v-if="selectItem.type == 'alert'">
           <!-- 按钮类型 -->
           <el-form-item  label="内容">
              <el-input type="textarea" v-model="options.title" :rows="4" placeholder="提示内容"/>
-          </el-form-item> 
+          </el-form-item>
           <el-form-item  label="辅助文字">
              <el-input type="textarea" v-model="options.description" :rows="4" placeholder="辅助文字"/>
-          </el-form-item> 
+          </el-form-item>
           <el-form-item  label="类型">
             <el-radio-group v-model="options.type">
               <el-radio-button label="success">success</el-radio-button>
-              <el-radio-button label="warning">warning</el-radio-button> 
+              <el-radio-button label="warning">warning</el-radio-button>
               <el-radio-button label="info">info</el-radio-button>
-              <el-radio-button label="error">error</el-radio-button> 
+              <el-radio-button label="error">error</el-radio-button>
             </el-radio-group>
-          </el-form-item> 
+          </el-form-item>
           <el-form-item  label="主题">
             <el-radio-group v-model="options.effect">
               <el-radio-button label="light">light</el-radio-button>
-              <el-radio-button label="dark">dark</el-radio-button> 
+              <el-radio-button label="dark">dark</el-radio-button>
             </el-radio-group>
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
-            <el-checkbox v-model="options.closable"  label="可关闭" /> 
+            <el-checkbox v-model="options.closable"  label="可关闭" />
             <el-checkbox v-model="options.center" label="居中" />
              <el-checkbox v-model="options.showIcon" label="显示图标" />
-          </el-form-item> 
+          </el-form-item>
            <el-form-item v-if="options.closable" label="关闭按钮文本">
             <el-input  v-model="options.closeText"  placeholder="不需要则不填"/>
-          </el-form-item> 
+          </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="动态必选" >
            <el-input type="textarea" v-model="options.showRequiredMarkScript" :rows="4" placeholder="请输入表达式或者动态函数,数据实体以$标识"/>
-          </el-form-item> 
-        </template> 
+          </el-form-item>
+        </template>
         <!-- 标签  end -->
 
         <!-- html start-->
-        <template v-if="selectItem.type == 'html'">  
+        <template v-if="selectItem.type == 'html'">
           <el-form-item label="默认值">
             <el-input type="textarea" v-model="options.defaultValue" :rows="4" />
           </el-form-item>
           <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
-            <el-checkbox v-model="options.hidden"  label="隐藏" />  
-          </el-form-item> 
-        </template> 
+            <el-checkbox v-model="options.hidden"  label="隐藏" />
+          </el-form-item>
+        </template>
         <!-- html  end -->
 
 
         <!-- ################### 布局  start ################################  -->
         <!-- 分割线 start-->
-        <template v-if="selectItem.type == 'divider'">  
-          
+        <template v-if="selectItem.type == 'divider'">
+
 
           <el-form-item  label="方向" >
             <el-radio-group  v-model="options.direction">
               <el-radio-button label="horizontal">横向</el-radio-button>
-              <el-radio-button label="vertical">竖向</el-radio-button> 
+              <el-radio-button label="vertical">竖向</el-radio-button>
             </el-radio-group>
-          </el-form-item>  
+          </el-form-item>
           <el-divider ></el-divider>
           <el-form-item  label="标签位置" v-if="options.direction && options.direction == 'horizontal'">
             <el-radio-group  v-model="options.orientation">
@@ -830,23 +830,23 @@
               <el-radio-button label="center">居中</el-radio-button>
               <el-radio-button label="right">右</el-radio-button>
             </el-radio-group>
-          </el-form-item> 
-        </template> 
+          </el-form-item>
+        </template>
         <!-- 分割线  end -->
 
         <!-- 栅格布局 start-->
-        <template v-if="selectItem.type == 'grid'">   
+        <template v-if="selectItem.type == 'grid'">
           <el-form-item  label="栅格间距">
             <el-input-number  v-model="selectItem.options.gutter"  placeholder="请输入" />
           </el-form-item>
           <el-form-item label="列配置项">
             <Option :value="selectItem.columns" type="colspan" />
           </el-form-item>
-        </template> 
+        </template>
         <!-- 栅格布局  end -->
 
         <!-- 表格布局 start-->
-        <template v-if="selectItem.type == 'table'">   
+        <template v-if="selectItem.type == 'table'">
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
@@ -863,7 +863,7 @@
             <el-checkbox v-model="options.bright" label="鼠标经过点亮" />
             <el-checkbox v-model="options.small" label="紧凑型" />
           </el-form-item>
-        </template> 
+        </template>
         <!-- 表格布局  end -->
 
          <!-- 容器 start -->
@@ -871,37 +871,37 @@
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
-          
 
-           <el-divider ></el-divider> 
+
+           <el-divider ></el-divider>
            <!-- 表格 -->
           <el-form-item  label="样式Class名称">
             <el-input v-model="selectItem.options.customClass" />
           </el-form-item>
-            
+
           <el-form-item  label="样式CSS">
             <el-input type="textarea" v-model="selectItem.options.customStyle" />
           </el-form-item>
-           
-           
+
+
           <el-divider ></el-divider>
 
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />  
-            <el-checkbox v-model="options.bordered" label="显示边框" /> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+            <el-checkbox v-model="options.bordered" label="显示边框" />
             <el-checkbox v-model="options.noAdd" label="无新增" />
-            <el-checkbox v-model="options.noRemove" label="无删除" />  
-            <el-checkbox v-model="options.noCopy" label="无复制" />  
-          </el-form-item> 
-        </template> 
+            <el-checkbox v-model="options.noRemove" label="无删除" />
+            <el-checkbox v-model="options.noCopy" label="无复制" />
+          </el-form-item>
+        </template>
         <!-- 容器 end -->
           <!-- 区划选择 start -->
         <template v-if="selectItem.type == 'state'">
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
-          </el-form-item> 
-          <el-divider ></el-divider> 
+          </el-form-item>
+          <el-divider ></el-divider>
           <el-form-item  label="区划层级">
             <el-select v-model="options.maxLevel"  placeholder="请选择区划层级" >
               <el-option
@@ -909,23 +909,23 @@
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
-              </el-option> 
+              </el-option>
             </el-select>
           </el-form-item>
-           
+
           <el-divider ></el-divider>
 
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
-            <el-checkbox v-model="options.disabled"  label="禁用" />   
-            <el-checkbox v-model="options.oneByOne" label="递进式显示" /> 
-            <el-checkbox v-model="options.showAllPath" label="回显所有路径" /> 
-          </el-form-item> 
+            <el-checkbox v-model="options.disabled"  label="禁用" />
+            <el-checkbox v-model="options.oneByOne" label="递进式显示" />
+            <el-checkbox v-model="options.showAllPath" label="回显所有路径" />
+          </el-form-item>
           <el-form-item v-if="options.showAllPath" label="路径分隔符">
-             <el-input  v-model="options.separator" max-length="10"/> 
-          </el-form-item> 
-        </template> 
-        <!-- 区划选择 end --> 
+             <el-input  v-model="options.separator" max-length="10"/>
+          </el-form-item>
+        </template>
+        <!-- 区划选择 end -->
         <!-- ############# 为自定义组件预备的插槽 start ############### -->
 
         <slot name="custom-properties"></slot>
@@ -955,10 +955,10 @@
           'button',
           'text',
           'html',
-          'divider' 
-        ].includes(selectItem.type)" label="tooptip提示" > 
-          <el-input type="textarea" v-model="options.tooptip"  placeholder="鼠标移动到组件上的提示信息" /> 
-        </el-form-item> 
+          'divider'
+        ].includes(selectItem.type)" label="tooptip提示" >
+          <el-input type="textarea" v-model="options.tooptip"  placeholder="鼠标移动到组件上的提示信息" />
+        </el-form-item>
         <el-divider ></el-divider>
 
         <!-- ################### 校验   start ############################## -->
@@ -971,11 +971,11 @@
         </el-form-item>
         <!-- ################### 校验   end ############################## -->
 
-       
+
 
         <template v-if="!hideModel && selectItem && selectItem.options">
            <el-form-item label="动态显示">
-            <!-- 每个元素都有隐藏条件 根据渲染数据的值来改变 --> 
+            <!-- 每个元素都有隐藏条件 根据渲染数据的值来改变 -->
             <el-switch
               v-model="selectItem.options.dynamicVisible"
               active-text="打开"
@@ -996,7 +996,7 @@
         <!-- 条件禁用 lyf 2021-05-06-->
         <template v-if="!hideModel && selectItem && selectItem.options && selectItem.options.disabled">
            <el-form-item label="动态禁用">
-            <!-- 每个元素都有隐藏条件 根据渲染数据的值来改变 --> 
+            <!-- 每个元素都有隐藏条件 根据渲染数据的值来改变 -->
             <el-switch
               v-model="selectItem.options.dynamicDisabled"
               active-text="打开"
@@ -1014,7 +1014,7 @@
           </el-form-item>
 
         </template>
-       
+
 
 
         <el-form-item v-if="selectItem.type === 'table'" label="提示">
@@ -1024,12 +1024,12 @@
         </el-form-item>
 
       </el-form>
-    </div> 
+    </div>
   </div>
 </template>
-<script> 
-import Option from "./option";
-import Linkage from './linkage'
+<script>
+import Option from "./option/index.vue";
+import Linkage from './linkage/index.vue'
 import {noModelList} from '../config'
 export default {
   name: "formItemProperties",
@@ -1040,14 +1040,14 @@ export default {
     };
   },
   watch: {
-    selectItem(val) { 
-      if(val.type == 'batch' && !val.options.colWidth) { 
+    selectItem(val) {
+      if(val.type == 'batch' && !val.options.colWidth) {
         val.options.colWidth = {}
       }
-      this.options = val.options || {}; 
+      this.options = val.options || {};
 
-        // 判断 labelWidth 
-      if(!this.hideModel && !Object.prototype.hasOwnProperty.call(this.options, 'labelWidth')){ 
+        // 判断 labelWidth
+      if(!this.hideModel && !Object.prototype.hasOwnProperty.call(this.options, 'labelWidth')){
         this.options['labelWidth'] = -1
       }
     }
@@ -1096,12 +1096,12 @@ export default {
       const ls = {}
       const types = []
       dicts.forEach(t=> {
-        const type = t.type 
+        const type = t.type
         if(!ls[type]) {
-          ls[type] = type 
+          ls[type] = type
 
           types.push(t)
-        } 
+        }
       })
 
       // 关键字过滤

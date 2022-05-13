@@ -1,5 +1,5 @@
 <!--
-通过json生成的单个表单节点 
+通过json生成的单个表单节点
  -->
 <template>
   <div
@@ -18,7 +18,7 @@
       @click.stop="$emit('handleCopy')"
     >
       <i class="el-icon-document-copy" />
-    </div> 
+    </div>
     <div
       class="delete"
       :class="record.key === selectItem.key ? 'active' : 'unactivated'"
@@ -30,13 +30,13 @@
 </template>
 <script>
 
-import FormItem from "../../../form-item/index";
+import FormItem from "../../../form-item/index.vue";
 export default {
   props: {
     record: {
       type: Object,
       required: true
-    }, 
+    },
     selectItem: {
       type: Object,
       default: () => {return {}}

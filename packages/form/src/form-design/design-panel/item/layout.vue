@@ -14,11 +14,11 @@
           'batch-box',
           record.options.customClass ? record.options.customClass : '' ,
           record.key === selectItem.key ? 'active' : ''
-        ]" 
+        ]"
         :style="record.options.customStyle"
         @click="handleSelectItem(record)"
       >
-        <div class="batch-label">{{record.label}}</div> 
+        <div class="batch-label">{{record.label}}</div>
          <draggable
           tag="div"
           class="draggable-box"
@@ -33,15 +33,15 @@
           :list="record.list"
           @start="$emit('dragStart', $event, record.list)"
           @add="$emit('handleColAdd', $event, record.list)"
-        > 
+        >
           <template #item="{element}">
               <transition-group tag="div" name="list" class="list-main">
                 <layoutItem
                   :key="element.key"
-                  class="drag-move" 
+                  class="drag-move"
                   :selectItem="selectItem"
                   :startType="startType"
-                   
+
                   :record="element"
                   :hideModel="hideModel"
                   :config="config"
@@ -54,7 +54,7 @@
               </transition-group>
             </template>
         </draggable>
-      
+
         <div
           class="copy"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
@@ -103,7 +103,7 @@
             >
               <template #item="{element}">
                 <transition-group tag="div" name="list" class="list-main">
-                  <formNode 
+                  <formNode
                     class="drag-move"
                     :key="element.key"
                     :selectItem="selectItem"
@@ -144,11 +144,11 @@
      <template v-else-if="record && record.type === 'control'">
       <div
         :class="[
-          'grid-box','control-form', 
+          'grid-box','control-form',
           record.options.customClass ? record.options.customClass : '' ,
           record.key === selectItem.key ? 'active' : '',
-          record.options && record.options.bordered ? 'form-table-bordered' : '' 
-        ]" 
+          record.options && record.options.bordered ? 'form-table-bordered' : ''
+        ]"
         :style="record.options.customStyle"
         @click="handleSelectItem(record)"
       >
@@ -167,10 +167,10 @@
           v-model="record.list"
           @start="$emit('dragStart', $event, record.list)"
           @add="$emit('handleColAdd', $event, record.list)"
-        > 
+        >
           <template #item="{element}">
             <transition-group tag="div" name="list" class="list-main">
-              <formNode 
+              <formNode
                 :key="element.key"
                 class="drag-move"
                 :selectItem="selectItem"
@@ -186,7 +186,7 @@
             </transition-group>
           </template>
         </draggable>
-      
+
         <div
           class="copy"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
@@ -203,24 +203,24 @@
         </div>
       </div>
     </template>
- 
+
     <!-- 容器 end -->
-    
+
     <!-- 表格布局 start -->
     <template v-else-if="record && record.type === 'table'">
       <div
         class="table-box"
         :class="{ active: record.key === selectItem.key }"
         @click.stop="handleSelectItem(record)"
-      > 
-        <table 
+      >
+        <table
           :class="[
             'table-layout','form-table',
             record.options.customClass ? record.options.customClass : '' ,
             record.options.bright ? 'bright' : '' ,
             record.options.small ? 'small' : '' ,
-            record.options.bordered ? 'bordered' : '' 
-          ]" 
+            record.options.bordered ? 'bordered' : ''
+          ]"
           :style="record.options.customStyle"
         >
           <tr v-for="(trItem, trIndex) in record.trs" :key="trIndex" >
@@ -234,7 +234,7 @@
               @contextmenu.prevent="
                 $emit('handleShowRightMenu', $event, record, trIndex, tdIndex , tdItem.colspan > 1 || tdItem.rowspan > 1)
               "
-            > 
+            >
               <draggable
                 tag="div"
                 class="draggable-box"
@@ -253,11 +253,11 @@
                 <template #item="{element}">
                    <transition-group tag="div" name="list" class="list-main">
                         <layoutItem
-                          class="drag-move" 
+                          class="drag-move"
                           :key="element.key"
                           :selectItem="selectItem"
                           :startType="startType"
-                           
+
                           :record="element"
                           :hideModel="hideModel"
                           :config="config"
@@ -307,9 +307,9 @@
   </div>
 </template>
 <script>
- 
+
 import draggable from "vuedraggable";
-import formNode from "./node";
+import formNode from "./node.vue";
 export default {
   name: "layoutItem",
   props: {
@@ -328,7 +328,7 @@ export default {
     startType: {
       type: String,
       required: true
-    }, 
+    },
     hideModel: {
       type: Boolean,
       default: false
@@ -342,14 +342,14 @@ export default {
     insertAllowed() {
       if(this.record.type == 'batch') {
         const disabledType = ['control' , 'batch' , 'batch' ,'divider', 'table']
-        
+
         // 判断当前是在从原始组件拖拽还是从面板内组件拖拽
         if(this.dragType) {
           return !disabledType.includes(this.dragType)
         } else {
           return !disabledType.includes(this.startType)
-        } 
-        
+        }
+
       }
       return true ;//this.insertAllowedType.includes(this.startType);
     }
@@ -362,7 +362,7 @@ export default {
     handleShowRightMenu(e, record, trIndex, tdIndex , isMergeCol) {
       this.$emit("handleShowRightMenu", e, record, trIndex, tdIndex , isMergeCol);
     },
-    handleSelectItem(record) { 
+    handleSelectItem(record) {
       this.$emit("handleSelectItem", record);
     },
     handleColAdd(e, list) {

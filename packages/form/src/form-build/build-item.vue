@@ -21,24 +21,24 @@
         v-for="item in colItem.list"
         :disabled="disabled"
         :renderPreview="renderPreview"
-        :models="models"  
-        :key="item.key" 
+        :models="models"
+        :key="item.key"
         :record="item"
         :formConfig="formConfig"
-        
+
       />
     </el-col>
-  </el-row> 
+  </el-row>
   <!-- 表格布局 -->
   <table
-    v-else-if="record.type === 'table' && dynamicVisibleItem" 
+    v-else-if="record.type === 'table' && dynamicVisibleItem"
     :class="[
       'table-layout','form-table',
       record.options.customClass ? record.options.customClass : '' ,
       record.options.bright ? 'bright' : '' ,
       record.options.small ? 'small' : '' ,
-      record.options.bordered ? 'bordered' : '' 
-    ]" 
+      record.options.bordered ? 'bordered' : ''
+    ]"
     :style="record.options.customStyle"
     >
     <template v-for="(trItem, trIndex) in record.trs">
@@ -57,54 +57,54 @@
             @change="handleChange"
              @forceUpdate="forceUpdate"
             v-for="item in tdItem.list"
-            :disabled="disabled" 
+            :disabled="disabled"
             :renderPreview="renderPreview"
-            :models="models"  
+            :models="models"
             :key="item.key"
             :record="item"
             :formConfig="formConfig"
-             
+
           />
         </td>
       </tr>
     </template>
-   
+
   </table>
   <!-- 2021-06-27 lyf 弹性容器 -->
- 
-    <div 
-     v-else-if="record.type === 'control' && dynamicVisibleItem" 
-     >   
+
+    <div
+     v-else-if="record.type === 'control' && dynamicVisibleItem"
+     >
      <div v-for="(mdata, idx) in models[record.model]"  :key="idx"
       :class="[
         'table-layout','form-table',
         record.options.customClass ? record.options.customClass : '' ,
         record.options.bright ? 'bright' : '' ,
         record.options.small ? 'small' : '' ,
-        record.options.bordered ? 'form-table-bordered' : '' 
-      ]" 
+        record.options.bordered ? 'form-table-bordered' : ''
+      ]"
       :style="record.options.customStyle"
        @contextmenu.prevent="handleShowRightMenu($event , idx) "
      >
-      <div  
-        v-for="(item, index) in record.list"  
-        :key="index"  
+      <div
+        v-for="(item, index) in record.list"
+        :key="index"
         >
        <ng-form-build-item
           ref="nestedComponents"
           @handleReset="$emit('handleReset')"
           @change="handleChange"
-           @forceUpdate="forceUpdate" 
+           @forceUpdate="forceUpdate"
           :disabled="disabled"
           :renderPreview="renderPreview"
-          :models="mdata"   
+          :models="mdata"
           :record="item"
-          :formConfig="formConfig" 
+          :formConfig="formConfig"
           :prop-prepend="record.model + '.' + idx + '.'"
         />
-      </div> 
-         
-        
+      </div>
+
+
 
      </div>
       <!-- 右键里的删除和复制 下方的新增 -->
@@ -117,21 +117,21 @@
         class="right-menu"
         id="rightMenu"
       >
-        <ul> 
+        <ul>
          <li v-if="!record.options.noCopy" @click="handleCopy"><i class="el-icon-document" />复制</li>
           <hr v-if="!record.options.noCopy && !record.options.noRemove">
-          <li v-if="!record.options.noRemove" @click="handleRemove"><i class="el-icon-delete" />删除</li> 
+          <li v-if="!record.options.noRemove" @click="handleRemove"><i class="el-icon-delete" />删除</li>
         </ul>
       </div>
-    </div> 
-  
-    
-      <el-tooltip 
-        class="item" 
-        effect="light" 
+    </div>
+
+
+      <el-tooltip
+        class="item"
+        effect="light"
         :enterable="false"
         :open-delay="500"
-        v-else-if="dynamicVisibleItem && record.options.tooptip && record.options.tooptip.trim()" 
+        v-else-if="dynamicVisibleItem && record.options.tooptip && record.options.tooptip.trim()"
         placement="top-start">
         <template #content>
             <div  class="tooltip-content"> {{record.options.tooptip}}</div>
@@ -139,38 +139,38 @@
         <form-item
           ref="nestedComponents"
           @handleReset="$emit('handleReset')"
-          @change="handleChange" 
+          @change="handleChange"
           @forceUpdate="forceUpdate"
-          :disabled="disabled" 
+          :disabled="disabled"
           :renderPreview="renderPreview"
-          :models="models"  
+          :models="models"
           :key="record.key"
           :record="record"
           :formConfig="formConfig"
           :prop-prepend="propPrepend"
         />
-      </el-tooltip> 
-     
+      </el-tooltip>
+
       <form-item
         v-else-if="dynamicVisibleItem"
         ref="nestedComponents"
         @forceUpdate="forceUpdate"
         @handleReset="$emit('handleReset')"
-        @change="handleChange" 
-        :disabled="disabled" 
+        @change="handleChange"
+        :disabled="disabled"
         :renderPreview="renderPreview"
-        :models="models"  
+        :models="models"
         :key="record.key"
         :record="record"
         :formConfig="formConfig"
         :prop-prepend="propPrepend"
       />
-       
+
    </div>
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
-import  FormItem  from "../form-item";
+import  FormItem  from "../form-item/index.vue";
 import {dynamicFun} from '../utils'
 export default {
   name: "ng-form-build-item",
@@ -188,7 +188,7 @@ export default {
       required: true
     },
     models: {
-      type: Object , 
+      type: Object ,
       required: true
     },
     formConfig: {
@@ -197,7 +197,7 @@ export default {
         labelWidth: 120
       })
       //required: true
-    }, 
+    },
     propPrepend: {
       // form-item的 prop前缀 默认不需要
       type: String
@@ -210,16 +210,16 @@ export default {
     renderPreview: {
       type: Boolean ,
       default: false
-    } 
+    }
   },
   components: {
     FormItem
   },
-  computed: { 
-    // 是否动态显示当前元素 
+  computed: {
+    // 是否动态显示当前元素
     // 返回true 显示 false 不显示
     dynamicVisibleItem(){
-      
+
       if(!this.record.options || !this.record.options.dynamicVisible){
         return true
       }
@@ -228,16 +228,16 @@ export default {
       }
       let fstr = this.record.options.dynamicVisibleValue;
       // 打开了开关 这里获取函数内容
-  
-      const ret = dynamicFun(fstr,this.models) 
+
+      const ret = dynamicFun(fstr,this.models)
       return ret ;
     }
   },
   created() {
     // 如果是control 则默认初始化就有一份空数据,control 下的list所有组件初始一个
-    
+
     if(this.record.type == 'control' && !this.renderPreview && !Object.prototype.hasOwnProperty.call(this.models, this.record.model) ) {
-      const data_ = {} 
+      const data_ = {}
 
      /* this.record.list.forEach(t=> {
         data_[t.model] = null
@@ -272,17 +272,17 @@ export default {
 
       return this.$refs.nestedComponents.validationSubform();
     },
-    handleChange(value, key) { 
+    handleChange(value, key) {
       this.$emit("change", value, key);
     },
-    forceUpdate(){ 
+    forceUpdate(){
        this.$emit("forceUpdate" );
     },
      showTr(trItem , model){
-      // 判断tr中是否还存在需要显示的td数据 
-      const tds = trItem.tds; 
+      // 判断tr中是否还存在需要显示的td数据
+      const tds = trItem.tds;
       let fs = tds.map(t=>{
-        const tdlist = t.list 
+        const tdlist = t.list
          // 判断list中每个数据是否需要显示
         for(let i in tdlist){
           const tdRecord = tdlist[i]
@@ -297,15 +297,15 @@ export default {
 
           let fstr = tdRecord.options.dynamicVisibleValue;
 
-           // 打开了开关 这里获取函数内容 
-          const fvalue = dynamicFun(fstr,model)  
+           // 打开了开关 这里获取函数内容
+          const fvalue = dynamicFun(fstr,model)
 
           if(fvalue) {
             return tdRecord
           }
 
-        } 
- 
+        }
+
       })
 
       for(let j in fs) {
@@ -314,20 +314,20 @@ export default {
         }
       }
 
-      return false 
+      return false
 
     },
     // 容器添加一行数据
     addControl() {
 
       // 将当前数据复制一份 压入
-      const data_ = {} 
+      const data_ = {}
 
       this.record.list.forEach(t=> {
         data_[t.model] = ''
       })
-      
-      this.models[this.record.model].push(data_) 
+
+      this.models[this.record.model].push(data_)
 
     },
     handleShowRightMenu(e, idx) {
@@ -343,7 +343,7 @@ export default {
       // this.fileItem = item
       // 显示
       this.showRightMenu = true;
- 
+
 
       // 计算rightMenu得高度和宽度 和当前屏幕对比 来决定菜单出现得起始位置
       let height = 210;// document.getElementById('rightMenu').clientHeight ;
@@ -352,9 +352,9 @@ export default {
       // 获取屏幕高度和宽度 比对
       const bodyHeight = document.body.clientHeight  ;
       const bodyWidth = document.body.clientWidth ;
- 
-        
-      // 定位 
+
+
+      // 定位
       if(e.clientY + height > bodyHeight) {
         this.menuTop = e.clientY - height;
       } else {
@@ -366,18 +366,18 @@ export default {
       } else {
         this.menuLeft = e.clientX + 20 ;
       }
-      
+
       this.selectControlIndex = idx
 
       return false;
     },
     handleCopy() {
       if(this.selectControlIndex == undefined || this.selectControlIndex < 0) {
-        return 
+        return
       }
 
       if(!this.models[this.record.model] || this.models[this.record.model].length < this.selectControlIndex) {
-        return 
+        return
       }
 
       const cloneData = cloneDeep(this.models[this.record.model][this.selectControlIndex])
@@ -387,15 +387,15 @@ export default {
     },
     handleRemove() {
       if(this.selectControlIndex == undefined || this.selectControlIndex < 0) {
-        return 
+        return
       }
 
       if(!this.models[this.record.model] || this.models[this.record.model].length < this.selectControlIndex) {
-        return 
+        return
       }
 
       if(this.models[this.record.model].length == 1) {
-        
+
         this.$message.error(this.record.label + '内仅存的一条数据不能删除')
         return
       }

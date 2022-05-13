@@ -2,12 +2,12 @@
  * author lyf
  * date 2020-07-06
  * description 可拖拽元素的列表 包含基础组件和布局组件
- --> 
+ -->
 <template>
 	<el-card header="组件列表" class="box-card form-item ">
 		<el-collapse v-model="actives" accordion >
 		  	<el-collapse-item title="基础组件" name="1"  v-if="basicItem == true || basicItem.length > 0">
-		  		<DragItem 
+		  		<DragItem
 	                :list="basicsArray"
 	                @generateKey="generateKey"
 	                @handleListPush="handleListPush"
@@ -35,7 +35,7 @@
               />
             </el-collapse-item>
 		  	<el-collapse-item title="布局组件" name="4" v-if="layoutItem == true || layoutItem.length > 0">
-		  		<DragItem 
+		  		<DragItem
 	                :list="layoutArray"
 	                @generateKey="generateKey"
 	                @handleListPush="handleListPush"
@@ -43,12 +43,12 @@
 	                @end="handleEnd"/>
 		  	</el-collapse-item>
 
-		</el-collapse> 
+		</el-collapse>
 	</el-card>
 </template>
 <script>
 import { basicsList,  layoutList ,personalList, noModelList} from "../config.js";
-import DragItem from './item'
+import DragItem from './item.vue'
 export default {
 	components: {
 		DragItem
@@ -70,28 +70,28 @@ export default {
 		      },
 		      previewOptions: {
 		        width: 850
-		    }, 
+		    },
 		    selectItem: {
 		       key: ""
-		    } 
+		    }
 		}
 	},
 	props: {
 		 // 基础组件需要展示的列表 或者false全部不展示
 	    basicItem: {
-	      type: [Boolean , Array] 
-	    }, 
+	      type: [Boolean , Array]
+	    },
 	    // 个性化组件需要展示的列表 或者false全部不展示
 	    personalItem: {
-	      type: [Boolean , Array] 
+	      type: [Boolean , Array]
 	    },
 	     //布局组件需要展示的列表 或者false全部不展示
 	    layoutItem: {
-	      type: [Boolean , Array] 
-	    } 
+	      type: [Boolean , Array]
+	    }
 	},
 	computed: {
-	    basicsArray() { 
+	    basicsArray() {
 	      	if(this.basicItem == false) {
 	    		return []
 	    	}
@@ -103,9 +103,9 @@ export default {
 	      	blist.forEach(t=>{
 	      		t.options.dynamicHide = false
         		t.options.dynamicHideValue = ''
-        		if(!t.key) { 
+        		if(!t.key) {
         		 	const key = t.type + "_" + new Date().getTime()
-        		 	t['key'] = key 
+        		 	t['key'] = key
         		 	t['model'] = key
         		}
 
@@ -116,7 +116,7 @@ export default {
 	    	if(this.personalItem == false) {
 	    		return []
 	    	}
-	    	// 计算需要显示的基础字段 
+	    	// 计算需要显示的基础字段
 	      	let blist = personalList
 	      	if(this.personalItem && this.personalItem instanceof Array && this.personalItem.length > 0) {
 	      		blist = blist.filter(t=> this.personalItem.indexOf(t.type) >= 0)
@@ -124,16 +124,16 @@ export default {
 	      	blist.forEach(t=>{
 	      		t.options.dynamicHide = false
         		t.options.dynamicHideValue = ''
-        		if(!t.key) { 
+        		if(!t.key) {
         		 	const key = t.type + "_" + new Date().getTime()
-        		 	t['key'] = key 
+        		 	t['key'] = key
         		 	t['model'] = key
         		}
 
 	      	}) ;
 	      	return blist
 	    },
-	    layoutArray(){ 
+	    layoutArray(){
 	    	if(this.layoutItem == false) {
 	    		return []
 	    	}
@@ -144,22 +144,22 @@ export default {
 	    	llist.forEach(t=>{
 	      		t.options.dynamicVisible = false
         		t.options.dynamicVisibleValue = ''
-        		if(!t.key) { 
+        		if(!t.key) {
         		 	const key = t.type + "_" + new Date().getTime()
-        		 	t['key'] = key 
+        		 	t['key'] = key
         		 	t['model'] = key
         		}
 	      	}) ;
 	      	return llist
-	    } 
+	    }
 	},
-	created() { 
+	created() {
 		// 2021-05-17 lyf 初始化回填默认key和model
 		if(this.customComponents && this.customComponents.length > 0) {
 			this.customComponents.forEach(t=>{
-				if(!t.key) { 
+				if(!t.key) {
 	        		const key = t.type + "_" + new Date().getTime()
-	        		t['key'] = key 
+	        		t['key'] = key
         		 	t['model'] = key
 	        	}
 			})
@@ -173,14 +173,14 @@ export default {
 	},
 	methods: {
 		generateKey(list, index) {
-	      // 生成key值 
+	      // 生成key值
 	      // const key = list[index].type + "_" + new Date().getTime();
 	      // this.$set(list, index, {
 	      //   ...list[index],
 	      //   key,
 	      //   model: key
 	      // });
-	      if(index === undefined) return 
+	      if(index === undefined) return
 	      const key = list[index].type + "_" + new Date().getTime();
 	    	  // list[index] = {
 	     //    ...list[index],
@@ -188,8 +188,8 @@ export default {
 	     //    model: key
 	     //  }
 
-	      list[index]['key'] = key 
-	      list[index]['model'] = key 
+	      list[index]['key'] = key
+	      list[index]['model'] = key
 
 	      if (this.noModel.includes(list[index].type)) {
 	        // 删除不需要的model属性
@@ -198,7 +198,7 @@ export default {
 	    },
 	    handleListPush(item) {
 	      // 双击控件按钮push到list
-	      // 生成key值 
+	      // 生成key值
 	      if (!this.selectItem.key) {
 	        // 在没有选择表单时，将数据push到this.data.list
 	        const key = item.type + "_" + new Date().getTime();
@@ -217,11 +217,11 @@ export default {
 	        delete record.icon;
 	        delete record.component;
 	        this.data.list.push(record);
-	       
+
 	        this.$emit('handleSetSelectItem' , record)
 	        return false;
 	      }
-	     
+
 	    },
 	    handleStart(list,index) {
 	    	this.generateKey(list,index)
@@ -229,7 +229,7 @@ export default {
 	    		const type = list[index].type
 	      		this.startType = type
 	    	}
-	      
+
 
 	    },
 	    handleEnd(){
@@ -239,4 +239,4 @@ export default {
 	}
 }
 
-</script> 
+</script>

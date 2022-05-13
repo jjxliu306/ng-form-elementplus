@@ -1,5 +1,5 @@
 <template>
-	 
+
 	<el-tabs type="card" v-model="active" >
 	    <el-tab-pane label="控件属性" name="item">
 	    	<ItemProperties :selectItem="selectItem" ref="itemProperties" >
@@ -11,29 +11,29 @@
 	  <!--    <el-tab-pane label="控件属性2" name="item2">
 	    	<ItemProperties2 :selectItem="selectItem" ref="itemProperties2" />
 	    </el-tab-pane> -->
-	    <el-tab-pane label="表单属性" name="form"> 
-	    	<FormProperties ref="formProperties"  
+	    <el-tab-pane label="表单属性" name="form">
+	    	<FormProperties ref="formProperties"
 	    	 	:config="data.config"
 	            :previewOptions="previewOptions"
-	    	 > 
+	    	 >
 	    		<template #form-extend-properties :data="data">
                     <slot name="form-extend-properties" :data="data"></slot>
-                </template> 
+                </template>
 	    	</FormProperties>
-	    </el-tab-pane> 
+	    </el-tab-pane>
 
 	    <slot name="extend-tab" :data="data"  >
 	     	<!-- 扩展插槽,扩展对应要素属性 -->
 	    </slot>
 
 	  </el-tabs>
-		
-	 
+
+
 </template>
 <script>
-import ItemProperties from './item-properties'
+import ItemProperties from './item-properties.vue'
 //import ItemProperties2 from './item-properties2'
-import FormProperties from './form-properties'
+import FormProperties from './form-properties.vue'
 //import { mapState } from "vuex";
 export default {
 	components: {
@@ -62,9 +62,9 @@ export default {
 		        width: 850
 		    },
 		}
-	}, 
+	},
 	methods: {
 
 	}
 }
-</script> 
+</script>
