@@ -2,26 +2,25 @@
   <el-dialog
     :title="!dataForm._id ? '新增' : '修改'"
     :close-on-click-modal="false"
-     :append-to-body="true" 
+     :append-to-body="true"
     :lock-scroll="false"
     :model="visible"
-    :id="randomId">  
+    :id="randomId">
    <el-form
       v-if="
         typeof formTemplate.list !== 'undefined' && typeof formTemplate.config !== 'undefined'
       "
       class="form-build form-design"
       :label-position="formTemplate.config.labelPosition"
-      :hide-required-asterisk="formTemplate.config.hideRequiredMark" 
-      :label-width="formTemplate.config.labelWidth + 'px'" 
-      ref="dataForm" 
-      :model="dataForm"  
+      :hide-required-asterisk="formTemplate.config.hideRequiredMark"
+      ref="dataForm"
+      :model="dataForm"
       size="mini"
       :label-width="(item.options.labelWidth >= 0 ? item.options.labelWidth : formTemplate.config.labelWidth) + 'px'"
- 
-    > 
+
+    >
     <template
-      v-for="(item,index) in formTemplate.list"  
+      v-for="(item,index) in formTemplate.list"
     >
       <el-form-item v-if="
       !(item.options.hidden === true) &&
@@ -43,39 +42,39 @@
           'cascader'
         ].includes(item.type) || customList.includes(item.type) ) && dynamicVisibleItem(item)  "
         :key="index"
-        :label="formTemplate.config.labelWidth > 0 ? item.label : null " 
+        :label="formTemplate.config.labelWidth > 0 ? item.label : null "
         :rules="recordRules(item)"
         :prop="item.rules && item.rules.length > 0 ? item.model : null"
         :id="item.model" :name="item.model"
-      >   
+      >
 
 
-       <el-tooltip 
-        class="item" 
-        effect="light" 
+       <el-tooltip
+        class="item"
+        effect="light"
         :enterable="false"
         :open-delay="500"
-        v-if="item.options.tooptip && item.options.tooptip.trim()" 
+        v-if="item.options.tooptip && item.options.tooptip.trim()"
         placement="top-start">
           <template #content>
            <div class="tooltip-content"> {{item.options.tooptip}}</div>
           </template>
-          <BaseItem 
-            :models="dataForm"  
+          <BaseItem
+            :models="dataForm"
             :formConfig="formTemplate.config"
-            :renderPreview="renderPreview" 
+            :renderPreview="renderPreview"
             :record="item"
-            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )" 
-            /> 
-        </el-tooltip>  
-        <BaseItem 
+            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )"
+            />
+        </el-tooltip>
+        <BaseItem
           v-else
-            :models="dataForm"  
+            :models="dataForm"
             :formConfig="formTemplate.config"
-            :renderPreview="renderPreview" 
+            :renderPreview="renderPreview"
             :record="item"
-            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )" 
-            /> 
+            :disabled="disabled || (item.options.disabled && !item.options.dynamicDisabled )"
+            />
       </el-form-item>
     </template>
     <el-form-item label="排序" prop="seq">
@@ -94,20 +93,20 @@
     </div>
    </template>
  <!--  </div> -->
-  </el-dialog> 
+  </el-dialog>
 </template>
 
 <script>
-//import FormBuild from '../../form-build/index' 
+//import FormBuild from '../../form-build/index'
   import cloneDeep from 'lodash/cloneDeep'
-  import BaseItem from '../base'
+  import BaseItem from '../base.vue'
   import {dynamicFun} from '../../utils'
   export default {
     name: 'table-add-or-update' ,
     components: {
       //FormBuild
       BaseItem
-    },  
+    },
     data () {
       return {
         randomId: '' ,
@@ -116,8 +115,8 @@
         dataForm: {
           _id: '',
           seq: 0
-        }, 
-        dataRule: { 
+        },
+        dataRule: {
         }
       }
     },
@@ -139,12 +138,12 @@
     props: {
       // 表格内部的配置
       formTemplate: {
-        type: Object, 
+        type: Object,
         default: () => ({})
       },
       //动态表格整体的配置
       formConfig: {
-        type: Object, 
+        type: Object,
         default: () => ({})
       },
          // 是否预览结果表单
@@ -156,21 +155,21 @@
         type: Boolean,
         default: false
       }
-    },  
+    },
     methods: {
       recordRules(record){
         // 2020-07-29 如果是预览 不需要规则验证
         if(this.renderPreview) {
           return []
         }
-        const rules = record.rules   
+        const rules = record.rules
         // 循环判断
         for(var i = 0 ; i < rules.length ; i++){
           const t = rules[i]
-           if(t.vtype == 1 || t.vtype == 2){ 
-            t.validator =  this.validatorFiled 
-          } 
- 
+           if(t.vtype == 1 || t.vtype == 2){
+            t.validator =  this.validatorFiled
+          }
+
           if(t.required && (record.type == 'input' || record.type == 'textarea') ){
             t.whitespace = true
           }
@@ -180,13 +179,13 @@
             t.trigger =  ['change','blur']
           }
         }
-       
 
-        return rules 
+
+        return rules
 
       },
-      dynamicVisibleItem(record){ 
-      
+      dynamicVisibleItem(record){
+
         if(!record.options || !record.options.dynamicVisible){
           return true
         }
@@ -201,27 +200,27 @@
        // 2021-03-12 清理没有显示的组件的数据
       clearHiddenValue() {
         // 根据组件ID 是否隐藏为准
-        // 根据 formTemplate.config.outputHidden 来判断是否要输出隐藏 
+        // 根据 formTemplate.config.outputHidden 来判断是否要输出隐藏
         if(!this.formConfig || !this.formConfig.outputHidden) {
-     
+
           const formdesign = document.getElementById(this.randomId)
-         
+
           // 循环当前数据 非P 开头的统一不深入第二层
           for(let key in this.dataForm) {
-            if(key.indexOf('_label') > 0 || key == '_id' || key == 'seq') continue 
+            if(key.indexOf('_label') > 0 || key == '_id' || key == 'seq') continue
             //  判断key的id是否还在
-            const key_div = formdesign.querySelector('#' + key) 
+            const key_div = formdesign.querySelector('#' + key)
             if(!key_div) {
               // 删除
               delete this.dataForm[key]
               delete this.dataForm[key + '_label']
-            }  
-          } 
-        } 
-      }, 
+            }
+          }
+        }
+      },
        validatorFiled (rule , value , callback) {
-      
-        // 判断rule类型 
+
+        // 判断rule类型
         if(rule.vtype == 1) {
           // 正则
           if(!rule.pattern) {
@@ -233,9 +232,9 @@
           //document.write(patt1.test("free"));
 
           if(patt1.test(value)) {
-            callback() 
+            callback()
            } else {
-            callback(new Error(rule.message)) 
+            callback(new Error(rule.message))
            }
 
            return
@@ -245,7 +244,7 @@
 
           // 打开了开关 这里获取函数内容
          const fvalue =  dynamicFun(script , this.dataForm)
-          
+
           if (!fvalue) {
             callback(new Error(rule.message))
           } else {
@@ -255,49 +254,49 @@
 
         }
 
-       
+
       } ,
-       
+
       init (data) {
           this.randomId = 'sxfw_table_dialog' + parseInt(Math.random() * 1000000)
-          this.visible = true 
-          this.dataForm._id = null  
+          this.visible = true
+          this.dataForm._id = null
           if(data) {
             //this.dataForm = data
             for(var i in data){
               this.dataForm[i] = data[i]
             }
           } else {
-            // 初始化数据  
-             
+            // 初始化数据
+
             const d = {}
             this.formTemplate.list.forEach(item => {
               if(item.options.defaultValue)
                 d[item.model] = item.options.defaultValue;
-              else 
+              else
                 d[item.model] = null
-            }); 
- 
+            });
+
             this.dataForm = {_id:null,seq: 0 , ...d}
 
             this.$nextTick(() => {
               this.$refs['dataForm'].resetFields()
-         
+
             })
           }
-             
+
 
         },
         // 表单提交
         dataFormSubmit () {
           this.$refs['dataForm'].validate((valid) => {
-            if (valid) { 
+            if (valid) {
               this.loading = true
               this.clearHiddenValue()
               if(!this.dataForm._id) {
-                // 回填一个ID 
+                // 回填一个ID
                 const id = new Date().getTime() * 10 + parseInt(Math.random() * 100)
-                this.dataForm._id = id 
+                this.dataForm._id = id
                 this.$emit('formAdd' , cloneDeep(this.dataForm))
               } else {
                 this.$emit('formUpdate' , cloneDeep(this.dataForm))
@@ -307,7 +306,7 @@
             }
           })
 
- 
+
         }
     }
   }

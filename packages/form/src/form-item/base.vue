@@ -1,8 +1,8 @@
 <!--
-传入record数据，通过判断record.type，来渲染对应的组件 
+传入record数据，通过判断record.type，来渲染对应的组件
  -->
 <template>
- 
+
   <div v-if="renderPreview" class="base-item">
     <template v-if=" [
           'input',
@@ -10,16 +10,16 @@
           //'date',
           'time',
           //'datePicker',
-          'number', 
+          'number',
           'rate',
           'switch',
-          'slider' 
-        ].includes(record.type)"> 
-      <span  class="base-item-span" v-if="record.options.prepend" v-html="transformAppend(record.options.prepend)"> 
+          'slider'
+        ].includes(record.type)">
+      <span  class="base-item-span" v-if="record.options.prepend" v-html="transformAppend(record.options.prepend)">
       </span>
        <span class="base-item-span" v-if="!loading">{{models[record.model]}} </span>
-      <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)"> 
-      </span>  
+      <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)">
+      </span>
     </template>
      <template v-if="record.type == 'date' || record.type == 'datePicker'">
       <span v-if="record.options.range && models[record.model] instanceof Array">
@@ -32,67 +32,67 @@
      <template v-else-if="[
           'uploadImg',
           'uploadFile'
-        ].includes(record.type)"> 
+        ].includes(record.type)">
 
       <!-- 上传图片 -->
       <FileUpload
         v-if="record.type == 'uploadImg'"
-        :style="`width:${record.options.width}`" 
-        v-model="models[record.model]" 
-        accept="image/*" 
-        :list-type="record.options.listType" 
-        :render-preview="true"  
+        :style="`width:${record.options.width}`"
+        v-model="models[record.model]"
+        accept="image/*"
+        :list-type="record.options.listType"
+        :render-preview="true"
         :record="record"
-      />  
-      <!-- 上传文件 --> 
+      />
+      <!-- 上传文件 -->
       <FileUpload
         v-else
-        :style="`width:${record.options.width}`" 
-        v-model="models[record.model]" 
-         :render-preview="true"  
-         :record="record"  
-      />  
+        :style="`width:${record.options.width}`"
+        v-model="models[record.model]"
+         :render-preview="true"
+         :record="record"
+      />
     </template>
     <!-- 区划三级联动选择 -->
      <ng-state
       v-else-if="record.type == 'state'"
-      v-model="models[record.model]" 
+      v-model="models[record.model]"
       :renderPreview="renderPreview"
       :models="models"
       :record="record"
       :config="formConfig"
-      :parentDisabled="disabled" 
-      :disabled="disabled || record.options.disabled"  
-    /> 
+      :parentDisabled="disabled"
+      :disabled="disabled || record.options.disabled"
+    />
     <template v-else-if="[
           'radio',
           'checkbox',
           'select',
           'cascader'
         ].includes(record.type)">
-      {{models[record.model+'_label']}}  
+      {{models[record.model+'_label']}}
     </template>
      <!-- 自定义组件 -->
     <template  v-else-if="customList.includes(record.type)">
       <customComponent
-        :models="models" 
+        :models="models"
         :record="record"
-        :disabled="disabled || record.options.disabled" 
+        :disabled="disabled || record.options.disabled"
         :renderPreview="true"
-        @change="handleChange($event, record.model)" 
-      /> 
+        @change="handleChange($event, record.model)"
+      />
     </template>
-   
+
     <template v-else>
       {{""}}
     </template>
 
 
   </div>
-  <div v-else class="base-item">  
-    <!-- 单行文本 -->   
+  <div v-else class="base-item">
+    <!-- 单行文本 -->
     <el-input
-     
+
       :style="`width:${record.options.width}`"
       v-if="record.type === 'input'"
       :disabled="dynamicDisabled"
@@ -101,7 +101,7 @@
       :clearable="record.options.clearable"
       :maxlength="record.options.maxLength > 0 ? record.options.maxLength : null"
       @change="handleChange($event, record.model)"
-      v-model="models[record.model]" 
+      v-model="models[record.model]"
     >
       <template #prepend v-if="record.options.prepend">
         <span  v-html="transformAppend(record.options.prepend)"> </span>
@@ -115,7 +115,7 @@
      v-model="models[record.model]"
       type="textarea"
       :style="`width:${record.options.width}`"
-      v-else-if="record.type === 'textarea'" 
+      v-else-if="record.type === 'textarea'"
       :disabled="dynamicDisabled"
       :placeholder="record.options.placeholder"
       :clearable="record.options.clearable"
@@ -123,7 +123,7 @@
       :rows="record.options.rows"
       :show-word-limit="record.options.maxLength > 0 && record.options.maxLength > 10"
       @change="handleChange($event, record.model)"
-       
+
     />
 
     <!-- 数字输入框 -->
@@ -131,8 +131,8 @@
       <div :style="`width:${record.options.width}`" class="el-input-number-diaplay">
 
         <el-input-number
-          :class="record.options.append ? 'el-input-number__append' : null" 
-          v-model="models[record.model]" 
+          :class="record.options.append ? 'el-input-number__append' : null"
+          v-model="models[record.model]"
           :style="`width:100%;float:left;`"
           :min="
             record.options.min || record.options.min === 0
@@ -155,18 +155,18 @@
           controls-position="right"
           :placeholder="record.options.placeholder"
           @change="handleChange($event, record.model)"
-          
+
         > </el-input-number>
         <div class="el-input-group__append el-input-number-group__append " v-if="record.options.append" v-html="transformAppend(record.options.append)">
-         
+
         </div>
       </div>
-      
+
     </template>
-   
+
 
      <!-- 下拉选框 -->
-    <template v-else-if="record.type === 'select' "> 
+    <template v-else-if="record.type === 'select' ">
       <el-select
         v-model="checkList"
         :value-key="itemProp.value"
@@ -180,10 +180,10 @@
         :clearable="record.options.clearable"
         multiple
         @clear="clearChange"
-        @change="handleChange($event, record.model ,  true)" 
+        @change="handleChange($event, record.model ,  true)"
       >
         <template  v-for="(item,index) in ((record.options.dynamic == 1 && record.options.remoteFunc) || (record.options.dynamic == 2 && record.options.dictType) ? checkValues : record.options.options)">
-          <el-option 
+          <el-option
             :key="item[itemProp.value] + index"
             :label="item[itemProp.label]"
             :value="item[itemProp.value]"
@@ -196,16 +196,16 @@
         v-else
         v-model="models[record.model]"
         :style="`width:${record.options.width}`"
-        :value-key="itemProp.value" 
+        :value-key="itemProp.value"
         :remote="record.options.onlineSearch && record.options.showSearch"
         :remote-method="remoteMethod"
         :placeholder="record.options.placeholder"
         :filterable="record.options.showSearch"
         :disabled="dynamicDisabled"
-        :clearable="record.options.clearable" 
+        :clearable="record.options.clearable"
         @clear="clearChange"
-        @change="handleChange($event, record.model , true)" 
-      > 
+        @change="handleChange($event, record.model , true)"
+      >
         <template v-for="(item,index) in ((record.options.dynamic == 1 && record.options.remoteFunc) || (record.options.dynamic == 2 && record.options.dictType) ? checkValues : record.options.options)">
           <el-option
             :key="item[itemProp.value] + index"
@@ -214,45 +214,45 @@
             v-if="itemVisible(item)"
             >
           </el-option>
-        </template> 
+        </template>
       </el-select>
     </template>
- 
-    <!-- 多选框 --> 
-    <el-checkbox-group  
-      v-else-if="record.type === 'checkbox'"  
+
+    <!-- 多选框 -->
+    <el-checkbox-group
+      v-else-if="record.type === 'checkbox'"
       v-model="checkList"
       :disabled="dynamicDisabled"
       :placeholder="record.options.placeholder"
       @change="handleChange($event, record.model)"
     >
       <template v-for="(checkitem,index) in  ( (record.options.dynamic == 1 && record.options.remoteFunc) || (record.options.dynamic == 2 && record.options.dictType) ? checkValues : record.options.options)" >
-         <el-checkbox :label="checkitem[itemProp.value]" :key="checkitem[itemProp.value] + index" v-if="itemVisible(checkitem)"> 
+         <el-checkbox :label="checkitem[itemProp.value]" :key="checkitem[itemProp.value] + index" v-if="itemVisible(checkitem)">
         {{checkitem[itemProp.label]}}
       </el-checkbox>
-      </template> 
+      </template>
     </el-checkbox-group>
 
      <!-- 单选框 -->
     <el-radio-group
       v-model="models[record.model]"
-      v-else-if="record.type === 'radio'" 
+      v-else-if="record.type === 'radio'"
       :disabled="dynamicDisabled"
       :placeholder="record.options.placeholder"
       @change="handleChange($event, record.model)"
-      
-    > 
+
+    >
       <template v-for="(radioitem,index) in ((record.options.dynamic == 1 && record.options.remoteFunc) || (record.options.dynamic == 2 && record.options.dictType) ? checkValues : record.options.options)" >
          <el-radio :label="radioitem[itemProp.value]" :key="radioitem[itemProp.value] + index" v-if="itemVisible(radioitem)">
          {{radioitem[itemProp.label]}}
         </el-radio>
-      </template> 
+      </template>
     </el-radio-group>
 
     <!-- 日期选择 -->
-    <template v-else-if="record.type === 'date'" > 
+    <template v-else-if="record.type === 'date'" >
       <!-- 区分时间段选择 和单个时间选择 -->
-      <el-date-picker 
+      <el-date-picker
         :style="`width:${record.options.width}`"
         v-if="record.options.range"
         v-model="models[record.model]"
@@ -266,7 +266,7 @@
         :value-format="record.options.format"
         @change="handleChange($event, record.model)" >
       </el-date-picker>
-      <el-date-picker 
+      <el-date-picker
         v-else
         :style="`width:${record.options.width}`"
         v-model="models[record.model]"
@@ -284,9 +284,9 @@
 
     <!-- 日期+时间选择 -->
    <!-- 日期选择 -->
-    <template v-else-if="record.type === 'datePicker'" > 
+    <template v-else-if="record.type === 'datePicker'" >
       <!-- 区分时间段选择 和单个时间选择 -->
-      <el-date-picker 
+      <el-date-picker
         v-if="record.options.range"
         :style="`width:${record.options.width}`"
         v-model="models[record.model]"
@@ -300,7 +300,7 @@
         :value-format="record.options.format"
         @change="handleChange($event, record.model)" >
       </el-date-picker>
-      <el-date-picker 
+      <el-date-picker
         v-else
         :style="`width:${record.options.width}`"
         v-model="models[record.model]"
@@ -315,8 +315,8 @@
       </el-date-picker>
 
     </template>
-    
- 
+
+
     <!-- 时间选择 -->
     <el-time-picker
       v-else-if="record.type === 'time'"
@@ -325,14 +325,14 @@
       @change="handleChange($event, record.model)"
       :clearable="record.options.clearable"
       :disabled="dynamicDisabled"
-      :placeholder="record.options.placeholder" 
+      :placeholder="record.options.placeholder"
       :format="record.options.format"
       :value-format="record.options.format">
-    </el-time-picker> 
+    </el-time-picker>
 
 
 
- 
+
     <!-- 评分 -->
     <el-rate
       :style="`width:${record.options.width}`"
@@ -343,9 +343,9 @@
       :placeholder="record.options.placeholder"
       :allowHalf="record.options.allowHalf"
       @change="handleChange($event, record.model)"
-     
+
     />
-   <!-- 滑块 --> 
+   <!-- 滑块 -->
     <el-slider
         v-else-if="record.type === 'slider'"
         v-model="models[record.model]"
@@ -357,9 +357,9 @@
         :step="record.options.step"
         :marks="sliderMarks"
         @change="handleChange($event, record.model)"
-          
-    />  
-    
+
+    />
+
    <!-- 上传图片 -->
     <FileUpload
       v-else-if="record.type === 'uploadImg'"
@@ -367,18 +367,18 @@
       :disabled="dynamicDisabled"
       v-model="models[record.model]"
       :record="record"
-      accept="image/*" 
+      accept="image/*"
       :list-type="record.options.listType"
-      :multiple="record.options.multiple" 
+      :multiple="record.options.multiple"
       :action="record.options.action"
       :limit="record.options.limit"
       @change="handleChange($event, record.model)"
-      
-    />  
+
+    />
      <!-- 上传文件  -->
      <template v-else-if="record.type === 'uploadFile'">
-       
-       <FileUpload 
+
+       <FileUpload
       :style="`width:${record.options.width}`"
       :disabled="dynamicDisabled"
       v-model="models[record.model]"
@@ -386,26 +386,26 @@
       :action="record.options.action"
       :record="record"
       :accept="record.options.accept"
-      :limit="record.options.limit" 
+      :limit="record.options.limit"
       @change="handleChange($event, record.model)"
-      
-    />   
+
+    />
      </template>
     <!-- 级联选择器 -->
-    <el-cascader 
+    <el-cascader
       v-else-if="record.type === 'cascader'"
       ref="cascader"
       v-model="checkList"
       :options="(record.options.dynamic == 1 && record.options.remoteFunc ? checkValues : record.options.options)"
       :style="`width:${record.options.width}`"
       :placeholder="record.options.placeholder"
-      :filterable="record.options.showSearch" 
+      :filterable="record.options.showSearch"
       :disabled="dynamicDisabled"
       :clearable="record.options.clearable"
       :props="itemProp"
       @change="handleChange($event, record.model)"
-      
-    />  
+
+    />
 
      <!-- 开关 -->
     <el-switch
@@ -415,20 +415,20 @@
       :inactive-text="record.options.inactiveText"
       :disabled="dynamicDisabled"
       @change="handleChange($event, record.model)"
-     
+
     />
     <!-- 区划三级联动选择 -->
      <ng-state
        :style="`width:${record.options.width}`"
       v-else-if="record.type == 'state'"
-      v-model="models[record.model]" 
+      v-model="models[record.model]"
       :renderPreview="renderPreview"
       :models="models"
       :record="record"
       :config="formConfig"
-      :parentDisabled="disabled" 
-      :disabled="disabled || record.options.disabled"  
-    /> 
+      :parentDisabled="disabled"
+      :disabled="disabled || record.options.disabled"
+    />
     <!-- 自定义组件 -->
     <customComponent
       :style="`width:${record.options.width}`"
@@ -439,16 +439,16 @@
       :formConfig="formConfig"
       :renderPreview="renderPreview"
       @change="handleChange($event, record.model)"
-      
-    /> 
+
+    />
   </div>
 </template>
-<script> 
+<script>
 import request from '../utils/request.js'
-import FileUpload from './upload'
-import {dynamicFun,dateFormater} from '../utils' 
-import CustomComponent from "./custom";
-import NgState from './state'
+import FileUpload from './upload/index.vue'
+import {dynamicFun,dateFormater} from '../utils'
+import CustomComponent from "./custom.vue";
+import NgState from './state/index.vue'
 import {objectPath} from "object-path";
 export default {
   name: "ng-form-item-base",
@@ -488,7 +488,7 @@ export default {
     models: {
       type: Object,
       required: true
-    }, 
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -502,7 +502,7 @@ export default {
     isDragPanel: {
       type: Boolean ,
       default: false
-    } 
+    }
   },
   inject: {
     customComponents: {
@@ -516,27 +516,27 @@ export default {
   },
   components: {
      FileUpload,CustomComponent,NgState
-  }, 
+  },
   computed: {
     sliderMarks() {
-        
+
       if(this.record.type !== 'slider' || !this.record.options.marks || this.record.options.marks.length == 0) {
-        return null 
+        return null
       }
 
-      let p = {}  
+      let p = {}
 
       this.record.options.marks.forEach(t=> {
-       
-        p[t.value] = t.label 
-        
+
+        p[t.value] = t.label
+
       })
 
       return p ;
 
     },
     customList() {
-     
+
       if (this.customComponents) {
         return this.customComponents.map(item => item.type);
       } else {
@@ -558,7 +558,7 @@ export default {
 
             }
           }
-          return vs 
+          return vs
 
         }
         return null
@@ -570,17 +570,17 @@ export default {
      // 2021-05-06 lyf 组件内的动态禁用
     dynamicDisabled() {
       if(this.disabled) {
-        return true 
+        return true
       }
-      
+
       if(this.record.options.disabled) {
-        // 打开禁用但没有配置动态禁用 直接返回true 
+        // 打开禁用但没有配置动态禁用 直接返回true
         if(this.record.options.dynamicDisabled) {
           if(this.record.options.dynamicDisabledValue) {
             const script = this.record.options.dynamicDisabledValue
 
             // 打开了开关 这里获取函数内容
-            const fvalue = dynamicFun(script,this.models , this.data) 
+            const fvalue = dynamicFun(script,this.models , this.data)
             return fvalue
           } else {
             // 打开了动态禁用,但没有配置脚本 返回 true 直接禁用
@@ -591,8 +591,8 @@ export default {
           return true
         }
 
-      } 
-      return false  
+      }
+      return false
     },
     // 2022-03-14 lyf 针对select radio checkbox这些数据的动态来源修改后进行刷新
     dynamicOption() {
@@ -600,7 +600,7 @@ export default {
       // 只在表单模板拖拽绘制的时候生效
 
       if(this.isDragPanel || !['select','radio','checkbox'].includes(this.record.type)) {
-        return null 
+        return null
       }
       if(this.record.options.dynamic == 0){
         return null
@@ -610,7 +610,7 @@ export default {
       } else if(this.record.options.dynamic == 2) {
         return this.record.options.dynamic + this.record.options.dictType
       }
-      
+
       return null
     }
   },
@@ -636,14 +636,14 @@ export default {
       handler(val, oldVal){
          this.initDynamicValue()
       },
-      deep:true 
+      deep:true
     },
     // 监听关联字段
     linkageData: {
-      handler(val , oldVal) { 
+      handler(val , oldVal) {
         if(this.record.options.linkage ) {
           const linkData = this.record.options.linkData
-          if(!linkData) return  
+          if(!linkData) return
 
           // 本地搜索
           let localScript = []
@@ -653,19 +653,19 @@ export default {
             const ld = linkData[i]
             if(ld.vtype == 1) {
               // local script
-              localScript.push(ld.script) 
-            } else if(ld.vtype == 2 
+              localScript.push(ld.script)
+            } else if(ld.vtype == 2
               // 确定有远程搜索
                 &&  this.record.options.dynamic == 1 && this.record.options.remoteFunc
                 // 确定搜索的key 和value存在
                 && ld.queryKey && ld.queryValue) {
-              // remote 远程过滤 
+              // remote 远程过滤
 
               // 解析queryValue
               const queryValue = dynamicFun(ld.queryValue , this.models)
 
-              remoteQuery[ld.queryKey] = queryValue 
-                
+              remoteQuery[ld.queryKey] = queryValue
+
             }
           }
 
@@ -679,14 +679,14 @@ export default {
              //this.$set(this.models , this.record.model , null)
              this.models[this.record.model] = null
           }
-    
+
 
           if(this.remoteFilter) {
             this.getRemoteData()
           }
 
         }
-         
+
       },
       deep:true
     } ,
@@ -694,13 +694,13 @@ export default {
       handler(val, oldVal){
           // 2021-04-21 lyf 目前只针对select多选\checkbox 两种进行监听
         if(this.record.type == 'checkbox' || (this.record.type == 'select' && this.record.options.multiple)) {
-           
+
           // 选择值重置
           if(val instanceof Array) {
             this.checkList = val
           }
 
-        } 
+        }
 
       },
       deep:true
@@ -712,18 +712,18 @@ export default {
         // 创建函数 返回结果
           const script = append
 
-          // 打开了开关 这里获取函数内容 
-          const fvalue = dynamicFun(script,this.models) 
+          // 打开了开关 这里获取函数内容
+          const fvalue = dynamicFun(script,this.models)
 
-          return fvalue 
-      } 
-      return append 
+          return fvalue
+      }
+      return append
     },
     remoteMethod(query){
       let queryParam = this.record.options.onlineParams
       queryParam = queryParam.replace('$' , query)
 
-      let url =  this.record.options.remoteFunc 
+      let url =  this.record.options.remoteFunc
 
       if(url.indexOf('?') >= 0){
         url += '&' + queryParam
@@ -731,12 +731,12 @@ export default {
         url += '?' + queryParam
       }
 
-      this.remoteUrl = url 
+      this.remoteUrl = url
 
       this.getRemoteData()
     },
     // 获取远程数据
-    getRemoteData() {  
+    getRemoteData() {
 
       const dataPath = this.record.options.dataPath
 
@@ -747,8 +747,8 @@ export default {
           ...this.remoteFilter
         }
       }).then((data) => {
-        if (data) { 
-          // 获取list 根据dataPath 
+        if (data) {
+          // 获取list 根据dataPath
           const rdata = objectPath.get(data, dataPath);
 
           this.checkValues = rdata
@@ -760,17 +760,17 @@ export default {
     },
     // 2021-03-13 判断列表中具体某个值是否应该显示
     dynamicVisible(script , item) {
-       const func = script.indexOf('return') >= 0 ? '{' + script + '}' : 'return (' + script + ')' 
+       const func = script.indexOf('return') >= 0 ? '{' + script + '}' : 'return (' + script + ')'
       const Fn = new Function('$','$item', func)
       return Fn(this.models , item)
     },
-    // 2021-03-13 针对select radio checkbox判断如果有本地过滤关联，判断该条数据是否该显示 
+    // 2021-03-13 针对select radio checkbox判断如果有本地过滤关联，判断该条数据是否该显示
     itemVisible(item) {
       // 没有过滤条件 直接全部展示
      // console.log('this.localFilter' , this.localFilter)
-      if(this.isDragPanel || !this.localFilter || this.localFilter.length == 0) return true 
+      if(this.isDragPanel || !this.localFilter || this.localFilter.length == 0) return true
 
-      //挨个过滤判断 
+      //挨个过滤判断
             // 本地搜索开始
       for(let i = 0 ; i < this.localFilter.length ; i++) {
           const v = this.dynamicVisible(this.localFilter[i] , item )
@@ -778,8 +778,8 @@ export default {
           if(!v) {
             return false
           }
-      }  
-      return true 
+      }
+      return true
     },
     // select 清除后回调
     clearChange() {
@@ -794,8 +794,8 @@ export default {
       Fn(this.models, this.data)
     },
     handleChange(value, key , type) {
-      // change事件  
-      this.$emit("change", value, key); 
+      // change事件
+      this.$emit("change", value, key);
 
       // 根据类型判断 如果是 select , radio , checkbox , cascader 则回带具体的显示值
       if(['select' , 'radio' , 'checkbox' , 'cascader'].includes(this.record.type)){
@@ -808,7 +808,7 @@ export default {
 
         // 回填数据
         if(this.record.type == 'cascader'){
-          let as = [] 
+          let as = []
           // 判断是不是复选
           if(!this.itemProp.multiple) {
             // 复选
@@ -819,16 +819,16 @@ export default {
 
           const checkNodes = this.$refs.cascader.getCheckedNodes()
           for(let i = 0 ; i < as.length ; i++){
-              const v = as[i] 
+              const v = as[i]
               // 比对nodes 显示值
-              const fs = checkNodes.filter(t=>t.path == v) 
-              
+              const fs = checkNodes.filter(t=>t.path == v)
+
               if(fs && fs.length > 0) {
                 const label = fs[0].pathLabels
                 if(label && label.length > 0)
                  labels.push(label.join('/'))
               }
-              
+
           }
 
 
@@ -843,14 +843,14 @@ export default {
            }
 
            for(let i = 0 ; i < as.length ; i++){
-              const v = as[i] 
+              const v = as[i]
               const fs = datas.filter(t=>t[this.itemProp.value] == v)
               if(fs && fs.length > 0) {
                 const label = fs[0][this.itemProp.label]
 
                 labels.push(label)
               }
-              
+
             }
 
         }
@@ -860,42 +860,42 @@ export default {
         //this.$set(this.models , modelLabel , labels.join(','))
 
 
-        // 2020-08-01 如果有远程调用并且有选择回调 再这里进行回调 
+        // 2020-08-01 如果有远程调用并且有选择回调 再这里进行回调
         if(/*this.record.options.onlineSearch && this.record.options.showSearch &&*/ type && this.record.options.selectCb) {
 
-          // 找到当前选择的数据实体  
+          // 找到当前选择的数据实体
           // 获取数据
           const cvalues = (this.record.options.dynamic == 1 && this.record.options.remoteFunc  ?  this.checkValues : this.record.options.options)
- 
-          const fs = cvalues.filter(t=>t[this.itemProp.value] == value)
- 
-          if(fs && fs.length > 0) {
-            const select = fs[0] 
 
-            // 构建函数 去执行 
+          const fs = cvalues.filter(t=>t[this.itemProp.value] == value)
+
+          if(fs && fs.length > 0) {
+            const select = fs[0]
+
+            // 构建函数 去执行
             this.$nextTick(()=>{
               const scriptFunc = this.record.options.selectCb
-              const func =  '{' + scriptFunc + '}'  
+              const func =  '{' + scriptFunc + '}'
               const Fn = new Function('$' , '$select', func)
-            
+
               Fn(this.models,select)
 
-              
+
             })
-           
-          } 
-        } 
+
+          }
+        }
       }
     },
      // 初始化远程数据或者数据字典 针对select radio checkbox
     initDynamicValue() {
       if(this.record.options.dynamic == 1 && this.record.options.remoteFunc) {
-        const url =  this.record.options.remoteFunc 
-        this.remoteUrl = url 
-        
+        const url =  this.record.options.remoteFunc
+        this.remoteUrl = url
+
 
         this.getRemoteData()
-   
+
 
         this.itemProp.label = this.record.options.remoteLabel
         this.itemProp.value = this.record.options.remoteValue
@@ -903,7 +903,7 @@ export default {
       } else if(this.record.options.dynamic == 2 && this.record.options.dictType ) {
 
         // 2022-02-26 lyf  引入数据字典后判断数据字典
-         
+
         //console.log('ngConfig' , this.ngConfig)
         if(this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0) {
           const fsDict = this.ngConfig.dict.filter(t=>t.type == this.record.options.dictType)
@@ -912,17 +912,17 @@ export default {
           this.itemProp.label = 'label'
           this.itemProp.value = 'value'
           this.itemProp.children = 'children'
-        }  
+        }
       }
     }
-  }, 
-  mounted() { 
-     // 2020-07-30 如果有cbColumn 则尝试从data中回填数据  
-   
+  },
+  mounted() {
+     // 2020-07-30 如果有cbColumn 则尝试从data中回填数据
+
     if(this.record.options.cbColumn && !this.isDragPanel) {
       this.loading = true
-      const value = this.data[this.record.options.cbColumn] 
-      this.models[this.record.model] = value  
+      const value = this.data[this.record.options.cbColumn]
+      this.models[this.record.model] = value
       //this.$set(this.models , this.record.model , value)
       this.loading = false
       return
@@ -931,23 +931,23 @@ export default {
     // 判断如果是远程方法的话 远程请求数据
     this.initDynamicValue()
 
-    
-    // 如果已经赋值了 则不管默认值了 
+
+    // 如果已经赋值了 则不管默认值了
     if(this.models && Object.prototype.hasOwnProperty.call(this.models, this.record.model)) {
-      // 判断数据类型是否正确 
+      // 判断数据类型是否正确
       // 类型为checkbox cascader 但数据非array类型 则强制转array
       let modelValue = this.models[this.record.model]
       if(  this.record.type == 'checkbox' || this.record.type == 'cascader' || (
         // 2020-07-31 如果时下拉复选 这里也绑定的是数组
-          this.record.type == 'select' && this.record.options.multiple 
+          this.record.type == 'select' && this.record.options.multiple
         )) {
         if(!(modelValue instanceof Array)){
           modelValue = modelValue.split(',')
           this.$set(this.models , this.record.model , modelValue)
         }
-  
+
         //this.models[this.record.model] = vs
-        this.checkList = modelValue 
+        this.checkList = modelValue
       }
 
       return ;
@@ -958,25 +958,25 @@ export default {
       if(this.record.type == 'checkbox' || this.record.type == 'cascader'){
         this.checkList = defaultValue
       } else {
-        if((this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker' ) && defaultValue == 'now') { 
+        if((this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker' ) && defaultValue == 'now') {
 
           defaultValue = dateFormater(new Date() ,this.record.options.format)
- 
-        }  
-        
+
+        }
+
         //this.$set(this.models , this.record.model , defaultValue)
         this.models[this.record.model] = defaultValue
-        
-      } 
+
+      }
 
       this.handleChange(defaultValue , this.record.model)
     }
 
 
     // 2022-05-12 lyf 如果当前是时间范围或者日期范围 则从rangeDefaultValue 中取默认值
-    if( (this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker') 
+    if( (this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker')
       && this.record.options.range) {
-      let defaultRangeValue = this.record.options.rangeDefaultValue 
+      let defaultRangeValue = this.record.options.rangeDefaultValue
       if(defaultRangeValue && defaultRangeValue.length == 2) {
          // 判断有么有设置为now的
         if(defaultRangeValue[0] == 'now'){
@@ -987,7 +987,7 @@ export default {
         }
       }
     }
-   
+
 
 
     // 2021-03-16 lyf 判断当前没有值并且类型是input 或者textarea 给初始化model
@@ -1008,12 +1008,12 @@ export default {
           // 字符串
           //this.$set(this.models , this.record.model , '')
           this.models[this.record.model] = ''
-        } 
+        }
       } else if(this.record.type == 'checkbox' ||  this.record.type == 'cascader'
           || (this.record.type == 'select' && this.record.options.multiple)){
-        // 获取数据 校验格式 
+        // 获取数据 校验格式
         const mv = this.models[this.record.model]
-         
+
 
         if(typeof mv == 'string') {
           if(mv == "") {
@@ -1024,13 +1024,13 @@ export default {
             //this.$set(this.models , this.record.model , mvs)
             this.models[this.record.model] = mvs
           }
-          
+
         }
 
       }
 
-    } 
+    }
   }
 }
 </script>
- 
+

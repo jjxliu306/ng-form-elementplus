@@ -1,32 +1,32 @@
 <template>
-	 
-		<FormPanel     
+
+		<FormPanel
             :data="data"
             :selectItem="selectItem"
             :noModel="noModel"
             :hideModel="hideModel"
             :selectForm="selectForm"
-            :startType="startType" 
+            :startType="startType"
             :dragType="dragType"
-            @handleSetSelectItem="handleSetSelectItem"> 
-		</FormPanel> 
- 
+            @handleSetSelectItem="handleSetSelectItem">
+		</FormPanel>
+
 </template>
 <script>
-import FormPanel from './item/index'
+import FormPanel from './item/index.vue'
 import {noModelList} from '../config'
 export default {
 	components:{
-		FormPanel 
+		FormPanel
 	},
 	data(){
 		return {
 			updateTime: 0,
-			hideModel: false, 
-			 
+			hideModel: false,
+
 			noModel: noModelList,
-		    startType: "", 
-		    selectItem: {}, 
+		    startType: "",
+		    selectItem: {},
 		}
 	},
 	props: {
@@ -40,7 +40,7 @@ export default {
 		dragType: {
 			type: String
 		}
-	}, 
+	},
 	methods: {
 		handleSetSelectItem(record) {
 
@@ -53,16 +53,16 @@ export default {
 	      this.updateTime = newTime;
 
 	      // 设置selectItem的值
-	      this.selectItem = record; 
+	      this.selectItem = record;
 
 	      this.$emit('changeSelectItem' , this.selectItem)
 
 	      // 判断是否选中控件，如果选中则弹出属性面板，否则关闭属性面板
 	      if (record.key) {
-	        this.startType = record.type; 
-	      }  
+	        this.startType = record.type;
+	      }
 	    },
-	   
+
 	}
 }
 </script>
