@@ -15,7 +15,7 @@
       :hide-required-asterisk="formTemplate.config.hideRequiredMark"
       ref="dataForm"
       :model="dataForm"
-      size="mini"
+      size="default"
       :label-width="(item.options.labelWidth >= 0 ? item.options.labelWidth : formTemplate.config.labelWidth) + 'px'"
 
     >

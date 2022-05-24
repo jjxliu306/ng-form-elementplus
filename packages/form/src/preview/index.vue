@@ -3,10 +3,9 @@
     title="预览"
     v-model="visible"
     :append-to-body="true"
-    class="design-preview"
+    custom-class="design-preview"
     :destroy-on-close="true"
     width="850px"
-    top="10px"
   >
 
     <div class="item-main">
@@ -16,11 +15,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button size="mini" @click="visible = false">取 消</el-button>
-        <el-button size="mini" @click="handleGetData">获取数据</el-button>
-        <el-button size="mini" @click="handleRender">渲染</el-button>
-        <el-button size="mini" @click="handleValidator">验证</el-button>
-        <el-button  size="mini" type="primary" @click="visible = false">确 定</el-button>
+        <el-button size="default" @click="visible = false">取 消</el-button>
+        <el-button size="default" @click="handleGetData">获取数据</el-button>
+        <el-button size="default" @click="handleRender">渲染</el-button>
+        <el-button size="default" @click="handleValidator">验证</el-button>
+        <el-button  size="default" type="primary" @click="visible = false">确 定</el-button>
       </span>
     </template>
 

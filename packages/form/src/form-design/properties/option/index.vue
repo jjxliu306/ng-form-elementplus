@@ -4,27 +4,27 @@
 
 <template>
   <div class="option-change-container">
-   
-    <el-row  
-      v-if="[ 
+
+    <el-row
+      v-if="[
         'radio',
         'checkbox',
         'select',
         'keyvalue'
         ].includes(type)" :gutter="8">
- 
+
       <div class="option-change-box" v-for="(val, index) in value" :key="index">
         <el-col :span="9">
           <el-input v-if="keyNumber" v-model="val.value"  type="number" placeholder="值"/>
           <el-input v-else v-model="val.label" type="text" placeholder="名称"/>
         </el-col>
-        <el-col :span="9"> 
+        <el-col :span="9">
           <el-input v-if="keyNumber" v-model="val.label" placeholder="名称"/>
           <el-input v-else v-model="val.value" placeholder="值"/>
         </el-col>
         <el-col :span="6"
           ><div @click="handleDelete(index)" class="option-delete-box">
-            <i class="el-icon-delete" /></div
+            <el-icon><Delete /></el-icon></div
         ></el-col>
       </div>
       <el-col v-if="!disabled" :span="24"><el-button type="primary" @click="handleAdd">添加</el-button></el-col>
@@ -40,7 +40,7 @@
           :expand-on-click-node="false">
           <template #default="{ node, data }">
           <span class="custom-tree-node">
-            <span> 
+            <span>
               <el-row :gutter="4">
                 <el-col :span="9">
                   <el-input v-model="data.label"  :type="keyNumber ? 'number' : 'text'" placeholder="名称" />
@@ -51,20 +51,20 @@
                 <el-col :span="6">
                   <el-button
                     type="text"
-                    size="mini"
+                    size="default"
                     @click="() => append(data)">
-                    <i class="el-icon-circle-plus-outline"></i>
+                    <el-icon><CirclePlus /></el-icon>
                   </el-button>
                   <el-button
                     type="text"
-                    size="mini"
+                    size="default"
                     @click="() => remove(node, data)">
-                    <i class="el-icon-delete"></i>
+                    <el-icon><Delete /></el-icon>
                   </el-button>
                 </el-col>
               </el-row>
             </span>
-            
+
           </span>
         </template>
         </el-tree>
@@ -75,9 +75,9 @@
     <el-row v-if="type === 'rules'" :gutter="8">
       <span v-for="(val, index) in value" :key="index">
         <div class="option-change-box" v-if="index !== 0">
-          <el-col :span="18" > 
+          <el-col :span="18" >
               <el-radio v-model="val.vtype" :label="1">正则</el-radio>
-              <el-radio v-model="val.vtype" :label="2">表达式</el-radio> 
+              <el-radio v-model="val.vtype" :label="2">表达式</el-radio>
           </el-col>
           <el-col :span="18" >
             <el-input v-model="val.message" placeholder="提示信息"/>
@@ -88,7 +88,7 @@
           </el-col>
           <el-col :span="6" >
             <div @click="handleDelete(index)" class="option-delete-box">
-              <i class="el-icon-delete" />
+              <el-icon><Delete /></el-icon>
             </div>
           </el-col>
         </div>
@@ -106,14 +106,14 @@
         /></el-col>
         <el-col :span="6"
           ><div @click="handleDelete(index)" class="option-delete-box">
-             <i class="el-icon-delete" /></div
+             <el-icon><Delete /></el-icon></div
         ></el-col>
       </div>
       <el-col v-if="!disabled" :span="24"><el-button type="primary" @click="handleAddCol">添加</el-button></el-col>
-    </el-row> 
+    </el-row>
   </div>
 </template>
-<script> 
+<script>
 export default {
   name: "ChangeOption",
   props: {
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     handleAdd() {
-      // 添加 
+      // 添加
       this.value.push( {
           value: "",
           label: ""
@@ -147,7 +147,7 @@ export default {
       this.$emit("update:value", this.value);
     },
     handleAddCol() {
-      // 添加栅格Col 
+      // 添加栅格Col
       this.value.push( {
         span: 12,
         list: []
@@ -155,7 +155,7 @@ export default {
       this.$emit("update:value", this.value);
     },
     handleAddRules() {
-    
+
       this.value.push( {
         vtype: 1,
         //validator: 'validatorFiled',
@@ -191,4 +191,4 @@ export default {
 
   }
 };
-</script> 
+</script>

@@ -63,19 +63,19 @@
       id="rightMenu"
     >
       <ul>
-        <li @click="handleSettingStyle" ><i class="el-icon-magic-stick" />样式配置</li>
+        <li @click="handleSettingStyle" ><el-icon><MagicStick /></el-icon>样式配置</li>
          <hr>
         <template v-if="isMergeCol">
-          <li @click="handleDropMerge" ><i class="el-icon-delete" />解除合并</li>
+          <li @click="handleDropMerge" ><el-icon><Delete /></el-icon>解除合并</li>
           <hr>
         </template>
-        <li @click="handleDownMerge"><i class="el-icon-bottom" />向下合并</li>
-        <li @click="handleRightMerge"><i class="el-icon-right" />向右合并</li>
-        <li @click="handleAddCol"><i class="el-icon-zoom-in" />增加一列</li>
-        <li @click="handleAddRow"><i class="el-icon-zoom-in" />增加一行</li>
+        <li @click="handleDownMerge"><el-icon><Bottom /></el-icon>向下合并</li>
+        <li @click="handleRightMerge"><el-icon><Right /></el-icon>向右合并</li>
+        <li @click="handleAddCol"><el-icon><ZoomIn /></el-icon>增加一列</li>
+        <li @click="handleAddRow"><el-icon><ZoomIn /></el-icon>增加一行</li>
         <hr>
-        <li @click="handleRemoveRow"><i class="el-icon-zoom-out" />删除当前行</li>
-        <li @click="handleRemoveCol"><i class="el-icon-zoom-out" />删除当前列</li>
+        <li @click="handleRemoveRow"><el-icon><ZoomOut /></el-icon>删除当前行</li>
+        <li @click="handleRemoveCol"><el-icon><ZoomOut /></el-icon>删除当前列</li>
 
       </ul>
     </div>
@@ -84,10 +84,9 @@
     <el-dialog
       title="表内单元格样式配置"
       :model-value="styleVisible"
-      style="top:20px;"
       :append-to-body="true"
     >
-      <el-form size="mini" :model="tdStyle" label-width="80px">
+      <el-form size="default" :model="tdStyle" label-width="80px">
         <el-form-item  label="class" >
           <el-input v-model="tdStyle.class" placeholder="请输入class名称" />
         </el-form-item>
@@ -191,13 +190,11 @@ export default {
       const listString = JSON.stringify(this.data.list);
       this.data.list = JSON.parse(listString);
       // 删除icon及compoent属性
-
-      if(this.data.list && this.data.list.length > newIndex) {
-        delete this.data.list[newIndex].icon;
-        delete this.data.list[newIndex].component;
-        this.$emit("handleSetSelectItem", this.data.list[newIndex]);
+      if (this.data&&this.data.list&&Array.isArray(this.data.list)&& this.data.list.length > newIndex){
+          delete this.data.list[newIndex].icon;
+          delete this.data.list[newIndex].component;
+          this.$emit("handleSetSelectItem", this.data.list[newIndex]);
       }
-
     },
     handleColAdd(evt, columns, isCopy = false) {
       // 重置或者生成key值

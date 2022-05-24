@@ -6,8 +6,7 @@
     title="预览"
     v-model="visible"
     :append-to-body="true"
-    class="design-preview"
-    top="10px"
+    custom-class="design-preview"
     width="850px"
   >
 
@@ -29,9 +28,9 @@
   </el-tabs>
    <template #footer>
     <span class="dialog-footer">
-      <el-button size="mini" @click="visible = false">取 消</el-button>
-      <el-button size="mini" v-if="active == 'third'" type="primary" @click="syncModel" >同 步</el-button>
-      <el-button size="mini" type="primary" @click="visible = false">确 定</el-button>
+      <el-button size="default" @click="visible = false">取 消</el-button>
+      <el-button size="default" v-if="active == 'third'" type="primary" @click="syncModel" >同 步</el-button>
+      <el-button size="default" type="primary" @click="visible = false">确 定</el-button>
     </span>
    </template>
 

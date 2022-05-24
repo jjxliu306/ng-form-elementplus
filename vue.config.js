@@ -12,14 +12,14 @@ module.exports = {
           //'https://unpkg.com/element-plus/dist/index.css'
         ],
         js: [
-          
-          "https://cdn.jsdelivr.net/npm/vue-router@3.5.2/dist/vue-router.min.js",
-          "https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js",
-         // "https://unpkg.com/element-plus", 
-          "https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js" 
+
+          //"https://cdn.jsdelivr.net/npm/vue-router@3.5.2/dist/vue-router.min.js",
+         // "https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js",
+         // "https://unpkg.com/element-plus",
+         // "https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"
         ]
- 
-      }, 
+
+      },
     }
   },
   configureWebpack: {
@@ -28,30 +28,30 @@ module.exports = {
       //"element-plus": "ElementPlus",
       //'vue': 'vue',
       "vue-router": "VueRouter",
-      vuex: "Vuex", 
-      moment: "moment" 
+      vuex: "Vuex",
+      moment: "moment"
     }
-  }, 
+  },
   productionSourceMap: false,
   // 强制内联CSS
-  css: { extract: true }, 
+  css: { extract: true },
   // 扩展 webpack 配置，使 packages 加入编译
-  chainWebpack: config => { 
+  chainWebpack: config => {
     //config.plugin('webpack-bundle-analyzer')
     //    .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     config.module
       .rule('js')
-		
+
       .include
         .add('/packages')
-        .end() 
+        .end()
       .use('babel')
         .loader('babel-loader')
         .tap(options => {
           // 修改它的选项...
           return options
         })
-       
-  } 
- 
+
+  }
+
 }
