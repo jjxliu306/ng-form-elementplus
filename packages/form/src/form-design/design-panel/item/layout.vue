@@ -56,18 +56,20 @@
         </draggable>
 
         <div
+          style="cursor: pointer"
           class="copy"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleCopy')"
         >
-          <i class="el-icon-copy-document" />
+          <el-icon><DocumentCopy /></el-icon>
         </div>
         <div
+          style="cursor: pointer"
           class="delete"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleDetele')"
         >
-          <i class="el-icon-delete" />
+          <el-icon><Delete /></el-icon>
         </div>
       </div>
     </template>
@@ -127,14 +129,14 @@
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleCopy')"
         >
-          <i class="el-icon-copy-document" />
+          <el-icon><DocumentCopy /></el-icon>
         </div>
         <div
           class="delete"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleDetele')"
         >
-          <i class="el-icon-delete" />
+          <el-icon><Delete /></el-icon>
         </div>
       </div>
     </template>
@@ -192,14 +194,14 @@
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleCopy')"
         >
-          <i class="el-icon-copy-document" />
+          <el-icon><DocumentCopy /></el-icon>
         </div>
         <div
           class="delete"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleDetele')"
         >
-          <i class="el-icon-delete" />
+          <el-icon><Delete /></el-icon>
         </div>
       </div>
     </template>
@@ -275,18 +277,20 @@
         </table>
 
         <div
+          style="cursor: pointer"
           class="copy"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleCopy')"
         >
-          <i class="el-icon-copy-document" />
+          <el-icon><DocumentCopy /></el-icon>
         </div>
         <div
+          style="cursor: pointer"
           class="delete"
           :class="record.key === selectItem.key ? 'active' : 'unactivated'"
           @click.stop="$emit('handleDetele')"
         >
-          <i class="el-icon-delete" />
+          <el-icon><Delete /></el-icon>
         </div>
       </div>
     </template>

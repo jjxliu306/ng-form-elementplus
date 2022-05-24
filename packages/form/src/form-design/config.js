@@ -2,19 +2,19 @@
 import {http_get_file_list_url,http_upload_file_url} from '../utils'
 
 /**
-* 不需要回填属性 model的组件 
+* 不需要回填属性 model的组件
 */
 export const noModelList = [
   "button",
             "divider",
-            "card", 
+            "card",
             "grid",
             "table",
             "alert",
             "text",
             "html"
 ]
- 
+
 /*
  * author lyf
  * date 2020-07-06
@@ -24,7 +24,7 @@ export const noModelList = [
 export const basicsList = [
   {
     type: "input", // 表单类型
-    label: "输入框", // 标题文字  
+    label: "输入框", // 标题文字
     options: {
       type: "text",
       width: "100%", // 宽度
@@ -51,9 +51,9 @@ export const basicsList = [
   },
   {
     type: "textarea", // 表单类型
-    label: "文本框", // 标题文字  
+    label: "文本框", // 标题文字
     options: {
-      width: "100%", // 宽度 
+      width: "100%", // 宽度
       maxLength: null,
       defaultValue: "",
       rows: 4,
@@ -75,7 +75,7 @@ export const basicsList = [
   },
   {
     type: "number", // 表单类型
-    label: "数字输入框", // 标题文字  
+    label: "数字输入框", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: 0, // 默认值
@@ -101,7 +101,7 @@ export const basicsList = [
   },
   {
     type: "select", // 表单类型
-    label: "下拉选择器", // 标题文字  
+    label: "下拉选择器", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: undefined, // 下拉选框请使用undefined为默认值
@@ -138,11 +138,11 @@ export const basicsList = [
   },
   {
     type: "checkbox",
-    label: "多选框",  
+    label: "多选框",
     options: {
       disabled: false, //是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
-      defaultValue: [], 
+      defaultValue: [],
       dynamic: 0,
       tooptip: '', // 提示
       remoteFunc: '',
@@ -172,11 +172,11 @@ export const basicsList = [
   },
   {
     type: "radio", // 表单类型
-    label: "单选框", // 标题文字  
+    label: "单选框", // 标题文字
     options: {
       disabled: false, //是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
-      defaultValue: "", // 默认值 
+      defaultValue: "", // 默认值
       dynamic: 0,
       tooptip: '', // 提示
       remoteFunc: '',
@@ -206,7 +206,7 @@ export const basicsList = [
   },
   {
     type: "date", // 表单类型
-    label: "日期选择框", // 标题文字  
+    label: "日期选择框", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: "", // 默认值，字符串 12:00:00
@@ -232,7 +232,7 @@ export const basicsList = [
   },
   {
     type: "time", // 表单类型
-    label: "时间选择框", // 标题文字  
+    label: "时间选择框", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: "", // 默认值，字符串 12:00:00
@@ -254,7 +254,7 @@ export const basicsList = [
   },
   {
     type: "datePicker", // 表单类型
-    label: "日期时间选择框", // 标题文字  
+    label: "日期时间选择框", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: "", // 默认值，字符串 12:00:00
@@ -277,10 +277,10 @@ export const basicsList = [
         message: "必填项"
       }
     ]
-  }, 
+  },
   {
     type: "rate", // 表单类型
-    label: "评分", // 标题文字  
+    label: "评分", // 标题文字
     options: {
       defaultValue: null,
       max: 5, // 最大值
@@ -300,9 +300,9 @@ export const basicsList = [
   },
   {
     type: "alert", // 提示
-    label: "提示", // 标题 
-    options: { 
-      tooptip: '',  // 提示 
+    label: "提示", // 标题
+    options: {
+      tooptip: '',  // 提示
       title: '' ,  //title
       type: 'info', //类型
       description: '',
@@ -310,13 +310,13 @@ export const basicsList = [
       center: true , // 是否居中
       showIcon: false, //  是否西安市图标
       effect: 'light' , // 主题 light/dark
-      closeText: '' , //关闭按钮自定义文本 
-    }, 
-    key: "" 
+      closeText: '' , //关闭按钮自定义文本
+    },
+    key: ""
   },
   {
     type: "slider", // 表单类型
-    label: "滑动输入条", // 标题文字  
+    label: "滑动输入条", // 标题文字
     options: {
       width: "100%", // 宽度
       defaultValue: 0, // 默认值， 如果range为true的时候，则需要改成数组,如：[12,15]
@@ -339,17 +339,17 @@ export const basicsList = [
       }
     ]
   },
-  { 
+  {
     type: "uploadFile", // 表单类型
-    label: "上传文件", // 标题文字  
+    label: "上传文件", // 标题文字
     options: {
       defaultValue: [],
       multiple: false,
       disabled: false,
       tooptip: '', // 提示
-      hidden: false, // 是否隐藏，false显示，true隐藏 
-      width: "100%", 
-      limit: 3,  
+      hidden: false, // 是否隐藏，false显示，true隐藏
+      width: "100%",
+      limit: 3,
       limitSize: 10, // 文件大小限制 单位MB
       accept:"", // 接受上传的文件类型
       name:"file" , //上传的文件字段名
@@ -369,17 +369,17 @@ export const basicsList = [
   },
   {
     type: "uploadImg",
-    label: "上传图片",  
+    label: "上传图片",
     options: {
       defaultValue: [ ],
       multiple: false,
       hidden: false, // 是否隐藏，false显示，true隐藏
       disabled: false,
-      width: "100%", 
+      width: "100%",
       tooptip: '', // 提示
       limit: 3,
-      placeholder: "上传图片",  
-      limitSize: 10, // 文件大小限制 单位MB 
+      placeholder: "上传图片",
+      limitSize: 10, // 文件大小限制 单位MB
       name:"file" , //上传的文件字段名
       headers: [],
       action: '',
@@ -394,10 +394,10 @@ export const basicsList = [
         message: "必填项"
       }
     ]
-  }, 
+  },
   {
     type: "cascader", // 表单类型
-    label: "级联选择器", // 标题文字  
+    label: "级联选择器", // 标题文字
     options: {
       disabled: false, //是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
@@ -405,7 +405,7 @@ export const basicsList = [
       showSearch: false, // 是否显示搜索框，搜索选择的项的值，而不是文字
       placeholder: "请选择",
       multiple: false,
-      clearable: false, // 是否显示清除按钮 
+      clearable: false, // 是否显示清除按钮
       dynamic: 0,
       tooptip: '', // 提示
       remoteFunc: '',
@@ -444,10 +444,10 @@ export const basicsList = [
       }
     ]
   },
-  
+
   {
     type: "switch", // 表单类型
-    label: "开关", // 标题文字   
+    label: "开关", // 标题文字
     options: {
       defaultValue: false, // 默认值 Boolean 类型
       activeText: '',
@@ -467,7 +467,7 @@ export const basicsList = [
   },
   {
     type: "button", // 表单类型
-    label: "按钮", // 标题文字  
+    label: "按钮", // 标题文字
     options: {
       type: "primary",
       handle: "submit",
@@ -481,7 +481,7 @@ export const basicsList = [
   } ,
   {
       type: "batch",
-      label: "动态表格",  
+      label: "动态表格",
       list: [],
       options: {
         scrollY: 0,
@@ -489,7 +489,7 @@ export const basicsList = [
         hidden: false, // 是否隐藏，false显示，true隐藏
         showLabel: false,
         hideSequence: false,
-        labelWidth: "100",
+        labelWidth: 100,
         addType: 'dialog', // 默认增加一条数据的方式为弹出框
         labelPosition: 'left',
         customStyle: "",
@@ -500,10 +500,10 @@ export const basicsList = [
       },
       model: "",
       key: ""
-  }, 
+  },
   {
       type: "text",
-      label: "标签", 
+      label: "标签",
       options: {
         textAlign: "left",
         tooptip: '', // 提示
@@ -514,7 +514,7 @@ export const basicsList = [
   },
   {
       type: "html",
-      label: "HTML", 
+      label: "HTML",
       options: {
         tooptip: '', // 提示
         hidden: false, // 是否隐藏，false显示，true隐藏
@@ -524,11 +524,11 @@ export const basicsList = [
   },
 ];
 
-// 2021-09-29 lyf 增加个性化组件 
+// 2021-09-29 lyf 增加个性化组件
 export const personalList = [
   {
     type: "state", // 表单类型
-    label: "区划选择", // 标题文字   
+    label: "区划选择", // 标题文字
     options: {
       defaultValue: '', // 默认值 Boolean 类型
       maxLevel: 3 , // 级别 1-省 2-地市 3-区县
@@ -550,12 +550,12 @@ export const personalList = [
   },
 
 ]
-  
+
 // 布局控件
 export const layoutList = [
   {
     type: "divider",
-    label: "分割线", 
+    label: "分割线",
     options: {
       tooptip: '', // 提示
       orientation: "left",
@@ -566,13 +566,13 @@ export const layoutList = [
   },
    {
     type: "control",
-    label: "弹性容器", 
+    label: "弹性容器",
     list: [],
-    options: {  
+    options: {
       width: "100%",
       bordered: true,
       disabled: false,
-      
+
       customStyle: "",
       customClass: '',
       noCopy: false,
@@ -581,10 +581,10 @@ export const layoutList = [
     },
     key: "",
     model: ""
-  }, 
+  },
   {
     type: "grid",
-    label: "栅格布局", 
+    label: "栅格布局",
     columns: [
       {
         span: 12,
@@ -603,7 +603,7 @@ export const layoutList = [
   },
   {
     type: "table",
-    label: "表格布局", 
+    label: "表格布局",
     trs: [
       {
         tds: [

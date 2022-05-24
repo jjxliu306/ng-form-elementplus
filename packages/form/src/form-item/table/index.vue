@@ -50,16 +50,16 @@
           :width="controlWidth ">
           <template  #default="scope">
             <el-button type="success"  v-if="renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <i class="el-icon-eye" />查看
+              <el-icon><View /></el-icon>查看
             </el-button>
             <el-button type="primary"  v-if="!renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <i class="el-icon-edit" />修改
+              <el-icon><Edit /></el-icon>修改
             </el-button>
             <el-button type="primary"  v-if="!renderPreview && record.options.copyRow"  @click="copyDomain(scope.row)">
-              <i class="el-icon-copy-document" />复制
+              <el-icon><DocumentCopy /></el-icon>复制
             </el-button>
             <el-button type="danger"   v-if="!renderPreview" @click="removeDomain(scope.$index)">
-              <i class="el-icon-delete" />删除
+              <el-icon><Delete /></el-icon>删除
             </el-button>
           </template>
         </el-table-column>
@@ -68,7 +68,7 @@
 
     </el-table>
     <el-button v-if="!renderPreview" type="dashed" :disabled="disabled" @click="addDomain">
-      <i class="el-icon-circle-plus-outline" />增加
+      <el-icon><CirclePlus /></el-icon>增加
     </el-button>
 
     <AddOrUpdate ref="addOrUpdate" v-if="addOrUpdateVisible" :formConfig="config" :formTemplate="templateData" :renderPreview="renderPreview" @formAdd="formAdd"  @formUpdate="formUpdate"/>
@@ -137,7 +137,7 @@ export default {
       return this.record.options.disabled || this.parentDisabled;
     },
     templateData() {
-      return {list: this.record.list, config: { "labelPosition": this.record.options.labelPosition ? this.record.options.labelPosition : "right", "labelWidth": this.record.options.labelWidth, "size": "mini", "hideRequiredMark": false } }
+      return {list: this.record.list, config: { "labelPosition": this.record.options.labelPosition ? this.record.options.labelPosition : "right", "labelWidth": this.record.options.labelWidth, "size": "default", "hideRequiredMark": false } }
     },
      controlWidth() {
       let w = 100

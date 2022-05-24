@@ -132,7 +132,7 @@
 	"config": {
 		"labelPosition": "left",
 		"labelWidth": 0,
-		"size": "mini",
+		"size": "default",
 		"hideRequiredMark": true,
 		"customStyle": ""
 	}

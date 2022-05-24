@@ -16,11 +16,11 @@
                     <span style="float: right;">
                       <slot name="controlButton">
                       </slot>
-                      <el-button v-if="clear" type="text" size="medium" icon="el-icon-delete" @click="handleClear">清空</el-button>
-                      <el-button v-if="preview" type="text" size="medium" icon="el-icon-view" @click="handlePreview">预览</el-button>
-                       <el-button v-if="reder"  type="text" size="medium" icon="el-icon-view" @click="handleRender">渲染</el-button>
-                      <el-button v-if="imp" type="text" size="medium" icon="el-icon-download" @click="handleImport">导入</el-button>
-                      <el-button v-if="exp" type="text" size="medium" icon="el-icon-upload2" @click="handleGenerateJson">导出</el-button>
+                      <el-button v-if="clear" type="text" size="large" icon="Delete" @click="handleClear">清空</el-button>
+                      <el-button v-if="preview" type="text" size="large" icon="View" @click="handlePreview">预览</el-button>
+                       <el-button v-if="reder"  type="text" size="large" icon="View" @click="handleRender">渲染</el-button>
+                      <el-button v-if="imp" type="text" size="large" icon="Download" @click="handleImport">导入</el-button>
+                      <el-button v-if="exp" type="text" size="large" icon="Upload" @click="handleGenerateJson">导出</el-button>
                     </span>
                   </div>
                 </template>
@@ -56,15 +56,14 @@
         title="模板数据"
         v-model="importVisible"
         :append-to-body="true"
-        top="10px"
         width="850px"
       >
         <el-input type="textarea" :rows="3" v-model="importText">
         </el-input>
         <template #footer>
           <span class="dialog-footer">
-            <el-button size="mini" @click="importVisible = false">取 消</el-button>
-            <el-button size="mini" type="primary" @click="importModel">确 定</el-button>
+            <el-button size="default" @click="importVisible = false">取 消</el-button>
+            <el-button size="default" type="primary" @click="importModel">确 定</el-button>
           </span>
         </template>
       </el-dialog>
@@ -104,7 +103,7 @@ export default {
         config: {
           labelPosition: "left",
           labelWidth: 100,
-          size: 'mini',
+          size: 'default',
           outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
           hideRequiredMark: true ,
           customStyle: ""

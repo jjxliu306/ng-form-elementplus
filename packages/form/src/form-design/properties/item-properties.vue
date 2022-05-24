@@ -6,7 +6,7 @@
 
     <div class="properties-body">
       <p class="hint-box" v-show="!selectItem.key">未选择控件</p>
-      <el-form v-show="selectItem.key" size="mini" :disabled="disabled">
+      <el-form v-show="selectItem.key" size="default" :disabled="disabled">
 
 
         <!-- 公共部分 标签 字段key 数据key start -->
@@ -131,16 +131,16 @@
           <el-form-item label-width="0px" >
             <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
-                <el-input size="mini" v-model="options.remoteFunc">
+                <el-input size="default" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
                 </el-input>
-                <el-input size="mini" v-model="options.dataPath"  title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
+                <el-input size="default" v-model="options.dataPath"  title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
                   <template #prepend>列表数据dataPath</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteValue">
+                <el-input size="default" v-model="options.remoteValue">
                   <template #prepend>值字段</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteLabel">
+                <el-input size="default" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
                 </el-input>
             </div>
@@ -226,16 +226,16 @@
           <el-form-item label-width="0px" >
              <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
-                <el-input size="mini" v-model="options.remoteFunc">
+                <el-input size="default" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
                 </el-input>
-                <el-input size="mini" v-model="options.dataPath"  title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
+                <el-input size="default" v-model="options.dataPath"  title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
                   <template #prepend>列表数据dataPath</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteValue">
+                <el-input size="default" v-model="options.remoteValue">
                   <template #prepend>值字段</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteLabel">
+                <el-input size="default" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
                 </el-input>
             </div>
@@ -304,16 +304,16 @@
           <el-form-item label-width="0px">
              <!-- 远程赋值配置 -->
             <div  v-if="options.dynamic == 1">
-                <el-input size="mini" v-model="options.remoteFunc">
+                <el-input size="default" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
                 </el-input>
-                <el-input size="mini" v-model="options.dataPath" title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
+                <el-input size="default" v-model="options.dataPath" title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
                   <template #prepend>列表数据dataPath</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteValue">
+                <el-input size="default" v-model="options.remoteValue">
                   <template #prepend>值字段</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteLabel">
+                <el-input size="default" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
                 </el-input>
             </div>
@@ -356,7 +356,7 @@
               :options="options.options"
               v-model="options.defaultValue"
             >
-              <el-radio  v-for="(item,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index">
+              <el-radio  v-for="(checkitem,index) in  [].concat(options.options)" :label="checkitem.value" :key="checkitem.value + index">
                 {{checkitem.label}}
               </el-radio>
           </el-radio-group>
@@ -582,19 +582,19 @@
           <el-form-item label-width="0px" >
              <!-- 远程赋值配置 -->
             <div v-if="options.dynamic == 1">
-                <el-input size="mini" v-model="options.remoteFunc">
+                <el-input size="default" v-model="options.remoteFunc">
                   <template #prepend>远端方法</template>
                 </el-input>
-                <el-input size="mini" v-model="options.dataPath">
+                <el-input size="default" v-model="options.dataPath">
                   <template #prepend>列表数据jsonPath</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteValue">
+                <el-input size="default" v-model="options.remoteValue">
                   <template #prepend>值字段</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteLabel">
+                <el-input size="default" v-model="options.remoteLabel">
                   <template #prepend>标签字段</template>
                 </el-input>
-                <el-input size="mini" v-model="options.remoteChildren" >
+                <el-input size="default" v-model="options.remoteChildren" >
                   <template #prepend>下级字段</template>
                 </el-input>
             </div>
@@ -1048,7 +1048,7 @@ export default {
 
         // 判断 labelWidth
       if(!this.hideModel && !Object.prototype.hasOwnProperty.call(this.options, 'labelWidth')){
-        this.options['labelWidth'] = -1
+        this.options['labelWidth'] = 60
       }
     }
   },

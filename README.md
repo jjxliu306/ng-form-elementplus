@@ -175,9 +175,9 @@ Vue.use(NgFormElementPlus)
  ```
   <ng-form-design >
         <template slot="controlButton" >
-            <el-button   type="text" size="medium"  @click="initDemo(1)">示例1</el-button>
-            <el-button   type="text" size="medium"  @click="initDemo(2)">示例2</el-button>
-            <el-button   type="text" size="medium"  @click="initDemo(3)">示例3</el-button>
+            <el-button   type="text" size="large"  @click="initDemo(1)">示例1</el-button>
+            <el-button   type="text" size="large"  @click="initDemo(2)">示例2</el-button>
+            <el-button   type="text" size="large"  @click="initDemo(3)">示例3</el-button>
         </template>
         <template  slot="formName">
             <span> vue-drag-formdesign 示例 </span>
@@ -284,7 +284,7 @@ Vue.use(NgFormElementPlus)
 ```
 <template>
   <!-- 自定义组件的属性配置 -->  
-  <el-form v-show="selectItem.key" size="mini" :disabled="disabled">
+  <el-form v-show="selectItem.key" size="default" :disabled="disabled">
     <!-- TCustom   start-->
       <template v-if="selectItem.type == 'customT'"> 
             <!-- 开关的label -->

@@ -184,7 +184,7 @@
 	"config": {
 		"labelPosition": "right",
 		"labelWidth": 150,
-		"size": "mini",
+		"size": "default",
 		"hideRequiredMark": false,
 		"customStyle": ""
 	}

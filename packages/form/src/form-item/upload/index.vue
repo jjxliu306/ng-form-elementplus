@@ -1,5 +1,5 @@
 <template>
-<div> 
+<div>
 	<el-upload
 	  class="upload-demo"
 	  :action="action"
@@ -15,11 +15,15 @@
 	  :on-remove="handleRemove"
 	  :on-preview="handlePreview"
 	  :auto-upload="autoUpload"
-	  :file-list="fileList"> 
+	  :file-list="fileList">
 	    <template v-if="!renderPreview">
-	  		<el-button v-if="listType != 'picture-card'" size="small" type="primary">选取文件</el-button>
-	  		<i v-else class="el-icon-plus"></i> 
-	  	</template> 
+        <template v-if="listType != 'picture-card'">
+          <el-button  size="default" type="primary">选取文件</el-button>
+        </template>
+        <template  v-else>
+          <el-icon><Plus /></el-icon>
+        </template>
+	  	</template>
 	   	<template #tip v-if="tip != undefined && !renderPreview" >
 	   		<div  class="el-upload__tip">请选择图片，且不超过500kb</div>
 	   	</template>
@@ -36,7 +40,7 @@ export default {
 		}
 	},
 	props: {
-	    value: {
+    modelValue: {
 	      type: Array,
 	      default: ()=> [],
 	      required: true
@@ -93,13 +97,13 @@ export default {
 	    }
 	},
 	watch: {
-		value(val) {
+    modelValue(val) {
 			if(val && val.length > 0) {
 				const valueNames = val.map(t=>t.name).join(',');
 				const fileListNames = this.fileList.map(t=>t.name).join(',')
 				if(fileListNames != valueNames) {
-					this.fileList = val 
-				} 
+					this.fileList = val
+				}
 			}
 		}
 	},
@@ -107,44 +111,44 @@ export default {
 		// 需要携带的头数据
 		uploadHeader() {
 			if(this.record && this.record.options && this.record.options.headers) {
-				const hs = {} 
+				const hs = {}
 				this.record.options.headers.forEach(t=> {
 					hs[t.label] = t.value
 				})
 
-				return hs 
-			} 
+				return hs
+			}
 			return {}
 		},
 		// 文件上传成功后文件的url路径
 		uploadResponseFileUrl() {
 			if(this.record && this.record.options && this.record.options.responseFileUrl) {
-				 
-				return this.record.options.responseFileUrl 
-			} 
+
+				return this.record.options.responseFileUrl
+			}
 
 			return null
 		}
 	},
 	mounted() {
-		if(this.value == null || this.value == undefined) {
+		if(this.modelValue == null || this.modelValue == undefined) {
 			//this.$emit("input", []);
 			this.fileList = []
 		} else {
-			this.fileList = this.value
+			this.fileList = this.modelValue
 		}
-	}, 
+	},
 	methods: {
 		beforeUpload(file) {
 			const fileName = file.name;
-	       
-	      	const ltSize = file.size / 1024 / 1024  
+
+	      	const ltSize = file.size / 1024 / 1024
 
 	      	const index1 = fileName.lastIndexOf(".");
 
 	      	const index2 = fileName.length;
 	      	const fileSuffix = fileName.substring(index1 + 1, index2); // 后缀名
- 
+
 	      	// console.log('file' , file)
 	      	//const fileType = file.type;
 	      	if (
@@ -160,7 +164,7 @@ export default {
 	        	this.$message.error( "上传文件大小不能超过" + (this.record.options.limitSize) + "MB!" )
 
 	        	return false
-	         
+
 	      	}
 	      return true;
 		},
@@ -173,40 +177,40 @@ export default {
 			//console.log('add fileList' , fileList)
 
 			// 根据返回结果的url来获取实际文件的url
-			const responseFileUrl = this.uploadResponseFileUrl 
- 
- 
+			const responseFileUrl = this.uploadResponseFileUrl
+
+
 			const fileUrl = objectPath.get(response, responseFileUrl)
 
 			if(fileUrl) {
 				// 重新组合
 				const f_ = {name: file.name , size: file.size , url: fileUrl}
- 
+
 				const addData = [
-			        ...this.value,
+			        ...this.modelValue,
 			        {
 			         name: file.name , size: file.size , url: fileUrl
 			        }
 			    ];
- 
-			    this.$emit("input", addData);
+
+			    this.$emit("update:modelValue", addData);
 			}
 
-			
-		 
+
+
 		},
 		handleRemove(file , fileList) {
 			//console.log('remove file' , file)
 			//console.log('remove fileList' , fileList)
 
 			// 根据文件名删除文件
-			const name = file.name  
+			const name = file.name
 
 			 // 删除
 		    this.$emit(
-		        "input",
-		        this.value.filter(val => val.name != name)
-		    ) 
+		        "update:modelValue",
+		        this.modelValue.filter(val => val.name != name)
+		    )
 		},
 		// 点击下载或者预览
 		handlePreview(file) {
