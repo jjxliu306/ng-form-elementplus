@@ -5,9 +5,9 @@
         <el-tab-pane label="表单绘制" name="first">
             <ng-form-design ref="formDesign"  >
                 <template #controlButton >
-                    <el-button   type="text" size="large"  @click="initDemo(1)">示例1</el-button>
-                    <el-button   type="text" size="large"  @click="initDemo(2)">示例2</el-button>
-                    <el-button   type="text" size="large"  @click="initDemo(3)">示例3</el-button>
+                    <el-button   type="text" size="small"  @click="initDemo(1)">示例1</el-button>
+                    <el-button   type="text" size="small"  @click="initDemo(2)">示例2</el-button>
+                    <el-button   type="text" size="small"  @click="initDemo(3)">示例3</el-button>
                 </template>
             </ng-form-design>
         </el-tab-pane>
@@ -16,12 +16,12 @@
             title="测试表单预览"
             type="warning">
           </el-alert>
-
+          	
             <ng-form-build ref="formbuild" :formTemplate="formTemplate" :models="models"  :config="formConfig"/>
 
-             <el-button   type="primary" size="default"  @click="validator()">验证</el-button>
-             <el-button   type="primary" size="default"  @click="reset()">重置</el-button>
-             <el-button   type="primary" size="default"  @click="getData()">获取数据</el-button>
+             <el-button   type="primary" size="small"  @click="validator()">验证</el-button>
+             <el-button   type="primary" size="small"  @click="reset()">重置</el-button>
+             <el-button   type="primary" size="small"  @click="getData()">获取数据</el-button>
         </el-tab-pane>
       </el-tabs>
 

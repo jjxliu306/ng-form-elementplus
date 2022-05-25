@@ -16,11 +16,11 @@
                     <span style="float: right;">
                       <slot name="controlButton">
                       </slot>
-                      <el-button v-if="clear" type="text" size="large" icon="Delete" @click="handleClear">清空</el-button>
-                      <el-button v-if="preview" type="text" size="large" icon="View" @click="handlePreview">预览</el-button>
-                       <el-button v-if="reder"  type="text" size="large" icon="View" @click="handleRender">渲染</el-button>
-                      <el-button v-if="imp" type="text" size="large" icon="Download" @click="handleImport">导入</el-button>
-                      <el-button v-if="exp" type="text" size="large" icon="Upload" @click="handleGenerateJson">导出</el-button>
+                      <el-button v-if="clear" type="text" size="small" icon="Delete" @click="handleClear">清空</el-button>
+                      <el-button v-if="preview" type="text" size="small" icon="View" @click="handlePreview">预览</el-button>
+                       <el-button v-if="reder"  type="text" size="small" icon="View" @click="handleRender">渲染</el-button>
+                      <el-button v-if="imp" type="text" size="small" icon="Download" @click="handleImport">导入</el-button>
+                      <el-button v-if="exp" type="text" size="small" icon="Upload" @click="handleGenerateJson">导出</el-button>
                     </span>
                   </div>
                 </template>
