@@ -620,6 +620,28 @@ export default {
       }
 
       return null
+    },
+     // 监听组件
+    listenModel() {
+      if(!this.isDragPanel && this.record.options.listenModel ) {
+          const listenModelData = this.record.options.listenModelData
+          if(!listenModelData) return null
+          
+          const lmodels = listenModelData.split(',')
+          let vs = []
+          for(let i = 0 ; i < lmodels.length ; i++) {
+            // 判断类型 vtype=1 本地搜索 vtype=2 远程过滤
+            const ld = lmodels[i]
+            if(ld) {
+              // local script
+              vs.push(this.models[ld])
+
+            }
+          }
+          return vs 
+
+      }
+      return null
     }
   },
   watch: {
@@ -712,6 +734,25 @@ export default {
 
       },
       deep:true
+    },
+    // 组件监听 2022-07-10 lyf
+    listenModel: {
+      handler(val, oldVal){
+        if(this.record.options.listenModel ) {
+          const listenModelData = this.record.options.listenModelData
+          if(!listenModelData) return  
+
+            // 本地搜索
+          const listenScript = this.record.options.listenModelScript 
+          if(!listenScript) return
+            
+          dynamicFun(listenScript , this.models)
+
+             
+        }
+      },
+      deep:true
+      
     }
   },
   methods: {
