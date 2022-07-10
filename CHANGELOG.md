@@ -1,5 +1,21 @@
 **版本更新说明**
 
+
+**1.0.4**  
+
+```
+2022-05-25
+
+1、升级element-plus->2.1.10
+2、同步组件大小同步升级为large,default,small,三种尺寸,默认为中等default尺寸，
+3、修复vue3.0组件绑定v-model,默认值为valueModel,update:valueModel
+4、同步修改图标icon为element-plus官方新版方法
+5、修复其他问题
+
+by-林星辉
+```
+
+
 **1.0.3**  
 
 ```
