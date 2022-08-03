@@ -1075,14 +1075,14 @@ export default {
 
         // 获取焦点事件
       if(this.focusType.includes(val.type) && !Object.prototype.hasOwnProperty.call(val.options, 'focusEvent')) {
-        this.$set(val.options , 'focusEvent' , '')
+        this.options['focusEvent'] = '' 
       }
 
         // 监听组件
       if(!Object.prototype.hasOwnProperty.call(val.options, 'listenModel')) {
-        this.$set(val.options , 'listenModel' , false)
-        this.$set(val.options , 'listenModelData' , '')
-        this.$set(val.options , 'listenModelScript' , '')
+        this.options['listenModel'] = false
+        this.options['listenModelData'] = '' 
+        this.options['listenModelScript'] = ''  
       }
 
       this.options = val.options || {};
