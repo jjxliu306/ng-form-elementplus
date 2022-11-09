@@ -975,26 +975,26 @@
         <template v-if="focusType.includes(selectItem.type) || Object.prototype.hasOwnProperty.call(options, 'focusEvent')" >
           <el-divider >事件</el-divider>
           <el-form-item  label="获取焦点事件">
-            <el-input type="textarea" v-model="options.focusEvent"  placeholder="获取焦点后事件,eg: $.address = $.city + $.location" /> 
+            <el-input type="textarea" v-model="options.focusEvent"  placeholder="获取焦点后事件,eg: $.address = $.city + $.location" />
           </el-form-item>
         </template>
-      
+
          <!-- 联动配置 2022-07-10 lyf -->
         <el-form-item label="监听组件">
-         
+
             <el-switch
               v-model="options.listenModel"
               active-text="是"
               inactive-text="否">
-            </el-switch> 
+            </el-switch>
         </el-form-item>
-        <template v-if="options.listenModel"> 
+        <template v-if="options.listenModel">
           <el-form-item label="监听组件model">
-            <el-input v-model.trim="options.listenModelData"  placeholder="多个使用,分割" /> 
+            <el-input v-model.trim="options.listenModelData"  placeholder="多个使用,分割" />
           </el-form-item>
           <el-form-item label="触发表达式">
             <el-input size="mini"   type="textarea" v-model="options.listenModelScript" placeholder="表达式,eg: $.address = $.city + $.location" />
-          </el-form-item> 
+          </el-form-item>
         </template>
         <el-divider ></el-divider>
 
@@ -1075,14 +1075,14 @@ export default {
 
         // 获取焦点事件
       if(this.focusType.includes(val.type) && !Object.prototype.hasOwnProperty.call(val.options, 'focusEvent')) {
-        this.options['focusEvent'] = '' 
+        this.options['focusEvent'] = ''
       }
 
         // 监听组件
-      if(!Object.prototype.hasOwnProperty.call(val.options, 'listenModel')) {
+      if(val.options&&!Object.prototype.hasOwnProperty.call(val.options, 'listenModel')) {
         this.options['listenModel'] = false
-        this.options['listenModelData'] = '' 
-        this.options['listenModelScript'] = ''  
+        this.options['listenModelData'] = ''
+        this.options['listenModelScript'] = ''
       }
 
       this.options = val.options || {};
