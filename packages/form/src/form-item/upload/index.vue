@@ -31,7 +31,7 @@
 </div>
 </template>
 <script>
-import {objectPath} from "object-path";
+import objectPath from "object-path";
 export default {
 	name: 'form-upload',
 	data() {

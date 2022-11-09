@@ -267,7 +267,7 @@
         :end-placeholder="record.options.rangeEndPlaceholder"
         :format="record.options.format"
         :value-format="record.options.format"
-        @change="handleChange($event, record.model)" 
+        @change="handleChange($event, record.model)"
          @focus="handleFocus($event , record.model)">
       </el-date-picker>
       <el-date-picker
@@ -457,7 +457,7 @@ import FileUpload from './upload/index.vue'
 import {dynamicFun,dateFormater} from '../utils'
 import CustomComponent from "./custom.vue";
 import NgState from './state/index.vue'
-import {objectPath} from "object-path";
+import objectPath from "object-path";
 export default {
   name: "ng-form-item-base",
   data(){
@@ -626,7 +626,7 @@ export default {
       if(!this.isDragPanel && this.record.options.listenModel ) {
           const listenModelData = this.record.options.listenModelData
           if(!listenModelData) return null
-          
+
           const lmodels = listenModelData.split(',')
           let vs = []
           for(let i = 0 ; i < lmodels.length ; i++) {
@@ -638,7 +638,7 @@ export default {
 
             }
           }
-          return vs 
+          return vs
 
       }
       return null
@@ -740,19 +740,19 @@ export default {
       handler(val, oldVal){
         if(this.record.options.listenModel ) {
           const listenModelData = this.record.options.listenModelData
-          if(!listenModelData) return  
+          if(!listenModelData) return
 
             // 本地搜索
-          const listenScript = this.record.options.listenModelScript 
+          const listenScript = this.record.options.listenModelScript
           if(!listenScript) return
-            
+
           dynamicFun(listenScript , this.models)
 
-             
+
         }
       },
       deep:true
-      
+
     }
   },
   methods: {
@@ -773,9 +773,9 @@ export default {
       // 判断是否有监听
       const focusEventScript = this.record.options.focusEvent
 
-      if(!focusEventScript) return 
+      if(!focusEventScript) return
 
-      dynamicFun(focusEventScript,this.models) 
+      dynamicFun(focusEventScript,this.models)
     },
     remoteMethod(query){
       let queryParam = this.record.options.onlineParams
