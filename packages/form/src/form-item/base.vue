@@ -478,6 +478,9 @@ export default {
       // 2021-03-13 如果该字段带有本地数据过滤,则这里保存本地过滤的过滤条件
       localFilter: [],
       remoteFilter: {} , // 远程过滤搜索 结构 {key:xx,value:xx}
+
+      copyModels: '', // 监听models数据上下两次变化
+      copyLstenModel: '', // 监听数据字段的变化
     }
   },
   props: {
@@ -495,7 +498,8 @@ export default {
     // form-item 宽度配置
     models: {
       type: Object,
-      required: true
+      required: true,
+      default: () => ({})
     },
     disabled: {
       type: Boolean,
@@ -742,16 +746,22 @@ export default {
           const listenModelData = this.record.options.listenModelData
           if(!listenModelData) return
 
-            // 本地搜索
-          const listenScript = this.record.options.listenModelScript
-          if(!listenScript) return
 
-          dynamicFun(listenScript , this.models)
+          // 解决 初始化加载数据 被计算数据监听造成数据变化
+          const Ify = JSON.stringify(val)
+          if (this.copyLstenModel != Ify) {
+            this.copyLstenModel = Ify
+            const listenScript = this.record.options.listenModelScript 
+            if(!listenScript) return
+            dynamicFun(listenScript , this.models)
+          }
+        
 
 
         }
       },
-      deep:true
+      deep:true,
+      immediate: true,
 
     }
   },

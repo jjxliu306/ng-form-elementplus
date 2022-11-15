@@ -120,7 +120,7 @@ export default {
     validator(){
       return new Promise((resolve, reject) => {
 
-          this.$refs.form.validate((valid,values)=>{
+           this.$refs.form && this.$refs.form.validate((valid,values)=>{
 
             resolve(valid);
           })
@@ -130,6 +130,11 @@ export default {
     getData() {
       // 提交函数，提供父级组件调用
       return new Promise((resolve, reject) => {
+
+        if(!this.$refs.form) {
+          reject('验证失败')
+          return
+        }
 
           this.$refs.form.validate((valid,values)=>{
             if (!valid) {
