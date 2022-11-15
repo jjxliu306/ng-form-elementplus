@@ -43,6 +43,7 @@
 <script>
 
 import NgFormBuildItem from "./build-item.vue";
+import { noModelList } from '../form-design/config.js'
 export default {
   name: "ng-form-build",
   data() {
@@ -193,7 +194,9 @@ export default {
               // 多选
               this.models[n.model] = []
               //this.$set(this.models , n.model , [])
-            } else if(n.type != 'control' && n.type != 'table' && n.type != 'divider' && n.type != 'grid'){
+            }     
+            //else if(n.type != 'control' && n.type != 'table' && n.type != 'divider' && n.type != 'grid' && n.type != ){ 
+            else if(!noModelList.includes(n.type)) {
               // 字符串
               this.models[n.model] = null
               //this.$set(this.models , n.model , null)
