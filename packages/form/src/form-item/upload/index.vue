@@ -1,7 +1,37 @@
 <template>
-<div>
+<div> 
+	<div v-if="renderPreview || disabled">
+		<!-- 判断图片还是文件列表 -->
+		<div v-if="accept && accept.indexOf('image') >= 0 && listType && listType.indexOf('picture-card') >= 0" >
+        <ul > 
+          <li style="float:left;margin-right:20px;list-style: none;" v-for="(item,index) in fileList"  :key="index">
+
+            <img  @click="reviewDown(item)"   :src="item.url" :class="[direction == null || direction == false?'avatar':'vertical']" style="max-height: 150px;max-width: 150px;cursor: pointer;">
+            
+          </li>
+
+        </ul>
+
+      </div>
+
+      <ul v-else class="el-upload-list el-upload-list--text">
+        <li v-for="(item,index) in fileList" :key="index" :tabindex="index" class="el-upload-list__item pointer"  style="cursor: pointer;"
+            @click="fileDown(item)"><!---->
+          <a class="el-upload-list__item-name "  style="cursor: pointer;">
+            <i class="el-icon-document"></i> {{item.name}}
+          </a>
+
+          <label class="el-upload-list__item-status-label">
+            <i class="el-icon-upload-success el-icon-circle-check"></i>
+          </label>
+
+          <!---->
+        </li>
+      </ul>
+	</div>
 	<el-upload
-	  class="upload-demo"
+	  v-else 
+	  class="ng-form-upload"
 	  :action="action"
 	  :drag="drag"
 	  :disabled="disabled"
@@ -11,23 +41,30 @@
 	  :accept="accept"
 	  :list-type="listType"
 	  :with-credentials="withCredentials"
+	   :before-upload="beforeUpload"
 	  :on-success="handleSuccess"
 	  :on-remove="handleRemove"
 	  :on-preview="handlePreview"
 	  :auto-upload="autoUpload"
 	  :file-list="fileList">
-	    <template v-if="!renderPreview">
-        <template v-if="listType != 'picture-card'">
-          <el-button  size="default" type="primary">选取文件</el-button>
-        </template>
-        <template  v-else>
-          <el-icon><Plus /></el-icon>
-        </template>
-	  	</template>
-	   	<template #tip v-if="tip != undefined && !renderPreview" >
+	  <template v-if="!renderPreview">
+		<template v-if="listType != 'picture-card'">
+			<el-button  size="small" type="primary" :disabled="disabled">选取文件</el-button>
+		</template>
+		<template  v-else>
+			<el-icon><Plus /></el-icon>
+		</template>
+	  </template>
+	  <template #tip v-if="tip != undefined && !renderPreview" >
 	   		<div  class="el-upload__tip">请选择图片，且不超过500kb</div>
-	   	</template>
+	   </template>
+ 
 	</el-upload>
+
+	  <!--附件上传-->
+    <el-dialog :append-to-body="true" :visible="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
 </div>
 </template>
 <script>
@@ -36,11 +73,13 @@ export default {
 	name: 'form-upload',
 	data() {
 		return {
+			dialogVisible: false,
+			dialogImageUrl: '',
 			fileList: []
 		}
 	},
 	props: {
-    modelValue: {
+	    value: {
 	      type: Array,
 	      default: ()=> [],
 	      required: true
@@ -94,16 +133,20 @@ export default {
 	    renderPreview: {
 	    	type: Boolean,
 	    	default: false
+	    },
+	    imgDownBut: {
+	    	type: Boolean,
+	    	default: true
 	    }
 	},
 	watch: {
-    modelValue(val) {
+		value(val) {
 			if(val && val.length > 0) {
 				const valueNames = val.map(t=>t.name).join(',');
 				const fileListNames = this.fileList.map(t=>t.name).join(',')
 				if(fileListNames != valueNames) {
-					this.fileList = val
-				}
+					this.fileList = val 
+				} 
 			}
 		}
 	},
@@ -111,46 +154,46 @@ export default {
 		// 需要携带的头数据
 		uploadHeader() {
 			if(this.record && this.record.options && this.record.options.headers) {
-				const hs = {}
+				const hs = {} 
 				this.record.options.headers.forEach(t=> {
 					hs[t.label] = t.value
 				})
 
-				return hs
-			}
+				return hs 
+			} 
 			return {}
 		},
 		// 文件上传成功后文件的url路径
 		uploadResponseFileUrl() {
 			if(this.record && this.record.options && this.record.options.responseFileUrl) {
-
-				return this.record.options.responseFileUrl
-			}
+				 
+				return this.record.options.responseFileUrl 
+			} 
 
 			return null
 		}
 	},
 	mounted() {
-		if(this.modelValue == null || this.modelValue == undefined) {
+		if(this.value == null || this.value == undefined) {
 			//this.$emit("input", []);
 			this.fileList = []
 		} else {
-			this.fileList = this.modelValue
+			this.fileList = this.value
 		}
-	},
+	}, 
 	methods: {
 		beforeUpload(file) {
 			const fileName = file.name;
-
-	      	const ltSize = file.size / 1024 / 1024
+	       
+	      	const ltSize = file.size / 1024 / 1024  
 
 	      	const index1 = fileName.lastIndexOf(".");
 
 	      	const index2 = fileName.length;
 	      	const fileSuffix = fileName.substring(index1 + 1, index2); // 后缀名
-
+ 
 	      	// console.log('file' , file)
-	      	//const fileType = file.type;
+	      	const fileType = file.type;
 	      	if (
 		        this.accept &&
 		        this.accept.indexOf("image") >= 0 &&
@@ -164,7 +207,7 @@ export default {
 	        	this.$message.error( "上传文件大小不能超过" + (this.record.options.limitSize) + "MB!" )
 
 	        	return false
-
+	         
 	      	}
 	      return true;
 		},
@@ -177,40 +220,43 @@ export default {
 			//console.log('add fileList' , fileList)
 
 			// 根据返回结果的url来获取实际文件的url
-			const responseFileUrl = this.uploadResponseFileUrl
+			const responseFileUrl = this.uploadResponseFileUrl 
+ 
 
-
+			 
 			const fileUrl = objectPath.get(response, responseFileUrl)
-
+		 
 			if(fileUrl) {
 				// 重新组合
 				const f_ = {name: file.name , size: file.size , url: fileUrl}
 
+				console.log('this.value' , JSON.stringify(this.value))
 				const addData = [
-			        ...this.modelValue,
+			        ...this.value,
 			        {
 			         name: file.name , size: file.size , url: fileUrl
 			        }
 			    ];
 
+			     console.log('addData' , addData)
 			    this.$emit("update:modelValue", addData);
 			}
 
-
-
+			
+		 
 		},
 		handleRemove(file , fileList) {
 			//console.log('remove file' , file)
 			//console.log('remove fileList' , fileList)
 
 			// 根据文件名删除文件
-			const name = file.name
+			const name = file.name  
 
 			 // 删除
 		    this.$emit(
 		        "update:modelValue",
-		        this.modelValue.filter(val => val.name != name)
-		    )
+		        this.value.filter(val => val.name != name)
+		    ) 
 		},
 		// 点击下载或者预览
 		handlePreview(file) {
@@ -218,12 +264,31 @@ export default {
 
 			// 从url中下载
 			if(file.url) {
-				window.location.href = file.url
+				 
+
+				this.dialogVisible = true 
+				this.dialogImageUrl = file.url 
+				//window.location.href = file.url
 			} else {
 				this.$message.error('找不到文件下载路径')
 			}
 
-		}
+		},
+		 // 浏览下载文件
+	    reviewDown (file) {
+	      this.handlePreview(file)
+	    },
+	    
+	    // 图片下载
+	    fileDown (file) {
+	    	if(file.url) {
+				 window.open(file.url)
+			} else {
+				this.$message.error('找不到文件下载路径')
+			}
+
+	     
+	    },
 	}
 }
 </script>
