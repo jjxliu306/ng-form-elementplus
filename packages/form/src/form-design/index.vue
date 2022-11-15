@@ -260,13 +260,21 @@ export default {
         return
       }
 
-      const importData = JSON.parse(this.importText)
-      if(importData){
-        this.data = importData
+      try {
+        const importData = JSON.parse(this.importText)
+        
+        if(importData && typeof importData == 'object'){
+          this.data = importData
+          this.importVisible = false
+        } else {
+          this.$message.error('模板解析异常，请检查文本内容.')
+        }
+        
+      } catch (error) {
+        console.error('模板解析异常，请检查文本内容.' , error)
+        this.$message.error('模板解析异常，请检查文本内容.')
       }
-
-      this.importVisible = false
-
+      
 
     },
     initModel(model) {
