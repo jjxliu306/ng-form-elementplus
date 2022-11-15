@@ -570,7 +570,7 @@ export default {
 
             }
           }
-          return vs
+          return vs.join(',')
 
         }
         return null
@@ -675,6 +675,9 @@ export default {
     // 监听关联字段
     linkageData: {
       handler(val , oldVal) {
+        if(val == oldVal) {
+          return
+        }
         if(this.record.options.linkage ) {
           const linkData = this.record.options.linkData
           if(!linkData) return
@@ -721,8 +724,7 @@ export default {
 
         }
 
-      },
-      deep:true
+      } 
     } ,
     modelsRecord :{
       handler(val, oldVal){
