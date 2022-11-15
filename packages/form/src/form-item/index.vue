@@ -414,15 +414,15 @@ export default {
     if(this.models[this.record.model])
       return ;
 
-    const defaultValue = this.record.options.defaultValue
-    if(defaultValue) {
-      if(this.record.type == 'checkbox'){
-        this.checkList = defaultValue
-      } else {
-        //this.$set(this.models , this.record.model , defaultValue)
-        this.models[this.record.model] = defaultValue
-      }
-    }
+    // const defaultValue = this.record.options.defaultValue
+    // if(defaultValue) {
+    //   if(this.record.type == 'checkbox'){
+    //     this.checkList = defaultValue
+    //   } else {
+    //     //this.$set(this.models , this.record.model , defaultValue)
+    //     this.models[this.record.model] = defaultValue
+    //   }
+    // }
 
   }
 };

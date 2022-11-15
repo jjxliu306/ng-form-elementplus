@@ -383,11 +383,23 @@
           <el-form-item  label="宽度">
             <el-input placeholder="请输入" v-model="options.width" />
           </el-form-item>
-           <el-divider ></el-divider>
+          <el-divider ></el-divider>
+          <el-form-item label="类型" v-if="selectItem.type == 'date'">
+           <!--  // year/month/date/dates/months/years week/datetime/datetimerange/ daterange/monthrange -->
+            <el-select v-model="options.dateType" placeholder="请选择类型">
+              <el-option
+                v-for="item in ['year' , 'month' , 'date' ]"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="默认值" >
             <el-input
               v-if="selectItem.type == 'time' || !options.range"
               v-model="options.defaultValue"
+              :title=" (typeof options.format === 'undefined' ? '' : options.format) + ',当前日期使用now'" 
               :placeholder="
                 (typeof options.format === 'undefined' ? '' : options.format) + ',当前日期使用now'
               "
@@ -398,6 +410,9 @@
               :placeholder="
                 '起始时间' + (typeof options.format === 'undefined' ? '' : options.format)
               "
+              :title="'起始时间' + (typeof options.format === 'undefined' ? '' : options.format)"
+            
+             
             />
             <el-input
               v-if="(selectItem.type == 'date' || selectItem.type == 'datePicker' ) && options.range"
@@ -405,20 +420,27 @@
               :placeholder="
                 '结束时间' + ( typeof options.format === 'undefined' ? '' : options.format)
               "
+              :title="'结束时间' + ( typeof options.format === 'undefined' ? '' : options.format)"
+             
             />
             <!-- <el-input  v-model="options.defaultValue"
               :placeholder=" typeof options.format === 'undefined' ? '请输入' : options.format"
             /> -->
           </el-form-item>
           <el-form-item  label="时间格式" >
-            <el-input  v-model="options.format"  :placeholder="selectItem.type == 'date' ? 'YYYY-MM-DD' : (selectItem.type == 'datePicker' ? 'YYYY-MM-DD HH:mm:ss' : 'HH:mm:ss' )" />
+            <el-form-item  label="时间格式" >
+              <el-input  v-model="options.format"  :placeholder="selectItem.type == 'date' ? 
+            (options.dateType == 'date' ? 'yyyy-MM-dd' : (options.dateType == 'year' ? 'yyyy' : 'yyyy-MM') ) : (selectItem.type == 'datePicker' ? 'yyyy-MM-dd HH:mm:ss' : 'HH:mm:ss' )" />
+          </el-form-item>
           </el-form-item>
            <el-divider ></el-divider>
           <el-form-item   label="操作属性" >
             <el-checkbox v-model="options.hidden"  label="隐藏" />
             <el-checkbox v-model="options.disabled"  label="禁用" />
             <el-checkbox v-model="options.clearable" label="可清除" />
-            <el-checkbox v-if="selectItem.type == 'date' || selectItem.type == 'datePicker'" v-model="options.range" label="范围选择" />
+             
+            <el-checkbox v-if="(selectItem.type == 'date' && options.dateType != 'year' ) || selectItem.type == 'datePicker'" v-model="options.range" label="范围选择" />
+       
           </el-form-item>
         </template>
         <!-- date end -->
@@ -1091,6 +1113,11 @@ export default {
         // 判断 labelWidth
       if(!this.hideModel && !Object.prototype.hasOwnProperty.call(this.options, 'labelWidth')){
         this.options['labelWidth'] = 60
+      }
+
+         // 2022-10-06 lyf当类型为日期的时候补充默认的日期选择类型
+      if(val.type == 'date' && !Object.prototype.hasOwnProperty.call(this.options, 'dateType')) {
+        this.$set(this.options , 'dateType' , 'date')
       }
     }
   },
