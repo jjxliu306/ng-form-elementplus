@@ -6,7 +6,7 @@
 
     <div class="properties-body">
       <p class="hint-box" v-show="!selectItem.key">未选择控件</p>
-      <el-form v-show="selectItem.key" size="default" :disabled="disabled">
+      <el-form v-show="selectItem.key" size="small"  :disabled="disabled">
 
 
         <!-- 公共部分 标签 字段key 数据key start -->
