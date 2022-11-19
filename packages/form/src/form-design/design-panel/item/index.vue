@@ -16,10 +16,10 @@
       ref="form"
       :style="data.config.customStyle"
       :size="data.config.size"
-    >
+    >  
       <draggable
         tag="div"
-        class="draggable-box"
+        class="draggable-box "
         v-bind="{
           group: 'form-draggable',
           ghostClass: 'moving',
@@ -32,8 +32,10 @@
         @add="deepClone"
         @start="dragStart($event, data.list)"
       >
+  
+
         <template #item="{element}">
-         <transition-group tag="div" name="list"  >
+        
           <layoutItem
             :key="element.key"
             class="drag-move"
@@ -50,10 +52,10 @@
             @handleColAdd="handleColAdd"
             @handleShowRightMenu="handleShowRightMenu"
           />
-        </transition-group>
+        
         </template>
 
-      </draggable>
+      </draggable> 
     </el-form>
     <!-- 右键菜单 start -->
     <div

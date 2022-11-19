@@ -107,10 +107,11 @@
 }
 .form-design .form-panel .draggable-box {
   height: 100%;
+   min-height: 100%;
   overflow: auto;
 }
 .form-design .form-panel .draggable-box .list-main {
-  min-height: 100%;
+ 
   padding: 5px;
   position: relative;
   background: #fafafa;
@@ -277,18 +278,19 @@
   padding: 10px 10px;
 }
 .form-design .batch-box .draggable-box {
-  min-height: 60px;
+  min-height: 90px;
   width: 100%;
   border: 1px #ccc dashed;
   background: #fff;
 }
 .form-design .batch-box .draggable-box .list-main {
-  min-height: 60px;
-  position: relative;
+  min-height: 90px;
+  float: left;
+  /*position: relative;
   border: 1px #ccc dashed;
   overflow-x: auto;
   overflow-y: auto;
-  white-space: nowrap;
+  white-space: nowrap;*/
 }
 .form-design .batch-box .draggable-box .list-main .moving {
   width: 175px;
@@ -638,3 +640,9 @@
   height: 100%;
 }
  
+
+
+.form-design .table-item .el-form-item__error{
+  position: relative;
+  text-align: left;
+}

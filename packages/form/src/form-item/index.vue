@@ -51,8 +51,9 @@
     :id="record.model" :name="record.model"
     v-else-if="record.type === 'batch' && dynamicVisibleItem"
     :label="!record.options.showLabel ? '' : record.label"
-     :label-width="record.options.showLabel ? ((record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px') : '0px'"
-
+    :label-width="record.options.showLabel ? ((record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px') : '0px'"
+    :rules="recordRules"
+    :prop="recordProps"
   >
     <!-- 动态表格 -->
     <TableBatch
@@ -276,10 +277,10 @@ export default {
       }
 
       //2020-12-08 lyf 如果是batch类型的话增加一个内部校验的标记
-
-      if(this.record.type == 'batch') {
-        rules.push({vtype: 3,trigger:['change','blur'] ,validator: this.validatorFiled ,message: '待完善'  })
-      }
+      // 2022-11-08 lyf batch走内部表单组件校验 此处不需要了
+      // if(this.record.type == 'batch') {
+      //   rules.push({vtype: 3,trigger:['change','blur'] ,validator: this.validatorFiled ,message: '待完善'  })
+      // }
 
 
       return rules

@@ -28,6 +28,7 @@
             animation: 180,
             handle: '.drag-move'
           }"
+          data-draggable="true"
           item-key="key"
           :force-fallback="true"
           :list="record.list"
@@ -35,10 +36,10 @@
           @add="$emit('handleColAdd', $event, record.list)"
         >
           <template #item="{element}">
-              <transition-group tag="div" name="list" class="list-main">
+              <transition-group tag="div" name="list" data-draggable="true" > 
                 <layoutItem
                   :key="element.key"
-                  class="drag-move"
+                  class="drag-move" 
                   :selectItem="selectItem"
                   :startType="startType"
 

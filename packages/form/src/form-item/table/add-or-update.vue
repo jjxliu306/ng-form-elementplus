@@ -4,7 +4,7 @@
     :close-on-click-modal="false"
      :append-to-body="true"
     :lock-scroll="false"
-    :model="visible"
+     v-model="visible"
     :id="randomId">
    <el-form
       v-if="
@@ -16,7 +16,7 @@
       ref="dataForm"
       :model="dataForm"
       size="default"
-      :label-width="(item.options.labelWidth >= 0 ? item.options.labelWidth : formTemplate.config.labelWidth) + 'px'"
+      :label-width="(formTemplate && formTemplate.cofig ? formTemplate.config.labelWidth : 80) + 'px' "
 
     >
     <template
@@ -261,6 +261,8 @@
           this.randomId = 'sxfw_table_dialog' + parseInt(Math.random() * 1000000)
           this.visible = true
           this.dataForm._id = null
+
+          console.log('111')
           if(data) {
             //this.dataForm = data
             for(var i in data){
