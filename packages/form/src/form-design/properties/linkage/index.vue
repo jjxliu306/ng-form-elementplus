@@ -7,19 +7,19 @@
     <el-row  :gutter="8">
       <span v-for="(val, index) in value" :key="index">
         <div class="option-change-box"  >
-          <el-col :span="21" >
+          <el-col :span="21" style="float: left;">
 
               {{index+1}}、
               <el-radio v-model="val.vtype" :label="1">本地</el-radio>
               <el-radio v-model="val.vtype" :label="2">远程</el-radio>
 
           </el-col>
-          <el-col :span="21" >
+          <el-col :span="21" style="float: left;">
             <el-input size="default" v-model="val.model" placeholder="关联字段">
               <template #prepend>关联字段</template>
             </el-input>
           </el-col>
-          <el-col :span="21">
+          <el-col :span="21" style="float: left;">
             <template v-if="val.vtype == 1">
                表达式:
               <el-input size="default"   type="textarea" v-model="val.script" placeholder="表达式,eg: $item.value>$.age . 其中$item表示当前数据中具体一条数据,$表示当前整个表单数据" />
@@ -27,10 +27,10 @@
             </template>
 
             <el-row v-else-if="val.vtype == 2">
-              <el-col :span="12">
+              <el-col :span="12" style="float: left;">
                 <el-input size="default" v-model="val.queryKey" placeholder="query key" />
               </el-col>
-               <el-col :span="12">
+               <el-col :span="12" style="float: left;">
                 <el-input size="default" v-model="val.queryValue" placeholder="query value" />
               </el-col>
             </el-row>

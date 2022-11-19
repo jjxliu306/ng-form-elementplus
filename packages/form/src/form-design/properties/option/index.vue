@@ -14,18 +14,19 @@
         ].includes(type)" :gutter="8">
 
       <div class="option-change-box" v-for="(val, index) in value" :key="index">
-        <el-col :span="9">
+        <el-col :span="9" style="float: left;">
           <el-input v-if="keyNumber" v-model="val.value"  type="number" placeholder="值"/>
           <el-input v-else v-model="val.label" type="text" placeholder="名称"/>
         </el-col>
-        <el-col :span="9">
+        <el-col :span="9" style="float: left;">
           <el-input v-if="keyNumber" v-model="val.label" placeholder="名称"/>
           <el-input v-else v-model="val.value" placeholder="值"/>
         </el-col>
-        <el-col :span="6"
-          ><div @click="handleDelete(index)" class="option-delete-box">
-            <el-icon><Delete /></el-icon></div
-        ></el-col>
+        <el-col :span="6" style="float: left;">
+          <div @click="handleDelete(index)" class="option-delete-box">
+            <el-icon><Delete /></el-icon>
+          </div>
+        </el-col>
       </div>
       <el-col v-if="!disabled" :span="24"><el-button type="primary" @click="handleAdd">添加</el-button></el-col>
     </el-row>
@@ -42,13 +43,13 @@
           <span class="custom-tree-node">
             <span>
               <el-row :gutter="4">
-                <el-col :span="9">
+                <el-col :span="9" style="float: left;">
                   <el-input v-model="data.label"  :type="keyNumber ? 'number' : 'text'" placeholder="名称" />
                 </el-col>
-                <el-col :span="9">
+                <el-col :span="9" style="float: left;">
                   <el-input v-model="data.value" placeholder="值"/>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="6" style="float: left;">
                   <el-button
                     type="text"
                     size="default"
@@ -75,7 +76,7 @@
     <el-row v-if="type === 'rules'" :gutter="8">
       <span v-for="(val, index) in value" :key="index">
         <div class="option-change-box" v-if="index !== 0">
-          <el-col :span="18" >
+          <el-col :span="24" >
             <el-radio v-model="val.vtype" :label="1" title="正则表达式不要带前后的/">
                 正则
             </el-radio>
@@ -83,10 +84,10 @@
                  表达式
             </el-radio>
           </el-col>
-          <el-col :span="18" >
+          <el-col :span="24" >
             <el-input v-model="val.message" placeholder="提示信息"/>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="24">
             <el-input  v-if="val.vtype == 1" v-model="val.pattern" placeholder="正则表达式pattern" />
             <el-input  v-else-if="val.vtype == 2" type="textarea" v-model="val.script" placeholder="条件表达式" />
           </el-col>
@@ -101,14 +102,14 @@
     </el-row>
     <el-row v-else-if="type === 'colspan'" :gutter="8">
       <div class="option-change-box" v-for="(val, index) in value" :key="index">
-        <el-col :span="18"
+        <el-col :span="18" style="float: left;"
           ><el-input-number
             style="width:100%"
             :max="24"
             v-model="val.span"
             placeholder="名称"
         /></el-col>
-        <el-col :span="6"
+        <el-col :span="6" style="float: left;"
           ><div @click="handleDelete(index)" class="option-delete-box">
              <el-icon><Delete /></el-icon></div
         ></el-col>
