@@ -23,6 +23,7 @@
       <FormBuild  :formTemplate="formTemplate" :custom-components="customComponents" :config="ngConfig" :models="models"   ref="buildPreview" v-if="buildVisible" />
     </el-tab-pane>
     <el-tab-pane label="渲染" name="four">
+    
       <FormBuild style="height: 100%;" :custom-components="customComponents" :config="ngConfig"  :formTemplate="formTemplate" :models="models" :renderPreview="true" ref="formPreview" v-if="formVisible" />
     </el-tab-pane>
   </el-tabs>

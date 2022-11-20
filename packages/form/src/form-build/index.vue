@@ -190,12 +190,10 @@ export default {
           if(n.model && (update || !Object.prototype.hasOwnProperty.call(this.models, n.model))) {
 
             if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
-              || (n.type == 'select' && n.options.multiple)) {
+              || (n.type == 'select' && n.options.multiple) || n.type == 'uploadFile' || n.type == 'uploadImg') {
               // 多选
-              this.models[n.model] = []
-              //this.$set(this.models , n.model , [])
-            }     
-            //else if(n.type != 'control' && n.type != 'table' && n.type != 'divider' && n.type != 'grid' && n.type != ){ 
+              this.models[n.model] = [] 
+            }      
             else if(!noModelList.includes(n.type)) {
               // 字符串
               this.models[n.model] = null

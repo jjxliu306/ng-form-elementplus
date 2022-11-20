@@ -32,7 +32,7 @@
     :label-width="(record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px'"
     :required="recordRequired" 
 
-  >
+  > 
     <BaseItem
       :models="models"
       :formConfig="formConfig"
@@ -42,7 +42,7 @@
       @forceUpdate="forceUpdate"
       :isDragPanel="isDragPanel"
       />
-
+  
 
   </el-form-item>
   <!-- 可隐藏label -->

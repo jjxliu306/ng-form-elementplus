@@ -1,5 +1,5 @@
 <template>
-<div> 
+<div>  
 	<div v-if="renderPreview || disabled">
 		<!-- 判断图片还是文件列表 -->
 		<div v-if="accept && accept.indexOf('image') >= 0 && listType && listType.indexOf('picture-card') >= 0" >
@@ -62,8 +62,9 @@
 	</el-upload>
 
 	  <!--附件上传-->
-    <el-dialog :append-to-body="true" :visible="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog :append-to-body="true" v-model="dialogVisible" >
+     <!--  <img width="100%" :src="dialogImageUrl" alt=""> -->
+     <el-image style="max-width: 500px;" :src="dialogImageUrl" fit="contain" />
     </el-dialog>
 </div>
 </template>
@@ -230,16 +231,21 @@ export default {
 				// 重新组合
 				const f_ = {name: file.name , size: file.size , url: fileUrl}
 
-				console.log('this.value' , JSON.stringify(this.value))
-				const addData = [
-			        ...this.value,
-			        {
+				if(this.value != undefined && this.value != null) {
+					this.value.push( {
+			         name: file.name , size: file.size , url: fileUrl
+			        })
+					this.$emit("update:value", this.value);
+				} else {
+					const addData = [
+ 							{
 			         name: file.name , size: file.size , url: fileUrl
 			        }
-			    ];
-
-			     console.log('addData' , addData)
-			    this.$emit("update:modelValue", addData);
+					]
+					this.$emit("update:value", addData);
+				}
+				 
+			    
 			}
 
 			
@@ -254,21 +260,20 @@ export default {
 
 			 // 删除
 		    this.$emit(
-		        "update:modelValue",
+		        "update:value",
 		        this.value.filter(val => val.name != name)
 		    ) 
 		},
 		// 点击下载或者预览
-		handlePreview(file) {
-			//console.log('handlePreview file' , file)
-
+		handlePreview(file) { 
+			console.log("preview" , file)
+			console.log('url' , file.url)
 			// 从url中下载
 			if(file.url) {
 				 
 
 				this.dialogVisible = true 
-				this.dialogImageUrl = file.url 
-				//window.location.href = file.url
+				this.dialogImageUrl = file.url  
 			} else {
 				this.$message.error('找不到文件下载路径')
 			}

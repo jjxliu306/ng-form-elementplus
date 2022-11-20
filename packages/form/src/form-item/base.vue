@@ -38,7 +38,7 @@
       <FileUpload
         v-if="record.type == 'uploadImg'"
         :style="`width:${record.options.width}`"
-        v-model="models[record.model]"
+        :value="models[record.model]"
         accept="image/*"
         :list-type="record.options.listType"
         :render-preview="true"
@@ -48,7 +48,7 @@
       <FileUpload
         v-else
         :style="`width:${record.options.width}`"
-        v-model="models[record.model]"
+        :value="models[record.model]"
          :render-preview="true"
          :record="record"
       />
@@ -373,7 +373,7 @@
       v-else-if="record.type === 'uploadImg'"
       :style="`width:${record.options.width}`"
       :disabled="dynamicDisabled"
-      v-model="models[record.model]"
+      :value="models[record.model]"
       :record="record"
       accept="image/*"
       :list-type="record.options.listType"
@@ -389,7 +389,7 @@
        <FileUpload
       :style="`width:${record.options.width}`"
       :disabled="dynamicDisabled"
-      v-model="models[record.model]"
+      :value="models[record.model]"
       :multiple="record.options.multiple"
       :action="record.options.action"
       :record="record"
