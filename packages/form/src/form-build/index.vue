@@ -186,7 +186,7 @@ export default {
           n.forEach(t=> {
             fs_(t)
           })
-        } else {
+        } else if(n){
           if(n.model && (update || !Object.prototype.hasOwnProperty.call(this.models, n.model))) {
 
             if(n.type == 'checkbox' || n.type == 'cascader' || n.type == 'batch'
@@ -202,12 +202,12 @@ export default {
 
           }
 
-          if(n.type != 'batch')
-          for(let i in n) {
-            if(n[i] instanceof Array)
-              fs_(n[i])
-          }
-
+          if(n.type != 'batch' && n.type != 'control') {
+            for(let i in n) {
+              if(n[i] instanceof Array)
+                fs_(n[i])
+            }
+          } 
         }
       }
 
