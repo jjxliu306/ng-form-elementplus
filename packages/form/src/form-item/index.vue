@@ -30,9 +30,9 @@
     :prop="recordProps"
     :id="record.model" :name="record.model"
     :label-width="(record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) + 'px'"
-    :required="recordRequired" 
+    :required="recordRequired"
 
-  > 
+  >
     <BaseItem
       :models="models"
       :formConfig="formConfig"
@@ -42,7 +42,7 @@
       @forceUpdate="forceUpdate"
       :isDragPanel="isDragPanel"
       />
-  
+
 
   </el-form-item>
   <!-- 可隐藏label -->
@@ -250,8 +250,15 @@ export default {
       if(this.isDragPanel || this.renderPreview || !this.record.rules || this.record.rules.length == 0) {
         return []
       }
-      let rules =this.record.rules
-
+     // let rules =this.record.rules
+      let rules=[];
+      (this.record.rules||[]).forEach(obj=>{
+        let item={};
+        for (let key in obj){
+          item[key]=obj[key];
+        }
+        rules.push(item)
+      })
       // 2020-09-12 判断是否必填 ,非必填得没有值得时候不校验
 
       const isRequire = rules[0].required
@@ -291,7 +298,7 @@ export default {
       if(this.formConfig.hideRequiredMark || !this.formConfig.syncLabelRequired) {
         return false
       }
-       
+
 
       let rules =this.record.rules
 
@@ -300,7 +307,7 @@ export default {
 
       const isRequire = rules[0].required
       if(isRequire) {
-        return true 
+        return true
       }
 
       const value = this.models[this.record.model]
@@ -308,10 +315,10 @@ export default {
       for(var i = 0 ; i < rules.length ; i++){
         const rule = rules[i]
 
- 
+
         if(rule.vtype == 1) {
             // 正则
-          if(!rule.pattern) { 
+          if(!rule.pattern) {
             continue
           }
           // 正则匹配
@@ -320,19 +327,19 @@ export default {
 
           if(!patt1.test(value)) {
             return true
-          }  
- 
+          }
+
         } else if(rule.vtype == 2) {
           // 表达式
           const script = rule.script
 
           // 打开了开关 这里获取函数内容
          const fvalue =  dynamicFun(script , this.models)
-          
+
           if (!fvalue) {
             return true
-          } 
-        } 
+          }
+        }
       }
 
       return false
