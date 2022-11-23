@@ -130,7 +130,7 @@
 import TableBatch from "./table/index.vue";
 import BaseItem from './base.vue'
 import {dynamicFun} from '../utils'
-
+import cloneDeep from 'lodash/cloneDeep'
 export default {
   name: "ng-form-item",
   data(){
@@ -250,15 +250,9 @@ export default {
       if(this.isDragPanel || this.renderPreview || !this.record.rules || this.record.rules.length == 0) {
         return []
       }
-     // let rules =this.record.rules
-      let rules=[];
-      (this.record.rules||[]).forEach(obj=>{
-        let item={};
-        for (let key in obj){
-          item[key]=obj[key];
-        }
-        rules.push(item)
-      })
+      // 深度复制一次
+      let rules = cloneDeep(this.record.rules)
+       
       // 2020-09-12 判断是否必填 ,非必填得没有值得时候不校验
 
       const isRequire = rules[0].required
