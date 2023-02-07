@@ -25,7 +25,7 @@
           'state'
         ].includes(record.type) || customList.includes(record.type) ) && dynamicVisibleItem && !(record.type == 'select' && renderPreview &&  record.options.previewHidden )
     "
-    :label="formConfig.labelWidth > 0 ? record.label : null "
+    :label="(record.options.labelWidth >= 0 ? record.options.labelWidth : formConfig.labelWidth) > 0 ? record.label : null "  
     :rules="recordRules"
     :prop="recordProps"
     :id="record.model" :name="record.model"
