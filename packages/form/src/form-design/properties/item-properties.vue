@@ -1112,7 +1112,7 @@ export default {
 
         // 判断 labelWidth
       if(!this.hideModel && !Object.prototype.hasOwnProperty.call(this.options, 'labelWidth')){
-        this.options['labelWidth'] = 60
+        this.options['labelWidth'] = -1
       }
 
          // 2022-10-06 lyf当类型为日期的时候补充默认的日期选择类型
