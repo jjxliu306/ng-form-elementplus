@@ -65,19 +65,23 @@
       id="rightMenu"
     >
       <ul>
-        <li @click="handleSettingStyle" ><el-icon><MagicStick /></el-icon>样式配置</li>
+        <li @click="handleSettingStyle" > 
+          <i class="el-icon-magic-stick"></i>样式配置
+        </li>
          <hr>
         <template v-if="isMergeCol">
-          <li @click="handleDropMerge" ><el-icon><Delete /></el-icon>解除合并</li>
+          <li @click="handleDropMerge" >
+            <i class="el-icon-delete"></i>解除合并
+          </li>
           <hr>
         </template>
-        <li @click="handleDownMerge"><el-icon><Bottom /></el-icon>向下合并</li>
-        <li @click="handleRightMerge"><el-icon><Right /></el-icon>向右合并</li>
-        <li @click="handleAddCol"><el-icon><ZoomIn /></el-icon>增加一列</li>
-        <li @click="handleAddRow"><el-icon><ZoomIn /></el-icon>增加一行</li>
+        <li @click="handleDownMerge"><i class="el-icon-bottom"></i>向下合并</li>
+        <li @click="handleRightMerge"><i class="el-icon-right"></i>向右合并</li>
+        <li @click="handleAddCol"><i class="el-icon-zoom-in"></i>增加一列</li>
+        <li @click="handleAddRow"><i class="el-icon-zoom-in"></i>增加一行</li>
         <hr>
-        <li @click="handleRemoveRow"><el-icon><ZoomOut /></el-icon>删除当前行</li>
-        <li @click="handleRemoveCol"><el-icon><ZoomOut /></el-icon>删除当前列</li>
+        <li @click="handleRemoveRow"><i class="el-icon-zoom-out"></i>删除当前行</li>
+        <li @click="handleRemoveCol"><i class="el-icon-zoom-out"></i>删除当前列</li>
 
       </ul>
     </div>

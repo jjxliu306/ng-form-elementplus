@@ -50,17 +50,17 @@
           v-if="!renderPreview || record.options.addType == 'dialog'"
           :width="controlWidth ">
           <template  #default="scope">
-            <el-button type="success"  v-if="renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <el-icon><View /></el-icon>查看
+            <el-button type="success"  v-if="renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)"> 
+              <i class="el-icon-view"></i> 查看
             </el-button>
-            <el-button type="primary"  v-if="!renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <el-icon><Edit /></el-icon>修改
+            <el-button type="primary"  v-if="!renderPreview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)"> 
+              <i class="el-icon-edit"></i> 修改
             </el-button>
-            <el-button type="primary"  v-if="!renderPreview && record.options.copyRow"  @click="copyDomain(scope.row)">
-              <el-icon><DocumentCopy /></el-icon>复制
+            <el-button type="primary"  v-if="!renderPreview && record.options.copyRow"  @click="copyDomain(scope.row)"> 
+              <i class="el-icon-document-copy"></i> 复制
             </el-button>
             <el-button type="danger"   v-if="!renderPreview" @click="removeDomain(scope.$index)">
-              <el-icon><Delete /></el-icon>删除
+              <i class="el-icon-delete"></i> 删除
             </el-button>
           </template>
         </el-table-column>
@@ -68,8 +68,8 @@
 
 
     </el-table>
-    <el-button v-if="!renderPreview" type="dashed" :disabled="disabled" @click="addDomain">
-      <el-icon><CirclePlus /></el-icon>增加
+    <el-button v-if="!renderPreview" type="dashed" :disabled="disabled" @click="addDomain"> 
+      <i class="el-icon-circle-plus"></i> 增加
     </el-button>
 
     <AddOrUpdate ref="addOrUpdate" v-if="addOrUpdateVisible" :formConfig="config" :formTemplate="templateData" :renderPreview="renderPreview" @formAdd="formAdd"  @formUpdate="formUpdate"/>

@@ -52,7 +52,7 @@
 			<el-button  size="small" type="primary" :disabled="disabled">选取文件</el-button>
 		</template>
 		<template  v-else>
-			<el-icon><Plus /></el-icon>
+			<i class="el-icon-plus"></i> 
 		</template>
 	  </template>
 	  <template #tip v-if="tip != undefined && !renderPreview" >

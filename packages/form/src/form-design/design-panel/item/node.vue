@@ -18,15 +18,15 @@
       :class="record.key === selectItem.key ? 'active' : 'unactivated'"
       @click.stop="$emit('handleCopy')"
     >
-     <el-icon><DocumentCopy /></el-icon>
+     <i class="el-icon-document-copy"></i>
     </div>
     <div
       style="cursor: pointer"
       class="delete"
       :class="record.key === selectItem.key ? 'active' : 'unactivated'"
       @click.stop="$emit('handleDetele')"
-    >
-      <el-icon><Delete /></el-icon>
+    > 
+      <i class="el-icon-delete"></i>
     </div>
   </div>
 </template>

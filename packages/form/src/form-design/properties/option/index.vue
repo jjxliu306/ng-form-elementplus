@@ -24,7 +24,7 @@
         </el-col>
         <el-col :span="6" style="float: left;">
           <div @click="handleDelete(index)" class="option-delete-box">
-            <el-icon><Delete /></el-icon>
+            <i class="el-icon-delete"></i>
           </div>
         </el-col>
       </div>
@@ -54,13 +54,13 @@
                     type="text"
                     size="default"
                     @click="() => append(data)">
-                    <el-icon><CirclePlus /></el-icon>
+                    <i class="el-icon-circle-plus"></i>
                   </el-button>
                   <el-button
                     type="text"
                     size="default"
                     @click="() => remove(node, data)">
-                    <el-icon><Delete /></el-icon>
+                    <i class="el-icon-delete"></i>
                   </el-button>
                 </el-col>
               </el-row>
@@ -93,7 +93,7 @@
           </el-col>
           <el-col :span="6" >
             <div @click="handleDelete(index)" class="option-delete-box">
-              <el-icon><Delete /></el-icon>
+              <i class="el-icon-delete"></i>
             </div>
           </el-col>
         </div>
@@ -109,9 +109,10 @@
             v-model="val.span"
             placeholder="名称"
         /></el-col>
-        <el-col :span="6" style="float: left;"
-          ><div @click="handleDelete(index)" class="option-delete-box">
-             <el-icon><Delete /></el-icon></div
+        <el-col :span="6" style="float: left;">
+          <div @click="handleDelete(index)" class="option-delete-box">
+            <i class="el-icon-delete"></i>
+          </div
         ></el-col>
       </div>
       <el-col v-if="!disabled" :span="24"><el-button type="primary" @click="handleAddCol">添加</el-button></el-col>
