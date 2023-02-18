@@ -30,6 +30,7 @@
     "lib": "vue-cli-service build --target lib --dest lib ./packages/index.ts"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "axios": "^0.21.2",
     "element-plus": "^2.1.11",
     "lodash": "^4.17.21",
