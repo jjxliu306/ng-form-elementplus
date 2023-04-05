@@ -19,7 +19,8 @@ k-v配置
         </el-col>
         <el-col :span="6">
         	<div @click="handleDelete(index)" class="option-delete-box" title="删除当前行数据">
-            	<i class="el-icon-delete" />
+             
+               <el-icon><Delete /></el-icon> 
         	</div>
     	</el-col>
       </div> 
@@ -65,10 +66,12 @@ export default {
     },
     handleDelete(deleteIndex) {
       // 删除
+      this.value.splice(deleteIndex,1)
       this.$emit(
         "update:value",
-        this.value.filter((val, index) => index !== deleteIndex)
-      );
+        this.value
+      )
+      
     }
 
   }

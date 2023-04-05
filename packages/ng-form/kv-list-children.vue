@@ -6,7 +6,7 @@ k-v配置
 -->
 
 <template>
-  <div class="ng-form-kvlist"> 
+  <div class="ng-form-kvlist-children"> 
         <el-tree
           :data="value ? value : []"
           show-checkbox 
@@ -25,15 +25,17 @@ k-v配置
                   <el-col :span="6">
                     <el-button
                       text
+                      class="kv-button"
                       size="small"
                       @click="() => append(data)">
-                      <i class="el-icon-circle-plus-outline"></i>
+                       <el-icon><CirclePlus /></el-icon> 
                     </el-button>
                     <el-button
                       text
+                      class="kv-button delete"
                       size="small"
                       @click="() => remove(node, data)">
-                      <i class="el-icon-delete"></i>
+                     <el-icon><Delete /></el-icon>
                     </el-button>
                   </el-col>
                 </el-row>
@@ -42,8 +44,7 @@ k-v配置
           </template> 
         </el-tree>
       
-      <el-col v-if="!disabled" :span="24">
-222
+      <el-col v-if="!disabled" :span="24"> 
       	<el-button type="primary" @click="handleAdd">添加</el-button>
       </el-col>
   </div>
@@ -99,8 +100,8 @@ export default {
 };
 </script> 
 <style lang="scss">
-.ng-form-kvlist {
-	padding-left: 10px;
+.ng-form-kvlist-children {
+	padding-left: 0px;
   
   .el-input__inner {
     padding: 0px; 
@@ -129,5 +130,14 @@ export default {
  	     
 	    }
   	} 
+
+    .kv-button {
+      padding: 0px;
+
+      &.delete{
+        color: red;
+      }
+
+    }
 }
 </style>
