@@ -16,16 +16,16 @@ cascader没有数据字典
     <!-- 远程赋值配置 --> 
     <div v-if="selectItem.options.dynamic == 1">
       <el-input size="small" v-model="selectItem.options.remoteFunc">
-        <template slot="prepend">远端方法</template>
+        <template #prepend>远端方法</template>
       </el-input>
       <el-input size="small" v-model="selectItem.options.dataPath"  title="假设当前接口返回的数据结构为:{code:200,data:[{id:1,name:'11'},{id:2,name:'22'}]} , 则当前的dataPath填写: data">
-        <template slot="prepend">列表数据dataPath</template>
+        <template #prepend>列表数据dataPath</template>
       </el-input>
       <el-input size="small" v-model="selectItem.options.remoteValue">
-        <template slot="prepend">值字段</template>
+        <template #prepend>值字段</template>
       </el-input>
       <el-input size="small" v-model="selectItem.options.remoteLabel">
-        <template slot="prepend">标签字段</template>
+        <template #prepend>标签字段</template>
       </el-input> 
     </div>  
     <div v-else-if="selectItem.options.dynamic == 2">
@@ -36,16 +36,16 @@ cascader没有数据字典
         placeholder="请输入"
         @select="handleDictSelect"
       >
-        <template slot="prepend">字典分类</template>
-        <template slot-scope="{ item }">
+        <template #prepend>字典分类</template>
+        <template #default="{ item }">
           <span class="name">{{ item.type }}</span> 
         </template>
       </el-autocomplete>
     </div>
     <!-- 本地赋值 -->
-    <template v-if="selectItem.options.dynamic == 0" >
-      <KvListChildren v-if="selectItem.type == 'cascader'" v-model="selectItem.options.options" />
-      <KvList v-else v-model="selectItem.options.options" /> 
+    <template v-if="selectItem.options.dynamic == 0" >  
+      <KvListChildren v-if="selectItem.type == 'cascader'" :value="selectItem.options.options" />
+      <KvList v-else :value="selectItem.options.options" /> 
     </template>
     
   </el-form-item>

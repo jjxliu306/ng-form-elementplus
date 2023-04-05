@@ -10,10 +10,14 @@
 		@focus="handleFocus"
       	@blur="handleBlur"
 		>
-		<span v-if="record.options.prepend"  slot="prepend" v-html="transformAppend(record.options.prepend)">
-		</span>
-		<span v-if="record.options.append"  slot="append" v-html="transformAppend(record.options.append)">
-		</span>
+		<template #prepend>
+			<span v-if="record.options.prepend"  v-html="transformAppend(record.options.prepend)">
+			</span>
+		</template>
+		<template #append>
+			<span v-if="record.options.append" v-html="transformAppend(record.options.append)">
+			</span>
+		</template> 
 	</el-input> 
 	<div v-else>
 		<span  class="base-item-span" v-if="record.options.prepend" v-html="transformAppend(record.options.prepend)"> 

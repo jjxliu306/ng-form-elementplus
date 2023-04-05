@@ -6,43 +6,44 @@ k-v配置
 -->
 
 <template>
-  <div class="ng-form-kvlist">
-    
+  <div class="ng-form-kvlist"> 
         <el-tree
           :data="value ? value : []"
           show-checkbox 
           default-expand-all
           :expand-on-click-node="false">
-          <span class="custom-tree-node" slot-scope="{ node, data }">
-            <span> 
-              <el-row :gutter="4">
-                <el-col :span="9">
-                  <el-input v-model="data.label"  :type="keyNumber ? 'number' : 'text'" placeholder="名称" />
-                </el-col>
-                <el-col :span="9">
-                  <el-input v-model="data.value" placeholder="值"/>
-                </el-col>
-                <el-col :span="6">
-                  <el-button
-                    text
-                    size="small"
-                    @click="() => append(data)">
-                    <i class="el-icon-circle-plus-outline"></i>
-                  </el-button>
-                  <el-button
-                    text
-                    size="small"
-                    @click="() => remove(node, data)">
-                    <i class="el-icon-delete"></i>
-                  </el-button>
-                </el-col>
-              </el-row>
+          <template #default="{ node, data }">
+            <span class="custom-tree-node" >
+              <span> 
+                <el-row :gutter="4">
+                  <el-col :span="9">
+                    <el-input v-model="data.label"  :type="keyNumber ? 'number' : 'text'" placeholder="名称" />
+                  </el-col>
+                  <el-col :span="9">
+                    <el-input v-model="data.value" placeholder="值"/>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-button
+                      text
+                      size="small"
+                      @click="() => append(data)">
+                      <i class="el-icon-circle-plus-outline"></i>
+                    </el-button>
+                    <el-button
+                      text
+                      size="small"
+                      @click="() => remove(node, data)">
+                      <i class="el-icon-delete"></i>
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </span> 
             </span>
-            
-          </span>
+          </template> 
         </el-tree>
       
       <el-col v-if="!disabled" :span="24">
+222
       	<el-button type="primary" @click="handleAdd">添加</el-button>
       </el-col>
   </div>
@@ -70,14 +71,14 @@ export default {
   methods: {
   	handleAdd() {
       // 添加
-      let addData = [
-        ...this.value,
-        {
+      
+      this.value.push(
+        { 
           value: "",
           label: ""
         }
-      ];
-      this.$emit("update:value", addData);
+      )
+      this.$emit("update:value", this.value);
     },
     append(data) {
         const newChild = { value: '', label: '' };

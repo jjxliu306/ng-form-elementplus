@@ -97,10 +97,13 @@
         <el-input type="textarea" :rows="3" v-model="tdStyle.style" placeholder="请输入css样式" />
       </el-form-item>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="styleVisible = false">取 消</el-button> 
-      <el-button type="primary" @click="settingStyle">确 定</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="styleVisible = false">取 消</el-button> 
+        <el-button type="primary" @click="settingStyle">确 定</el-button>
+      </span>
+    </template>
+    
   </el-dialog>
 </div> 
 </template>

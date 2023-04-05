@@ -16,7 +16,7 @@
           </el-col>
           <el-col :span="21" >
             <el-input size="small" v-model="val.model" placeholder="关联字段">
-              <template slot="prepend">关联字段</template>
+              <template #prepend>关联字段</template>
             </el-input>
           </el-col>
           <el-col :span="21">

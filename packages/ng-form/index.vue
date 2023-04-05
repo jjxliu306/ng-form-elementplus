@@ -20,7 +20,7 @@
         :label-width="column.labelWidth != null ? (column.labelWidth + 'px') : null"
         :key="column.prop"
         v-else-if="column.show == undefined || column.show == true || columnVisible(column.show)">
-        <template slot="label" v-if="column.labelScript">
+        <template #label v-if="column.labelScript">
           {{getScriptValue(column.labelScript , column.label)}}
         </template> 
         
@@ -133,9 +133,9 @@
           </template>
           <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" placeholder="请选择颜色"></el-color-picker>   
             
-          <KvList v-else-if="column.type == 'kv'" v-model="model[column.prop]" :keyNumber="column.keyNumber"/>
+          <KvList v-else-if="column.type == 'kv'" :value="model[column.prop]" :keyNumber="column.keyNumber"/>
           <template v-else-if="column.type == 'rules'"> 
-             <Rules  v-model="model[column.prop]" />
+             <Rules  :value="model[column.prop]" />
           </template> 
        <!--  </slot> -->
         <!-- 插槽 -->

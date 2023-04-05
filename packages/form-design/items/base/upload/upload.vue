@@ -48,9 +48,14 @@
 	  :auto-upload="autoUpload"
 	  :file-list="fileList">
 	  <template v-if="!renderPreview">
-	  	 <el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
-	   	<i v-else class="el-icon-plus"></i>
-	  	<div v-if="tip != undefined" slot="tip" class="el-upload__tip">请选择图片，且不超过500kb</div>
+	  		<template #trigger >
+	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
+	  			<i v-else class="el-icon-plus"></i>
+	  		</template> 
+	   		<template #tip v-if="tip != undefined">
+	   			<div   class="el-upload__tip">请选择图片，且不超过500kb</div>
+	   		</template>
+	  	
 	  </template> 
 	</el-upload>
 

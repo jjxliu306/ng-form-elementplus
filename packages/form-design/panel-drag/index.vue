@@ -5,7 +5,7 @@
 			<template v-for="(colItem,colIndex) in dataList"> 
 				<el-collapse-item :key="colIndex" :title="colItem.name" :name="colIndex + 1" v-if="colItem && colItem.list && colItem.list.length > 0">
 
-					<template slot="title">
+					<template #title>
 					    <span class="title">{{colItem.name}}</span>
 					</template>
 			  		<DragItem 

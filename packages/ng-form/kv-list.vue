@@ -6,9 +6,8 @@ k-v配置
 -->
 
 <template>
-  <div class="ng-form-kvlist">
-   
-    <el-row   :gutter="8">
+  <div class="ng-form-kvlist"> 
+    <el-row   :gutter="8" :key="key">
       <div class="option-change-box" v-for="(val, index) in value" :key="index">
         <el-col :span="9" :title="keyNumber ? '值' : '标签'">
           <el-input v-if="keyNumber" v-model="val.value"  type="number" placeholder="值"/>
@@ -23,7 +22,7 @@ k-v配置
             	<i class="el-icon-delete" />
         	</div>
     	</el-col>
-      </div>
+      </div> 
       <el-col v-if="!disabled" :span="24"><el-button type="primary" @click="handleAdd">添加</el-button></el-col>
     </el-row>
       
@@ -49,17 +48,20 @@ export default {
       default: false
     },
   },
+  computed: {
+    key() {
+      return this.value.length 
+    } 
+  },
   methods: {
     handleAdd() {
       // 添加
-      let addData = [
-        ...this.value,
-        {
-          value: "",
-          label: ""
-        }
-      ];
-      this.$emit("update:value", addData);
+       
+      this.value.push({
+        value: "",
+        label: ""
+      })
+      this.$emit("update:value", this.value);
     },
     handleDelete(deleteIndex) {
       // 删除

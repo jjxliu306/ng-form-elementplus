@@ -37,7 +37,7 @@
           :label="item.label"
           :width="record.options.colWidth && record.options.colWidth[item.model] ? record.options.colWidth[item.model] : undefined"
           align="center">
-          <template  slot-scope="scope"> 
+          <template  #default="scope"> 
             <!-- 这里就要判断类型了 -->   
             <!-- 2021-03-14 判断新增数据方式，如果是怎加航 这里就不能预览了 -->
             <TableItem :record="item" :index="scope.$index" :models="models" :parent-model="record.model"  :preview="preview || record.options.addType == 'dialog'" :domains="models[record.model][scope.$index]" /> 
@@ -49,7 +49,7 @@
           align="center" 
           v-if="!preview || record.options.addType == 'dialog'"
           :width="controlWidth ">
-          <template  slot-scope="scope"> 
+          <template  #default="scope"> 
             <el-button type="success"  :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
               <i class="el-icon-eye" />查看
             </el-button>

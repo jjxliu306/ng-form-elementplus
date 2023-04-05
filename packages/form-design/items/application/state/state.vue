@@ -1,7 +1,7 @@
 <template>
 	<div v-if="!preview || isDragPanel" class="ng-application-state">
 			<el-select class="width-select" v-model="dataForm.province" value-key="value" filterable clearable placeholder="请选择省份" @change="changeProvince" @clear="changeProvince()" :disabled="disabled"> 
-				<template slot="prefix">
+				<template #prefix>
 					<span>省份:</span>
 				</template>
           <el-option
@@ -13,7 +13,7 @@
         </el-select>
       <template  v-if="maxLevel >1 && (!oneByOne || dataForm.province)">
       	<el-select class="width-select" v-model="dataForm.city" value-key="value" filterable clearable  placeholder="请选择地市" @change="changeCity" @clear="changeCity()" :disabled="disabled">
-      		<template slot="prefix">
+      		<template #prefix>
 						<span>地市:</span>
 					</template>
           <el-option
@@ -26,7 +26,7 @@
       </template>
     	<template v-if="maxLevel > 2 && (!oneByOne || dataForm.city)" >
     		<el-select class="width-select" v-model="dataForm.district" value-key="value" filterable clearable placeholder="请选择区县" @change="changeDistrict" @clear="changeDistrict()" :disabled="disabled"> 
-    			<template slot="prefix">
+    			<template #prefix>
 						<span>区县:</span>
 					</template>
           <el-option
