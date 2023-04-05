@@ -51,16 +51,19 @@
           :width="controlWidth ">
           <template  #default="scope"> 
             <el-button type="success"  :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <i class="el-icon-eye" />查看
+               
+               <el-icon><Eye /></el-icon> 查看
             </el-button>
             <el-button type="primary"  :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
-              <i class="el-icon-edit" />修改
+              
+              <el-icon><Edit /></el-icon> 修改
             </el-button>
             <el-button type="primary"  :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
-              <i class="el-icon-copy-document" />复制
+             
+               <el-icon><CopyDocument /></el-icon> 复制
             </el-button>
-            <el-button type="danger"  :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)">
-              <i class="el-icon-delete" />删除 
+            <el-button type="danger"  :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
+              <el-icon><Delete /></el-icon> 删除
             </el-button>
           </template> 
         </el-table-column> 
@@ -69,7 +72,8 @@
        
     </el-table>
     <el-button v-if="!preview" :size="config.size" type="dashed" :disabled="disabled" @click="addDomain">
-      <i class="el-icon-circle-plus-outline" />增加
+       
+       <el-icon><CirclePlusOutline /></el-icon> 
     </el-button>
 
     <AddOrUpdate ref="addOrUpdate" v-if="addOrUpdateVisible"   :formTemplate="templateData" :preview="preview" @formAdd="formAdd"  @formUpdate="formUpdate"/>

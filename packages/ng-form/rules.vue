@@ -29,7 +29,8 @@
           </el-col>
           <el-col :span="4" >
             <div @click="handleDelete(index)" class="option-delete-box">
-              <i class="el-icon-delete" />
+              <!-- <i class="el-icon-delete" /> -->
+               <el-icon  ><Delete /></el-icon>
             </div>
           </el-col>
           <el-col :span="24">

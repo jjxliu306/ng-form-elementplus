@@ -27,7 +27,8 @@
             :class="selectItem && record.key === selectItem.key ? 'active' : 'unactivated'"
             @click.stop="$emit('handleCopy')"
           >
-            <i class="el-icon-document-copy" />
+           <!--  <i class="el-icon-document-copy" /> -->
+            <el-icon  ><DocumentCopy /></el-icon>
           </div>
           
           <div
@@ -36,7 +37,8 @@
             :class="selectItem && record.key === selectItem.key ? 'active' : 'unactivated'"
             @click.stop="$emit('handleDetele')"
           >
-            <i class="el-icon-delete" />
+           <!--  <i class="el-icon-delete" /> -->
+            <el-icon  ><Delete /></el-icon>
           </div>
         </div> 
       </template> 

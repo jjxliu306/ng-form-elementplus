@@ -18,11 +18,13 @@
         <li v-for="(item,index) in fileList" :key="index" :tabindex="index" class="el-upload-list__item pointer"  style="cursor: pointer;"
             @click="fileDown(item)"><!---->
           <a class="el-upload-list__item-name "  style="cursor: pointer;">
-            <i class="el-icon-document"></i> {{item.name}}
+           
+            <el-icon><Document /></el-icon>{{item.name}}
           </a>
 
           <label class="el-upload-list__item-status-label">
-            <i class="el-icon-upload-success el-icon-circle-check"></i>
+           <!--  <i class="el-icon-upload-success el-icon-circle-check"></i> -->
+             <el-icon><UploadSuccess /></el-icon> 
           </label>
 
           <!---->
@@ -50,7 +52,8 @@
 	  <template v-if="!renderPreview">
 	  		<template #trigger >
 	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
-	  			<i v-else class="el-icon-plus"></i>
+	  			<!-- <i v-else class="el-icon-plus"></i> -->
+	  			<el-icon v-else><Plus /></el-icon> 
 	  		</template> 
 	   		<template #tip v-if="tip != undefined">
 	   			<div   class="el-upload__tip">请选择图片，且不超过500kb</div>

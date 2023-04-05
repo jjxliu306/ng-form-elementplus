@@ -17,12 +17,14 @@
           animation: 180,
           handle: '.drag-move'
         }"
+        item-key="key"
         :force-fallback="true"
         v-model="record.list"
         @add="dragEnd($event, record.list)" 
         >
         <template #item="{element}">
           <ng-form-node 
+            :key="element.key"
             class="drag-move"
             :selectItem="selectItem"
             :record="element" 
@@ -99,6 +101,7 @@ export default {
   z-index: 0;
   border-radius: 4px;
   border: 1px solid #DCDFE6;
+  width: 100%;
 
   .draggable-box {
     min-height: 200px;

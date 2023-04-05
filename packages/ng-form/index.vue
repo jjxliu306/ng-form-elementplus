@@ -52,11 +52,11 @@
                   :step="column.step" />
                 </el-col>
                 <el-col :span="2" style="padding-left: 5px">
-                  <el-button text icon="el-icon-close" @click="removeData(model,column.prop, index)"></el-button>
+                  <el-button text icon="Close" @click="removeData(model,column.prop, index)"></el-button>
                 </el-col>
               </el-row>
             </div>
-            <el-button text icon="el-icon-plus" @click="addData(model , column.prop , column.type)"></el-button>
+            <el-button text icon="Plus" @click="addData(model , column.prop , column.type)"></el-button>
           </template>
           <el-radio-group v-else-if="column.type == 'radio'" v-model="model[column.prop]">
             <el-radio :label="rv.value" v-for="rv in column.dicData" :key="rv.value">{{rv.label}}</el-radio>
@@ -125,11 +125,11 @@
                  <el-color-picker v-model="model[column.prop][index]" placeholder="请选择颜色"/> 
                 </el-col>
                 <el-col :span="2" style="padding-left: 5px">
-                  <el-button text icon="el-icon-close" @click="removeData(model,column.prop, index)"></el-button>
+                  <el-button text icon="Close" @click="removeData(model,column.prop, index)"></el-button>
                 </el-col>
               </el-row>
             </div>
-            <el-button text icon="el-icon-plus" @click="addData(model , column.prop, column.type)"></el-button>
+            <el-button text icon="Plus" @click="addData(model , column.prop, column.type)"></el-button>
           </template>
           <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" placeholder="请选择颜色"></el-color-picker>   
             

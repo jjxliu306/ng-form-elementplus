@@ -10,11 +10,11 @@
 		<el-col :span="12"> 
 			<span class="buttons">
 				<slot name="controlButton"></slot>
-				<el-button v-if="clear" text size="small"   @click="handleClear">清空</el-button>
-			    <el-button v-if="preview" text size="small"   @click="handlePreview">预览</el-button>
+				<el-button v-if="clear" text size="small" icon="Delete"  @click="handleClear">清空</el-button>
+			    <el-button v-if="preview" text size="small" icon="View"  @click="handlePreview">预览</el-button>
 			  	<!--   <el-button v-if="reder"  type="text" size="medium" icon="el-icon-view" @click="handleRender">渲染</el-button> -->
-			    <el-button v-if="imp" text size="small"   @click="handleImport">导入</el-button>
-			    <el-button v-if="exp" text size="small"  @click="handleExport">导出</el-button>
+			    <el-button v-if="imp" text size="small" icon="Download"  @click="handleImport">导入</el-button>
+			    <el-button v-if="exp" text size="small" icon="Upload" @click="handleExport">导出</el-button>
 			</span> 
 		</el-col> 
 	</el-row>	 

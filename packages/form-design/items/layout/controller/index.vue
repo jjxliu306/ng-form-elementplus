@@ -78,7 +78,8 @@
           </div> 
            <!-- 右键里的删除和复制 下方的新增 -->
           <el-button v-if="!preview && record.options.add" type="dashed" size="small" :disabled="disabled" @click="addControlData">
-            <i class="el-icon-circle-plus-outline" />增加
+            <!-- <i class="el-icon-circle-plus-outline" /> -->
+            <el-icon  ><CirclePlusOutline /></el-icon> 增加
           </el-button>
           <div
             v-show="!preview && showRightMenu"
@@ -87,9 +88,15 @@
             id="rightMenu"
           >
             <ul> 
-             <li v-if="record.options.copy" @click="handleCopyData"><i class="el-icon-document" />复制</li>
+             <li v-if="record.options.copy" @click="handleCopyData">
+              <!--   <i class="el-icon-document" />复制 -->
+                 <el-icon  ><Document /></el-icon>复制
+              </li>
               <hr v-if="record.options.copy && record.options.remove">
-              <li v-if="record.options.remove" @click="handleRemoveData"><i class="el-icon-delete" />删除</li> 
+              <li v-if="record.options.remove" @click="handleRemoveData">
+               <!--  <i class="el-icon-delete" /> -->
+                 <el-icon  ><Delete /></el-icon>删除
+              </li> 
             </ul>
           </div>
         </div> 
