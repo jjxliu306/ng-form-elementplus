@@ -85,7 +85,7 @@
 
   <el-dialog
     title="表内单元格样式配置"
-    :visible.sync="styleVisible" 
+    v-model="styleVisible" 
     style="top:20px;" 
     :append-to-body="true"  
     > 

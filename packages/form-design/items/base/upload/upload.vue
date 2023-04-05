@@ -55,7 +55,7 @@
 	</el-upload>
 
 	  <!--附件上传-->
-    <el-dialog :append-to-body="true" :visible.sync="dialogVisible">
+    <el-dialog :append-to-body="true" v-model="dialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
 </div>

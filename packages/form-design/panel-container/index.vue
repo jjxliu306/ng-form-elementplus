@@ -14,7 +14,6 @@
       	:style="formTemplate.config.customStyle" 
       	:size="formTemplate.config.size"
     	>
-    	formTemplate.list:: {{formTemplate.list}}
 	    <el-row :gutter="20" class="row "> 
 	    		<draggable  
 			        tag="div"

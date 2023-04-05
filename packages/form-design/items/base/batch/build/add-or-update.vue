@@ -4,7 +4,7 @@
     :close-on-click-modal="false"
      :append-to-body="true" 
     :lock-scroll="false"
-    :visible.sync="visible"
+    v-model="visible"
     :id="randomId">    
    <el-form
       v-if="

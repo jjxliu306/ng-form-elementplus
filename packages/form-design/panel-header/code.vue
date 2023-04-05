@@ -4,7 +4,7 @@
 <template>
   <el-dialog
     title="模板数据" 
-    :visible.sync="visible"
+    v-model="visible"
     :append-to-body="true"
     style="top:20px;"
     width="850px"
@@ -18,10 +18,12 @@
         导出代码
       </el-button>
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="handleCancel">关闭</el-button> 
-      <el-button v-if="edit" size="small" type="primary" @click="handleImp">导入</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button size="small" @click="handleCancel">关闭</el-button> 
+        <el-button v-if="edit" size="small" type="primary" @click="handleImp">导入</el-button>
+      </span>
+    </template> 
   </el-dialog>
 </template>
 <script> 
