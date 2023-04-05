@@ -1,0 +1,468 @@
+<template>
+<div class="item-properties"> 
+	<!-- 判断是否有自定义的属性配置组件 -->
+	<p class="no-data-text" v-show="!selectItemKey">
+      请先从面板中选择组件
+    </p> 
+	<!-- 先是属性中配置的columns -->
+	<ng-form 
+		v-if="formColumns && formColumns.column && formColumns.column.length > 0" 
+		:config="formColumns.config"   
+		:record="selectItem" 
+		:model="selectItem"
+		:columns="formColumns.column"  
+	/> 
+	
+
+	<!-- 
+		分割线
+	循环group 处理在group中但要显示在外部的表单
+	 -->
+	<template v-for="(form,formIndex) in groupColumns ">
+		<ng-form 
+			v-if="form.alone != undefined && form.alone == false && form.column && form.column.length > 0"
+			:key="formIndex + selectItemKey" 
+			:config="form.config"   
+			:record="selectItem" 
+			:model="selectItem[form.prop]"
+			:columns="form.column"  
+		/> 
+	 
+	</template>
+
+
+	<slot name="custom-properties"></slot>
+
+	<!-- 
+	循环group 处理在group中但显示在折叠面板中的表单
+	 -->
+	
+	<el-collapse :key="'2'+selectItemKey" v-model="activeNames" class="ng-form-properties-collapse">
+		<template v-if="groupColumnsCollapse && groupColumnsCollapse.length > 0" >
+			<el-collapse-item  
+				v-for="(form,formIndex) in groupColumnsCollapse "
+				:key="'form' + formIndex" 
+				:title="form.label" 
+				:name="formIndex + ''" 
+				>
+				<ng-form   
+					:config="form.config"   
+					:record="selectItem" 
+					:model="selectItem[form.prop]"
+					:columns="form.column"  
+				/> 
+		  	</el-collapse-item> 
+		</template> 
+		<!-- 最后判断有没有自定义属性配置 -->
+		<component 
+			ref="itemProperties" 
+			v-if="propertiesComponent"
+			:selectItem="selectItem"   
+			:is="propertiesComponent">  
+		</component>  
+		<template v-if="selectItem && selectItem.options && formColumns && formColumns.config">
+			<el-collapse-item name="event" title="事件"  >
+				<ng-form   
+					:config="formColumns.config"   
+					:record="selectItem" 
+					:model="selectItem.options"
+					:columns="[  
+						{
+		                    label: '获取焦点', 
+		                    prop: 'focusEvent', 
+		                    type: 'textarea',  
+		                    placeholder: '获取焦点后事件,eg: $.address = $.city + $.location' , 
+		                    span: 24,
+		                },
+		                {
+		                    label: '失去焦点', 
+		                    prop: 'blurEvent',
+		                    type: 'textarea', 
+		                    placeholder: '失去焦点后事件,eg: $.address = $.city + $.location' , 
+		                    span: 24,
+		                } 
+					]"  
+				/> 
+			</el-collapse-item>
+			<el-collapse-item name="listen" title="监听" >
+				<ng-form   
+					:config="formColumns.config"   
+					:record="selectItem" 
+					:model="selectItem.options"
+					:columns="[  
+						{
+		                    label: '监听组件', 
+		                    prop: 'listenModel', 
+		                    type: 'switch',   
+		                    span: 24,
+		                },
+		                {
+		                    label: '组件model', 
+		                    prop: 'listenModelData', 
+		                    placeholder: '多个使用,分割' , 
+		                    show: '$.options.listenModel' ,
+		                    span: 24,
+		                },
+		                {
+		                    label: '触发表达式', 
+		                    prop: 'listenModelScript',
+		                    type: 'textarea', 
+		                    placeholder: '表达式,eg: $.address = $.city + $.location' , 
+		                    show: '$.options.listenModel' ,
+		                    span: 24,
+		                } 
+					]"  
+				/> 
+			</el-collapse-item>
+			<el-collapse-item name="show" title="动态配置"  >
+				<ng-form   
+					:config="formColumns.config"   
+					:record="selectItem" 
+					:model="selectItem.options"
+					:columns="[  
+						{
+		                    label: '动态显示', 
+		                    prop: 'dynamicVisible', 
+		                    type: 'switch',   
+		                    span: 24,
+		                },
+		                {
+		                    label: '显示条件', 
+		                    prop: 'dynamicVisibleValue', 
+		                    show: '$.options.dynamicVisible' ,
+		                    type: 'textarea',
+		                    placeholder: '请输入显示条件,$标识当前整个表单的绑定数据' , 
+		                    span: 24,
+		                },
+		                {
+		                    label: '动态禁用', 
+		                    prop: 'dynamicDisabled', 
+		                    type: 'switch',   
+		                    span: 24,
+		                },
+		                {
+		                    label: '禁用条件', 
+		                    prop: 'dynamicDisabledValue', 
+		                    show: '$.options.dynamicDisabled' ,
+		                    type: 'textarea',
+		                    placeholder: '请输入禁用条件,$标识当前整个表单的绑定数据' , 
+		                    span: 24,
+		                },
+					]"  
+				/> 
+			</el-collapse-item>
+		</template>
+	</el-collapse> 
+
+	 
+	
+</div>
+</template>
+<script>
+import NgForm from '../../ng-form/index.vue'
+
+// 获取个性化属性配置 
+import itemIndex from "../items/index.js";
+
+import { dynamicFun } from '../../utils/index.js' 
+import cloneDeep from 'lodash/cloneDeep'
+import NgConstants from '../../constants'
+
+export default {
+	components: {
+		NgForm
+	},
+	data() {
+		return {
+			activeNames: [],
+			groupColumns: [],
+		    // 独立与group分组，直接配置的属性
+		    formColumns: {}, 
+		}
+	},
+	props: {
+		selectItem: {
+			type: Object
+		}
+	},
+	inject: {
+    	// 自定义组件
+      	customComponents: {
+        	from: 'customC',
+        	default: ()=>[]
+      	} 
+  	},
+	computed: {
+		selectItemKey() {
+			if(this.selectItem){
+				return this.selectItem.key 
+			}
+			return null
+		},
+		isCustomComponent() {
+			if(!this.selectItem || !this.selectItem.type) return false
+
+			// 判断自定义组件
+			if(this.customComponents && this.customComponents.length > 0) {
+				const cs = this.customComponents.filter(t=> t.type == this.selectItem.type)
+				return cs && cs.length > 0 
+			}
+			return false
+		},
+		propertiesComponent() {
+			if(!this.selectItem || !this.selectItem.type) return null
+
+ 
+  			// 判断自定义组件
+			if(this.customComponents && this.customComponents.length > 0) {
+					
+				const cs = this.customComponents.filter(t=> t.type == this.selectItem.type)
+				if(cs && cs.length > 0) {
+					return cs[0].properties
+				}
+			}
+  			const selectItemType = this.selectItem.type   
+	        // 将数组映射成json
+		    if(itemIndex && itemIndex.length > 0) {
+		       	for(let i = 0 ; i < itemIndex.length ; i++) {
+		        	const itemList = itemIndex[i]
+
+		        	if(itemList.list && itemList.list.length > 0) {
+			        	const fs = itemList.list.filter(t=>t.type == selectItemType)
+				        if(fs && fs.length > 0) {
+				        	return fs[0].properties
+				        } 
+			        } 
+
+		        }
+		    }
+  			 
+	         
+	        return null
+	    }, 
+	    // 分组字段 需要在collapse上显示的列表
+	    groupColumnsCollapse() {
+	    	return this.groupColumns.filter(form=> {
+	    		return (form.alone == undefined || form.alone == true ) && form.column && form.column.length > 0
+	    	})
+	    }
+	},
+	watch: {
+		selectItemKey() {
+			this.init() 
+		}
+	},
+	methods: {
+		init() {
+			console.log('selectItemKey' , this.selectItemKey)
+			if(this.selectItem) {
+		      	this.$nextTick(()=> {
+		      		if(this.$refs.properties && this.$refs.properties.init) {
+				      	this.$refs.properties.init()
+				    } 
+		      	}) 
+
+		      	this.groupColumns = this.initFormOptions()
+		      	this.formColumns = this.initFormColumns() 
+		      	this.formGroupColumn =  []
+	      	
+	      	} else {
+	      		this.groupColumns = []
+	      		this.formColumns = {}
+	      		this.formGroupColumn = {}
+	      	}
+		},
+		initFormOptions () {
+	      const currentType = this.selectItem.type
+	      const configs = NgConstants.itemConfig
+	      if (configs && configs[currentType]) {
+	        const tformOptions = cloneDeep(configs[currentType].options)
+	      	
+	        let config_ = { ...tformOptions.config }
+
+	        const groups = tformOptions.group
+	        if(!groups || groups.length == 0) {
+
+	        	return []
+
+	        }
+	        const this_ = this
+	        const groupColumns = [] 
+	        groups.forEach(t => {
+	        	// 判断是否已经叠加到columns中 
+	          	t.config = config_
+	          	const prop = t.prop
+	          	// 判断当前整个组的prop是否有值
+	          	if (!this_.selectItem[prop]) {
+	            	this_.$set(this_.selectItem, prop, {})
+	          	}
+
+	          	// 如果找到新的column有默认值 当前配置中没有值 则回填 
+	          	const groupColumn = t.column
+	          	if (groupColumn) {
+
+	            	groupColumn.filter(gf => gf.default).forEach(gc => {
+		              	// 判断column如果有默认值，但当前data没有值 则回填 
+		               
+		              	if (!Object.prototype.hasOwnProperty.call(this_.selectItem[prop], gc.prop)) {
+		                	this_.$set(this_.selectItem[prop], gc.prop, gc.default)
+		              	}
+	 
+	            	})
+	          	}
+
+	          	groupColumns.push(t)
+	        })
+
+	      
+
+	        return groupColumns
+	      }
+	      return []
+	    },
+	    initFormColumns() {
+
+	    	// 判断如果是自定义组件 
+	        // 判断自定义组件
+			if(this.isCustomComponent && this.selectItem) {
+				 // 如果没有数据 则可能是自定义组件过来的，补充
+		        // 标签，标签宽度，要素宽度，栅格数量，
+
+		        let label_ = this.selectItem.label 
+		        let labelWidth_ = this.selectItem.labelWidth 
+		        let width_ = this.selectItem.width 
+		        let span_ = this.selectItem.span 
+
+		        if(!label_) {
+		        	label_ = this.selectItem.type
+		        	//this.$set(this.selectItem, 'label', label_)
+		        	this.selectItem['label'] = label_
+		        }
+		        if(!labelWidth_) {
+		        	labelWidth_ = -1
+		        	this.selectItem['labelWidth'] = labelWidth_
+		        	//this.$set(this.selectItem, 'labelWidth', labelWidth_)
+		        }
+		        if(!width_) {
+		        	width_ = '100%'
+		        	this.selectItem['width'] = width_
+		        	//this.$set(this.selectItem, 'width', width_)
+		        }
+		        if(!span_) {
+		        	span_ = 24
+		        	this.selectItem['span'] = span_
+		        	//this.$set(this.selectItem, 'span', span_)
+		        }
+
+		        return {
+		        	config: {
+		        		size: 'small',
+	      				labelWidth: 80
+		        	},
+		        	column: [
+			        	{
+			            	label: '标签', 
+				            prop: 'label', 
+				            default: label_,
+				            span: 24,
+				        },
+				        {
+				            label: '标签宽度', 
+				            prop: 'labelWidth',
+				            type: 'number',
+				            min: -1,
+				            max: 1000,
+				            default: labelWidth_,
+				            span: 24,
+				        },
+				        {
+				            label: '要素宽度', 
+				            prop: 'width',  
+				            default: width_,
+				            span: 24,
+				        },
+				        {
+				            label: '所占栅格', 
+				            type: 'slider',
+				            prop: 'span',
+				            min: 1,
+				            max: 24,
+				            default: span_,
+				            span: 24,
+				        }
+		        	]
+		        } 
+	        
+			}
+	    	  // 2023-01-03 lyf 判断是否有单独的columns 不依赖分组信息
+	        const currentType = this.selectItem.type
+	      	const configs = NgConstants.itemConfig
+	      	if (configs && configs[currentType]) {
+	        	const tformOptions = cloneDeep(configs[currentType].options)
+	        	
+	        	let config_ = { ...tformOptions.config }
+
+	        	let columns = tformOptions.columns
+	        	const this_ = this 
+	          	if (columns) {
+
+	            	columns.filter(gf => gf.default).forEach(gc => {
+	              		// 判断column如果有默认值，但当前data没有值 则回填  
+	              		if (!Object.prototype.hasOwnProperty.call(this_.selectItem, gc.prop)) {
+	                		this_.$set(this_.selectItem, gc.prop, gc.default)
+	              		}
+	 
+	            	})
+	          	}
+
+
+	          	return {config: config_ , column : columns}
+
+	        }
+ 
+
+	        return null
+	    },
+
+	    /** 计算当前form是否需要显示 */
+	    showCollapse (form) {
+	    	// 如果下面没有任何字段 则不显示
+	      if(!form.column || form.column.length == 0) return false
+	      if (form.show == undefined || form.show == true) return true
+	      if (typeof form.show == 'string') {
+	        return dynamicFun(form.show, this.selectItem)
+	      }
+	      return true
+	    },
+	}
+}
+</script>
+<style lang="scss">
+.item-properties {
+	.no-data-text {
+		text-align: center; 
+    	font-size: 13px; 
+	}
+
+	.common-form {
+		padding: 10px;
+	}
+
+	.ng-form-properties-collapse {
+		.el-collapse-item__header {
+			padding-left: 10px;
+		}
+		
+	}
+
+	.linkage-item {
+	  border-bottom: 1px solid #EBEEF5;
+
+	  .linkage-form {
+	    padding: 10px;
+	  }
+	}
+
+}
+
+</style>
