@@ -117,8 +117,17 @@ export default {
 	  	reset() {
 	  		this.$refs.form && this.$refs.form.resetFields()
 	  	},
-	  	validate(v) {
-	  		return this.$refs.form && this.$refs.form.validate(v)
+	  	validate() {
+	  		return new Promise((resolve, reject) => { 
+	  			if(this.$refs.form) {
+	  				this.$refs.form.validate((valid,values)=>{ 
+			            resolve(valid,values)
+			        })
+	  			} else {
+	  				reject()
+	  			}  
+			})
+	  		//return this.$refs.form && this.$refs.form.validate(v)
 	  	},
 	  	getData(async = true) {
 	  		const data = cloneDeep(this.models)

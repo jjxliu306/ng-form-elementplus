@@ -55,12 +55,12 @@
 <script> 
 import TableBuild from './build/index.vue'
 import cloneDeep from 'lodash/cloneDeep'
-
+import draggable from "vuedraggable"
 import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin] , 
   components: {
-    TableBuild
+    TableBuild,draggable
   },
   created() {
     // 赋予一个空的默认值
@@ -69,7 +69,10 @@ export default {
   methods: {
     dragEnd(evt, list) {   
       // 拖拽结束,自动选择拖拽的控件项
-      this.handleSelectItem(list[evt.newIndex])
+      //this.handleSelectItem(list[evt.newIndex])
+      const clone = cloneDeep(list[evt.newIndex])
+      this.$set(list , evt.newIndex , clone)
+      this.handleSelectItem(clone)
     },
     handleCopy(item){ 
       const nitem = cloneDeep(item)

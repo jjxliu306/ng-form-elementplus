@@ -58,10 +58,13 @@
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
-
+import draggable from "vuedraggable"
 import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin] ,
+  components: {
+    draggable
+  },
   data() {
     return { 
     }

@@ -282,5 +282,9 @@ export default {
 .active .key-box {
     color: #ff40ec;
 }
+
+.pointer {
+  cursor: pointer;
+}
 </style>
  

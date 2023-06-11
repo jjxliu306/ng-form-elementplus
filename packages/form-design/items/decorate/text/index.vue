@@ -3,6 +3,7 @@
       <label
         :class="{ 'is-required': showRequiredMark }"
         v-text="record.label"
+         :style="textStyle"
       ></label>
   </div>
 </template>
@@ -12,6 +13,18 @@ import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin],
 	computed: {
+		textStyle() {
+			const style_ = {}
+
+			if(this.record.options.bold) {
+				style_.fontWeight = 'bold'
+			}
+			if(this.record.options.fontSize && this.record.options.fontSize > 0) {
+				style_.fontSize = this.record.options.fontSize + 'px'
+			}
+			 
+			return style_
+		},
 		showRequiredMark(){
 	      //##############
 	      if(!this.record.options.showRequiredMark) return false

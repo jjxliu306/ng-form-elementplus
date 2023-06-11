@@ -11,7 +11,7 @@
       ]" 
       :size="config.size"
       :style="record.options.customStyle"
-      :rowKey="record => record.key" 
+      :empty-text="record.options.noDataText || '暂无数据'"
       :data="models[record.model]" 
       :border="record.options.showBorder"
       :scroll="{

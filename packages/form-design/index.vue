@@ -56,7 +56,7 @@ export default {
   },
   data(){
     return {
-      selectItem: undefined,
+      selectItem: {},
     }
   },
   props:{
@@ -207,11 +207,16 @@ export default {
     },
     // 初始化模板
     initModel(formTemplate) {
-      this.formTemplate = cloneDeep(formTemplate)
+      //this.formTemplate = cloneDeep(formTemplate)
+      const modelData = cloneDeep(formTemplate)
+
+      this.importData(modelData)
     },
     // 从模板处导入json表单模板
     importData(formTemplate = {}) {
-      this.formTemplate = formTemplate
+      //this.formTemplate = formTemplate
+      this.formTemplate.list = formTemplate.list;
+      this.formTemplate.config = formTemplate.config;
     }
   }
 }

@@ -181,8 +181,7 @@ export default {
 		}
 	},
 	props: {
-		selectItem: {
-			type: Object
+		selectItem: { 
 		}
 	},
 	inject: {
@@ -194,10 +193,10 @@ export default {
   	},
 	computed: {
 		selectItemKey() {
-			if(this.selectItem){
+			if(this.selectItem && this.selectItem.key){
 				return this.selectItem.key 
 			}
-			return null
+			return ''
 		},
 		isCustomComponent() {
 			if(!this.selectItem || !this.selectItem.type) return false

@@ -17,6 +17,7 @@
       ref="dataForm" 
       :model="dataForm"  
       size="small"
+      :key="dataForm._id"
     >  
        
     <ng-form-item  
@@ -213,15 +214,25 @@
           } else {
             // 初始化数据  
              
-            const d = {}
+            // const d = {}
+            // this.formTemplate.list.forEach(item => {
+            //   if(item.options.defaultValue)
+            //     d[item.model] = item.options.defaultValue;
+            //   else 
+            //     d[item.model] = null
+            // }); 
+            //  this.dataForm = {_id:null,seq: 0 , ...d}
+
+            //const d = {}
+            this.dataForm.seq = 0 
             this.formTemplate.list.forEach(item => {
               if(item.options.defaultValue)
-                d[item.model] = item.options.defaultValue;
+                this.dataForm[item.model] = item.options.defaultValue;
               else 
-                d[item.model] = null
+                this.dataForm[item.model] = null
             }); 
  
-            this.dataForm = {_id:null,seq: 0 , ...d}
+           
 
             this.$nextTick(() => {
               this.$refs['dataForm'] && this.$refs['dataForm'].resetFields()

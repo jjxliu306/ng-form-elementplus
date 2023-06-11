@@ -5,14 +5,14 @@
 <div>
       
   <!-- 文本 -->
-  <div v-if="record.type === 'text'" :style="{ textAlign: record.options.textAlign }">  
+<!--   <div v-if="record.type === 'text'" :style="{ textAlign: record.options.textAlign }">  
     <span>{{record.label}}</span>
-  </div>
+  </div> -->
   <!-- html -->
-  <div   v-else-if="record.type === 'html'"  v-html="record.options.defaultValue" > 
+ <!--  <div   v-else-if="record.type === 'html'"  v-html="record.options.defaultValue" >  -->
   </div>  
     <ng-form-item
-      v-else
+     
       :disabled="disabled"
       :preview="preview"
       :models="domains"   

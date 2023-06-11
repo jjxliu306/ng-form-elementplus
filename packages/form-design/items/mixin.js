@@ -57,9 +57,9 @@ export default {
 	        from: 'configC',
 	        default: ()=>({})
 	    },
-	    dicts: {
-        	from: 'dictsC',
-        	default: ()=> []
+	    ngConfig: {
+        	from: 'ngConfig',
+        	default: ()=> ({})
       	},
 	},
 	computed: {
@@ -91,14 +91,16 @@ export default {
 	methods: {
 		// 设置数组类默认值
 		updateArrayDefaultValue() {
-			if(this.models && !Object.prototype.hasOwnProperty.call(this.models,this.record.model)) {
+			if(this.models && 
+				(!Object.prototype.hasOwnProperty.call(this.models,this.record.model)
+					// 当前赋值类型不是数组
+					|| ! (this.models[this.record.model] instanceof Array)
+				)) {
 				const defaultValue = this.record.options.defaultValue
 				if(defaultValue != null && defaultValue != undefined && defaultValue instanceof Array ) {
-					//this.$set(this.models , this.record.model , defaultValue)
-					this.models[this.record.model] = defaultValue
+					this.$set(this.models , this.record.model , defaultValue)
 				} else {
-					//this.$set(this.models , this.record.model , [])
-					this.models[this.record.model] = []
+					this.$set(this.models , this.record.model , [])
 				}
 			}
 		},
@@ -113,11 +115,9 @@ export default {
 				) {
 				const defaultValue = this.record.options.defaultValue
 				if(defaultValue != null && defaultValue != undefined) {
-					this.models[this.record.model] = defaultValue
-					//this.$set(this.models , this.record.model , defaultValue)
+					this.$set(this.models , this.record.model , defaultValue)
 				} else {
-					this.models[this.record.model] = ''
-					//this.$set(this.models , this.record.model , '')
+					this.$set(this.models , this.record.model , '')
 				}
 			}
 		},
@@ -126,12 +126,13 @@ export default {
     	},
 		 // 2021-03-13 判断列表中具体某个值是否应该显示
 	    dynamicVisible(script , item) {
-	       	const func = script.indexOf('return') >= 0 ? '{' + script + '}' : 'return (' + script + ')' 
-	      	const Fn = new Function('$','$item', func)
-	      	return Fn(this.models , item)
+	       const func = script.indexOf('return') >= 0 ? '{' + script + '}' : 'return (' + script + ')' 
+	      const Fn = new Function('$','$item', func)
+	      return Fn(this.models , item)
 	    },
 	     // 2021-03-13 针对select radio checkbox判断如果有本地过滤关联，判断该条数据是否该显示 
 	    itemVisible(item) {
+	    	if(!item) return false
 	      // 没有过滤条件 直接全部展示 
 	      if(this.isDragPanel || !this.localFilter || this.localFilter.length == 0) return true 
 
@@ -161,12 +162,17 @@ export default {
 	     // 初始化远程数据或者数据字典 针对select radio checkbox
 	    initDynamicValue() {
 	      if(this.record.options.dynamic == 1 && this.record.options.remoteFunc) {
+	        
 	        const url =  this.record.options.remoteFunc 
 	        this.remoteUrl = url 
 	        
-
-	        this.getRemoteData()
-	   
+	        // 在配置了远程数据的label和value之后在请求接口
+	        if(this.record.options.remoteLabel && this.record.options.remoteValue) {
+	        	
+	        	
+	        	this.getRemoteData()
+	        }
+ 
 
 	        this.itemProp.label = this.record.options.remoteLabel
 	        this.itemProp.value = this.record.options.remoteValue
@@ -174,10 +180,9 @@ export default {
 	      } else if(this.record.options.dynamic == 2 && this.record.options.dictType ) {
 
 	        // 2022-02-26 lyf  引入数据字典后判断数据字典
-	        console.log('ths.dicts' , this.dicts)
-	     
-	        if(this.dicts && this.dicts.length > 0) {
-	          const fsDict = this.dicts.filter(t=>t.type == this.record.options.dictType)
+	      	
+	        if(this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0) {
+	          const fsDict = this.ngConfig.dict.filter(t=>t.type == this.record.options.dictType)
 	          this.checkValues = cloneDeep(fsDict)
 
 	          this.itemProp.label = 'label'
@@ -211,12 +216,19 @@ export default {
 	      
 	      const dataPath = this.record.options.dataPath
 
+	      // 如果么有datapath 直接返回
+	      if(!dataPath) {
+	      	this.checkValues = []
+	      	return 
+	      }
+
 	      request({
 	        url: this.remoteUrl,
 	        method: 'get',
-	        params: {
+	        params: this.remoteFilter
+	       /* {
 	          ...this.remoteFilter
-	        }
+	        }*/
 	      }).then((data) => {
 	        if (data) { 
 	          // 获取list 根据dataPath 

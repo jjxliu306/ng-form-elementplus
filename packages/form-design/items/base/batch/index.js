@@ -106,7 +106,13 @@ obj.options = {
                     type: 'textarea',
                     span: 24,
                 },
-                
+                {
+                    label: '空内容提示', 
+                    prop: 'noDataText',  
+                    type: 'textarea',
+                    default: '暂无数据',
+                    span: 24,
+                },
                 {
                   label: '行复制',
                   prop: 'copyRow',

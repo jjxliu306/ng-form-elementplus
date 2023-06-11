@@ -1,7 +1,7 @@
 <template>  
 <!-- 上传图片 --> 
       <Upload 
-      :style="`width:${record.options.width}`"
+      :style="`width:${record.width}`"
       :disabled="recordDisabled"
       v-model="models[record.model]"
       :record="record"

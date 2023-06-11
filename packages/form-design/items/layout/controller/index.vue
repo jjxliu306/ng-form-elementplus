@@ -35,17 +35,7 @@
                   @handleCopy="handleCopy(element)"
                   @handleDetele="handleDetele(element)"
                 />
-              </template>
-               <!--  <ng-form-node
-                  v-for="item in record.list"
-                  :key="item.key"
-                  class="drag-move"
-                  :selectItem="selectItem"
-                  :record="item" 
-                  @handleSelectItem="handleSelectItem"
-                  @handleCopy="handleCopy(item)"
-                  @handleDetele="handleDetele(item)"
-                />  -->
+              </template> 
             </draggable>
           </el-row>
         </template> 
@@ -106,12 +96,13 @@
 //import Node from '../../../panel-container/node.vue'
 //import Item from '../../index.vue'
 import cloneDeep from 'lodash/cloneDeep'
-
+import draggable from "vuedraggable"
 import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin] ,
   components: {
   //  Node , Item
+    draggable
   },
   data() {
     return {
