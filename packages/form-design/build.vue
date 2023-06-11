@@ -84,12 +84,12 @@ export default {
 			return {}
 		},
 		// 配置的数据字典
-	    dicts() {
-	      if(this.config && this.config.dict && this.config.dict.length > 0) {
-	        return this.config.dict
-	      }
-	      return null
-	    },
+	    // dicts() {
+	    //   if(this.config && this.config.dict && this.config.dict.length > 0) {
+	    //     return this.config.dict
+	    //   }
+	    //   return null
+	    // },
 	    // 配置中的http配置
 	    httpConfig() {
 	      if(this.config && this.config.httpConfig ) {
@@ -109,8 +109,9 @@ export default {
     	return {
      		customC: this.customComponents ,
      		configC: this.templateConfig,
-     		dictsC: this.dicts,
-     		httpConfigC: this.httpConfig
+     		//dictsC: this.dicts,
+     		httpConfigC: this.httpConfig,
+     		ngConfig: this.config
     	}
   	},
 	methods: {

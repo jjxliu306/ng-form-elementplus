@@ -9,8 +9,8 @@
     <span>{{record.label}}</span>
   </div> -->
   <!-- html -->
- <!--  <div   v-else-if="record.type === 'html'"  v-html="record.options.defaultValue" >  -->
-  </div>  
+ <!--  <div   v-else-if="record.type === 'html'"  v-html="record.options.defaultValue" >  
+  </div>  -->
     <ng-form-item
      
       :disabled="disabled"

@@ -67,18 +67,19 @@ export default {
 	},
 	computed: {
 		hasDict() { 
-			return this.dicts && this.dicts.length > 0 && this.selectItem && this.selectItem.type != 'cascader'
-		}
+      return this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 && this.selectItem && this.selectItem.type != 'cascader'
+    }
 	},
-  	inject: {
-      	dicts: {
-        	from: 'dictsC',
-        	default: ()=> []
-      	},
-  	},
-  	methods: {
+  inject: {
+    ngConfig: {
+      from: 'ngConfig',
+      default: ()=> ({})
+    },
+  },
+  methods: {
     	queryDictSearch(queryString, cb) {
-      		const dicts = this.dicts && this.dicts.length > 0 ? this.dicts : null
+      		const dicts = this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 ? this.ngConfig.dict : null
+          
       		if(!dicts || dicts.length == 0) {
         		cb([])
       		}
@@ -99,6 +100,6 @@ export default {
       		cb(fs)
 
     	},
-  	}
+  }
 }
 </script>

@@ -1,6 +1,6 @@
 
 // 扫描下面目录中所有的index.js 然后穷举后返回 
-const files = import.meta.globEager('./*/index.js')
+const files = import.meta.globEager('./**/index.js')
 
 let list = [] 
 

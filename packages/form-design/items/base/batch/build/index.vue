@@ -72,8 +72,9 @@
        
     </el-table>
     <el-button v-if="!preview" :size="config.size" type="dashed" :disabled="disabled" @click="addDomain">
-       
-       <el-icon><CirclePlusOutline /></el-icon> 
+       <!-- 
+       <el-icon><CirclePlus />新增</el-icon>  -->
+       <el-icon><CirclePlusFilled /></el-icon>新增
     </el-button>
 
     <AddOrUpdate ref="addOrUpdate" v-if="addOrUpdateVisible"   :formTemplate="templateData" :preview="preview" @formAdd="formAdd"  @formUpdate="formUpdate"/>

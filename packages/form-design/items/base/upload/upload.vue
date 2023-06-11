@@ -49,8 +49,8 @@
 	  :on-preview="handlePreview"
 	  :auto-upload="autoUpload"
 	  :file-list="fileList">
-	  <template v-if="!renderPreview">
-	  		<template #trigger >
+	   
+	  		<template #trigger v-if="!renderPreview">
 	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
 	  			<!-- <i v-else class="el-icon-plus"></i> -->
 	  			<el-icon v-else><Plus /></el-icon> 
@@ -59,7 +59,7 @@
 	   			<div   class="el-upload__tip">请选择图片，且不超过500kb</div>
 	   		</template>
 	  	
-	  </template> 
+	  
 	</el-upload>
 
 	  <!--附件上传-->
@@ -153,12 +153,12 @@ export default {
 		}
 	},
 	
-	inject: { 
-	    // 表单全局config配置
-	    httpConfig: {
-	        from: 'httpConfigC' 
-	    }
-	},
+	// inject: { 
+	//     // 表单全局config配置
+	//     httpConfig: {
+	//         from: 'httpConfigC' 
+	//     }
+	// },
 	computed: {
 		// 需要携带的头数据
 		uploadHeader() {
@@ -171,11 +171,20 @@ export default {
  
 			} 
 
-			// 2023-03-04 lyf强制性走一次httpConfig
+		/*	// 2023-03-04 lyf强制性走一次httpConfig
 			if(this.httpConfig) {
 				const config = {headers: {}}
 
 				this.httpConfig(config)
+
+				hs = {...hs , ...config.headers}
+			}*/
+			// 2023-03-04 lyf强制性走一次httpConfig
+			const nghttpConfig = window.nghttpConfig
+			if(nghttpConfig) {
+				const config = {headers: {}}
+
+				nghttpConfig(config)
 
 				hs = {...hs , ...config.headers}
 			}
