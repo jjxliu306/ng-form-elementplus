@@ -457,7 +457,7 @@ import FileUpload from './upload/index.vue'
 import {dynamicFun,dateFormater} from '../utils'
 import CustomComponent from "./custom.vue";
 import NgState from './state/index.vue'
-import objectPath from "object-path";
+import {objectPath} from "object-path";
 export default {
   name: "ng-form-item-base",
   data(){

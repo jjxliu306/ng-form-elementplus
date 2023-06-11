@@ -262,6 +262,11 @@
   margin-bottom: 0;
   padding: 5px 0;
 }
+
+.form-design   .el-form-item .el-form-item__content{
+   display: inline;
+}
+
 .form-design .properties-centent .properties-body .el-form .el-form-item .el-form-item__label, .form-design .properties-centent .properties-body .el-form .el-form-item .el-radio__label, .form-design .properties-centent .properties-body .el-form .el-form-item .el-switch__label, .form-design .properties-centent .properties-body .el-form .el-form-item * {
   font-size: 13px; 
 }
