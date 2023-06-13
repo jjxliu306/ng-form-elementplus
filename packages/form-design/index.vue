@@ -159,9 +159,12 @@ export default {
     }
   },
   watch: {
-    httpConfig(val) {
-      if(val)
-        window.nghttpConfig = val
+    httpConfig: {
+      handler(newVal) { 
+        window.nghttpConfig = newVal;
+      },
+      deep: true,
+      immediate: false,
     },
     formTemplate: {
       handler: function(newVal, oldVal) {
@@ -181,20 +184,24 @@ export default {
     }
   },
   created() {
-    // if(this.formTemplate == null){
-    //   this.formTemplate = {
-    //       list: [],
-    //       config: {
-    //         labelPosition: "left",
-    //         labelWidth: 100, 
-    //         size: 'small',
-    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-    //         hideRequiredMark: false ,
-    //         syncLabelRequired: false,
-    //         customStyle: ""
-    //       }
-    //     }
-    // }
+    if(this.formTemplate == null){
+      this.formTemplate = {
+          list: [],
+          config: {
+            labelPosition: "left",
+            labelWidth: 100, 
+            size: 'small',
+            outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+            hideRequiredMark: false ,
+            syncLabelRequired: false,
+            customStyle: ""
+          }
+        }
+    } 
+
+    if(this.httpConfig) {
+      window.nghttpConfig = this.httpConfig;
+    }
   },
   methods: {
     handleSelectItem(record) {
