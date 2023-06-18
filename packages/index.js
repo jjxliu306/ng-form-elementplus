@@ -25,6 +25,19 @@ const NgFormElementPlus = {
   },
 };
 
-export default NgFormElementPlus;
+//export default NgFormElementPlus;
 
+
+function install(app) {
+
+  components.forEach(t=>  app.component(t.name, t)) 
+}
+
+export {
+ NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
+}
+
+export default {
+  install
+}
  
