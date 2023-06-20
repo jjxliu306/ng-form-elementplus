@@ -49,7 +49,21 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style>
+.table-layout-build.small .table-td {
+  padding: 8px 8px;
+}
+
+.table-layout-build .table-td {
+  min-height: 30px;
+}
+
+.table-layout-build .table-td .row-td {
+  min-height: 30px;
+}
+
+</style>
+<!-- <style lang="scss">
 .table-layout-build {
 
   &.small    {
@@ -67,4 +81,4 @@ export default {
     }
   }
 }
-</style>
+</style> -->

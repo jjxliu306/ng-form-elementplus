@@ -42,7 +42,15 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
+<style>
+.ng-form-label .is-required:before {
+  content: "*";
+  color: #F56C6C;
+  margin-right: 4px;
+}
+
+</style>
+<!-- <style lang="scss">
 .ng-form-label {
 	.is-required:before {
 	  content: "*";
@@ -50,4 +58,4 @@ export default {
 	  margin-right: 4px;
 	}
 } 
-</style>
+</style> -->

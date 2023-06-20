@@ -497,7 +497,18 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
+<style>
+ .table-box .td-draggable, .table-box .td-row {
+  min-height: 65px;
+  min-width: 100px;
+}
+
+.table-box .td-draggable {
+  border: 1px solid #e8e8e8 !important;
+}
+ 
+</style>>
+<!-- <style lang="scss">
 .table-box {
 	.td-draggable , .td-row {
 		min-height: 65px;
@@ -510,4 +521,4 @@ export default {
 	}
 }
 
-</style>
+</style> -->

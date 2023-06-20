@@ -14,7 +14,7 @@
              <DragPanel :basic-item="basicItem" :decorate-item="decorateItem" :layout-item="layoutItem" :application-item="applicationItem"/>
           </el-aside>
           <el-main class="center-panel form-main">
-            <ContainerPanel :formTemplate="formTemplate" @handleSelectItem="handleSelectItem" :selectItem="selectItem">
+            <ContainerPanel :formTemplate="template" @handleSelectItem="handleSelectItem" :selectItem="selectItem">
               <template slot="controlButton" >
                 <slot name="controlButton" ></slot>
               </template> 
@@ -26,10 +26,10 @@
                     <slot name="custom-properties" :selectItem="selectItem"></slot>
                   </template>
                    <template slot="form-extend-properties"  >
-                      <slot name="form-extend-properties" :data="formTemplate"></slot>
+                      <slot name="form-extend-properties" :data="template"></slot>
                   </template>
                    <template slot="extend-tab" >
-                      <slot name="extend-tab" :data="formTemplate"></slot>
+                      <slot name="extend-tab" :data="template"></slot>
                   </template>
               </PropertiesPanel> 
           </el-aside>  
@@ -124,22 +124,22 @@ export default {
     },
   },   
   computed: {
-    formTemplate() {
-      return this.template || {
-          list: [],
-          config: {
-            labelPosition: "left",
-            labelWidth: 100, 
-            size: 'small',
-            outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-            hideRequiredMark: false ,
-            syncLabelRequired: false,
-            customStyle: ""
-          }
-        }
-    },
+    // formTemplate() {
+    //   return this.template || {
+    //       list: [],
+    //       config: {
+    //         labelPosition: "left",
+    //         labelWidth: 100, 
+    //         size: 'small',
+    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+    //         hideRequiredMark: false ,
+    //         syncLabelRequired: false,
+    //         customStyle: ""
+    //       }
+    //     }
+    // },
     templateConfig() {
-      if(this.formTemplate) return this.formTemplate.config 
+      if(this.template) return this.template.config 
       return {}
     },
     // 配置的数据字典
@@ -184,20 +184,20 @@ export default {
     }
   },
   created() {
-    if(this.formTemplate == null){
-      this.formTemplate = {
-          list: [],
-          config: {
-            labelPosition: "left",
-            labelWidth: 100, 
-            size: 'small',
-            outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-            hideRequiredMark: false ,
-            syncLabelRequired: false,
-            customStyle: ""
-          }
-        }
-    } 
+    // if(this.formTemplate == null){
+    //   this.formTemplate = {
+    //       list: [],
+    //       config: {
+    //         labelPosition: "left",
+    //         labelWidth: 100, 
+    //         size: 'small',
+    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+    //         hideRequiredMark: false ,
+    //         syncLabelRequired: false,
+    //         customStyle: ""
+    //       }
+    //     }
+    // } 
 
     if(this.httpConfig) {
       window.nghttpConfig = this.httpConfig;
@@ -209,7 +209,7 @@ export default {
     },
     // 返回编辑好的模板
     getModel() {
-      const model = cloneDeep(this.formTemplate)
+      const model = cloneDeep(this.template)
 
       return model 
     },
@@ -223,13 +223,54 @@ export default {
     // 从模板处导入json表单模板
     importData(formTemplate = {}) {
       //this.formTemplate = formTemplate
-      this.formTemplate.list = formTemplate.list;
-      this.formTemplate.config = formTemplate.config;
+      this.template.list = formTemplate.list;
+      this.template.config = formTemplate.config;
     }
   }
 }
 </script>
+<style>
+.form-design {
+  height: 100%;
+  background: white;
+}
 
+.form-design .header {
+  box-shadow: 1px 0px 6px 3px rgba(48, 65, 86, 0.35);
+}
+
+.form-design .form-main {
+  padding: 0px;
+  height: 100%;
+  min-height: 500px;
+}
+
+.form-design .form-main .ng-main-container {
+  height: 100%;
+  min-height: 500px;
+}
+
+.form-design .item-panel {
+  height: 100%;
+  overflow-y: hidden;
+  box-shadow: 1px 0px 6px 3px rgba(48, 65, 86, 0.35);
+}
+
+.form-design .center-panel {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.form-design .properties-panel {
+  height: 100%;
+  box-shadow: -3px 0 6px rgba(48, 65, 86, 0.35);
+}
+
+
+</style>
+
+<!-- 
 <style lang="scss"> 
 
 .form-design {
@@ -273,3 +314,4 @@ export default {
 }
 
 </style>
+ -->

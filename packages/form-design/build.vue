@@ -186,6 +186,24 @@ export default {
 	}
 }
 </script>
+<style>
+.form-build-panel {
+  height: 100%;
+}
+
+.form-build-panel .row {
+  height: 100%;
+  overflow: auto;
+}
+
+.form-build-panel .ng-form-build {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+</style>
+<!-- 
 <style lang="scss">
 .form-build-panel {
 	height: 100%; 
@@ -204,4 +222,4 @@ export default {
 
 	
 }
-</style>
+</style> -->

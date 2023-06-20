@@ -436,7 +436,30 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
+<style>
+.item-properties .no-data-text {
+  text-align: center;
+  font-size: 13px;
+}
+
+.item-properties .common-form {
+  padding: 10px;
+}
+
+.item-properties .ng-form-properties-collapse .el-collapse-item__header {
+  padding-left: 10px;
+}
+
+.item-properties .linkage-item {
+  border-bottom: 1px solid #EBEEF5;
+}
+
+.item-properties .linkage-item .linkage-form {
+  padding: 10px;
+}
+
+</style>
+<!-- <style lang="scss">
 .item-properties {
 	.no-data-text {
 		text-align: center; 
@@ -464,4 +487,4 @@ export default {
 
 }
 
-</style>
+</style> -->

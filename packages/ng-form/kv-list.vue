@@ -77,7 +77,41 @@ export default {
   }
 };
 </script> 
-<style lang="scss">
+<style>
+.ng-form-kvlist {
+  padding-left: 10px;
+  
+  .el-input__inner {
+    padding: 0px; 
+  }
+   
+  .option-change-box {
+      height: 38px;
+      padding-bottom: 6px; 
+
+      .option-delete-box {
+        margin-top: 3px;
+        background: #ffe9e9;
+        color: #f22;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        border-radius: 50%;
+        overflow: hidden;
+        transition: all 0.3s;
+
+        &:hover {
+          background: #f22;
+          color: #fff;
+        }
+       
+      }
+    } 
+}
+
+</style>
+<!-- <style lang="scss">
 .ng-form-kvlist {
 	padding-left: 10px;
   
@@ -109,4 +143,4 @@ export default {
 	    }
   	} 
 }
-</style>
+</style> -->

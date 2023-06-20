@@ -99,6 +99,49 @@ export default {
   }
 };
 </script> 
+<style>
+.ng-form-kvlist-children {
+  padding-left: 0px;
+}
+
+.ng-form-kvlist-children .el-input__inner {
+  padding: 0px;
+}
+
+.ng-form-kvlist-children .option-change-box {
+  height: 38px;
+  padding-bottom: 6px;
+}
+
+.ng-form-kvlist-children .option-change-box .option-delete-box {
+  margin-top: 3px;
+  background: #ffe9e9;
+  color: #f22;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.ng-form-kvlist-children .option-change-box .option-delete-box:hover {
+  background: #f22;
+  color: #fff;
+}
+
+.ng-form-kvlist-children .kv-button {
+  padding: 0px;
+}
+
+.ng-form-kvlist-children .kv-button.delete {
+  color: red;
+}
+
+
+</style>
+<!-- 
 <style lang="scss">
 .ng-form-kvlist-children {
 	padding-left: 0px;
@@ -140,4 +183,4 @@ export default {
 
     }
 }
-</style>
+</style> -->

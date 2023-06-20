@@ -180,7 +180,22 @@ export default {
 }
 
 </script> 
-<style lang="scss">
+<style>
+.drag-panel {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.drag-panel .title {
+  width: 100%;
+  /*text-align: center;*/
+  padding-left: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+</style>
+<!-- <style lang="scss">
 .drag-panel {
 	height: 100%;
     overflow-y: hidden;
@@ -194,4 +209,4 @@ export default {
     }
 }
 
-</style>
+</style> -->

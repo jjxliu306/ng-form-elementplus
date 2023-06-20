@@ -95,7 +95,7 @@ export function translateConfig(config = []) {
                     t.column.filter(tf=>tf.prop).forEach(tc=> {
                         let jdefault = tc['default']
                         if (jdefault == undefined || jdefault == null) {
-                            jdefault = ''
+                            jdefault = undefined
                         }
 
                         v[t.prop][tc.prop] = jdefault
@@ -109,7 +109,7 @@ export function translateConfig(config = []) {
             formOptions.columns.filter(tf=>tf.prop).forEach(tc=> {
                 let jdefault = tc['default']
                 if (jdefault == undefined || jdefault == null) {
-                    jdefault = ''
+                    jdefault = undefined
                 }
 
                 v[tc.prop] = jdefault
@@ -124,3 +124,56 @@ export function translateConfig(config = []) {
     return cloneConfig
 
 }
+
+
+
+
+// import fs from 'fs'
+// import path from 'path'
+
+//   // const fs = require('fs');
+//   // const path = require('path');
+
+// // 定义要扫描的目录路径 
+ 
+// // 扫描目录下的文件
+// export function scanDirectoryJs(directory) {
+
+
+//   const jsFiles = []
+//   const scan = (dir)=> {
+
+//      // 读取目录中的文件
+//     fs.readdir(dir, (err, files) => {
+//       if (err) {
+//         console.error('Error reading directory:', err);
+//         return;
+//       }
+
+//       // 遍历文件列表
+//       files.forEach(file => {
+//         const filePath = path.join(dir, file);
+
+//         // 判断文件是否为 JavaScript 文件
+//         if (fs.statSync(filePath).isFile() && path.extname(filePath) === '.js') {
+//           // 在这里处理 JavaScript 文件，例如执行或导入文件等
+//           console.log('Found JavaScript file:', filePath);
+//         }
+
+//         // 如果文件是子目录，则递归调用 scan 函数进行进一步扫描
+//         if (fs.statSync(filePath).isDirectory()) {
+//           scan(filePath);
+//         }
+//       });
+//     });
+//   }
+
+//   // 调用函数开始扫描目录
+//   scan(directory);
+
+
+//   return jsFiles
+ 
+// }
+
+ 

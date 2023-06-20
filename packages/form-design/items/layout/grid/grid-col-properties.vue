@@ -53,7 +53,23 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
+<style>
+.layout-grid-col-pro .delete {
+  margin-left: 10px;
+  background: #ffe9e9;
+  color: #f22;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+</style>
+<!-- <style lang="scss">
 .layout-grid-col-pro {
 	.delete {
     	margin-left: 10px;
@@ -69,4 +85,4 @@ export default {
 	    cursor: pointer;
   	}
 }
-</style>
+</style> -->

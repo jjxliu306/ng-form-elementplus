@@ -100,7 +100,29 @@ export default{
 	}
 }
 </script>
-<style lang="scss">
+<style>
+.panel-header-index {
+  height: 100%;
+}
+
+.panel-header-index .logo, .panel-header-index .title {
+  float: left;
+}
+
+.panel-header-index .title {
+  line-height: 40px;
+  height: 40px;
+  padding-left: 20px;
+}
+
+.panel-header-index .buttons {
+  float: right;
+  height: 40px;
+  line-height: 40px;
+}
+
+</style>
+<!-- <style lang="scss">
 .panel-header-index {
 	height: 100%;
   
@@ -120,4 +142,4 @@ export default{
     	line-height: 40px;
 	}
 }
-</style>
+</style> -->

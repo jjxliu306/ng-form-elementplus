@@ -13,9 +13,46 @@
       	ref="form" 
       	:style="formTemplate.config.customStyle" 
       	:size="formTemplate.config.size"
-    	>
+    	> 
 	    <el-row :gutter="20" class="row "> 
-	    		<draggable  
+	    	<draggable
+	          tag="div"
+	          class="draggable-box items-main"
+	          v-bind="{
+	            group: 'form-draggable' ,
+	            ghostClass: 'moving',
+	            animation: 180,
+	            handle: '.drag-move'
+	          }" 
+			    :force-fallback="true"
+			    :list="formTemplate.list" 
+			    @add="dragEnd($event)" 
+
+	          	data-draggable="true"
+	          	item-key="key" 
+	           
+	        >
+	          <template #item="{element}">
+	               
+	               		<Node   
+						       :key="element.key" 
+				        		class="drag-move"  
+				            	:record="element"
+				            	:isDrag="true"
+				            	:config="formTemplate.config"
+				            	:selectItem="selectItem"
+				            	@handleSelectItem="handleSelectItem"
+				            	@handleCopy="handleCopy(element)"
+				            	@handleDetele="handleDetele(element)"
+				            	>  
+				        		</Node>
+	               
+	            </template>
+	        </draggable>
+
+
+
+	    		<!-- <draggable  
 			        tag="div"
 			        class="draggable-box items-main"
 			        v-bind="{
@@ -45,22 +82,9 @@
 				            	>  
 				        		</Node>
 				         
-					    </template>
-			        	<!-- <Node  
-			        		class="drag-move"
-			        		v-for="record in formTemplate.list"
-			            	:key="record.key"
-			            	:record="record"
-			            	:isDrag="true"
-			            	:config="formTemplate.config"
-			            	:selectItem="selectItem"
-			            	@handleSelectItem="handleSelectItem"
-			            	@handleCopy="handleCopy(record)"
-			            	@handleDetele="handleDetele(record)"
-			            	>  
-			        	</Node>  -->
+					    </template> 
 			      
-		    	</draggable> 
+		    	</draggable>  -->
 	     
 	    </el-row> 
 	</el-form> 
@@ -92,12 +116,13 @@ export default {
 	methods: {
 	 	dragEnd(evt, list) {   
 	 		// 复制一遍
-	 		const clone = cloneDeep(list[evt.newIndex])
-	 		list[evt.newIndex] = clone
-	 		//this.$set(list , evt.newIndex , clone)
-		    // 拖拽结束,自动选择拖拽的控件项
-		    //console.log('111' , cloneDeep(list[evt.newIndex]))
-		    this.handleSelectItem(list[evt.newIndex])
+	 		const clone = cloneDeep(this.formTemplate.list[evt.newIndex])
+	 		this.formTemplate.list[evt.newIndex] = clone
+
+	 		console.log('list' , this.formTemplate.list)
+ 			
+		    // 拖拽结束,自动选择拖拽的控件项 
+		    this.handleSelectItem(this.formTemplate.list[evt.newIndex])
 	  	},
 	  	handleSelectItem(record) {
 	    	this.$emit('handleSelectItem' , record)
@@ -130,7 +155,54 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
+<style>
+.form-panel {
+  height: 100%;
+  min-height: 500px;
+}
+
+.form-panel .no-data-text {
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.form-panel .row {
+  height: 100%;
+  min-height: 500px;
+}
+
+.form-panel .ng-form {
+  height: 100%;
+  min-height: 500px;
+}
+
+.form-panel .ng-form .draggable-box {
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+  min-height: 500px;
+}
+
+.form-panel .ng-form .items-main {
+  height: 100%;
+  width: 100%;
+  min-height: 500px;
+  padding: 0px 10px;
+}
+
+.form-panel .ng-form .drag-move {
+  width: 100%;
+}
+
+</style>
+<!-- <style lang="scss">
 .form-panel {
 	height: 100%; 
 	min-height: 500px;
@@ -174,4 +246,4 @@ export default {
 
  
 }
-</style>
+</style> -->

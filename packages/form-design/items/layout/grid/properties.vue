@@ -23,10 +23,8 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style>
 .layout-grid-properties {
-  padding: 20px;
-
-  
+  padding: 20px; 
 }
 </style>
