@@ -50,19 +50,19 @@
           v-if="!preview || record.options.addType == 'dialog'"
           :width="controlWidth ">
           <template  #default="scope"> 
-            <el-button type="success"  :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
+            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
                
                <el-icon><Eye /></el-icon> 查看
             </el-button>
-            <el-button type="primary"  :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
+            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
               
               <el-icon><Edit /></el-icon> 修改
             </el-button>
-            <el-button type="primary"  :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
+            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
              
                <el-icon><CopyDocument /></el-icon> 复制
             </el-button>
-            <el-button type="danger"  :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
+            <el-button  type="text" class="ng-form-btn-del" :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
               <el-icon><Delete /></el-icon> 删除
             </el-button>
           </template> 
@@ -292,4 +292,14 @@ export default {
   }
 };
 </script>
+
+<style>
+.form-table-index .form-table .ng-form-btn-view {
+
+}
+.form-table-index .form-table .ng-form-btn-del {
+  color:  #f56c6c;
+}
+
+</style>
  

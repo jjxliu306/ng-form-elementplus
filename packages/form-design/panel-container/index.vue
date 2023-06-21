@@ -185,7 +185,7 @@ export default {
   height: 100%;
   overflow: auto;
   width: 100%;
-  min-height: 500px;
+  
 }
 
 .form-panel .ng-form .items-main {

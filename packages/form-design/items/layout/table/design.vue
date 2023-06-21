@@ -21,7 +21,7 @@
         <draggable
           tag="div"
           class="draggable-box td-draggable"
-          :style="{'min-height' : (tdItem.rowspan > 1 ? tdItem.rowspan * 65 : undefined) + 'px'}"
+          :style="{'min-height' : (tdItem.rowspan > 1 ? tdItem.rowspan * 65 : 65) + 'px'}"
           v-bind="{
             group: 'form-draggable',
             ghostClass: 'moving',
@@ -29,7 +29,7 @@
             handle: '.drag-move'
             }"
             :force-fallback="true"
-            v-model="tdItem.list"
+            :list="tdItem.list"
             item-key="key"
             @add="dragEnd($event, tdItem.list)" 
           > 
@@ -130,8 +130,12 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import mixin from '../../mixin.js'
+import draggable from "vuedraggable"
 export default {
 	mixins: [mixin] ,
+  components: {
+    draggable
+  },
 	data() {
 		return { 
       showRightMenu: false,
