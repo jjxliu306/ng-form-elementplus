@@ -1,8 +1,7 @@
 <template>  
 <div 
-  class="form-label" 
-  
-  :style="{ textAlign: record.options.textAlign }" > 
+  class="form-label"  
+  :style="{ textAlign: record.options.textAlign , width: record.width }" > 
        <el-alert
         :title="record.options.title"
         :type="record.options.type"

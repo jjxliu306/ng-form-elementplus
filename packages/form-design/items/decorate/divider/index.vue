@@ -1,5 +1,5 @@
 <template>  
-<div>
+<div :style="`width:${record.width}`">
  <el-divider
       v-if="record.label !== '' && record.options.orientation "
       :content-position="record.options.orientation" :direction="record.options.direction ? record.options.direction : 'horizontal'">
