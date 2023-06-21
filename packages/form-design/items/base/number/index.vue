@@ -49,7 +49,7 @@ import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin],
 	created () { 
-	  this.updateSimpleDefaultValue()
+	  this.updateSimpleDefaultValue(true)
 	}
 }
 </script>

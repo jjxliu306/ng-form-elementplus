@@ -79,8 +79,9 @@ export default {
   },
   methods: {
     init(data) {
-      
-      this.formTemplate = data
+      console.log('data' , data)
+      this.formTemplate.list = data.list
+      this.formTemplate.config = data.config
       this.models = {}
       this.key = 'key' + new Date().getTime()
       this.visible = true

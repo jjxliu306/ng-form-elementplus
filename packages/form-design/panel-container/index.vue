@@ -1,6 +1,6 @@
 <template> 
 <div class="form-panel" > 
-    
+     
     <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0">
       从左侧选择组件添加
     </p>
@@ -16,21 +16,19 @@
     	> 
 	    <el-row :gutter="20" class="row "> 
 	    	<draggable
-	          tag="div"
-	          class="draggable-box items-main"
-	          v-bind="{
+	        tag="div"
+	        class="draggable-box items-main"
+	        v-bind="{
 	            group: 'form-draggable' ,
 	            ghostClass: 'moving',
 	            animation: 180,
 	            handle: '.drag-move'
-	          }" 
+	        }" 
 			    :force-fallback="true"
 			    :list="formTemplate.list" 
 			    @add="dragEnd($event)" 
-
-	          	data-draggable="true"
-	          	item-key="key" 
-	           
+					data-draggable="true"
+	        item-key="key"  
 	        >
 	          <template #item="{element}">
 	               
@@ -120,10 +118,10 @@ export default {
 	 		this.formTemplate.list[evt.newIndex] = clone
 
 	 		console.log('list' , this.formTemplate.list)
- 			
-		    // 拖拽结束,自动选择拖拽的控件项 
-		    this.handleSelectItem(this.formTemplate.list[evt.newIndex])
-	  	},
+ 			this.$emit("update:formTemplate", this.formTemplate);
+		  // 拖拽结束,自动选择拖拽的控件项 
+		  this.handleSelectItem(this.formTemplate.list[evt.newIndex])
+	  },
 	  	handleSelectItem(record) {
 	    	this.$emit('handleSelectItem' , record)
 	  	},

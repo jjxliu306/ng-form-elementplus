@@ -107,7 +107,7 @@ export default {
 			}
 		},
 		// 设置文本类默认值
-		updateSimpleDefaultValue() {
+		updateSimpleDefaultValue(isNumber = false) {
 			// 判断当前models中是否有值 有值则不需要赋予默认值
 			// 必须要包含key但没值
 			if(this.models 
@@ -121,7 +121,12 @@ export default {
 					this.models[this.record.model] = defaultValue
 				} else {
 					//this.$set(this.models , this.record.model , '')
-					this.models[this.record.model] = []
+					if(isNumber) {
+						this.models[this.record.model] = -Infinity
+					} else {
+						this.models[this.record.model] = ''
+					}
+					
 				}
 			}
 		},

@@ -1,7 +1,7 @@
 <template> 
   <el-container class="form-design">
       <el-header class="header" height="40px">
-        <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="formTemplate" @importData="importData">
+        <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="template" @importData="importData">
           <template slot="controlButton">
              <slot name="controlButton"></slot>
           </template>
@@ -14,6 +14,7 @@
              <DragPanel :basic-item="basicItem" :decorate-item="decorateItem" :layout-item="layoutItem" :application-item="applicationItem"/>
           </el-aside>
           <el-main class="center-panel form-main">
+           
             <ContainerPanel :formTemplate="template" @handleSelectItem="handleSelectItem" :selectItem="selectItem">
               <template slot="controlButton" >
                 <slot name="controlButton" ></slot>
@@ -57,26 +58,38 @@ export default {
   data(){
     return {
       selectItem: {},
+      template: {
+        list: [],
+        config: {
+          labelPosition: "left",
+          labelWidth: 100, 
+          size: 'small',
+          outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+          hideRequiredMark: false ,
+          syncLabelRequired: false,
+          customStyle: ""
+        }
+      }
     }
   },
   props:{
-    template: {
-      type: Object,
-      default: () => {
-        return {
-          list: [],
-          config: {
-            labelPosition: "left",
-            labelWidth: 100, 
-            size: 'small',
-            outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-            hideRequiredMark: false ,
-            syncLabelRequired: false,
-            customStyle: ""
-          }
-        }
-      }
-    },
+    // template: {
+    //   type: Object,
+    //   default: () => {
+    //     return {
+    //       list: [],
+    //       config: {
+    //         labelPosition: "left",
+    //         labelWidth: 100, 
+    //         size: 'small',
+    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+    //         hideRequiredMark: false ,
+    //         syncLabelRequired: false,
+    //         customStyle: ""
+    //       }
+    //     }
+    //   }
+    // },
     customComponents: {
       type: Array,
       default: ()=>[]
@@ -166,13 +179,13 @@ export default {
       deep: true,
       immediate: false,
     },
-    formTemplate: {
-      handler: function(newVal, oldVal) {
-        this.$emit('update:formTemplate', newVal)
-      },
-      deep: true,
-      immediate: false,
-    }
+    // formTemplate: {
+    //   handler: function(newVal, oldVal) {
+    //     this.$emit('update:formTemplate', newVal)
+    //   },
+    //   deep: true,
+    //   immediate: false,
+    // }
   },
   provide: function () {
     return {

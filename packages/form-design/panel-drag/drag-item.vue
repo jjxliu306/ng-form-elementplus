@@ -56,11 +56,17 @@ export default {
   },
   methods: { 
     handleEnd(e, list){ 
+      const index = e.oldIndex
+      const key = list[index].type + "_" + new Date().getTime();
+
+      list[index].key = key 
+      list[index].model = key 
 
       this.$emit('dragend' ,list,  e.oldIndex)
     },
     handleStart(e , list) {
       
+         
     },
     //组件图标
     weightIcon(item) {

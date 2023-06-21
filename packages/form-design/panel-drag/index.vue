@@ -155,20 +155,17 @@ export default {
 		},
 		generateKey(list, index) {
 			 
-	      // 生成key值 
-	      const key = list[index].type + "_" + new Date().getTime();
+			  const key = list[index].type + "_" + new Date().getTime();
 
-	      list[index] = {
-	        ...list[index],
-	        key,
-	        model: key
-	      }
+	      const nData = cloneDeep(list[index])
+	      nData.key = key 
+	      nData.model = key 
+	      
+	      list[index] = nData
 
-	      // this.$set(list, index, {
-	      //   ...list[index],
-	      //   key,
-	      //   model: key
-	      // })
+	      console.log('generateKey' , key )
+	       
+ 
 	    },
 	    handleStart(list,index) {
 	    	this.generateKey(list,index) 

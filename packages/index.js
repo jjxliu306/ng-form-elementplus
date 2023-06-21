@@ -10,6 +10,12 @@ import NgFormItemNode from './form-design/items/node.vue'
 
 import NgForm  from './ng-form/index.vue'
  
+
+
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+
+
  
 
 // 按需引入 
@@ -31,6 +37,10 @@ const NgFormElementPlus = {
 function install(app) {
 
   components.forEach(t=>  app.component(t.name, t)) 
+
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 }
 
 export {
