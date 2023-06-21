@@ -317,11 +317,8 @@ export default {
 }
 </style> -->
 <style>
-.ng-application-state {
-  .width-select {
-    .el-input__inner {
-      text-align: right;
-    }
-  }
+ 
+.ng-application-state .width-select .el-input__inner{ 
+  text-align: right; 
 }
 </style>

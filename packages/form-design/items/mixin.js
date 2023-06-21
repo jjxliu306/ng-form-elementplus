@@ -3,7 +3,7 @@ import { dynamicFun } from '../../utils/index.js'
 
 import request from '../../utils/request.js'
 import cloneDeep from 'lodash/cloneDeep'
-
+import objectPath from 'object-path';
 export default {
 	props: {
 	  // 表单数组 
@@ -221,7 +221,7 @@ export default {
 	    // 获取远程数据
 	    getRemoteData() { 
 
-	      const objectPath = require("object-path");
+	      //const objectPath = require("object-path");
 	      
 	      const dataPath = this.record.options.dataPath
 
