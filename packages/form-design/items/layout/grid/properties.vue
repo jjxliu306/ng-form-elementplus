@@ -2,7 +2,7 @@
 <el-collapse-item name="grid" title="栅格">
 <el-form class="layout-grid-properties"  size="small" label-width="80px" label-position="top" >
 	<el-form-item  label="列配置" v-if="selectItem && selectItem.columns && selectItem.columns.length > 0">
-     <ColProperties v-model="selectItem.columns" />
+     <ColProperties :value="selectItem.columns" />
   </el-form-item> 
 </el-form>
 </el-collapse-item>

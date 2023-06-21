@@ -11,7 +11,7 @@
        	</el-col>
         <el-col :span="6">
         	<div @click="handleDelete(index)" class="delete" title="删除">
-             	<i class="el-icon-delete" />
+              <el-icon><Delete /></el-icon> 
          	</div>
      	</el-col>
     </div>
@@ -24,7 +24,8 @@
 export default {
 	props: {
 		value: {
-			type: Array
+			type: Array,
+			required: true
 		},
 		disabled: {
 			type: Boolean,
@@ -34,22 +35,24 @@ export default {
 	methods: {
 		handleAddCol() {
 	      // 添加栅格Col
-	      let addData = [
-	        ...this.value,
-	        {
-	          span: 12,
-	          list: []
-	        }
-	      ];
-	      this.$emit("input", addData);
+	    
+	      const addData = {
+	      	span: 12,
+	        list: []
+	      }
+
+	      this.value.push(addData)
+
+	      this.$emit("update:value",  this.value);
 	    },
 		handleDelete(deleteIndex) {
-	      // 删除
-	      this.$emit(
-	        "input",
-	        this.value.filter((val, index) => index !== deleteIndex)
-	      );
-    	},
+	      // 删除 
+      this.value.splice(deleteIndex,1)
+      this.$emit(
+        "update:value",
+        this.value
+      ) 
+    },
 	}
 }
 </script>
