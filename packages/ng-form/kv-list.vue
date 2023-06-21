@@ -78,37 +78,37 @@ export default {
 };
 </script> 
 <style>
-.ng-form-kvlist {
+ .ng-form-kvlist {
   padding-left: 10px;
-  
-  .el-input__inner {
-    padding: 0px; 
-  }
-   
-  .option-change-box {
-      height: 38px;
-      padding-bottom: 6px; 
-
-      .option-delete-box {
-        margin-top: 3px;
-        background: #ffe9e9;
-        color: #f22;
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
-        text-align: center;
-        border-radius: 50%;
-        overflow: hidden;
-        transition: all 0.3s;
-
-        &:hover {
-          background: #f22;
-          color: #fff;
-        }
-       
-      }
-    } 
 }
+
+.ng-form-kvlist .el-input__inner {
+  padding: 0px;
+}
+
+.ng-form-kvlist .option-change-box {
+  height: 38px;
+  padding-bottom: 6px;
+}
+
+.ng-form-kvlist .option-change-box .option-delete-box {
+  margin-top: 3px;
+  background: #ffe9e9;
+  color: #f22;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.ng-form-kvlist .option-change-box .option-delete-box:hover {
+  background: #f22;
+  color: #fff;
+}
+
 
 </style>
 <!-- <style lang="scss">

@@ -15,14 +15,15 @@
       <span v-for="(val, index) in value" :key="index">
         <div class="option-change-box" v-if="index !== 0">
           <el-col :span="24" >
-            <template>
+           
+              {{index}}、
               <el-radio v-model="val.vtype" :label="1" title="正则表达式不要带前后的/">
                 正则
               </el-radio>
               <el-radio v-model="val.vtype" :label="2" title="表达式中$表示全局表单数据,$row表示在动态表格内单行的数据">
                  表达式
               </el-radio>
-            </template>
+           
           </el-col>
           <el-col :span="20" >
             <el-input v-model="val.message" placeholder="提示信息"/>
@@ -67,23 +68,22 @@ export default {
   },
   methods: {
     handleAddRules() {
-      let addData = [
-        ...this.value,
-        {
-          vtype: 1,
-          //validator: 'validatorFiled',
+     
+      const addData =  {
+          vtype: 1, 
           pattern: "",
           script: "",
           message: ""
         }
-      ];
+      this.value.push(addData)
       this.$emit("update:value", addData);
     },
     handleDelete(deleteIndex) {
       // 删除
+      this.value.splice(deleteIndex,1)
       this.$emit(
         "update:value",
-        this.value.filter((val, index) => index !== deleteIndex)
+        this.value
       );
     }
   }
