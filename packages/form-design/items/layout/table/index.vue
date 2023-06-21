@@ -88,8 +88,7 @@ export default {
 }
 
 .ng-table-controller .form-table .table-td .draggable-box {
-  min-height: 45px;
-  display: flex;
+  min-height: 45px; 
 }
 
 .ng-table-controller .form-table tr {

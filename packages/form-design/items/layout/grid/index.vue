@@ -9,7 +9,7 @@
     <draggable
       v-if="isDragPanel"
       tag="div"
-      class="draggable-box"
+      class="draggable-box grid-box"
       v-bind="{
         group: 'form-draggable',
         ghostClass: 'moving',
@@ -19,7 +19,7 @@
       item-key="key"
       :force-fallback="true"
       v-model="item.list"
-      @add="dragEnd($event, record.list)" 
+      @add="dragEnd($event, item.list)" 
       > 
         <template #item="{element}">
           <ng-form-node 
@@ -75,7 +75,15 @@ export default {
   methods: {
     dragEnd(evt, columns) {   
       // 拖拽结束,自动选择拖拽的控件项
-      this.handleSelectItem(columns[evt.newIndex])
+      const nitem = cloneDeep(columns[evt.newIndex])
+      const key = nitem.type + "_" + new Date().getTime() 
+      nitem.key = key
+      nitem.model = key
+
+      columns[evt.newIndex] = nitem
+
+
+      this.handleSelectItem(nitem)
     },
     handleCopy(item){ 
       const nitem = cloneDeep(item)
@@ -121,6 +129,10 @@ export default {
   box-sizing: border-box;
   padding-left: 2px;
   padding-right: 2px;
+}
+
+.form-panel .grid-box {
+
 }
 
 </style>
