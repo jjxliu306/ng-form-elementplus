@@ -128,7 +128,8 @@
 </div> 
 </template>
 <script>
-import cloneDeep from 'lodash/cloneDeep'
+//import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../../../../utils/index.js'
 import mixin from '../../mixin.js'
 import draggable from "vuedraggable"
 export default {

@@ -48,8 +48,8 @@
 <script> 
  
 import Item from "../items/index.vue"
-import cloneDeep from 'lodash/cloneDeep' 
-
+//import cloneDeep from 'lodash/cloneDeep' 
+import { cloneDeep } from '../../utils/index.js'
 export default {
   name: 'ng-form-node',
   components: {

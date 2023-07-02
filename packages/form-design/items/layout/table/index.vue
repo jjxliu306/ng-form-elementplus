@@ -36,13 +36,12 @@
 <script>
  
 import Build from './build.vue'
-import Design from './design.vue'
-import draggable from "vuedraggable"
+import Design from './design.vue' 
 import mixin from '../../mixin.js'
 export default {
 	mixins: [mixin] ,
   components: {
-    Build , Design , draggable
+    Build , Design
   },
   data() {
     return {

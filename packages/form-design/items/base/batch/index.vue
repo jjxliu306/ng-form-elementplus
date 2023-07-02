@@ -19,8 +19,9 @@
         }"
         item-key="key"
         :force-fallback="true"
-        v-model="record.list"
-        @add="dragEnd($event, record.list)" 
+        :list="record.list"
+        @add="dragEnd($event, record.list)"  
+
         >
         <template #item="{element}">
           <ng-form-node 
@@ -53,11 +54,13 @@
 </div>
 </template>
 <script> 
+import { defineComponent } from 'vue';
 import TableBuild from './build/index.vue'
-import cloneDeep from 'lodash/cloneDeep'
+//import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../../../../utils/index.js'
 import draggable from "vuedraggable"
 import mixin from '../../mixin.js'
-export default {
+export default defineComponent({
 	mixins: [mixin] , 
   components: {
     TableBuild,draggable
@@ -98,7 +101,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 <!-- <style lang="scss">
 .ng-base-batch {

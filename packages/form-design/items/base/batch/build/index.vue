@@ -50,20 +50,20 @@
           v-if="!preview || record.options.addType == 'dialog'"
           :width="controlWidth ">
           <template  #default="scope"> 
-            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
+            <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
                
-               <el-icon><Eye /></el-icon> 查看
+               <!-- <el-icon><Eye /></el-icon> --> 查看
             </el-button>
-            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
+            <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
               
-              <el-icon><Edit /></el-icon> 修改
+              <!-- <el-icon><Edit /></el-icon> --> 修改
             </el-button>
-            <el-button  type="text" class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
+            <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
              
-               <el-icon><CopyDocument /></el-icon> 复制
+               <!-- <el-icon><CopyDocument /></el-icon> --> 复制
             </el-button>
-            <el-button  type="text" class="ng-form-btn-del" :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
-              <el-icon><Delete /></el-icon> 删除
+            <el-button  type="text" text  class="ng-form-btn-del" :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
+             <!--  <el-icon><Delete /></el-icon> --> 删除
             </el-button>
           </template> 
         </el-table-column> 

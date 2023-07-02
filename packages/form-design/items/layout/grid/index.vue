@@ -18,7 +18,7 @@
       }"
       item-key="key"
       :force-fallback="true"
-      v-model="item.list"
+      :list="item.list"
       @add="dragEnd($event, item.list)" 
       > 
         <template #item="{element}">
@@ -57,7 +57,8 @@
 </el-row>
 </template>
 <script>
-import cloneDeep from 'lodash/cloneDeep'
+//import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../../../../utils/index.js'
 import draggable from "vuedraggable"
 import mixin from '../../mixin.js'
 export default {

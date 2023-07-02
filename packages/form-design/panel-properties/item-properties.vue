@@ -164,8 +164,9 @@ import NgForm from '../../ng-form/index.vue'
 // 获取个性化属性配置 
 import itemIndex from "../items/index.js";
 
-import { dynamicFun } from '../../utils/index.js' 
-import cloneDeep from 'lodash/cloneDeep'
+import { dynamicFun , cloneDeep } from '../../utils/index.js' 
+//import cloneDeep from 'lodash/cloneDeep'
+
 import NgConstants from '../../constants'
 
 export default {

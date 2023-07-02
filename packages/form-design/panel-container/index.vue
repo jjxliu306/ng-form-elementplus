@@ -13,7 +13,7 @@
       	ref="form" 
       	:style="formTemplate.config.customStyle" 
       	:size="formTemplate.config.size"
-    	> 
+    	>  
 	    <el-row :gutter="20" class="row "> 
 	    	<draggable
 	        tag="div"
@@ -89,8 +89,10 @@
 </div> 
 </template>
 <script> 
-import cloneDeep from 'lodash/cloneDeep'
-import draggable from 'vuedraggable'
+//import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../../utils/index.js'
+ 
+import draggable from "vuedraggable"
 import Node from './node.vue'
 export default {
 	name: 'ng-form-container' ,

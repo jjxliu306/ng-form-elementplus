@@ -33,7 +33,7 @@
 <script> 
 import Node from './panel-container/node.vue'
  
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../utils/index.js'
 
 export default {
 	name: 'ng-form-build' ,

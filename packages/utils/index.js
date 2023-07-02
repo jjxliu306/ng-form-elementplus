@@ -1,12 +1,24 @@
-
-export const http_get_file_list_url = 'http://localhost:9000/sxfw/file/list';
-export const http_upload_file_url = 'http://localhost:9000/sxfw/file/upload'
-export const http_down_file_url = 'http://localhost:9000/sxfw/file/fileDown'
-
  
 
-import cloneDeep from 'lodash/cloneDeep'
+//import cloneDeep from 'lodash/cloneDeep'
  
+
+export function cloneDeep(obj) {
+
+    if (typeof obj !== 'object') return
+    let newObj = obj instanceof Array ? [] : {}  
+    for (let key in obj) {    
+       if (typeof obj[key] === 'object') {      
+         newObj[key] = cloneDeep(obj[key])    
+       } else {      
+          newObj[key] = obj[key]    
+       }  
+     }
+     return newObj
+ 
+    //return JSON.parse(JSON.stringify(data))
+}
+
 /**
 * 动态函数
 * @param script 函数脚本

@@ -35,8 +35,8 @@
 </template>
 <script>   
 
-import cloneDeep from 'lodash/cloneDeep'
-import { dynamicFun } from '../../utils/index.js'
+//import cloneDeep from 'lodash/cloneDeep'
+import { dynamicFun , cloneDeep } from '../../utils/index.js'
 
 import ItemNode from './node.vue'
 

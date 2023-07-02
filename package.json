@@ -1,26 +1,29 @@
 {
-  "name": "ng-form-elementplus",
+  "name": "test-ng-form-elementplus",
   "private": false,
-  "version": "2.0.0",
+  "version": "2.0.9",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:components": "node --trace-warnings ./build.js",
+    "lib": "npm run build:components",
     "preview": "vite preview"
-  },
-  "author": "liuyufneg",
-  "main": "./packages/index.js",
+  }, 
+  "author": "liuyufneg", 
+  "files": ["lib"],
+  "main": "./lib/test-ng-form-elementplus.umd.js",
+  "typings": "./lib/index.d.ts",  
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^0.27.2",
-    "element-plus": "^2.2.0", 
-    "lodash": "^4.17.21",
+    "element-plus": "^2.2.0",  
     "object-path": "^0.11.8",
     "vue": "^3.2.25",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3", 
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "@vue/compiler-sfc": "^3.2.6"
   },
   "bugs": {
     "url": "https://gitee.com/jjxliu306/ng-form-elementplus/issues"

@@ -51,9 +51,9 @@
 
 <script>
  
-  import cloneDeep from 'lodash/cloneDeep'
+  //import cloneDeep from 'lodash/cloneDeep'
   
-  import { dynamicFun} from '../../../../../utils/index' 
+  import { dynamicFun , cloneDeep } from '../../../../../utils/index' 
   export default {
     name: 'table-add-or-update' ,
     data () {

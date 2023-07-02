@@ -1,7 +1,7 @@
  
 import { translateConfig } from '../../utils/index.js'
-import cloneDeep from 'lodash/cloneDeep'
-  
+//import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../../utils/index.js'  
 // 扫描下面目录中所有的index.js 然后穷举后返回
 import baseConfig from './base/index.js' 
 import decorateConfig from './decorate/index.js' 
@@ -15,7 +15,7 @@ const list = [ baseConfig , decorateConfig , layoutConfig , applicationConfig]
 let itemConfig = {}
 list.forEach(t=> {
   	t.list.forEach(n=> {
-  		const nclone = cloneDeep(n)
+  		const nclone = cloneDeep(n) 
 	  	delete nclone.component
 	  	delete nclone.properties 
 	  	itemConfig[n.type] = nclone 

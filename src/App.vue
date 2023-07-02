@@ -1,6 +1,13 @@
  
 <template>
-  <ng-form-design :template.sync="template"/>
+  <ng-form-design :template.sync="template">
+  	<template #formName> 
+  		<el-input v-model="formName" />
+  	</template>
+  	<template #controlButton> 
+  		222
+  	</template>
+  </ng-form-design>
 </template>
 <script>
 	
@@ -23,9 +30,11 @@ export default  ({
 	            syncLabelRequired: false,
 	            customStyle: ""
 	          }})
+ 		const formName = ref('')
 
  		 return {
- 		 	template
+ 		 	template,
+ 		 	formName
  		 }
 	}
 })

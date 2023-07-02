@@ -20,7 +20,8 @@
 <script>
 import itemIndex from "../items/index.js"
 import DragItem from './drag-item.vue'
-import cloneDeep from 'lodash/cloneDeep' 
+//import cloneDeep from 'lodash/cloneDeep' 
+import { cloneDeep } from '../../utils/index.js'
 export default {
 	components: {
 		DragItem

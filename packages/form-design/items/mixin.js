@@ -1,9 +1,9 @@
 
-import { dynamicFun } from '../../utils/index.js'
+import { dynamicFun , cloneDeep } from '../../utils/index.js'
 
 import request from '../../utils/request.js'
-import cloneDeep from 'lodash/cloneDeep'
-import objectPath from 'object-path';
+//import cloneDeep from 'lodash/cloneDeep'
+import * as objectPath from 'object-path';
 export default {
 	props: {
 	  // 表单数组 

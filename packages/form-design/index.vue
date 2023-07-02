@@ -2,8 +2,11 @@
   <el-container class="form-design">
       <el-header class="header" height="40px">
         <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="template" @importData="importData">
-          <template slot="controlButton">
+          <template #controlButton>
              <slot name="controlButton"></slot>
+          </template>
+          <template #formName>
+             <slot name="formName"></slot>
           </template>
         </HeaderPanel>
       </el-header>
@@ -45,7 +48,8 @@ import DragPanel from './panel-drag/index.vue'
 import ContainerPanel from './panel-container/index.vue'
 import PropertiesPanel from './panel-properties/index.vue'
 
-import cloneDeep from 'lodash/cloneDeep' 
+//import cloneDeep from 'lodash/cloneDeep' 
+import { cloneDeep } from '../utils/index.js'
 
 export default {
   name: 'ng-form-design',

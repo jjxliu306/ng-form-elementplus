@@ -1,5 +1,5 @@
-import axios from 'axios'
-
+//import axios from 'axios'
+import * as axios from 'axios';
 //const axios = require('axios');
 
 const request = axios.create({
