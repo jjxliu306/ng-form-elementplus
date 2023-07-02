@@ -1,7 +1,7 @@
 # ng-form 致力打造开源最强vue动态表单组件
 NG-FORM-ELEMENTPLUS
 
-![组件一览](https://s3.ax1x.com/2020/12/22/rr6Dw6.png "11.png")
+![组件一览](img/0324_11.png "0324_11.png")  
  
  **说明**
  
