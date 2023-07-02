@@ -1,8 +1,16 @@
 # ng-form 致力打造开源最强vue动态表单组件
 NG-FORM-ELEMENTPLUS
 
-![组件一览](https://s3.ax1x.com/2020/12/22/rr6Dw6.png "11.png")
+![组件一览](img/0324_11.png "0324_11.png")  
  
+ **说明**
+ 
+目前已经开始启用2.0版本，配置基本兼容1.x版本。差异部分如下：
+1. 1.x中日期中通过属性来配置是否可以范围选择，2.x版本拆成了两个组件
+2. 2.x版本全局默认使用栅格布局，使用1.x的配置导入进来后，默认每个组件都是占24格
+
+
+
  **在线示例**
  https://jjxliu306.github.io/ng-form-elementplus/dist
 
@@ -19,7 +27,7 @@ NG-FORM-ELEMENTPLUS
 https://gitee.com/jjxliu306/ngtool
 
 ## 文档（陆续更新）
-https://www.ng-form.cn/  
+https://www.kancloud.cn/jjxliu306/ng-form/3138508
 
 
 <!--
@@ -31,20 +39,16 @@ https://www.ng-form.cn/
 前端vue: https://gitee.com/jjxliu306/ng-ui
 -->
 ##示例
- **引用示例代码**
-https://gitee.com/jjxliu306/ng-form-elementplus-sample
-
-
  **基础表单** 
- ![基础表单](https://s3.ax1x.com/2020/12/22/rrcpkT.gif "basic.gif")
+ ![基础表单](img/0324_basic.gif "0324_basic.gif")  
 
 
  **表单验证和组件动态显示** 
-![表单验证和组件动态显示](https://s3.ax1x.com/2020/12/22/rr6x00.gif "validator1.gif")
+![表单验证和组件动态显示](img/0324_validator.gif "0324_validator.gif")
 
 
  **动态表格** 
-![动态表格](https://s3.ax1x.com/2020/12/22/rrc9tU.gif "tablebatch.gif")
+![动态表格](img/0324_batch.gif "0324_batch.gif")
 
 
 ## 简介
@@ -66,52 +70,7 @@ https://gitee.com/jjxliu306/ng-form-elementplus-sample
 ## 组件
 - ng-form-design 表单设计器（基于可视化操作快速设计出表单页面，生成配置json或页面）
 - ng-form-build 表单构建器（根据设计器中获取的配置json数据，快速构建出表单页面，添加readonly属性后展现预览表单）
-
-
- <!--
-## CDN 直接使用
  
-```
-  <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>vue-drag-formdesign</title> 
-  引入样式  
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jjxliu306/vue-form-design@2.0.10/lib/vue-drag-formdesign.css">
-  引入组件库  
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/jjxliu306/vue-form-design@2.0.10/lib/vue-drag-formdesign.umd.min.js"></script>
-</head> 
-<body>
-<div id="app"> 
-  <vue-drag-formdesign ref="formDesign" > 
-    <template  slot="formName">
-        <span> vue-drag-formdesign 示例 </span>
-    </template>
-  </vue-drag-formdesign>  
-</div> 
-<script>
-new Vue({
-  el: '#app',
-  data: { 
-  },
-  mounted() { 
-  },
-  methods: {
-     
-  }
-})
-</script>
-</body>
-</html>
-```
-
-**详情可参考项目中 form-cdn.html**
- -->
-</div>
  
 ## 安装
 ```
@@ -122,13 +81,15 @@ npm install --save  ng-form-elementplus
 ```
  // 导入组件库
 import NgFormElementPlus  from 'ng-form-elementplus'
-import 'ng-form-elementplus/packages/form/src/form-design.css'
+import 'ng-form-elementplus/lib/style.css'
 ```
 
 ## 注册
 ``` 
+const app = createApp(App)
+ 
 // 注册组件库
-Vue.use(NgFormElementPlus) 
+app.use(NgFormElementPlus) 
 
 ```
 
@@ -178,13 +139,13 @@ Vue.use(NgFormElementPlus)
  插槽示例:
  ```
   <ng-form-design >
-        <template slot="controlButton" >
+        <template #controlButton >
             <el-button   type="text" size="large"  @click="initDemo(1)">示例1</el-button>
             <el-button   type="text" size="large"  @click="initDemo(2)">示例2</el-button>
             <el-button   type="text" size="large"  @click="initDemo(3)">示例3</el-button>
         </template>
         <template  slot="formName">
-            <span> vue-drag-formdesign 示例 </span>
+            <span> ng-form-elementplus 示例 </span>
         </template>
     </ng-form-design> 
  ```
