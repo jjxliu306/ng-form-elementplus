@@ -86,8 +86,10 @@ import 'ng-form-elementplus/lib/style.css'
 
 ## 注册
 ``` 
+const app = createApp(App)
+ 
 // 注册组件库
-Vue.use(NgFormElementPlus) 
+app.use(NgFormElementPlus) 
 
 ```
 

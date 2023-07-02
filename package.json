@@ -1,9 +1,10 @@
 {
-  "name": "test-ng-form-elementplus",
+  "name": "ng-form-elementplus",
   "private": false,
-  "version": "2.0.9",
+  "version": "2.0.0",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
     "build:components": "node --trace-warnings ./build.js",
     "lib": "npm run build:components",
     "preview": "vite preview"

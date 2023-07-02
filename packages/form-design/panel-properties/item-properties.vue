@@ -294,7 +294,8 @@ export default {
 	          	const prop = t.prop
 	          	// 判断当前整个组的prop是否有值
 	          	if (!this_.selectItem[prop]) {
-	            	this_.$set(this_.selectItem, prop, {})
+	            	//this_.$set(this_.selectItem, prop, {})
+	            	this_.selectItem.prop = {}
 	          	}
 
 	          	// 如果找到新的column有默认值 当前配置中没有值 则回填 
@@ -305,7 +306,8 @@ export default {
 		              	// 判断column如果有默认值，但当前data没有值 则回填 
 		               
 		              	if (!Object.prototype.hasOwnProperty.call(this_.selectItem[prop], gc.prop)) {
-		                	this_.$set(this_.selectItem[prop], gc.prop, gc.default)
+		                	//this_.$set(this_.selectItem[prop], gc.prop, gc.default)
+		                	this_.selectItem[prop][gc.prop] =  gc.default
 		              	}
 	 
 	            	})
@@ -409,7 +411,8 @@ export default {
 	            	columns.filter(gf => gf.default).forEach(gc => {
 	              		// 判断column如果有默认值，但当前data没有值 则回填  
 	              		if (!Object.prototype.hasOwnProperty.call(this_.selectItem, gc.prop)) {
-	                		this_.$set(this_.selectItem, gc.prop, gc.default)
+	                		//this_.$set(this_.selectItem, gc.prop, gc.default)
+	                		this_.selectItem[gc.prop] = gc.default
 	              		}
 	 
 	            	})

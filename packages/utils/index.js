@@ -98,7 +98,7 @@ export function translateConfig(config = []) {
 
       delete v.options
 
-        if(formOptions.group && formOptions.group.length > 0) {
+        if(formOptions && formOptions.group && formOptions.group.length > 0) {
             formOptions.group.forEach(t=> {
                 if(t.label && t.prop && t.default != null && !t.column) {
                     v[t.prop] = t.default
@@ -117,7 +117,7 @@ export function translateConfig(config = []) {
             }) 
         }
 
-        if(formOptions.columns && formOptions.columns.length > 0) {
+        if(formOptions && formOptions.columns && formOptions.columns.length > 0) {
             formOptions.columns.filter(tf=>tf.prop).forEach(tc=> {
                 let jdefault = tc['default']
                 if (jdefault == undefined || jdefault == null) {

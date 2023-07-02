@@ -100,7 +100,7 @@ obj.options = {
                 {
                     label: '日期格式', 
                     prop: 'format',  
-                    default: 'yyyy-MM-dd' ,
+                    default: 'YYYY-MM-DD' ,
                     span: 24,
                 },
                 {

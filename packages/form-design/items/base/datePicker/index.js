@@ -88,7 +88,7 @@ obj.options = {
                 {
                     label: '日期格式', 
                     prop: 'format',  
-                    default: 'yyyy-MM-dd HH:mm:ss' ,
+                    default: 'YYYY-MM-DD HH:mm:ss' ,
                     span: 24,
                 },
                 {
