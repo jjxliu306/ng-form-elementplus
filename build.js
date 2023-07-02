@@ -1,6 +1,7 @@
 const path = require('path')
 const { defineConfig, build } = require('vite')
 const vue = require('@vitejs/plugin-vue')
+const fs = require('fs-extra')  
 
 // 添加打包入口文件夹 packages（需要手动创建）
 const entryDir = path.resolve(__dirname, './packages')
@@ -34,8 +35,8 @@ const buildAll = async () => {
       lib: {
         entry: path.resolve(entryDir, 'index.js'),
 		    // 组件库名字
-        name: 'test-ng-form-elementplus',
-        fileName: 'test-ng-form-elementplus',
+        name: 'ng-form-elementplus',
+        fileName: 'ng-form-elementplus',
 		    // 输出格式
         formats: ['es', 'umd']
       },
@@ -47,6 +48,8 @@ const buildAll = async () => {
 
 const buildLib = async () => {
   await buildAll()
+
+  fs.copySync('./packages/index.d.ts', './lib/index.d.ts');
 }
 
 buildLib()
