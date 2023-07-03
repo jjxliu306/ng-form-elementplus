@@ -2,7 +2,7 @@
  传入record数据，通过判断record.type，来渲染对应的组件 
  -->
 <template>
-<div>
+ 
       
   <!-- 文本 -->
 <!--   <div v-if="record.type === 'text'" :style="{ textAlign: record.options.textAlign }">  
@@ -12,7 +12,7 @@
  <!--  <div   v-else-if="record.type === 'html'"  v-html="record.options.defaultValue" >  
   </div>  -->
     <ng-form-item
-     
+      class="batch-build-item"
       :disabled="disabled"
       :preview="preview"
       :models="domains"   
@@ -22,7 +22,7 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />    
-</div>
+ 
 </template>
 <script> 
 import { dynamicFun} from '../../../../../utils/index' 
@@ -104,4 +104,8 @@ export default {
   }
 };
 </script>
- 
+<style>
+.batch-build-item.is-error {
+    margin-bottom: 18px;
+}
+</style>
