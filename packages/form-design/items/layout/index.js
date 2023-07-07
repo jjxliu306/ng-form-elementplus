@@ -14,12 +14,12 @@ let list = []
 import controller from './controller/index.js'
 import grid from './grid/index.js'
 import table from './table/index.js'
- 
+import tabs from './tabs/index.js' 
 
 list.push(controller)
 list.push(grid)
 list.push(table) 
-
+list.push(tabs) 
  
 // 按照seq排序
 list = list.sort(function(a,b){
