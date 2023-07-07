@@ -17,7 +17,7 @@
              <DragPanel :basic-item="basicItem" :decorate-item="decorateItem" :layout-item="layoutItem" :application-item="applicationItem"/>
           </el-aside>
           <el-main class="center-panel form-main">
-           
+            
             <ContainerPanel :formTemplate="template" @handleSelectItem="handleSelectItem" :selectItem="selectItem">
               <template slot="controlButton" >
                 <slot name="controlButton" ></slot>
@@ -47,8 +47,7 @@ import HeaderPanel from './panel-header/index.vue'
 import DragPanel from './panel-drag/index.vue'
 import ContainerPanel from './panel-container/index.vue'
 import PropertiesPanel from './panel-properties/index.vue'
-
-//import cloneDeep from 'lodash/cloneDeep' 
+ 
 import { cloneDeep } from '../utils/index.js'
 
 export default {
@@ -76,24 +75,7 @@ export default {
       }
     }
   },
-  props:{
-    // template: {
-    //   type: Object,
-    //   default: () => {
-    //     return {
-    //       list: [],
-    //       config: {
-    //         labelPosition: "left",
-    //         labelWidth: 100, 
-    //         size: 'small',
-    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-    //         hideRequiredMark: false ,
-    //         syncLabelRequired: false,
-    //         customStyle: ""
-    //       }
-    //     }
-    //   }
-    // },
+  props:{ 
     customComponents: {
       type: Array,
       default: ()=>[]
@@ -140,32 +122,11 @@ export default {
       default: true
     },
   },   
-  computed: {
-    // formTemplate() {
-    //   return this.template || {
-    //       list: [],
-    //       config: {
-    //         labelPosition: "left",
-    //         labelWidth: 100, 
-    //         size: 'small',
-    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-    //         hideRequiredMark: false ,
-    //         syncLabelRequired: false,
-    //         customStyle: ""
-    //       }
-    //     }
-    // },
+  computed: { 
     templateConfig() {
       if(this.template) return this.template.config 
       return {}
-    },
-    // 配置的数据字典
-    // dicts() {
-    //   if(this.config && this.config.dict && this.config.dict.length > 0) {
-    //     return this.config.dict
-    //   }
-    //   return null
-    // },
+    }, 
     // 配置中的http配置
     httpConfig() {
       if(this.config && this.config.httpConfig ) {
@@ -182,39 +143,18 @@ export default {
       },
       deep: true,
       immediate: false,
-    },
-    // formTemplate: {
-    //   handler: function(newVal, oldVal) {
-    //     this.$emit('update:formTemplate', newVal)
-    //   },
-    //   deep: true,
-    //   immediate: false,
-    // }
+    } 
   },
   provide: function () {
     return {
      customC: this.customComponents ,
      configC: this.templateConfig,
-     //dictsC: this.dicts,
+     
      httpConfigC: this.httpConfig,
      ngConfig: this.config
     }
   },
-  created() {
-    // if(this.formTemplate == null){
-    //   this.formTemplate = {
-    //       list: [],
-    //       config: {
-    //         labelPosition: "left",
-    //         labelWidth: 100, 
-    //         size: 'small',
-    //         outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-    //         hideRequiredMark: false ,
-    //         syncLabelRequired: false,
-    //         customStyle: ""
-    //       }
-    //     }
-    // } 
+  created() { 
 
     if(this.httpConfig) {
       window.nghttpConfig = this.httpConfig;
@@ -241,7 +181,12 @@ export default {
     importData(formTemplate = {}) {
       //this.formTemplate = formTemplate
       this.template.list = formTemplate.list;
-      this.template.config = formTemplate.config;
+
+      for(let k in formTemplate.config) {
+        this.template.config[k] = formTemplate.config[k]
+      }
+
+      //this.template.config = formTemplate.config;
     }
   }
 }
