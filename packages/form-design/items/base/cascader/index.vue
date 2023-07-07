@@ -73,31 +73,18 @@ export default {
 
       if(!datas) {
         datas = []
-      }
-
-    
-      // 判断是不是复选
-      if(!this.itemProp.multiple) {
-        // 复选
-        as = [value]
-      } else {
-        as = value
-      }
+      } 
 
       const checkNodes = this.$refs.cascader.getCheckedNodes()
-      for(let i = 0 ; i < as.length ; i++){
-        const v = as[i] 
-        // 比对nodes 显示值
-        const fs = checkNodes.filter(t=>t.path == v) 
-              
-        if(fs && fs.length > 0) {
-          const label = fs[0].pathLabels
-          if(label && label.length > 0)
-          labels.push(label.join('/'))
-        }
-              
-      }
+     
+      for(let i = 0 ; i < checkNodes.length ; i++){
+        const v = checkNodes[i] 
 
+        const vText = v.text 
+        if(vText) {
+           labels.push(vText)
+        }  
+      } 
       const modelLabel = this.record.model + '_label'
       this.models[modelLabel] = labels.join(',')
       //this.$set(this.models , modelLabel , labels.join(','))
