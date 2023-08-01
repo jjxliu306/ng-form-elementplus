@@ -9,9 +9,11 @@ import NgFormItem from './form-design/items/index.vue'
 import NgFormItemNode from './form-design/items/node.vue' 
 
 import NgForm  from './ng-form/index.vue'
+
+import mixin from './form-design/items/mixin.js'
  
 export {
- NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
+ mixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
 }
 
 
