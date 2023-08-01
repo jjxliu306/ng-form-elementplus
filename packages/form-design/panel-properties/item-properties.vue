@@ -340,7 +340,7 @@ export default {
 		        	//this.$set(this.selectItem, 'label', label_)
 		        	this.selectItem['label'] = label_
 		        }
-		        if(!labelWidth_) {
+		        if(labelWidth_ == null || labelWidth_ == undefined) {
 		        	labelWidth_ = -1
 		        	this.selectItem['labelWidth'] = labelWidth_
 		        	//this.$set(this.selectItem, 'labelWidth', labelWidth_)
