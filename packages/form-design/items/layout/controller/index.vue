@@ -135,6 +135,7 @@ export default {
     dragEnd(evt, list) {   
       // 拖拽结束,自动选择拖拽的控件项
       const nitem = cloneDeep(list[evt.newIndex])
+      delete nitem.icon 
       const key = nitem.type + "_" + new Date().getTime() 
       nitem.key = key
       nitem.model = key

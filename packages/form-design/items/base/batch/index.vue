@@ -74,6 +74,7 @@ export default defineComponent({
       // 拖拽结束,自动选择拖拽的控件项
       //this.handleSelectItem(list[evt.newIndex])
       const clone = cloneDeep(list[evt.newIndex])
+      delete clone.icon 
       list[evt.newIndex] = clone
      // this.$set(list , evt.newIndex , clone)
       this.handleSelectItem(clone)

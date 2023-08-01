@@ -117,9 +117,10 @@ export default {
 	 	dragEnd(evt, list) {   
 	 		// 复制一遍
 	 		const clone = cloneDeep(this.formTemplate.list[evt.newIndex])
+	 		delete clone.icon 
 	 		this.formTemplate.list[evt.newIndex] = clone
 
-	 		console.log('list' , this.formTemplate.list)
+	 		 
  			this.$emit("update:formTemplate", this.formTemplate);
 		  // 拖拽结束,自动选择拖拽的控件项 
 		  this.handleSelectItem(this.formTemplate.list[evt.newIndex])
