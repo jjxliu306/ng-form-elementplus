@@ -226,22 +226,17 @@ export default {
 </script>
 <style>
 
-.hd-form {
-  .el-radio {
-    margin-right: 10px;
-
-    .el-radio__label {
-      padding-left: 5px;
-    }
-  }
-
-  .hd-form-divider {
-    font-size: 13px;
-
-    .el-divider__text {
-      font-size: 13px;
-    }
-  }
+.ng-form .el-radio {
+  margin-right: 10px;
+}
+.ng-form .el-radio .el-radio__label {
+  padding-left: 5px;
+}
+.ng-form .ng-form-divider {
+  font-size: 13px;
+}
+.ng-form .ng-form-divider .el-divider__text {
+  font-size: 13px;
 }
 
 </style>
