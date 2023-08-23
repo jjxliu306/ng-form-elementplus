@@ -53,9 +53,9 @@
            >
             <el-row :gutter="20" class="controller-row dragpanel" 
             :class="{'controller-bordered': record.options && record.options.bordered}"> 
-             
-              <template  v-for="(item, index) in record.list"  >
+              
                 <ng-form-node
+                  v-for="(item, index) in record.list"
                   :key="index"  
                   ref="nestedComponents"
                   :is-drag="false"
@@ -64,8 +64,7 @@
                   :models.sync="mdata"   
                   :record="item" 
                   :prop-prepend="record.model + '.' + idx + '.'"
-                />
-              </template> 
+                /> 
             </el-row>
           </div> 
            <!-- 右键里的删除和复制 下方的新增 -->

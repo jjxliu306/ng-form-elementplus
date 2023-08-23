@@ -48,16 +48,16 @@
         /> -->
         <el-row :gutter="20" class="controller-row dragpanel" 
             :class="{'controller-bordered': record.options && record.options.bordered}"> 
-          <template  v-for="node in item.list"  >
+        
             <ng-form-node 
+              v-for="node in item.list"
               :is-drag="false"
               :key="node.key"
               :disabled="disabled"
               :preview="preview"
               :models.sync="models"   
               :record="node" 
-            />
-          </template> 
+            /> 
         </el-row>
       </template>
     </el-tab-pane> 

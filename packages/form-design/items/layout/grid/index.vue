@@ -114,8 +114,7 @@ export default {
 }
 </script>
 <style>
-.ng-layout-row {
-  z-index: 0;
+.ng-layout-row { 
   margin: 0px !important;
   border-radius: 4px;
   border: 1px dashed #ccc;
