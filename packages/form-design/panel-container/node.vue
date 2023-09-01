@@ -11,6 +11,7 @@
           :selectItem="selectItem"
           :preview="preview"
           :key="refreshKey" 
+          :prop-prepend="propPrepend"
           @submit="$emit('submit')"
           @reset="$emit('reset')"
           @handleSelectItem="handleSelectItem"
@@ -80,6 +81,10 @@ export default {
       type: Object ,
       default: ()=>{return {}}
     }, 
+    propPrepend: {
+      type: String,
+      default: ''
+    }
   },
   data(){
     return { 

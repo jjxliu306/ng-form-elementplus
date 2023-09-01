@@ -16,6 +16,7 @@
         :isDragPanel="isDragPanel"
         :selectItem="selectItem" 
         :models.sync="models" 
+        :prop-prepend="propPrepend"
         @handleSelectItem="handleSelectItem" 
         @handleFocus="handleFocus"
         @handleBlur="handleBlur"
@@ -60,6 +61,10 @@ export default {
     },
     selectItem: {
       type: Object
+    },
+    propPrepend: {
+      type: String,
+      default: ''
     }
   }, 
   inject: {

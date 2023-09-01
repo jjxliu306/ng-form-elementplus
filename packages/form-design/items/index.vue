@@ -9,6 +9,7 @@
     :preview="preview"
     :isDragPanel="isDragPanel"
     :selectItem="selectItem" 
+    :prop-prepend="propPrepend"
     :models="models" 
     @handleSelectItem="handleSelectItem" 
     /> 
@@ -21,13 +22,14 @@
     :id="record.model" 
     :name="record.model"
     :label-width="labelWidth"
-    >      
+    >       
     <ItemNode 
       :record="record"
       :disabled="disabled" 
       :preview="preview"
       :isDragPanel="isDragPanel"
       :selectItem="selectItem" 
+      :prop-prepend="propPrepend"
       :models="models" 
       @handleSelectItem="handleSelectItem"
       /> 
@@ -79,7 +81,8 @@ export default {
       default: true
     },
     propPrepend: {
-      type: String
+      type: String,
+      default: ''
     }
   }, 
   inject: {
