@@ -34,6 +34,7 @@
 	<el-upload
 	  v-else 
 	  class="ng-form-upload"
+	  :class="{'upload': !uploadVisible}"
 	  :action="action"
 	  :drag="drag"
 	  :disabled="disabled"
@@ -51,6 +52,7 @@
 	  :file-list="fileList">
 	   
 	  		<template #trigger v-if="uploadVisible">
+	  		 
 	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
 	  			<!-- <i v-else class="el-icon-plus"></i> -->
 	  			<el-icon v-else><Plus /></el-icon> 
@@ -60,12 +62,11 @@
 	   		</template>
 	  	
 	  
-	</el-upload>
- 
+	</el-upload> 
 </div>
 </template>
 <script>
-
+import   objectPath   from 'object-path'
 export default {
 	name: 'ng-form-upload',
 	data() {
@@ -143,6 +144,7 @@ export default {
 			if(val && val.length > 0) {
 				const valueNames = val.map(t=>t.name).join(',');
 				const fileListNames = this.fileList.map(t=>t.name).join(',')
+				console.log('valueNames' , valueNames , fileListNames)
 				if(fileListNames != valueNames) {
 					this.fileList = val 
 				} 
@@ -243,26 +245,25 @@ export default {
       		return ["png", "jpg", "jpeg", "bmp"].indexOf(ext.toLowerCase()) !== -1;
     	},
 		handleSuccess(response , file , fileList) {
-		 
+		 	console.log('file' , file)
+		 	console.log('fileList' , fileList.value)
 			// 根据返回结果的url来获取实际文件的url
 			const responseFileUrl = this.uploadResponseFileUrl 
- 
-
-			const objectPath = require("object-path")
+  
+			//const objectPath = require("object-path")
 			const fileUrl = objectPath.get(response, responseFileUrl)
-	 
+	 	 
 			if(fileUrl) {
 				// 重新组合
 				const f_ = {name: file.name , size: file.size , url: fileUrl}
 
 			 
-				const addData = [
-			        ...this.value,
-			        {
-			         name: file.name , size: file.size , url: fileUrl
-			        }
-			    ]; 
-			    this.$emit("input", addData);
+			  this.value.push(f_)
+		 
+			    
+			  this.$emit("update:value", this.value);
+			  file.url = fileUrl
+
 			}
 
 			
@@ -274,12 +275,14 @@ export default {
 
 			// 根据文件名删除文件
 			const name = file.name  
-
-			 // 删除
-		    this.$emit(
-		        "input",
-		        this.value.filter(val => val.name != name)
-		    ) 
+			const deleteIndex = fileList.findIndex(t=> t.name == name)
+			 
+			this.value.splice(deleteIndex,1)
+      this.$emit(
+        "update:value",
+        this.value
+      )
+			 
 		},
 		// 点击下载或者预览
 		handlePreview(file) {
@@ -304,6 +307,7 @@ export default {
 	    
 	    // 图片下载
 	    fileDown (file) {
+	    	console.log('file' , file)
 	    	if(file.url) {
 				 window.open(file.url)
 			} else {
@@ -315,3 +319,8 @@ export default {
 	}
 }
 </script>
+<style>
+.ng-form-upload.upload .el-upload {
+	display: none;
+}
+</style>

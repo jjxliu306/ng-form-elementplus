@@ -3,7 +3,7 @@
       <Upload 
       :style="`width:${record.width}`"
       :disabled="recordDisabled"
-      v-model="models[record.model]"
+      :value="models[record.model]"
       :record="record"
         :accept="record.options.accept" 
       :preview="preview"
@@ -11,7 +11,8 @@
       :multiple="record.options.multiple" 
       :action="record.options.action"
       :limit="record.options.limit" 
-      
+        :limit-size="record.options.limitSize"
+      :upload-auto-hidden="record.options.uploadHidden"
     />  
 </template>
 <script> 

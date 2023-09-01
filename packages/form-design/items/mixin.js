@@ -103,7 +103,7 @@ export default {
 				const defaultValue = this.record.options.defaultValue
 				if(defaultValue != null && defaultValue != undefined && defaultValue instanceof Array ) {
 					//this.$set(this.models , this.record.model , defaultValue)
-					this.models[this.record.model] = defaultValue
+					this.models[this.record.model] = cloneDeep(defaultValue)
 				} else {
 					//this.$set(this.models , this.record.model , [])
 					this.models[this.record.model] = []
@@ -122,7 +122,7 @@ export default {
 				const defaultValue = this.record.options.defaultValue
 				if(defaultValue != null && defaultValue != undefined) {
 					//this.$set(this.models , this.record.model , defaultValue)
-					this.models[this.record.model] = defaultValue
+					this.models[this.record.model] = cloneDeep(defaultValue)
 				} else {
 					//this.$set(this.models , this.record.model , '')
 					if(isNumber) {
