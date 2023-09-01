@@ -1,6 +1,6 @@
 <template>
 <div> 
-	<div v-if="renderPreview || disabled">
+	<div v-if="preview || disabled">
 		<!-- 判断图片还是文件列表 -->
 		<div v-if="accept && accept.indexOf('image') >= 0 && listType && listType.indexOf('picture-card') >= 0" >
         <ul > 
@@ -24,7 +24,7 @@
 
           <label class="el-upload-list__item-status-label">
            <!--  <i class="el-icon-upload-success el-icon-circle-check"></i> -->
-             <el-icon><UploadSuccess /></el-icon> 
+            <el-icon><SuccessFilled /></el-icon>
           </label>
 
           <!---->
@@ -37,35 +37,31 @@
 	  :action="action"
 	  :drag="drag"
 	  :disabled="disabled"
-	  :multiple="multiple"
+	  :multiple="false"
 	  :limit="limit"
 	  :headers="uploadHeader"
 	  :accept="accept"
 	  :list-type="listType"
 	  :with-credentials="withCredentials"
-	   :before-upload="beforeUpload"
+	  :before-upload="beforeUpload"
 	  :on-success="handleSuccess"
 	  :on-remove="handleRemove"
 	  :on-preview="handlePreview"
 	  :auto-upload="autoUpload"
 	  :file-list="fileList">
 	   
-	  		<template #trigger v-if="!renderPreview">
+	  		<template #trigger v-if="uploadVisible">
 	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
 	  			<!-- <i v-else class="el-icon-plus"></i> -->
 	  			<el-icon v-else><Plus /></el-icon> 
 	  		</template> 
 	   		<template #tip v-if="tip != undefined">
-	   			<div   class="el-upload__tip">请选择图片，且不超过500kb</div>
+	   			<div   class="el-upload__tip">{{tip}}</div>
 	   		</template>
 	  	
 	  
 	</el-upload>
-
-	  <!--附件上传-->
-    <el-dialog :append-to-body="true" v-model="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
+ 
 </div>
 </template>
 <script>
@@ -73,21 +69,17 @@
 export default {
 	name: 'ng-form-upload',
 	data() {
-		return {
-			dialogVisible: false,
-			dialogImageUrl: '',
+		return { 
 			fileList: []
 		}
 	},
 	props: {
 	    value: {
 	      type: Array,
-	      default: ()=> [],
-	      required: true
+	      default: ()=> {return []} 
 	    },
 	    action: {
-	      type: String,
-	      required: true
+	      type: String 
 	    },
 	    disabled: {
 	      type: Boolean,
@@ -139,6 +131,11 @@ export default {
 	    imgDownBut: {
 	    	type: Boolean,
 	    	default: true
+	    }, 
+	    // 2023-8-27 lyf 文件上传后自动隐藏上传按钮 默认关闭
+	    uploadAutoHidden: {
+	    	type: Boolean ,
+	    	default: false
 	    }
 	},
 	watch: {
@@ -151,15 +148,19 @@ export default {
 				} 
 			}
 		}
-	},
-	
-	// inject: { 
-	//     // 表单全局config配置
-	//     httpConfig: {
-	//         from: 'httpConfigC' 
-	//     }
-	// },
+	}, 
 	computed: {
+		// 上传按钮显示条件 
+		// 1、只上传一个时有文件则不显示 多个时导致门限也不现实
+		// 2、预览时不显示
+		uploadVisible() {
+			if(!this.uploadAutoHidden) return true
+			if(this.preview || this.disabled) return false 	
+			if(!this.multiple && this.value && this.value.length > 0) return false 
+			if(this.multiple && this.value && this.value.length >= this.limit) return false
+
+			return true 
+		},
 		// 需要携带的头数据
 		uploadHeader() {
 			let hs = {} 
@@ -283,17 +284,17 @@ export default {
 		// 点击下载或者预览
 		handlePreview(file) {
 			//console.log('handlePreview file' , file)
-
+			this.fileDown(file)
 			// 从url中下载
-			if(file.url) {
+			// if(file.url) {
 				 
 
-				this.dialogVisible = true 
-				this.dialogImageUrl = file.url 
-				//window.location.href = file.url
-			} else {
-				this.$message.error('找不到文件下载路径')
-			}
+			// 	this.dialogVisible = true 
+			// 	this.dialogImageUrl = file.url 
+			// 	//window.location.href = file.url
+			// } else {
+			// 	this.$message.error('找不到文件下载路径')
+			// }
 
 		},
 		 // 浏览下载文件

@@ -21,7 +21,7 @@
 
         </div> 
         <template #reference>
-	       <el-button style="margin: 0px 10px;"  icon="Document" text size="medium"   >示例</el-button>
+	       <el-button style="margin: 0px 10px;"  icon="Document" text size="small"   >示例</el-button>
 	      </template>
          
       </el-popover>
