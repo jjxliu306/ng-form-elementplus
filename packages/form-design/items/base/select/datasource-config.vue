@@ -39,6 +39,9 @@ cascader没有数据字典
       <el-input size="small" v-model="selectItem.options.remoteLabel">
         <template #prepend>标签字段</template>
       </el-input> 
+      <el-input size="mini" v-if="selectItem.type == 'cascader'" v-model="selectItem.options.remoteChildren">
+        <template slot="prepend">下级字段</template>
+      </el-input> 
     </div>  
     <div v-else-if="selectItem.options.dynamic == 2">
       <el-autocomplete 

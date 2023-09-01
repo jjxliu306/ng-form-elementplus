@@ -1,5 +1,5 @@
 
-import { dynamicFun , cloneDeep } from '../../utils/index.js'
+import { dynamicFun , cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
 
 import request from '../../utils/request.js'
 //import cloneDeep from 'lodash/cloneDeep'
@@ -33,7 +33,10 @@ export default {
 	  },
 	  selectItem: {
 	  	type: Object
-	  } 
+	  } ,
+	  propPrepend: {
+	      type: String
+	  }
 	}, 
 	data() {
 		return {
@@ -89,6 +92,7 @@ export default {
 	},
 	
 	methods: {
+		cloneDeepAndFormat,
 		// 设置数组类默认值
 		updateArrayDefaultValue() {
 			if(this.models && 

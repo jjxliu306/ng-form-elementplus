@@ -31,17 +31,7 @@
             @handleCopy="handleCopy(element)"
             @handleDetele="handleDetele(element)"
           />  
-        </template>
-       <!--  <ng-form-node
-            v-for="node in item.list"
-            :key="node.key"
-            class="drag-move"
-            :selectItem="selectItem"
-            :record="node" 
-            @handleSelectItem="handleSelectItem"
-            @handleCopy="handleCopy(node)"
-            @handleDetele="handleDetele(node)"
-          />   -->
+        </template> 
     </draggable>
     <template v-else>
       <ng-form-node 
@@ -50,6 +40,7 @@
         :key="node.key"
         :disabled="disabled"
         :preview="preview"
+        :prop-prepend="propPrepend"
         :models.sync="models"   
         :record="node" 
       />
@@ -77,7 +68,7 @@ export default {
   methods: {
     dragEnd(evt, columns) {   
       // 拖拽结束,自动选择拖拽的控件项
-      const nitem = cloneDeep(columns[evt.newIndex])
+      const nitem = this.cloneDeepAndFormat(columns[evt.newIndex])
       delete nitem.icon 
       const key = nitem.type + "_" + new Date().getTime() 
       nitem.key = key
@@ -89,7 +80,7 @@ export default {
       this.handleSelectItem(nitem)
     },
     handleCopy(item){ 
-      const nitem = cloneDeep(item)
+      const nitem = this.cloneDeepAndFormat(item)
       const key = item.type + "_" + new Date().getTime() 
       nitem.key = key
       nitem.model = key

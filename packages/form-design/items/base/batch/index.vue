@@ -30,25 +30,16 @@
             :selectItem="selectItem"
             :record="element" 
             @handleSelectItem="handleSelectItem"
+            :prop-prepend="propPrepend"
             @handleCopy="handleCopy(element)"
             @handleDetele="handleDetele(element)"
             /> 
-        </template>
-       <!--    <ng-form-node
-            v-for="item in record.list"
-            :key="item.key"
-            class="drag-move"
-            :selectItem="selectItem"
-            :record="item" 
-            @handleSelectItem="handleSelectItem"
-            @handleCopy="handleCopy(item)"
-            @handleDetele="handleDetele(item)"
-            />  -->
+        </template> 
       </draggable> 
     </el-row>    
   </template> 
   <template v-else>  
-    <TableBuild :record="record" :models="models"  :preview="preview"/>
+    <TableBuild :record="record" :models="models" :prop-prepend="propPrepend" :preview="preview"/>
 
   </template> 
 </div>
@@ -73,14 +64,14 @@ export default defineComponent({
     dragEnd(evt, list) {   
       // 拖拽结束,自动选择拖拽的控件项
       //this.handleSelectItem(list[evt.newIndex])
-      const clone = cloneDeep(list[evt.newIndex])
-      delete clone.icon 
+      const clone = this.cloneDeepAndFormat(list[evt.newIndex])
+      
       list[evt.newIndex] = clone
      // this.$set(list , evt.newIndex , clone)
       this.handleSelectItem(clone)
     },
     handleCopy(item){ 
-      const nitem = cloneDeep(item)
+      const nitem = this.cloneDeepAndFormat(item)
       const key = item.type + "_" + new Date().getTime() 
       nitem.key = key
       nitem.model = key

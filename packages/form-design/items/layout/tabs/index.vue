@@ -38,14 +38,6 @@
           </template>
       </draggable>
       <template v-else>
-        <!-- <ng-form-item 
-          v-for="node in item.list"
-          :key="node.key"
-          :disabled="disabled"
-          :preview="preview"
-          :models.sync="models"   
-          :record="node" 
-        /> -->
         <el-row :gutter="20" class="controller-row dragpanel" 
             :class="{'controller-bordered': record.options && record.options.bordered}"> 
         
@@ -54,6 +46,7 @@
               :is-drag="false"
               :key="node.key"
               :disabled="disabled"
+              :prop-prepend="propPrepend"
               :preview="preview"
               :models.sync="models"   
               :record="node" 
@@ -84,7 +77,7 @@ export default {
     dragEnd(evt, list) {   
       // 拖拽结束,自动选择拖拽的控件项
       
-      const nitem = cloneDeep(list[evt.newIndex])
+      const nitem = this.cloneDeepAndFormat(list[evt.newIndex])
       delete nitem.icon 
       const key = nitem.type + "_" + new Date().getTime() 
       nitem.key = key
@@ -95,7 +88,7 @@ export default {
       this.handleSelectItem(list[evt.newIndex])
     },
     handleCopy(item , list){ 
-      const nitem = cloneDeep(item)
+      const nitem = this.cloneDeepAndFormat(item)
       const key = item.type + "_" + new Date().getTime() 
       nitem.key = key
       nitem.model = key
