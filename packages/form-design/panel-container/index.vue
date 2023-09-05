@@ -32,7 +32,7 @@
 	        >
 	          <template #item="{element}">
 	               
-	               		<Node   
+	               		<ng-form-node   
 						       :key="element.key" 
 				        		class="drag-move"  
 				            	:record="element"
@@ -43,46 +43,10 @@
 				            	@handleCopy="handleCopy(element)"
 				            	@handleDetele="handleDetele(element)"
 				            	>  
-				        		</Node>
+				        		</ng-form-node>
 	               
 	            </template>
-	        </draggable>
-
-
-
-	    		<!-- <draggable  
-			        tag="div"
-			        class="draggable-box items-main"
-			        v-bind="{
-			          group: 'form-draggable',
-			          ghostClass: 'moving',
-			          animation: 180,
-			          handle: '.drag-move'
-			        }"
-			        item-key="key"
-			        :force-fallback="true"
-			        :list="formTemplate.list" 
-			        @add="dragEnd($event, formTemplate.list)" 
-			      	>
-			       
-			        	<template #item="{element}"> 
-					       
-						     <Node   
-						       :key="element.key" 
-				        		class="drag-move"  
-				            	:record="element"
-				            	:isDrag="true"
-				            	:config="formTemplate.config"
-				            	:selectItem="selectItem"
-				            	@handleSelectItem="handleSelectItem"
-				            	@handleCopy="handleCopy(element)"
-				            	@handleDetele="handleDetele(element)"
-				            	>  
-				        		</Node>
-				         
-					    </template> 
-			      
-		    	</draggable>  -->
+	        </draggable> 
 	     
 	    </el-row> 
 	</el-form> 
@@ -93,11 +57,12 @@
 import { cloneDeep } from '../../utils/index.js'
  
 import draggable from "vuedraggable"
-import Node from './node.vue'
+//import Node from './node.vue'
 export default {
 	name: 'ng-form-container' ,
 	components:{
-		Node,draggable
+		//Node,
+		draggable
 	},
 	data(){
 		return {

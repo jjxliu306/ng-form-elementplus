@@ -27,11 +27,12 @@
             ghostClass: 'moving',
             animation: 180,
             handle: '.drag-move'
-            }"
-            :force-fallback="true"
-            :list="tdItem.list"
-            item-key="key"
-            @add="dragEnd($event, tdItem.list)" 
+          }"
+          :force-fallback="true"
+          :list="tdItem.list"
+          item-key="key"
+          @add="dragEnd($event, tdItem.list)" 
+          :move="()=>{}"
           > 
           <template #item="{element}">
             <el-row class="td-row" :key="element.key">  
@@ -44,19 +45,7 @@
                 @handleDetele="handleDetele(element , tdItem)"
                 />  
             </el-row>
-          </template>
-         <!--  <el-row class="td-row">  
-              <ng-form-node 
-                v-for="item in tdItem.list"
-                :key="item.key"
-                class="drag-move"
-                :selectItem="selectItem"
-                :record="item" 
-                @handleSelectItem="handleSelectItem"
-                @handleCopy="handleCopy(item , tdItem)"
-                @handleDetele="handleDetele(item , tdItem)"
-                />  
-          </el-row> -->
+          </template> 
         </draggable>
       </td>
     </tr>

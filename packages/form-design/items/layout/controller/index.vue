@@ -24,6 +24,7 @@
               :force-fallback="true"
               :list="record.list"
               @add="dragEnd($event, record.list)" 
+              :move="()=>{}"
             >  
               <template #item="{element}">
                 <ng-form-node 

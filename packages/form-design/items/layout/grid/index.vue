@@ -15,13 +15,15 @@
         ghostClass: 'moving',
         animation: 180,
         handle: '.drag-move'
-      }"
+      }" 
       item-key="key"
       :force-fallback="true"
       :list="item.list"
       @add="dragEnd($event, item.list)" 
+      :move="()=>{}"
       > 
         <template #item="{element}">
+           
           <ng-form-node 
             :key="element.key"
             class="drag-move"
@@ -31,6 +33,7 @@
             @handleCopy="handleCopy(element)"
             @handleDetele="handleDetele(element)"
           />  
+        
         </template> 
     </draggable>
     <template v-else>
@@ -67,6 +70,7 @@ export default {
   },
   methods: {
     dragEnd(evt, columns) {   
+      console.log("ddddd")
       // 拖拽结束,自动选择拖拽的控件项
       const nitem = this.cloneDeepAndFormat(columns[evt.newIndex])
       delete nitem.icon 
