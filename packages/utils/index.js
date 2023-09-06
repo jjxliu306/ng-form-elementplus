@@ -11,14 +11,7 @@ export function cloneDeep(obj , refreshKey) {
        if (typeof obj[key] === 'object') {      
          newObj[key] = cloneDeep(obj[key])    
        } else {      
-        if(refreshKey && key == 'key') {
-          idx++ 
-          const vkey = newObj[key] + '_copy'
-          newObj[key] = vkey 
-        } else {
           newObj[key] = obj[key]    
-        } 
-         
        }  
      }
      return newObj
@@ -34,42 +27,39 @@ export function cloneDeepAndFormat(data) {
   const clone = cloneDeep(data , true)
   delete clone.icon 
  
-  // let idx = 1
-  // // 2023-08-27 lyf 迭代判断是否包含子组件，全部替换子组件的key和model
-  // const iterKeyReplace_ = (v)=> {
-  //   if(v instanceof Array){
-  //     v.forEach(c=> {
-  //       iterKeyReplace_(c)
-  //     })
-  //     return
-  //   } else if(v.key) {
+  let idx = 1
+  // 2023-08-27 lyf 迭代判断是否包含子组件，全部替换子组件的key和model
+  const iterKeyReplace_ = (v)=> {
+    if(v instanceof Array){
+      v.forEach(c=> {
+        iterKeyReplace_(c)
+      })
+      return
+    } else if(v.key) {
        
-  //     // 重置key和model
-  //     idx++
-  //     const vkey = v.type + "_" + new Date().getTime() + '' + idx
+      // 重置key和model
+      idx++
+      const vkey = v.type + "_" + new Date().getTime() + '' + idx
       
-  //     v['key'] = vkey 
-  //     v['model'] = vkey 
-  //     v.key = vkey 
-  //     v.model = vkey
+      v['key'] = vkey 
+      v['model'] = vkey 
+      v.key = vkey 
+      v.model = vkey
+ 
+    } 
 
-  //    // v = {...v , key: vkey , model: vkey }
-
-  //      console.log('v2' , v)
-  //   } 
-
-  //   if(typeof v == 'object') {
-  //     for(let k in v) {
-  //       const kd = v[k]
-  //       if(kd instanceof Array)
-  //         iterKeyReplace_(kd) 
-  //     }
-  //   }
+    if(typeof v == 'object') {
+      for(let k in v) {
+        const kd = v[k]
+        if(kd instanceof Array)
+          iterKeyReplace_(kd) 
+      }
+    }
 
   
-  // }
+  }
 
-  // iterKeyReplace_(clone)
+  iterKeyReplace_(clone)
 
 
 
