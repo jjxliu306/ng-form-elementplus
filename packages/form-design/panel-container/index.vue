@@ -27,8 +27,8 @@
 			    :force-fallback="true"
 			    :list="formTemplate.list" 
 			    @add="dragEnd($event)" 
-					data-draggable="true"
-	        item-key="key"  
+				data-draggable="true"
+	        	item-key="key"  
 	        >
 	          <template #item="{element}">
 	               
@@ -54,7 +54,7 @@
 </template>
 <script> 
 //import cloneDeep from 'lodash/cloneDeep'
-import { cloneDeep } from '../../utils/index.js'
+import { cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
  
 import draggable from "vuedraggable"
 //import Node from './node.vue'
@@ -81,7 +81,7 @@ export default {
 	methods: {
 	 	dragEnd(evt, list) {   
 	 		// 复制一遍
-	 		const clone = cloneDeep(this.formTemplate.list[evt.newIndex])
+	 		const clone = cloneDeepAndFormat(this.formTemplate.list[evt.newIndex])
 	 		delete clone.icon 
 	 		this.formTemplate.list[evt.newIndex] = clone
 
@@ -94,11 +94,11 @@ export default {
 	    	this.$emit('handleSelectItem' , record)
 	  	},
 	  	handleCopy(item){ 
-	  		const nitem = cloneDeep(item)
+	  		const nitem = cloneDeepAndFormat(item)
 	  		const key = item.type + "_" + new Date().getTime() 
 	  		nitem.key = key
 	  		nitem.model = key
-
+ 
 	  		// 找到index 插入
 	  		const oindex = this.formTemplate.list.findIndex(t=>t.key == item.key)
 	   
