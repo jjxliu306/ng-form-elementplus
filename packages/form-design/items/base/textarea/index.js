@@ -111,13 +111,13 @@ obj.options = {
                     prop: 'maxLength', 
                     span: 24,
                 }, 
-                {
-                  label: '可清除',
-                  prop: 'clearable',
-                  type: 'switch',
-                  default: false,
-                  span: 24,
-                } ,
+                // {
+                //   label: '可清除',
+                //   prop: 'clearable',
+                //   type: 'switch',
+                //   default: false,
+                //   span: 24,
+                // } ,
                 {
                   label: '自动高度',
                   prop: 'autosize',

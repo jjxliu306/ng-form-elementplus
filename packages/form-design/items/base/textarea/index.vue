@@ -4,7 +4,7 @@
 		type="textarea"
 		:style="`width:${record.width}`"
 		:placeholder="record.options.placeholder"
-		:clearable="record.options.clearable"
+		 
 		:disabled="recordDisabled"
 		:rows="record.options.rows"
 		:autosize="record.options.autosize"
