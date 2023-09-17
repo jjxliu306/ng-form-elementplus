@@ -5,7 +5,7 @@ let idx = 1
 
 export function cloneDeep(obj , refreshKey) {
 
-    if (typeof obj !== 'object') return
+    if (typeof obj !== 'object') return obj 
     let newObj = obj instanceof Array ? [] : {}  
     for (let key in obj) {    
        if (typeof obj[key] === 'object') {      
