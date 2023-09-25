@@ -1,10 +1,10 @@
-<template>  
-	<div class="ng-form-label"  :style="{ textAlign: record.options.textAlign }" >  
-      <label
-        :class="{ 'is-required': showRequiredMark }"
-        v-text="record.label"
-         :style="textStyle"
-      ></label>
+<template>
+  <div class="ng-form-label" :style="{ textAlign: record.options.textAlign, width: record.width }">
+    <label
+      :class="{ 'is-required': showRequiredMark }"
+      v-text="record.label"
+      :style="textStyle"
+    ></label>
   </div>
 </template>
 <script>
