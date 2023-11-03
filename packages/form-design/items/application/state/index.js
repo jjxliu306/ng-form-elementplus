@@ -123,6 +123,13 @@ obj.options = {
                   span: 24,
                 },
                 {
+                  label: '可搜索',//'可搜索',
+                  prop: 'showSearch',
+                  type: 'switch',
+                  default: true,
+                  span: 24,
+                } ,
+                {
                   label: '是否隐藏',
                   prop: 'hidden',
                   type: 'switch',

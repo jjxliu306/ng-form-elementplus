@@ -1,6 +1,6 @@
 <template>
 	<div v-if="!preview || isDragPanel" class="ng-application-state">
-			<el-select class="width-select" v-model="dataForm.province" value-key="value" filterable clearable placeholder="请选择省份" @change="changeProvince" @clear="changeProvince()" :disabled="disabled"> 
+			<el-select class="width-select" v-model="dataForm.province" value-key="value" :filterable="filterable" clearable placeholder="请选择省份" @change="changeProvince" @clear="changeProvince()" :disabled="disabled"> 
 				<template #prefix>
 					<span>省份:</span>
 				</template>
@@ -12,7 +12,7 @@
           </el-option>
         </el-select>
       <template  v-if="maxLevel >1 && (!oneByOne || dataForm.province)">
-      	<el-select class="width-select" v-model="dataForm.city" value-key="value" filterable clearable  placeholder="请选择地市" @change="changeCity" @clear="changeCity()" :disabled="disabled">
+      	<el-select class="width-select" v-model="dataForm.city" value-key="value" :filterable="filterable" clearable  placeholder="请选择地市" @change="changeCity" @clear="changeCity()" :disabled="disabled">
       		<template #prefix>
 						<span>地市:</span>
 					</template>
@@ -25,7 +25,7 @@
         </el-select>
       </template>
     	<template v-if="maxLevel > 2 && (!oneByOne || dataForm.city)" >
-    		<el-select class="width-select" v-model="dataForm.district" value-key="value" filterable clearable placeholder="请选择区县" @change="changeDistrict" @clear="changeDistrict()" :disabled="disabled"> 
+    		<el-select class="width-select" v-model="dataForm.district" value-key="value" :filterable="filterable" clearable placeholder="请选择区县" @change="changeDistrict" @clear="changeDistrict()" :disabled="disabled"> 
     			<template #prefix>
 						<span>区县:</span>
 					</template>
@@ -100,6 +100,13 @@ export default {
   		},
   		oneByOne(){
   			return this.record && this.record.options ? this.record.options.oneByOne : false
+  		},
+  		// 是否可以过滤 默认true
+  		filterable() {
+  			if(this.record.options ) {
+  				return this.record.options.showSearch
+  			}
+  			return true 
   		}
   	},
   	mounted(){
