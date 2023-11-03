@@ -88,9 +88,22 @@ export default {
 
 			return false
 		},
-		
+		dicts() {
+			return this.ngConfig ? this.ngConfig.dict: []
+		}
 	},
-	
+	watch: {
+		dicts(val) {
+			// 只有数据字典要素才需要
+			if(this.record.options.dynamic != 2 || !this.record.options.dictType ) return 
+			console.log('watch dict' , val)
+			if(val) {
+				this.initDynamicValue()
+			} else {
+				this.checkValues = []
+			}
+		}
+	},
 	methods: {
 		cloneDeepAndFormat,
 		// 设置数组类默认值
@@ -194,8 +207,8 @@ export default {
 
 	        // 2022-02-26 lyf  引入数据字典后判断数据字典
 	      	
-	        if(this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0) {
-	          const fsDict = this.ngConfig.dict.filter(t=>t.type == this.record.options.dictType)
+	        if(this.dicts && this.dicts.length > 0) {
+	          const fsDict = this.dicts.filter(t=>t.type == this.record.options.dictType)
 	          this.checkValues = cloneDeep(fsDict)
 
 	          this.itemProp.label = 'label'
