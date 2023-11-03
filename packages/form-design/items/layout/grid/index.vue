@@ -30,8 +30,8 @@
             :selectItem="selectItem"
             :record="element" 
             @handleSelectItem="handleSelectItem"
-            @handleCopy="handleCopy(element)"
-            @handleDetele="handleDetele(element)"
+            @handleCopy="handleCopy(element , item.list )"
+            @handleDetele="handleDetele(element , item.list)"
           />  
         
         </template> 
@@ -83,26 +83,26 @@ export default {
 
       this.handleSelectItem(nitem)
     },
-    handleCopy(item){ 
+    handleCopy(item , list){ 
       const nitem = this.cloneDeepAndFormat(item)
       const key = item.type + "_" + new Date().getTime() 
       nitem.key = key
       nitem.model = key
 
       // 找到index 插入
-      const oindex = this.record.columns.findIndex(t=>t.key == item.key)
-     
+      const oindex = list.findIndex(t=>t.key == item.key)
+      console.log('copy' , item)
       if(oindex >= 0) {
         // insert 
-        this.record.columns.splice(oindex + 1 , 0, nitem)
+        list.splice(oindex + 1 , 0, nitem)
 
       }
 
     },
-    handleDetele(item) {
-      const oindex = this.record.columns.findIndex(t=>t.key == item.key)
+    handleDetele(item , list) {
+      const oindex = list.findIndex(t=>t.key == item.key)
       if(oindex >= 0) {
-        this.record.columns.splice(oindex , 1);
+        list.splice(oindex , 1);
       }
     }
   }
