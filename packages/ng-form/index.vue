@@ -8,17 +8,17 @@
     size="small"
     label-position="right"
     :label-width="(config.labelWidth || 80) + 'px'">
-    <template v-for="column in columns">
+    <template v-for="(column,idx) in columns">
 
 
-      <el-divider :key="column.label" content-position="center" class="ng-form-divider" v-if="column.type == 'divider' && (column.show == undefined || column.show == true || columnVisible(column.show))">{{column.label}}</el-divider> 
+      <el-divider :key="'divider' + idx" content-position="center" class="ng-form-divider" v-if="column.type == 'divider' && (column.show == undefined || column.show == true || columnVisible(column.show))">{{column.label}}</el-divider> 
       <el-form-item
         :prop="column.prop"
         :label="column.label"
         :rules="column.rules"
         :title="column.tip" 
         :label-width="column.labelWidth != null ? (column.labelWidth + 'px') : null"
-        :key="column.prop"
+        :key="'item' + idx"
         v-else-if="column.show == undefined || column.show == true || columnVisible(column.show)">
         <template #label v-if="column.labelScript">
           {{getScriptValue(column.labelScript , column.label)}}
@@ -39,7 +39,7 @@
             :precision="column.precision"
             :step="column.step" />
           <template v-else-if="column.type == 'numbers'">
-            <div v-for="(item, index) in model[column.prop]" :key='index'>
+            <div v-for="(item, index) in model[column.prop]" :key='"number" + index'>
               <el-row :span="24">
                 <el-col :span="22">
                  <!--   --> 
@@ -59,10 +59,10 @@
             <el-button text icon="Plus" @click="addData(model , column.prop , column.type)"></el-button>
           </template>
           <el-radio-group v-else-if="column.type == 'radio'" v-model="model[column.prop]">
-            <el-radio :label="rv.value" v-for="rv in column.dicData" :key="rv.value">{{rv.label}}</el-radio>
+            <el-radio :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radio' + idx2">{{rv.label}}</el-radio>
           </el-radio-group>
           <el-radio-group v-else-if="column.type == 'radioButton'" v-model="model[column.prop]">
-            <el-radio-button :label="rv.value" v-for="rv in column.dicData" :key="rv.value">{{rv.label}}</el-radio-button>
+            <el-radio-button :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radioB' + idx2">{{rv.label}}</el-radio-button>
           </el-radio-group>
          <!--  <el-switch v-else-if="column.type == 'switch'" v-model="model[column.prop]"></el-switch> -->
           <el-switch v-else-if="column.type == 'switch'"  v-model="model[column.prop]"  ></el-switch>
@@ -77,13 +77,13 @@
             :value-format="column.format" >
           </el-date-picker>
           <el-checkbox-group v-else-if="column.type == 'checkbox'" v-model="model[column.prop]">
-            <el-checkbox :label="rv.value" v-for="rv in column.dicData" :key="rv.value">{{rv.label}}</el-checkbox>
+            <el-checkbox :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'check' + idx2">{{rv.label}}</el-checkbox>
           </el-checkbox-group>
           <el-select clearable v-else-if="column.type == 'select'" v-model="model[column.prop]" placeholder="请选择" style="width:100%">
             <el-option
-              v-for="rv in column.dicData"
+              v-for="(rv,idx2) in column.dicData"
               :label="rv.label"
-              :key="rv.value"
+              :key="'select' + idx2"
               :value="rv.value">
             </el-option>
           </el-select>
