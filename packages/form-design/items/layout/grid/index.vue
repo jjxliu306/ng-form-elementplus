@@ -70,13 +70,13 @@ export default {
   },
   methods: {
     dragEnd(evt, columns) {   
-      console.log("ddddd")
+    
       // 拖拽结束,自动选择拖拽的控件项
-      const nitem = this.cloneDeepAndFormat(columns[evt.newIndex])
-      delete nitem.icon 
-      const key = nitem.type + "_" + new Date().getTime() 
-      nitem.key = key
-      nitem.model = key
+      const nitem = this.cloneDeepAndFormat(columns[evt.newIndex] , evt)
+      // delete nitem.icon 
+      // const key = nitem.type + "_" + new Date().getTime() 
+      // nitem.key = key
+      // nitem.model = key
 
       columns[evt.newIndex] = nitem
 

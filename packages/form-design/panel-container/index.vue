@@ -81,7 +81,7 @@ export default {
 	methods: {
 	 	dragEnd(evt, list) {   
 	 		// 复制一遍
-	 		const clone = cloneDeepAndFormat(this.formTemplate.list[evt.newIndex])
+	 		const clone = cloneDeepAndFormat(this.formTemplate.list[evt.newIndex] , evt)
 	 		delete clone.icon 
 	 		this.formTemplate.list[evt.newIndex] = clone
 
