@@ -49,6 +49,29 @@ export default {
 
       }
       return null
+    },
+    // 联动关联的所有类型
+    linkageTypes() {
+       if(!this.isDragPanel && this.record.options.linkage ) {
+          const linkData = this.record.options.linkData
+          if(!linkData) return null
+
+          let vs = []
+          for(let i = 0 ; i < linkData.length ; i++) {
+            // 判断类型 vtype=1 本地搜索 vtype=2 远程过滤
+            const ld = linkData[i]
+            if(ld.model) {
+              // local script
+              vs.push(ld.vtype)
+
+            }
+
+
+          }
+          return vs 
+
+      }
+      return null
     }
   }, 
   watch: {
@@ -66,7 +89,15 @@ export default {
         if(val == oldVal) {
           return
         }
-        if(this.record.options.linkage ) {
+        this.linkageDataHandle()
+         
+      } 
+    }  
+  },
+  methods: {
+    // 关联数据变动后触发
+    linkageDataHandle(resetValue = true) {
+       if(this.record.options.linkage ) {
           const linkData = this.record.options.linkData
           if(!linkData) return  
 
@@ -98,12 +129,14 @@ export default {
           this.remoteFilter = remoteQuery
 
           // 将当前选中值设置为空 防止选择的值目前展示不出来后永远不能反选
-          if( (this.record.type === 'select' && this.record.options.multiple) || this.record.type === 'checkbox') {
-            this.models[this.record.model] = []
-          } else {
-            //this.$set(this.models , this.record.model , null)
-            this.models[this.record.model] = null
+          if(resetValue) {
+            if( (this.record.type === 'select' && this.record.options.multiple) || this.record.type === 'checkbox') {
+              this.models[this.record.model] = []
+            } else {
+              this.models[this.record.model] = null
+            }
           }
+          
     
 
           if(this.remoteFilter) {
@@ -111,13 +144,9 @@ export default {
           }
 
         }
-         
-      } 
-    }  
-  },
-  methods: {
+    },
     handleChange(value) { 
-      console.log('handleChange' , value)
+      //console.log('handleChange' , value)
         let labels = []
         // 获取数据 判断从ajax 还是本地默认配置
         let datas = this.record.options.dynamic > 0 ? this.checkValues : this.record.options.options
