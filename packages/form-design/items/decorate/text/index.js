@@ -71,6 +71,7 @@ obj.options = {
                   label: '字体大小',
                   prop: 'fontSize',
                   type: 'number', 
+                  default: 13,
                   span: 24,
                 } , 
                 {
