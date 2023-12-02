@@ -1,7 +1,7 @@
 <template> 
 <div class="form-panel" > 
      
-    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0">
+    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0" :class="[arrow ? 'arrow_open' : 'arrow_hidden']" >
       从左侧选择组件添加
     </p>
     <el-form  
@@ -76,6 +76,10 @@ export default {
 		},
 		selectItem: {
 			type: Object
+		},
+		arrow: {
+			type: Boolean,
+			default: false
 		}
 	}, 
 	methods: {
@@ -128,15 +132,25 @@ export default {
 }
 
 .form-panel .no-data-text {
+  
   text-align: center;
-  width: 200px;
-  height: 50px;
+ 
+  height: 50px; 
+  width: calc(100% - 370px - 260px);
   position: absolute;
   top: 40%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
+   
+   
   font-size: 20px;
   font-weight: 700;
+}
+
+.form-panel .no-data-text.arrow_open {
+	width: calc(100% - 260px);
+}
+
+.form-panel .no-data-text.arrow_hidden {
+	width: calc(100% - 370px - 260px);
 }
 
 .form-panel .row {
