@@ -2,8 +2,8 @@
 <div class="item-properties"> 
 	<!-- 判断是否有自定义的属性配置组件 -->
 	<p class="no-data-text" v-show="!selectItemKey">
-      请先从面板中选择组件
-    </p> 
+        {{t('ngform.properties.no_feature')}}
+  </p> 
 	<!-- 先是属性中配置的columns -->
 	<ng-form 
 		v-if="formColumns && formColumns.column && formColumns.column.length > 0" 
@@ -37,12 +37,12 @@
 	循环group 处理在group中但显示在折叠面板中的表单
 	 -->
 	
-	<el-collapse :key="'2'+selectItemKey" v-model="activeNames" class="ng-form-properties-collapse">
+	<el-collapse :key="'2'+selectItemKey + formKey" v-model="activeNames" class="ng-form-properties-collapse">
 		<template v-if="groupColumnsCollapse && groupColumnsCollapse.length > 0" >
 			<el-collapse-item  
 				v-for="(form,formIndex) in groupColumnsCollapse "
 				:key="'form' + formIndex" 
-				:title="form.label" 
+				:title="getLabel(form.label)" 
 				:name="formIndex + ''" 
 				>
 				<ng-form   
@@ -56,96 +56,99 @@
 		<!-- 最后判断有没有自定义属性配置 -->
 		<component 
 			ref="itemProperties" 
+			:key="formKey"
 			v-if="propertiesComponent"
 			:selectItem="selectItem"   
 			:is="propertiesComponent">  
 		</component>  
 		<template v-if="selectItem && selectItem.options && formColumns && formColumns.config">
-			<el-collapse-item name="event" title="事件"  >
+			<el-collapse-item name="event" :title="t('ngform.properties.event')" >
 				<ng-form   
 					:config="formColumns.config"   
 					:record="selectItem" 
 					:model="selectItem.options"
 					:columns="[  
 						{
-		                    label: '获取焦点', 
-		                    prop: 'focusEvent', 
-		                    type: 'textarea',  
-		                    placeholder: '获取焦点后事件,eg: $.address = $.city + $.location' , 
+		                    label: $t('ngform.properties.focus_event'),
+		                    prop: 'focusEvent',
+		                    type: 'textarea',
+		                    placeholder: 'eg: $.address = $.city + $.location' ,
 		                    span: 24,
-		                },
-		                {
-		                    label: '失去焦点', 
+		        },
+		        {
+		                    label: $t('ngform.properties.blur_event'),
 		                    prop: 'blurEvent',
-		                    type: 'textarea', 
-		                    placeholder: '失去焦点后事件,eg: $.address = $.city + $.location' , 
+		                    type: 'textarea',
+		                    placeholder: 'eg: $.address = $.city + $.location' ,
 		                    span: 24,
-		                } 
+		        }
 					]"  
 				/> 
 			</el-collapse-item>
-			<el-collapse-item name="listen" title="监听" >
+			<el-collapse-item name="listen" :title="t('ngform.properties.listen')" >
 				<ng-form   
 					:config="formColumns.config"   
 					:record="selectItem" 
 					:model="selectItem.options"
 					:columns="[  
-						{
-		                    label: '监听组件', 
-		                    prop: 'listenModel', 
-		                    type: 'switch',   
+					{
+		                    label: $t('ngform.properties.listen_model') ,
+		                    prop: 'listenModel',
+		                    type: 'switch',
 		                    span: 24,
 		                },
 		                {
-		                    label: '组件model', 
-		                    prop: 'listenModelData', 
-		                    placeholder: '多个使用,分割' , 
+		                    label: $t('ngform.properties.feature_model'),//'组件model',
+		                    prop: 'listenModelData',
+		                    placeholder: $t('ngform.properties.feature_model_tip'), //'多个使用,分割' ,
 		                    show: '$.options.listenModel' ,
 		                    span: 24,
 		                },
 		                {
-		                    label: '触发表达式', 
+		                    label: $t('ngform.properties.listen_script'),//'触发表达式',
 		                    prop: 'listenModelScript',
-		                    type: 'textarea', 
-		                    placeholder: '表达式,eg: $.address = $.city + $.location' , 
+		                    type: 'textarea',
+		                    placeholder: 'eg: $.address = $.city + $.location' ,
 		                    show: '$.options.listenModel' ,
 		                    span: 24,
-		                } 
+		                }
 					]"  
 				/> 
 			</el-collapse-item>
-			<el-collapse-item name="show" title="动态配置"  >
+			<el-collapse-item name="show" :title="t('ngform.properties.dynamics')" >
 				<ng-form   
 					:config="formColumns.config"   
 					:record="selectItem" 
 					:model="selectItem.options"
 					:columns="[  
-						{
-		                    label: '动态显示', 
-		                    prop: 'dynamicVisible', 
-		                    type: 'switch',   
+										{
+		                    label: $t('ngform.properties.dynamic_visible'),//'动态显示',
+		                    prop: 'dynamicVisible',
+		                    type: 'switch',
 		                    span: 24,
 		                },
 		                {
-		                    label: '显示条件', 
-		                    prop: 'dynamicVisibleValue', 
+		                    label: $t('ngform.properties.dynamic_visible_script'),//'显示条件',
+		                    prop: 'dynamicVisibleValue',
 		                    show: '$.options.dynamicVisible' ,
 		                    type: 'textarea',
-		                    placeholder: '请输入显示条件,$标识当前整个表单的绑定数据' , 
+		                    placeholder: $t('ngform.properties.dynamic_visible_tip'),//'请输入显示条件,$标识当前整个表单的绑定数据' ,
+		                    span: 24,
+		                },
+                    // 动态禁用必须包含disabled属性
+		                {
+		                    label: $t('ngform.properties.dynamic_disabled'),//'动态禁用',
+		                    prop: 'dynamicDisabled',
+                        show: '$.options.disabled != undefined && $.options.disabled != null' ,
+		                    type: 'switch',
 		                    span: 24,
 		                },
 		                {
-		                    label: '动态禁用', 
-		                    prop: 'dynamicDisabled', 
-		                    type: 'switch',   
-		                    span: 24,
-		                },
-		                {
-		                    label: '禁用条件', 
-		                    prop: 'dynamicDisabledValue', 
+		                    label: $t('ngform.properties.disabled_visible_script'),//'禁用条件',
+		                    prop: 'dynamicDisabledValue',
 		                    show: '$.options.dynamicDisabled' ,
 		                    type: 'textarea',
-		                    placeholder: '请输入禁用条件,$标识当前整个表单的绑定数据' , 
+		                    placeholder: $t('ngform.properties.dynamic_disabled_tip'),//'请输入禁用条件,$标识当前整个表单的绑定数据' ,
 		                    span: 24,
 		                },
 					]"  
@@ -166,15 +169,17 @@ import itemIndex from "../items/index.js";
 
 import { dynamicFun , cloneDeep } from '../../utils/index.js' 
 //import cloneDeep from 'lodash/cloneDeep'
-
+import Bus from '../../utils/bus.js'
 import NgConstants from '../../constants'
-
+import LocalMixin from '../../locale/mixin.js'
 export default {
+  mixins: [LocalMixin],
 	components: {
 		NgForm
 	},
 	data() {
 		return {
+			formKey: '',
 			activeNames: [],
 			groupColumns: [],
 		    // 独立与group分组，直接配置的属性
@@ -252,6 +257,13 @@ export default {
 			this.init() 
 		}
 	},
+	mounted() {
+    
+    Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
+  },
 	methods: {
 		init() {
 			console.log('selectItemKey' , this.selectItemKey)
@@ -307,7 +319,7 @@ export default {
 		               
 		              	if (!Object.prototype.hasOwnProperty.call(this_.selectItem[prop], gc.prop)) {
 		                	//this_.$set(this_.selectItem[prop], gc.prop, gc.default)
-		                	this_.selectItem[prop][gc.prop] =  gc.default
+		                	this_.selectItem[prop][gc.prop] =  this_.getLabel(gc.default)
 		              	}
 	 
 	            	})
@@ -363,35 +375,35 @@ export default {
 		        	},
 		        	column: [
 			        	{
-			            	label: '标签', 
-				            prop: 'label', 
-				            default: label_,
-				            span: 24,
-				        },
-				        {
-				            label: '标签宽度', 
-				            prop: 'labelWidth',
-				            type: 'number',
-				            min: -1,
-				            max: 1000,
-				            default: labelWidth_,
-				            span: 24,
-				        },
-				        {
-				            label: '要素宽度', 
-				            prop: 'width',  
-				            default: width_,
-				            span: 24,
-				        },
-				        {
-				            label: '所占栅格', 
-				            type: 'slider',
-				            prop: 'span',
-				            min: 1,
-				            max: 24,
-				            default: span_,
-				            span: 24,
-				        }
+		              label: this.$t('ngform.item.label'),//'标签',
+		              prop: 'label',
+		              default: label_,
+		              span: 24
+		            },
+		            {
+		              label: this.$t('ngform.item.label_width'),//'标签宽度',
+		              prop: 'labelWidth',
+		              type: 'number',
+		              min: -1,
+		              max: 1000,
+		              default: labelWidth_,
+		              span: 24
+		            },
+		            {
+		              label: this.$t('ngform.item.width'),//'要素宽度',
+		              prop: 'width',
+		              default: width_,
+		              span: 24
+		            },
+		            {
+		              label: this.$t('ngform.item.span'),// '所占栅格',
+		              type: 'spanGroup',
+		              prop: 'span',
+		              min: 1,
+		              max: 24,
+		              default: span_,
+		              span: 24
+		            }
 		        	]
 		        } 
 	        
@@ -412,7 +424,7 @@ export default {
 	              		// 判断column如果有默认值，但当前data没有值 则回填  
 	              		if (!Object.prototype.hasOwnProperty.call(this_.selectItem, gc.prop)) {
 	                		//this_.$set(this_.selectItem, gc.prop, gc.default)
-	                		this_.selectItem[gc.prop] = gc.default
+	                		this_.selectItem[gc.prop] = this_.getLabel(gc.default)
 	              		}
 	 
 	            	})

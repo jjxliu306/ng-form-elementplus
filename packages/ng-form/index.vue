@@ -6,6 +6,7 @@
     :model="model "
     :label-suffix="config.labelSuffix"
     size="small"
+    :key="formKey"
     label-position="right"
     :label-width="(config.labelWidth || 80) + 'px'">
     <template v-for="(column,idx) in columns">
@@ -177,7 +178,7 @@ import { dynamicFun } from '../utils/index.js'
 // key-value数组配置
 import KvList from './kv-list.vue'
 import Rules from './rules.vue'
-
+import Bus from '../utils/bus.js'
 import LocalMixin from '../locale/mixin.js'
 export default {
   name: 'ng-form', 
@@ -188,7 +189,7 @@ export default {
   },
   data () {
     return {
-      
+      formKey: ''
     }
   },
   props: {
@@ -214,7 +215,12 @@ export default {
       default: () => []
     }
   },
-  mounted () { },
+  mounted () {
+     Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
+  },
   methods: {
     // 返回函数值
     getScriptValue (script, currentValue) {
