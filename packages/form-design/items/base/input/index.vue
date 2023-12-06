@@ -1,7 +1,7 @@
 <template>   
 	<el-input 
 		v-if="!preview"
-		:placeholder="record.options.placeholder"
+		:placeholder="getLabel(record.options.placeholder)"
 		:clearable="record.options.clearable"
 		:disabled="recordDisabled"
 		:type="record.options.type || 'text'"
@@ -26,6 +26,7 @@
     <span class="base-item-span" >{{models[record.model]}} </span>
     <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)"> 
     </span>  
+    {{t('ngform.close')}}
 	</div> 
 </template>
 <script>

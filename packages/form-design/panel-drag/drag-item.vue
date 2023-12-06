@@ -16,11 +16,11 @@
         <template #item="{element}">
           <li class="form-edit-widget-label"  >
            
-            <div class="handle-widget-label"   draggable="true" :title="element.label">
+            <div class="handle-widget-label"   draggable="true"  :title="getLabel(element.label)"  >
               <div class="label-item"> 
-                <img v-if="weightIcon(element)" draggable="false" class="item-img" :src="weightIcon(element)" :alt="element.label">
+                <img v-if="weightIcon(element)" draggable="false" class="item-img" :src="weightIcon(element)" :alt="getLabel(element.label)">
               </div>
-              <div class="handle-label">{{element.label}}</div>
+              <div class="handle-label">{{getLabel(element.label)}}</div>
             </div> 
           </li> 
         </template>
@@ -42,9 +42,11 @@
 </template>
 <script>
 import { getItemIcon } from '../../utils/icons.js'
+import LocalMixin from '../../locale/mixin.js'
 import draggable from "vuedraggable"
 export default {
   name: "dragItem",
+  mixins: [LocalMixin],
   props: {
     list: {
       type: Array,

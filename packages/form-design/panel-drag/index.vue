@@ -3,14 +3,14 @@
 		<el-collapse class="drag-panel" v-model="actives" accordion > 
 
 			<template v-for="(colItem,colIndex) in dataList"> 
-				<el-collapse-item :key="colIndex" :title="colItem.name" :name="colIndex + 1" v-if="colItem && colItem.list && colItem.list.length > 0">
+				<el-collapse-item :key="colIndex + formKey" :title="getLabel(colItem.name)" :name="colIndex + 1" v-if="colItem && colItem.list && colItem.list.length > 0">
 
 					<template #title>
-					    <span class="title">{{colItem.name}}</span>
+					    <span class="title">{{getLabel(colItem.name)}}</span>
 					</template>
 			  		<DragItem 
 		                :list="itemInitArray(colItem.list)"
-                    	:title="colItem.name"
+                    :title="getLabel(colItem.name)"
 		                @generateKey="generateKey"  
 		                @dragend="handleEnd"/>
 			  	</el-collapse-item>
@@ -21,8 +21,11 @@
 import itemIndex from "../items/index.js"
 import DragItem from './drag-item.vue'
 //import cloneDeep from 'lodash/cloneDeep' 
+import LocalMixin from '../../locale/mixin.js'
 import { cloneDeep } from '../../utils/index.js'
+import Bus from '../../utils/bus.js'
 export default {
+  mixins: [LocalMixin],
 	components: {
 		DragItem
 	},
@@ -109,30 +112,37 @@ export default {
         	from: 'customC',
         	default: ()=>[]
       	} 
-  	},
+  },
 	data(){
 		return {
 			actives:[1], 
-		    startType: "",
+		  startType: "",
+		  formKey: '',
 		    //dataList: itemIndex ,
-		    data: {
-		        list: [],
-		        config: {
-		          layout: "horizontal",
-		          labelCol: { span: 4 },
-		          wrapperCol: { span: 18 },
-		          hideRequiredMark: false,
-		          customStyle: ""
-		        }
-		      },
-		    previewOptions: {
-		        width: 850
-		    }, 
-		    selectItem: {
-		       key: ""
-		    } 
+		  data: {
+		    list: [],
+		    config: {
+		    	layout: "horizontal",
+		      labelCol: { span: 4 },
+		      wrapperCol: { span: 18 },
+		      hideRequiredMark: false,
+		      customStyle: ""
+		    }
+		  },
+		  previewOptions: {
+		    width: 850
+		  }, 
+		  selectItem: {
+		    key: ""
+		  } 
 		}
 	}, 
+	mounted () {  
+    Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
+  },
 	methods: {
 		// 组件初始化
 		itemInitArray(list = []) {

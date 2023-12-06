@@ -1,10 +1,12 @@
 
 import { dynamicFun , cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
 
+import LocalMixin from '../../locale/mixin.js'
 import request from '../../utils/request.js'
 //import cloneDeep from 'lodash/cloneDeep'
 import * as objectPath from 'object-path';
 export default {
+	mixins: [LocalMixin],
 	props: {
 	  // 表单数组 
 	  record: {

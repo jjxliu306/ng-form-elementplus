@@ -19,7 +19,7 @@ cascader没有数据字典
       </el-radio-group>
     </el-form-item>
     <el-form-item  label="数据" v-if="selectItem.options.methodType == 'post'">
-      <el-input type="textarea" placeholder="post请求需要携带的数据(JSON格式)" size="mini" v-model="selectItem.options.dynamicPostData"> 
+      <el-input type="textarea" placeholder="post请求需要携带的数据(JSON格式)" size="small" v-model="selectItem.options.dynamicPostData"> 
       </el-input>
     </el-form-item>
   </template>
@@ -39,7 +39,7 @@ cascader没有数据字典
       <el-input size="small" v-model="selectItem.options.remoteLabel">
         <template #prepend>标签字段</template>
       </el-input> 
-      <el-input size="mini" v-if="selectItem.type == 'cascader'" v-model="selectItem.options.remoteChildren">
+      <el-input size="small" v-if="selectItem.type == 'cascader'" v-model="selectItem.options.remoteChildren">
         <template #prepend>下级字段</template>
       </el-input> 
     </div>  

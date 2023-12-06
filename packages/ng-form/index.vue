@@ -11,12 +11,12 @@
     <template v-for="(column,idx) in columns">
 
 
-      <el-divider :key="'divider' + idx" content-position="center" class="ng-form-divider" v-if="column.type == 'divider' && (column.show == undefined || column.show == true || columnVisible(column.show))">{{column.label}}</el-divider> 
+      <el-divider :key="'divider' + idx" content-position="center" class="ng-form-divider" v-if="column.type == 'divider' && (column.show == undefined || column.show == true || columnVisible(column.show))">{{getLabel(column.label)}}</el-divider> 
       <el-form-item
         :prop="column.prop"
-        :label="column.label"
+        :label="getLabel(column.label)"
         :rules="column.rules"
-        :title="column.tip" 
+        :title="getLabel(column.tip)" 
         :label-width="column.labelWidth != null ? (column.labelWidth + 'px') : null"
         :key="'item' + idx"
         v-else-if="column.show == undefined || column.show == true || columnVisible(column.show)">
@@ -27,8 +27,8 @@
        <!--  <slot :value="column.prop" :column="column" :name="column.prop">  -->
            
           <!-- 输入类型判断 -->
-          <el-input v-if="!column.type || column.type == 'input'" v-model.trim="model[column.prop]" :placeholder="column.placeholder" />
-          <el-input type="textarea" v-else-if="column.type == 'textarea'" v-model="model[column.prop]" :placeholder="column.placeholder" />
+          <el-input v-if="!column.type || column.type == 'input'" v-model.trim="model[column.prop]" :placeholder="getLabel(column.placeholder)" />
+          <el-input type="textarea" v-else-if="column.type == 'textarea'" v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)" />
           <el-input-number
             style="width:100%"
             v-else-if="column.type == 'number'"
@@ -59,10 +59,10 @@
             <el-button text icon="Plus" @click="addData(model , column.prop , column.type)"></el-button>
           </template>
           <el-radio-group v-else-if="column.type == 'radio'" v-model="model[column.prop]">
-            <el-radio :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radio' + idx2">{{rv.label}}</el-radio>
+            <el-radio :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radio' + idx2">{{getLabel(rv.label)}}</el-radio>
           </el-radio-group>
           <el-radio-group v-else-if="column.type == 'radioButton'" v-model="model[column.prop]">
-            <el-radio-button :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radioB' + idx2">{{rv.label}}</el-radio-button>
+            <el-radio-button :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'radioB' + idx2">{{getLabel(rv.label)}}</el-radio-button>
           </el-radio-group>
          <!--  <el-switch v-else-if="column.type == 'switch'" v-model="model[column.prop]"></el-switch> -->
           <el-switch v-else-if="column.type == 'switch'"  v-model="model[column.prop]"  ></el-switch>
@@ -72,22 +72,22 @@
             align="right"
             type="date"
             clearable  
-            :placeholder="column.placeholder"
+            :placeholder="getLabel(column.placeholder)"
             :format="column.format"
             :value-format="column.format" >
           </el-date-picker>
           <el-checkbox-group v-else-if="column.type == 'checkbox'" v-model="model[column.prop]">
-            <el-checkbox :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'check' + idx2">{{rv.label}}</el-checkbox>
+            <el-checkbox :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'check' + idx2">{{getLabel(rv.label)}}</el-checkbox>
           </el-checkbox-group>
           <el-select clearable v-else-if="column.type == 'select'" v-model="model[column.prop]" placeholder="请选择" style="width:100%">
             <el-option
               v-for="(rv,idx2) in column.dicData"
-              :label="rv.label"
+              :label="getLabel(rv.label)"
               :key="'select' + idx2"
               :value="rv.value">
             </el-option>
           </el-select>
-          <el-slider
+       <!--    <el-slider
             v-else-if="column.type == 'slider'"
             v-model="model[column.prop]"
             :show-input="column.showInput"
@@ -96,7 +96,34 @@
             :stops="column.stops"
             :show-stops="column.showStops"
             :range="column.range">
-          </el-slider>
+          </el-slider> -->
+          <el-row :gutter="20" v-else-if="column.type === 'slider' || column.type === 'spanGroup'">
+            <el-col :span="20">
+              <el-slider
+                  v-if="column.type === 'slider'"
+                  v-model="model[column.prop]"
+                  :show-input="column.showInput"
+                  :min="column.min || 0"
+                  :max="column.max"
+                  :stops="column.stops"
+                  :show-stops="column.showStops"
+                  :range="column.range"
+              >
+              </el-slider>
+              <el-radio-group style="width: 100%;" v-model="model[column.prop]" v-else>
+                <el-radio-button :label="6">25%</el-radio-button>
+                <el-radio-button :label="12">50%</el-radio-button>
+                <el-radio-button :label="18">75%</el-radio-button>
+                <el-radio-button :label="24">100%</el-radio-button>
+              </el-radio-group>
+            </el-col>
+            <el-col :span="2"></el-col>
+            <el-col :span="2">
+              <el-icon   style="cursor: pointer;" @click="handleChangeSpanType(column)">
+                <Sort />
+              </el-icon> 
+            </el-col>
+          </el-row>
           <el-row v-else-if="column.type == 'doubleNumber'" >
             <el-col :span="12">
               <el-input-number
@@ -150,8 +177,11 @@ import { dynamicFun } from '../utils/index.js'
 // key-value数组配置
 import KvList from './kv-list.vue'
 import Rules from './rules.vue'
+
+import LocalMixin from '../locale/mixin.js'
 export default {
   name: 'ng-form', 
+  mixins: [LocalMixin],
   components: {
     KvList,
     Rules
@@ -221,6 +251,13 @@ export default {
       //this.$set(model , prop , nlist)
       model[prop] = nlist
     },
+    handleChangeSpanType(column) {
+      if (column.type === 'slider') {
+        column.type = 'spanGroup'
+      } else {
+        column.type = 'slider'
+      }
+    }
   }
 }
 </script>

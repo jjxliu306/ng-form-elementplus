@@ -1,6 +1,6 @@
 <template>
 <el-collapse-item name="tabs" title="选项卡">
-<el-form class="layout-tabs-properties"  size="mini" label-width="80px" label-position="top" >
+<el-form class="layout-tabs-properties"  size="small" label-width="80px" label-position="top" >
 	<el-form-item  label="选项卡" v-if="selectItem && selectItem.columns && selectItem.columns.length > 0">
      <TabProperties :value="selectItem.columns" />
   </el-form-item> 

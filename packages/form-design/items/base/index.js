@@ -1,7 +1,7 @@
 
 // 扫描下面目录中所有的index.js 然后穷举后返回 
 // const files = import.meta.globEager('./**/index.js')
-
+import { t , $t } from '../../../locale/index.js' 
 let list = [] 
 
 // for(let key in files) {
@@ -51,7 +51,7 @@ list = list.sort(function(a,b){
 
 export default {
   type: 'basic',
-  name: '基础组件',
+  name:  $t('ngform.item.basic'),//'基础组件',
   icon: 'icon-tradingdata',
   list: list 
 }

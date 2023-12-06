@@ -46,7 +46,11 @@ import DragPanel from './panel-drag/index.vue'
 import ContainerPanel from './panel-container/index.vue'
 import PropertiesPanel from './panel-properties/index.vue'
  
-import { cloneDeep } from '../utils/index.js'
+import { cloneDeep , getUUID } from '../utils/index.js'
+ 
+import { use } from '../locale/index'
+
+import Bus from '../utils/bus.js'
 
 export default {
   name: 'ng-form-design',
@@ -60,6 +64,7 @@ export default {
     return {
       arrow: false,
       selectItem: {},
+      i18nkey: getUUID(),
       template: {
         list: [],
         config: {
@@ -186,7 +191,12 @@ export default {
       }
 
       //this.template.config = formTemplate.config;
-    }
+    },
+    useLocale(val) {
+      use(val)
+      this.i18nkey = getUUID()
+      Bus.emit('i18nRefresh') 
+    },
   }
 }
 </script>

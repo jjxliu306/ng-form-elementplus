@@ -11,9 +11,13 @@ import NgFormItemNode from './form-design/items/node.vue'
 import NgForm  from './ng-form/index.vue'
 
 import mixin from './form-design/items/mixin.js'
+
+// 国际化
+import locale from './locale';
+import LocalMixin from './locale/mixin.js'
  
 export {
- mixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
+ mixin,LocalMixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
 }
 
 
@@ -25,10 +29,13 @@ const components = [ NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgF
  
 
 const NgFormElementPlus = {
-  install(App) {
+  install(App , opts) {
     components.forEach((item) => {
       App.component(item.name, item);
     });
+
+    locale.use(opts.locale);
+    locale.i18n(opts.i18n);
   },
 };
 

@@ -98,7 +98,25 @@ export function dynamicFun(script , model , key="$" , row , rowKey) {
  
 } 
 
+/**
+ * 获取uuid
+ */
+export function getUUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+    return (c === "x" ? (Math.random() * 16) | 0 : "r&0x3" | "0x8").toString(
+      16
+    );
+  });
+}
 
+export function getLabel(v) {
+
+    if(typeof v == 'function') {
+        const label = v()
+        return label 
+    } 
+    return v
+}
  
 /**
 * 动态函数

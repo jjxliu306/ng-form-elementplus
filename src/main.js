@@ -11,16 +11,16 @@ import NgFormElementPlus from "../packages/index.js"; //导入
  
  
 const app = createApp(App);
-app.use(NgFormElementPlus); //注册
+app.use(NgFormElementPlus , {locale: 'zh_cn'}); //注册
 app.use(ElementPlus, {locale: zhCn})
 
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 
-  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-  }
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 
 app.mount('#app')

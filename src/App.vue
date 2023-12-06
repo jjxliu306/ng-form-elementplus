@@ -22,9 +22,17 @@
         </div> 
         <template #reference>
 	       <el-button style="margin: 0px 10px;"  icon="Document" text size="small"   >示例</el-button>
-	      </template>
-         
+	      </template> 
       </el-popover>
+
+       <el-select v-model="i18n" style="width: 100px;" placeholder="语言" size="small" @change="changeI18n">
+          <el-option
+            v-for="item in i18nList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
   	</template>
   </ng-form-design>
 </template>
@@ -41,15 +49,16 @@ export default  ({
 
  		const template = ref({ 
  		 	list: [],
-	          config: {
-	            labelPosition: "left",
-	            labelWidth: 100, 
-	            size: 'small',
-	            outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-	            hideRequiredMark: false ,
-	            syncLabelRequired: false,
-	            customStyle: ""
-	          }})
+	    config: {
+	      labelPosition: "left",
+	      labelWidth: 100, 
+	      size: 'small',
+	      outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
+	      hideRequiredMark: false ,
+	      syncLabelRequired: false,
+	      customStyle: ""
+	    }
+    })
  		const formName = ref('')
  		const examples = ref([
         {name:'基础示例' , path: 'basic.json'},
@@ -107,15 +116,29 @@ export default  ({
  
       }
     }
+ 
 
- 		 return {
+    const i18n = ref('zh_cn')
+    const i18nList = ref([
+      {label: '中文简体' , value: 'zh_cn'},
+      {label: 'English' , value: 'en'}
+    ])
+
+    const changeI18n = (v)=> {
+      formDesign.value.useLocale(v)
+    }
+
+ 		return {
  		 	formDesign,
  		 	template,
  		 	formName,
  		 	examples,
  		 	formConfig,
- 		 	initDemo
- 		 }
+ 		 	initDemo,
+      i18n,
+      i18nList,
+      changeI18n
+ 		}
 	}
 })
 </script>
