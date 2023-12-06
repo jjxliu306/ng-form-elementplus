@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="预览"
+    :title="t('ngform.header.preview')"
     v-model="visible" 
     style="top:20px;"
     :append-to-body="true"
@@ -14,11 +14,11 @@
     </div> 
     <template  #footer>
       <span  class="dialog-footer"> 
-        <el-button size="small" @click="handleCancel">取消</el-button>
-        <el-button type="primary" size="small" @click="handleValidator">效验</el-button>  
-        <el-button type="primary" size="small" @click="handleGetData">获取数据</el-button>  
+        <el-button size="small" @click="handleCancel">{{t('ngform.cancel')}}</el-button>
+        <el-button type="primary" size="small" @click="handleValidator">{{t('ngform.validator')}}</el-button>  
+        <el-button type="primary" size="small" @click="handleGetData">{{t('ngform.header.get_data')}}</el-button>  
         <el-button type="primary" size="small" @click="handleView">
-          {{preview ?  '填报模式': '查看模式'}}
+           {{preview ?  t('ngform.header.write_mode') :  t('ngform.header.read_mode')}}
         </el-button>  
       </span> 
     </template>
@@ -26,7 +26,7 @@
 
 
     <el-dialog
-      title="数据查看"
+      :title="t('ngform.header.get_data')"
       v-model="dataVisible" 
       style="top:20px;"
       :append-to-body="true"
@@ -45,8 +45,9 @@
 </template>
 <script> 
 import FormBuild from '../build.vue' 
- 
+import LocalMixin from '../../locale/mixin.js'
 export default {
+  mixins: [LocalMixin],
   name: "ng-form-preview",
   data() {
     return {

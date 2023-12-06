@@ -3,7 +3,7 @@
 -->
 <template>
   <el-dialog
-    title="模板数据" 
+    :title="t('ngform.header.template_data')" 
     v-model="visible"
     :append-to-body="true"
     style="top:20px;"
@@ -15,20 +15,21 @@
     </div>
     <div class="copy-btn-box" v-if="!edit"> 
       <el-button size="small" @click="handleExportJson" type="primary">
-        导出代码
+        {{t('ngform.header.export_code')}}
       </el-button>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button size="small" @click="handleCancel">关闭</el-button> 
-        <el-button v-if="edit" size="small" type="primary" @click="handleImp">导入</el-button>
+        <el-button size="small" @click="handleCancel">{{t('ngform.close')}}</el-button> 
+        <el-button v-if="edit" size="small" type="primary" @click="handleImp">{{t('ngform.import')}}</el-button>
       </span>
     </template> 
   </el-dialog>
 </template>
 <script> 
- 
+import LocalMixin from '../../locale/mixin.js' 
 export default {
+  mixins: [LocalMixin],
   name: "ng-form-code",
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
     },
     handleImp() {
       if(!this.jsonCode) {
-        alert('文本不能为空')
+        this.$message.error(this.t('ngform.header.content_not_empty'))
         return
       }  
       try {
@@ -63,12 +64,12 @@ export default {
           
           this.handleCancel()
         } else {
-          this.$message.error('模板解析异常，请检查文本内容.')
+          this.$message.error(this.t('ngform.header.content_parse_error'))
           return
         }
         
       } catch (error) {
-        this.$message.error('模板解析异常，请检查文本内容.')
+        this.$message.error(this.t('ngform.header.content_parse_error'))
         return
       }
     },
