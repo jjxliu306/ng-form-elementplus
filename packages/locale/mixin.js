@@ -10,8 +10,10 @@ export default {
       return t.apply(this, args);
     },
     getLabel(v) { 
+      console.log("v" , v , (typeof v=='function'))
       if(typeof v == 'function') {
           const label = v()
+          console.log('label' , label)
           return label 
       } 
       return v

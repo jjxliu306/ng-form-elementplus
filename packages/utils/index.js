@@ -27,6 +27,31 @@ export function cloneDeepAndFormat(data , e ) {
   const clone = cloneDeep(data , true)
   delete clone.icon 
 
+
+  
+  const fs_ = (p ,k , v) => {
+    if(v instanceof Function) {
+
+      const nv = getLabel(v)
+      p[k] = nv 
+
+    } else if(v instanceof Array) {
+      v.forEach((t,idx)=> {
+        fs_(v ,idx , t)
+      })
+    } else if(v instanceof Object) {
+      for(let key in v) {
+        fs_(v , key , v[key])
+      }
+    }  
+  }
+
+  for(let key in clone) {
+    const kdata = clone[key]
+
+    fs_(clone , key , kdata)
+  }
+
     // 判断事件 和数据来源 如果存在且来自非ul 则不刷新key和model
   //console.log('e.from.nodeName' , e ? e.from.nodeName : 'none')
   if(e && e.from && e.from.nodeName != 'UL') {
