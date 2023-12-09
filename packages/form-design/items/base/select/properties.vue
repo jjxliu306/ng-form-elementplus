@@ -1,6 +1,6 @@
 <template>
 <div>  
-    <el-collapse-item name="data" title="数据">
+    <el-collapse-item name="data" :title="t('ngform.item.datasource')">
       <DatasourceConfig :selectItem="selectItem">
         <template slot="defaultValue" >
           <el-form-item v-if="selectItem && selectItem.options.dynamic == 0" label="默认值">
@@ -17,13 +17,13 @@
         </template>
       </DatasourceConfig>
     </el-collapse-item>
-    <el-collapse-item name="linkage" title="联动" class="linkage-item">
+    <el-collapse-item name="linkage" :title="t('ngform.item.linkage_title')" class="linkage-item">
       <el-form   size="small" label-width="80px"  class="linkage-form">
-        <el-form-item label="联动关联">
+        <el-form-item :label="t('ngform.item.linkage')">
             <el-switch
               v-model="selectItem.options.linkage"
-              active-text="是"
-              inactive-text="否">
+               :active-text="t('ngform.item.yes')"
+              :inactive-text="t('ngform.item.no')">
             </el-switch> 
           </el-form-item>
           <template v-if="selectItem.options.linkage">
@@ -37,7 +37,9 @@
 <script>
 import DatasourceConfig from './datasource-config.vue'
 import Linkage from './linkage.vue'
+import LocalMixin from '../../../../locale/mixin.js'
 export default {
+  mixins: [LocalMixin],
   components: {
     DatasourceConfig , Linkage
   },
