@@ -11,7 +11,7 @@
       ]" 
       :size="config.size"
       :style="record.options.customStyle"
-      :empty-text="record.options.noDataText || '暂无数据'"
+      :empty-text="getLabel(record.options.noDataText) || t('ngform.item.batch.no_data')"
       :data="models[record.model]" 
       :border="record.options.showBorder"
       :scroll="{
@@ -25,7 +25,7 @@
       <template  v-if="isVisible"> 
         <el-table-column 
           v-if="!record.options.hideSequence"
-          label="序号"
+          :label="t('ngform.item.batch.seq')" 
           align="center"
           type="index"
           width="50" >  
@@ -45,25 +45,26 @@
         </el-table-column>
         </template> 
         <el-table-column  
-          label="操作"
+          :label="t('ngform.item.batch.operate')"
           align="center" 
+          :fixed="record.options.fixedBtn ? 'right' : undefined"
           v-if="!preview || record.options.addType == 'dialog'"
           :width="controlWidth ">
           <template  #default="scope"> 
             <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
                
-               <!-- <el-icon><Eye /></el-icon> --> 查看
+               <!-- <el-icon><Eye /></el-icon> -->  {{t('ngform.item.view')}} 
             </el-button>
             <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.addType == 'dialog'"  @click="updateDomain(scope.row)">
               
-              <!-- <el-icon><Edit /></el-icon> --> 修改
+              <!-- <el-icon><Edit /></el-icon> --> {{t('ngform.item.edit')}} 
             </el-button>
             <el-button  type="text" text  class="ng-form-btn-view" :size="config.size" v-if="!preview && record.options.copyRow"  @click="copyDomain(scope.row , scope.$index)">
              
-               <!-- <el-icon><CopyDocument /></el-icon> --> 复制
+               <!-- <el-icon><CopyDocument /></el-icon> --> {{t('ngform.item.copy')}} 
             </el-button>
             <el-button  type="text" text  class="ng-form-btn-del" :size="config.size"  v-if="!preview" @click="removeDomain(scope.$index)"> 
-             <!--  <el-icon><Delete /></el-icon> --> 删除
+             <!--  <el-icon><Delete /></el-icon> --> {{t('ngform.item.delete')}} 
             </el-button>
           </template> 
         </el-table-column> 
@@ -74,7 +75,7 @@
     <el-button v-if="!preview" :size="config.size" type="dashed" :disabled="disabled" @click="addDomain">
        <!-- 
        <el-icon><CirclePlus />新增</el-icon>  -->
-       <el-icon><CirclePlusFilled /></el-icon>新增
+       <el-icon><CirclePlusFilled /></el-icon>{{t('ngform.item.add')}} 
     </el-button>
 
     <AddOrUpdate ref="addOrUpdate" v-if="addOrUpdateVisible"   :formTemplate="templateData" :preview="preview" @formAdd="formAdd"  @formUpdate="formUpdate"/>
@@ -86,7 +87,9 @@
 //import TableFormItem from "./table-form-item";
 import TableItem from './table-item.vue'
 import AddOrUpdate from './add-or-update.vue'
+import mixin from '../../../mixin.js'
 export default {
+  mixins: [mixin] , 
   name: "ng-form-base-batch", 
   components: {
     TableItem,AddOrUpdate
@@ -167,10 +170,10 @@ export default {
       this.$refs.dynamicValidateForm.resetFields();
     },
     removeDomain(index) { 
-
-      this.$confirm(`确定删除此数据?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+      const this_ = this
+      this.$confirm(this.t('ngform.item.batch.delete_prompt'),  this.t('ngform.header.prompt'), {
+          confirmButtonText: this.t('ngform.confirm'),
+          cancelButtonText: this.t('ngform.cancel'),
           type: 'warning'
       }).then(() => {
         let domains = this.models[this.record.model] 
@@ -179,7 +182,7 @@ export default {
             domains.splice(index, 1);
 
             this.$message({
-              message: '删除成功',
+              message: this_.t('ngform.item.batch.operation_success'),
               type: 'success',
               duration: 1000 
             })
@@ -263,7 +266,7 @@ export default {
       });
       this.isVisible = true
       this.$message({
-        message: '添加成功',
+        message: this.t('ngform.item.batch.operation_success'),
         type: 'success',
         duration: 1000 
       })
@@ -285,7 +288,7 @@ export default {
           return a.seq - b.seq
         });
       this.$message({
-        message: '更新成功',
+        message: this.t('ngform.item.batch.operation_success'),
         type: 'success',
         duration: 1000 
       }) 
