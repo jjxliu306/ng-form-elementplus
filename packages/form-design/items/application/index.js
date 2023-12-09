@@ -1,16 +1,8 @@
-// import { scanDirectoryJs }  from '../../../utils/index.js'
+import { t , $t } from '../../../locale/index.js' 
+ 
 
-// // 扫描下面目录中所有的index.js 然后穷举后返回 
-// const files = import.meta.globEager('./*/index.js')
-
-// const files2 = scanDirectoryJs('./state')
-
- let list = [] 
-
-// for(let key in files) {
-// 	const config = files[key].default;
-//   	list = list.concat(config)
-// }
+let list = [] 
+ 
 
 import state from './state/index.js'
 
@@ -24,7 +16,7 @@ list = list.sort(function(a,b){
 
 export default {
   type: 'application',
-  name: '应用组件',
+  name: $t('ngform.item.application'),//'应用组件',
   icon: 'icon-tradingdata',
   list: list 
 }

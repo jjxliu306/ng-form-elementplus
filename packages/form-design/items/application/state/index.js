@@ -1,5 +1,6 @@
 // 对外输出 包含组件的对外json定义、属性配置页面、展示页面 三部分
- 
+import { t , $t } from '../../../../locale/index.js'  
+
 import BaseIndex from './index.vue' 
   
 
@@ -19,13 +20,13 @@ obj.options = {
     },
     columns: [
         {
-            label: '标签', 
+            label: $t('ngform.item.label'), 
             prop: 'label',
-            default: '区划选择',
+            default: $t('ngform.item.state.name'),
             span: 24,
         },
         {
-            label: '标签宽度', 
+            label: $t('ngform.item.label_width'), 
             prop: 'labelWidth',
             type: 'number',
             min: -1,
@@ -34,13 +35,13 @@ obj.options = {
             span: 24,
         },
         {
-            label: '要素宽度', 
+            label: $t('ngform.item.width'), 
             prop: 'width',  
             default: '100%',
             span: 24,
         },
         {
-            label: '所占栅格', 
+            label: $t('ngform.item.span'), 
             type: 'slider',
             prop: 'span',
             min: 1,
@@ -49,19 +50,19 @@ obj.options = {
             span: 24,
         },
         {
-            label: '数据字段', 
+            label: $t('ngform.item.model'), 
             prop: 'model',
             span: 24,
         },
         {
-            label: '数据KEY', 
+            label: $t('ngform.item.key'), 
             prop: 'key',
             show: false,
             span: 24,
         },
         {
             type: 'divider',
-            label: '效验规则'
+            label: $t('ngform.item.validate_rule') 
         },
         { 
             prop: 'rules',
@@ -69,7 +70,7 @@ obj.options = {
             labelWidth: 0,
             default: [{ 
                 required: false, // 必须填写
-                message: "必填项",
+                message: $t('ngform.item.required'), //"必填项",
                 trigger: ['blur','change'] 
             }],
             span: 24, 
@@ -77,67 +78,96 @@ obj.options = {
     ],
     group: [
         {
-            label: '属性',
+            label: $t('ngform.item.options') , //'属性',
             prop: 'options',
             alone: true, // 是否独立与columns之外展示 false则和columns一起，不另外显示
             collapse: false, // 是否启用 collapse 必须alone=true
             column: [ 
                
                 {
-                    label: '默认值', 
+                    label: $t('ngform.item.default_value') ,//'默认值', 
                     prop: 'defaultValue', 
                     show: false,
                     span: 24,
+                }, 
+                 // 选择类型  cascader 还是下拉选择
+                {
+                    label: $t('ngform.item.state.select_type') ,// 类型
+                    prop: 'selectType',
+                    default: 'select',
+                    span: 24,
+                    type: 'radioButton',  
+                    dicData: [
+                        {value: 'select' , label: $t('ngform.item.state.select')},
+                        {value: 'cascader' , label: $t('ngform.item.state.cascader')}, 
+                    ]
                 },  
                 {
-                    label: '区划层级', 
+                    label: $t('ngform.item.state.max_level') ,//'区划层级', 
                     prop: 'maxLevel',
                     default: 3,
                     span: 24,
                     type: 'select',  
                     dicData: [
-                        {value:1 , label: '省'},
-                        {value:2 , label: '地市'},
-                        {value:3 , label: '区县'}
+                        {value:1 , label: $t('ngform.item.state.province')},
+                        {value:2 , label: $t('ngform.item.state.city')},
+                        {value:3 , label: $t('ngform.item.state.district')}
                     ]
                 }, 
                 {
-                  label: '递进式显示',
+                  label: $t('ngform.item.state.any_select'),// 任意一级可选
+                  prop: 'anySelect',
+                  type: 'switch',
+                  show: '$.options && $.options.selectType == "cascader"',
+                  default: false,
+                  span: 24,
+                } ,
+                {
+                  label: $t('ngform.item.state.one_by_one'),//'递进式显示',
                   prop: 'oneByOne',
                   type: 'switch',
+                  show: '$.options && $.options.selectType == "select"',
                   default: false,
                   span: 24,
                 },
-                {
-                  label: '回显路径',
+                 {
+                  label: $t('ngform.item.state.all_path'),//'回显路径',
                   prop: 'showAllPath',
                   type: 'switch',
                   default: false,
                   span: 24,
                 },
                 {
-                  label: '路径分隔符',
+                  label: $t('ngform.item.state.separator'),//'路径分隔符',
                   prop: 'separator',
                   show: '$.options.showAllPath' ,
                   default: '/',
                   span: 24,
                 },
                 {
-                  label: '可搜索',//'可搜索',
+                  label: $t('ngform.item.search'),//'可搜索',
                   prop: 'showSearch',
                   type: 'switch',
                   default: true,
                   span: 24,
                 } ,
+                 {
+                  label: $t('ngform.item.clearable'),//'可清除',
+                  prop: 'clearable',
+                  type: 'switch',
+                  show: '$.options && $.options.selectType == "cascader"',
+                  default: false,
+                  span: 24,
+                } ,
                 {
-                  label: '是否隐藏',
+                  label: $t('ngform.item.if_hidden') ,//'是否隐藏',
                   prop: 'hidden',
                   type: 'switch',
                   default: false,
                   span: 24,
                 },
                 {
-                  label: '是否禁用',
+                  label: $t('ngform.item.if_disabled') ,//'是否禁用',
                   prop: 'disabled',
                   type: 'switch',
                   default: false,
