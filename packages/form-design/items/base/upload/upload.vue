@@ -63,14 +63,23 @@
 	  	
 	  
 	</el-upload> 
+
+	   <!--图片查看-->
+    <el-dialog :append-to-body="true" :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
 </div>
 </template>
 <script>
 import   objectPath   from 'object-path'
+import LocalMixin from '../../../../locale/mixin.js'
 export default {
+	mixins: [LocalMixin],
 	name: 'ng-form-upload',
 	data() {
 		return { 
+			dialogVisible: false,
+			dialogImageUrl: '',
 			fileList: []
 		}
 	},
@@ -94,6 +103,10 @@ export default {
 	    // 文件接收类型
 	    accept: {
 	    	type: String
+	    },
+	    image: {
+	    	type: Boolean,
+	    	default: false
 	    },
 	    listType: {
 	    	type: String,
@@ -144,7 +157,7 @@ export default {
 			if(val && val.length > 0) {
 				const valueNames = val.map(t=>t.name).join(',');
 				const fileListNames = this.fileList.map(t=>t.name).join(',')
-				console.log('valueNames' , valueNames , fileListNames)
+				//console.log('valueNames' , valueNames , fileListNames)
 				if(fileListNames != valueNames) {
 					this.fileList = val 
 				} 
@@ -229,12 +242,12 @@ export default {
 		        this.accept.indexOf("image") >= 0 &&
 		        !this.isAssetTypeAnImage(fileSuffix)
 		    ) {
-		        this.$message.error("当前图片格式只支持:[png,jpg,jpeg,bmp]");
+		         this.$message.error(this.t('ngform.item.upload.error_img_filetype') + "[png,jpg,jpeg,bmp]");
 		        return false;
 		    }
 
 	      	if (this.record.options.limitSize && ltSize > this.record.options.limitSize) {
-	        	this.$message.error( "上传文件大小不能超过" + (this.record.options.limitSize) + "MB!" )
+	        	this.$message.error( this.t('ngform.item.upload.error_max_size') + (this.record.options.limitSize) + "MB!" )
 
 	        	return false
 	         
@@ -245,8 +258,8 @@ export default {
       		return ["png", "jpg", "jpeg", "bmp"].indexOf(ext.toLowerCase()) !== -1;
     	},
 		handleSuccess(response , file , fileList) {
-		 	console.log('file' , file)
-		 	console.log('fileList' , fileList.value)
+		 	//console.log('file' , file)
+		 	//console.log('fileList' , fileList.value)
 			// 根据返回结果的url来获取实际文件的url
 			const responseFileUrl = this.uploadResponseFileUrl 
   
@@ -307,12 +320,17 @@ export default {
 	    
 	    // 图片下载
 	    fileDown (file) {
-	    	console.log('file' , file)
+	    	//console.log('file' , file)
 	    	if(file.url) {
-				 window.open(file.url)
-			} else {
-				this.$message.error('找不到文件下载路径')
-			}
+					if(this.image) {
+		    		this.dialogVisible = true 
+						this.dialogImageUrl = file.url 
+		    	} else {
+		    		window.open(file.url)
+		    	}
+				} else {
+					this.$message.error(this.t('ngform.item.upload.error_not_found_file'))
+				}
 
 	     
 	    },
