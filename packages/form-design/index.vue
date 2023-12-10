@@ -22,7 +22,7 @@
             </ContainerPanel>  
           </el-main>  
           <el-aside :width="arrow ? '0px' : '370px'" class="properties-panel"> 
-            <a  :class="[arrow ? 'togglelefts ' : 'togglelefts arrowR']" @click="arrow=!arrow" :style="{right: (arrow ?  '0px': '370px')}" :title="arrow ? '打开属性配置面板' : '关闭属性配置面板'"></a>
+            <a  :class="[arrow ? 'togglelefts ' : 'togglelefts arrowR']" @click="arrow=!arrow" :style="{right: (arrow ?  '0px': '370px')}" :title="arrow ?  t('ngform.open_properties_panel') : t('ngform.close_properties_panel')"></a>
               <PropertiesPanel :selectItem="selectItem" >
                   <template slot="custom-properties" >
                     <slot name="custom-properties" :selectItem="selectItem"></slot>
@@ -51,8 +51,9 @@ import { cloneDeep , getUUID } from '../utils/index.js'
 import { use } from '../locale/index'
 
 import Bus from '../utils/bus.js'
-
+import LocalMixin from '../locale/mixin.js'
 export default {
+  mixins: [LocalMixin],
   name: 'ng-form-design',
   components: {
     HeaderPanel,

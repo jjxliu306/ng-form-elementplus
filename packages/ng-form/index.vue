@@ -77,7 +77,7 @@
           <el-checkbox-group v-else-if="column.type == 'checkbox'" v-model="model[column.prop]">
             <el-checkbox :label="rv.value" v-for="(rv,idx2) in column.dicData" :key="'check' + idx2">{{getLabel(rv.label)}}</el-checkbox>
           </el-checkbox-group>
-          <el-select clearable v-else-if="column.type == 'select'" v-model="model[column.prop]" placeholder="请选择" style="width:100%">
+          <el-select clearable v-else-if="column.type == 'select'" v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)" style="width:100%">
             <el-option
               v-for="(rv,idx2) in column.dicData"
               :label="getLabel(rv.label)"
@@ -147,7 +147,7 @@
               <el-row :span="24">
                 <el-col :span="22">
                  <!--   -->
-                 <el-color-picker v-model="model[column.prop][index]" placeholder="请选择颜色"/> 
+                 <el-color-picker v-model="model[column.prop][index]" :placeholder="getLabel(column.placeholder)"/> 
                 </el-col>
                 <el-col :span="2" style="padding-left: 5px">
                   <el-button text icon="Close" @click="removeData(model,column.prop, index)"></el-button>
@@ -156,7 +156,7 @@
             </div>
             <el-button text icon="Plus" @click="addData(model , column.prop, column.type)"></el-button>
           </template>
-          <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" placeholder="请选择颜色"></el-color-picker>   
+          <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)"></el-color-picker>   
             
           <KvList v-else-if="column.type == 'kv'" :value="model[column.prop]" :keyNumber="column.keyNumber"/>
           <template v-else-if="column.type == 'rules'">  

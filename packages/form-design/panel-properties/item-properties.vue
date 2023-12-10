@@ -266,7 +266,7 @@ export default {
   },
 	methods: {
 		init() {
-			console.log('selectItemKey' , this.selectItemKey)
+			//console.log('selectItemKey' , this.selectItemKey)
 			if(this.selectItem) {
 		      	this.$nextTick(()=> {
 		      		if(this.$refs.properties && this.$refs.properties.init) {

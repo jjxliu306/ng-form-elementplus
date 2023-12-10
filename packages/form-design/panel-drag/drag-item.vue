@@ -24,18 +24,6 @@
             </div> 
           </li> 
         </template>
-       <!--  <li
-          class="form-edit-widget-label"
-          v-for="(val, index) in list"
-          :key="index"  >
-         
-          <div class="handle-widget-label"   draggable="true" :title="val.label">
-            <div class="label-item"> 
-              <img v-if="weightIcon(val)" draggable="false" class="item-img" :src="weightIcon(val)" :alt="val.label">
-            </div>
-            <div class="handle-label">{{val.label}}</div>
-          </div> 
-        </li> -->
     </draggable>
   </div>
   

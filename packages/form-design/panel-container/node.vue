@@ -24,7 +24,7 @@
         <div class="node-control">   
           <div
             class="copy pointer"
-            title="复制"
+            :title="t('ngform.item.copy')"
             :class="selectItem && record.key === selectItem.key ? 'active' : 'unactivated'"
             @click.stop="$emit('handleCopy')"
           >
@@ -34,7 +34,7 @@
           
           <div
             class="delete pointer"
-            title="删除"
+            :title="t('ngform.item.delete')"
             :class="selectItem && record.key === selectItem.key ? 'active' : 'unactivated'"
             @click.stop="$emit('handleDetele')"
           >
@@ -49,9 +49,10 @@
 <script> 
  
 import Item from "../items/index.vue"
- 
+import LocalMixin from '../../locale/mixin.js' 
 export default {
   name: 'ng-form-node',
+  mixins: [LocalMixin],
   components: {
     Item 
   },
