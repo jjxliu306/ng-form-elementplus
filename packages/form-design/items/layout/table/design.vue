@@ -57,59 +57,61 @@
     id="table-design-rightmenu"
     >
     <ul>
-      <li @click="handleSettingStyle" ><i class="el-icon-magic-stick" />样式配置</li> 
+      <li @click="handleSettingStyle" ><i class="el-icon-magic-stick" />
+        {{t('ngform.item.table.style')}}
+      </li> 
       <hr>
       <template v-if="isMergeCol">
         <li @click="handleDropMerge" >
-          <el-icon  ><Delete /></el-icon>解除合并
+          <el-icon  ><Delete /></el-icon>{{t('ngform.item.table.unmerge')}}
         </li><hr>
       </template> 
       <li @click="handleDownMerge">
         <!-- <i class="el-icon-bottom" /> -->
-         <el-icon  ><Bottom /></el-icon>向下合并
+         <el-icon  ><Bottom /></el-icon>{{t('ngform.item.table.merge_down')}}
       </li>
       <li @click="handleRightMerge">
         <!-- <i class="el-icon-right" /> -->
-        <el-icon  ><Right /></el-icon>向右合并
+        <el-icon  ><Right /></el-icon>{{t('ngform.item.table.merge_right')}}
       </li>
       <li @click="handleAddCol">
        <!--  <i class="el-icon-zoom-in" /> -->
-         <el-icon  ><ZoomIn /></el-icon>增加一列
+         <el-icon  ><ZoomIn /></el-icon>{{t('ngform.item.table.add_col')}}
       </li>
       <li @click="handleAddRow">
         <!-- <i class="el-icon-zoom-in" /> -->
-        <el-icon  ><ZoomIn /></el-icon>增加一行
+        <el-icon  ><ZoomIn /></el-icon>{{t('ngform.item.table.add_row')}}
       </li>
       <hr>
       <li @click="handleRemoveRow">
        <!--  <i class="el-icon-zoom-out" /> -->
-        <el-icon  ><ZoomOut /></el-icon>删除当前行
+        <el-icon  ><ZoomOut /></el-icon>{{t('ngform.item.table.delete_row')}}
       </li>
       <li @click="handleRemoveCol">
        <!--  <i class="el-icon-zoom-out" /> -->
-        <el-icon  ><ZoomOut /></el-icon>删除当前列
+        <el-icon  ><ZoomOut /></el-icon>{{t('ngform.item.table.delete_col')}}
       </li>
     </ul>
   </div>
 
   <el-dialog
-    title="表内单元格样式配置"
+    :title="t('ngform.item.table.cell_style_config')"
     v-model="styleVisible" 
     style="top:20px;" 
     :append-to-body="true"  
     > 
     <el-form size="small" :model="tdStyle" label-width="80px"> 
       <el-form-item  label="class" >
-        <el-input v-model="tdStyle.class" placeholder="请输入class名称" />
+        <el-input v-model="tdStyle.class" :placeholder="t('ngform.item.table.class_placeholder')"/>
       </el-form-item>
       <el-form-item  label="style" >
-        <el-input type="textarea" :rows="3" v-model="tdStyle.style" placeholder="请输入css样式" />
+        <el-input type="textarea" :rows="3" v-model="tdStyle.style" :placeholder="t('ngform.item.table.css_placeholder')"/>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="styleVisible = false">取 消</el-button> 
-        <el-button type="primary" @click="settingStyle">确 定</el-button>
+        <el-button @click="styleVisible = false">{{t('ngform.item.table.cancel')}}</el-button> 
+        <el-button type="primary" @click="settingStyle">{{t('ngform.item.table.ok')}}</el-button>
       </span>
     </template>
     
@@ -274,7 +276,7 @@ export default {
             .rowspan <=
         this.trIndex
       ) {
-        this.$message.error("当前是最后一行，无法向下合并");
+        this.$message.error(this.t('ngform.item.table.no_bottom_merge'));
         return false;
       }
 
@@ -300,7 +302,7 @@ export default {
         this.record.trs[this.trIndex + 1].tds[this.tdIndex - rows]
           .colspan
       ) {
-        this.$message.error("当前表格无法向下合并");
+        this.$message.error(this.t('ngform.item.table.no_bottom_merge'));
         return false;
       }
 
@@ -342,7 +344,7 @@ export default {
             .colspan <=
         this.tdIndex
       ) {
-        this.$message.error("当前是最后一列，无法向右合并");
+        this.$message.error(this.t('ngform.item.table.no_right_merge'));
         return false;
       }
       if (
@@ -351,7 +353,7 @@ export default {
         this.record.trs[this.trIndex].tds[this.tdIndex + 1]
           .rowspan
       ) {
-        this.$message.error("当前表格无法向右合并");
+        this.$message.error(this.t('ngform.item.table.no_right_merge'));
         return false;
       }
 
@@ -403,8 +405,8 @@ export default {
       const tri = this.trIndex
       const len = this.record.trs.length
       if(len <= 1) {
-        this.$message.error("当前是最后一行,无法删除");
-        return
+        this.$message.error(this.t('ngform.item.table.no_del_by_endrow'));
+        return;
       }
       this.record.trs.splice(tri , 1)
 
@@ -417,8 +419,8 @@ export default {
       for(let i in  this.record.trs){
         let tds = this.record.trs[i].tds
         if(tds.length <= 1){
-          this.$message.error("当前只剩下最后一列,无法删除");
-          return
+          this.$message.error(this.t('ngform.item.table.no_del_by_endcol'));
+          return;
         }
       }
         

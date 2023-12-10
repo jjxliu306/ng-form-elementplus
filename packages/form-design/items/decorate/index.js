@@ -10,6 +10,7 @@
 // }
 
 let list = []
+import { t , $t } from '../../../locale/index.js' 
 
 import alert from './alert/index.js'
 import divider from './divider/index.js'
@@ -29,7 +30,7 @@ list = list.sort(function(a,b){
 
 export default {
   type: 'decorate',
-  name: '装饰组件',
+  name: $t('ngform.item.decorate'),//'装饰组件',
   icon: 'icon-tradingdata',
   list: list 
 }

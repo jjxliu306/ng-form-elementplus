@@ -1,14 +1,5 @@
-
-// 扫描下面目录中所有的index.js 然后穷举后返回 
-// const files = import.meta.globEager('./*/index.js')
-
-// let list = [] 
-
-// for(let key in files) {
-// 	const config = files[key].default;
-//   	list = list.concat(config)
-// }
-
+import { t , $t } from '../../../locale/index.js' 
+ 
 let list = []
 
 import controller from './controller/index.js'
@@ -29,7 +20,7 @@ list = list.sort(function(a,b){
 
 export default {
   type: 'layout',
-  name: '布局组件',
+  name: $t('ngform.item.layout'),//'布局组件',
   icon: 'icon-tradingdata',
   list: list 
 }
