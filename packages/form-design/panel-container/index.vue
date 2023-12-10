@@ -1,8 +1,9 @@
 <template> 
 <div class="form-panel" > 
      
-    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0" :class="[arrow ? 'arrow_open' : 'arrow_hidden']" >
-      从左侧选择组件添加
+    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0" :class="[arrow ? 'arrow_open' : 'arrow_hidden']" :key="formKey">
+      <!-- 从左侧选择组件添加 -->
+      {{t('ngform.select_item')}}
     </p>
     <el-form  
       	:label-width="formTemplate.config.labelWidth + 'px'" 
@@ -55,10 +56,12 @@
 <script> 
 //import cloneDeep from 'lodash/cloneDeep'
 import { cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
- 
+import Bus from '../../utils/bus.js' 
 import draggable from "vuedraggable"
 //import Node from './node.vue'
+import LocalMixin from '../../locale/mixin.js'
 export default {
+	mixins: [LocalMixin],
 	name: 'ng-form-container' ,
 	components:{
 		//Node,
@@ -66,7 +69,7 @@ export default {
 	},
 	data(){
 		return {
-			 
+			 formKey: '1'
 		}
 	},
 	props: {
@@ -82,6 +85,13 @@ export default {
 			default: false
 		}
 	}, 
+	mounted() {
+    
+    Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
+  },
 	methods: {
 	 	dragEnd(evt, list) {   
 	 		// 复制一遍

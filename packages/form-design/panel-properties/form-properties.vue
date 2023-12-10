@@ -4,7 +4,7 @@
 <template>
   <div class="form-properties"> 
     <div class="properties-body">
-      <el-form label-position="left" size="small"  >
+      <el-form label-position="left" size="small" :key="formKey" >
         <el-form-item :label="t('ngform.properties.label_position')">
           <el-radio-group v-model="config.labelPosition">
             <el-radio-button label="left">{{t('ngform.properties.left')}}</el-radio-button>
@@ -73,15 +73,28 @@
   </div>
 </template>
 <script>
+import Bus from '../../utils/bus.js'
 import LocalMixin from '../../locale/mixin.js'  
 export default {
   mixins: [LocalMixin],
   name: "form-properties", 
+  data() {
+    return {
+      formKey: '1'
+    }
+  },
   props: {
     config: {
       type: Object,
       required: true
     } 
+  },
+  mounted() {
+    
+    Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
   },
   methods: {
 
