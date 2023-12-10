@@ -1,13 +1,22 @@
 <template>
 	<el-tabs type="card" v-model="active" class="design-properties" >
-	    <el-tab-pane :label="t('ngform.properties.feature_property')" name="item" class="tab-pane">
+	    <el-tab-pane name="item" class="tab-pane">
+	    	<template #label>
+	        <span class="ng-properties-tabs-label" :key="formKey"> 
+	          {{t('ngform.properties.feature_property')}}
+	        </span>
+	      </template>
 	    	<ItemProperties :selectItem="selectItem">
 	    	 	<template slot="custom-properties"  >
                     <slot name="custom-properties" :selectItem="selectItem"></slot>
                 </template>
 	    	</ItemProperties>
 	    </el-tab-pane> 
-	    <el-tab-pane :label="t('ngform.properties.form_property')" name="form" class="tab-pane"> 
+	    <el-tab-pane name="form" class="tab-pane"> 	<template #label>
+	        <span class="ng-properties-tabs-label" :key="formKey"> 
+	          {{t('ngform.properties.form_property')}}
+	        </span>
+	      </template>
 	    	<FormProperties :config="config">
 	    	 	<template slot="form-extend-properties"  >
                     <slot name="form-extend-properties"  ></slot>
@@ -24,6 +33,7 @@
 import FormProperties from './form-properties.vue'
 import ItemProperties from './item-properties.vue'
 import LocalMixin from '../../locale/mixin.js'
+import Bus from '../../utils/bus.js'
 export default {
 	mixins: [LocalMixin],
 	components: {
@@ -35,7 +45,8 @@ export default {
 	},
 	data() {
 		return {
-			active: 'item'
+			active: 'item',
+			formKey: '12',
 		}
 	},
 	inject: { 
@@ -53,6 +64,13 @@ export default {
 			return null
 		}
 	},
+	mounted() {
+    
+    Bus.on('i18nRefresh', () => { 
+      this.formKey = new Date().getTime()
+       
+    });
+  },
 	watch: {
 		selectItemKey(val){
 			if(val) {
