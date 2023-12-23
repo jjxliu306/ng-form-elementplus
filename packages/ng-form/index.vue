@@ -159,9 +159,9 @@
           <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)"></el-color-picker>   
             
           <KvList v-else-if="column.type == 'kv'" :value="model[column.prop]" :keyNumber="column.keyNumber"/>
-          <template v-else-if="column.type == 'rules'">  
-             <Rules  :value="model[column.prop]" /> 
-          </template> 
+         
+          <Rules  :value="model[column.prop]"  v-else-if="column.type == 'rules'"/> 
+          
        <!--  </slot> -->
         <!-- 插槽 -->
         <!-- <slot :name="column.prop"></slot> -->
@@ -278,6 +278,8 @@ export default {
 .ng-form .ng-form-divider .el-divider__text {
   font-size: 13px;
 }
+
+ 
 
 </style>
 <!-- 

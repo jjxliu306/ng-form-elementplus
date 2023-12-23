@@ -11,39 +11,47 @@
       <el-checkbox v-model="value[0].required" :label="t('ngform.rules.required')" />
       <el-input v-model="value[0].message"  :placeholder="t('ngform.rules.required_message')" />
     </template>
-    <el-row   :gutter="8">
-      <span v-for="(val, index) in value" :key="index">
-        <div class="option-change-box" v-if="index !== 0">
-          <el-col :span="24" >
-            <template>
+  
+    <div v-for="(val, index) in value" :key="index">
+      <div class="option-change-box" v-if="index !== 0">
+        <el-row   :gutter="8">
+          
+           
               <el-radio v-model="val.vtype" :label="1" :title="t('ngform.rules.regular_tip')">
                 {{t('ngform.rules.regular')}}
               </el-radio>
               <el-radio v-model="val.vtype" :label="2" :title="t('ngform.rules.script_tip')">
-                 {{t('ngform.rules.script')}}
+                {{t('ngform.rules.script')}}
               </el-radio>
-            </template>
-          </el-col>
+            
+         
+        </el-row> 
+        <el-row :gutter="8">
           <el-col :span="20" >
             <el-input v-model="val.message" :placeholder="t('ngform.rules.message_tip')"/>
           </el-col>
           <el-col :span="4" >
             <div @click="handleDelete(index)" class="option-delete-box">
-              <i class="el-icon-delete" />
+               <el-icon><Delete /></el-icon> 
             </div>
           </el-col>
-          <el-col :span="24">
+        </el-row>  
+        <el-row :gutter="8">
+         
             <el-input  v-if="val.vtype == 1" v-model="val.pattern" :placeholder="t('ngform.rules.regular_placeholder')" />
             <el-input  v-else-if="val.vtype == 2" type="textarea" v-model="val.script" :placeholder="t('ngform.rules.script_placeholder')" />
-          </el-col> 
-        </div>
-      </span>
-      <el-col v-if="!disabled" :span="24">
+          
+        </el-row>
+      </div>
+    </div>
+    <div  v-if="!disabled">
+     
         <el-button type="primary" @click="handleAddRules">
          {{t('ngform.rules.add_rule')}} 
         </el-button>
-      </el-col>
-    </el-row> 
+     
+    </div>
+   
   </div>
 </template>
 <script>
@@ -93,10 +101,11 @@ export default {
 <style>
 .ng-form-rules {
   padding-left: 10px;
+  width: 100%;
 }
 
 .ng-form-rules .option-change-box {
-  height: 38px;
+  line-height: 38px;
   padding-bottom: 6px;
 }
 
