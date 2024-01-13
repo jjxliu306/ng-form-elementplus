@@ -18,6 +18,7 @@
         :label="getLabel(column.label)"
         :rules="column.rules"
         :title="getLabel(column.tip)" 
+        :class="{'slider-form-item' : column.type == 'slider' || column.type == 'spanGroup'  }"
         :label-width="column.labelWidth != null ? (column.labelWidth + 'px') : null"
         :key="'item' + idx"
         v-else-if="column.show == undefined || column.show == true || columnVisible(column.show)">
@@ -95,10 +96,10 @@
             :show-stops="column.showStops"
             :range="column.range">
           </el-slider> -->
-          <el-row :gutter="20" v-else-if="column.type === 'slider' || column.type === 'spanGroup'">
+          <el-row :gutter="20"   v-else-if="column.type === 'slider' || column.type === 'spanGroup'">
             <el-col :span="20">
               <el-slider
-                  v-if="column.type === 'slider'"
+                  v-if="sliderType === 'slider'"
                   v-model="model[column.prop]"
                   :show-input="column.showInput"
                   :min="column.min || 0"
@@ -117,7 +118,7 @@
             </el-col>
             <el-col :span="2"></el-col>
             <el-col :span="2">
-              <el-icon   style="cursor: pointer;" @click="handleChangeSpanType(column)">
+              <el-icon   style="cursor: pointer;" @click="handleChangeSpanType()">
                 <Sort />
               </el-icon> 
             </el-col>
@@ -186,7 +187,8 @@ export default {
   },
   data () {
     return {
-      formKey: ''
+      formKey: '',
+      sliderType: 'slider'
     }
   },
   props: {
@@ -254,11 +256,11 @@ export default {
       //this.$set(model , prop , nlist)
       model[prop] = nlist
     },
-    handleChangeSpanType(column) {
-      if (column.type === 'slider') {
-        column.type = 'spanGroup'
+    handleChangeSpanType() {
+      if (this.sliderType === 'slider') {
+        this.sliderType = 'spanGroup'
       } else {
-        column.type = 'slider'
+        this.sliderType = 'slider'
       }
     }
   }
@@ -279,7 +281,9 @@ export default {
   font-size: 13px;
 }
 
- 
+.ng-form .slider-form-item .el-form-item__content {
+  display: flow;
+}
 
 </style>
 <!-- 
