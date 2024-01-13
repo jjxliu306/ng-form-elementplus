@@ -9,7 +9,7 @@
     "lib": "npm run build:components",
     "preview": "vite preview"
   },
-  "author": "liuyufneg",
+  "author": "liuyufeng",
   "files": [
     "lib"
   ],
