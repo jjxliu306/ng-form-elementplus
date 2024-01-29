@@ -26,7 +26,6 @@
     <span class="base-item-span" >{{models[record.model]}} </span>
     <span class="base-item-span" v-if="record.options.append" v-html="transformAppend(record.options.append)"> 
     </span>  
-    {{t('ngform.close')}}
 	</div> 
 </template>
 <script>
