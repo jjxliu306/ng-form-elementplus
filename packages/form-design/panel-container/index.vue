@@ -189,6 +189,7 @@ export default {
 
 .form-panel .ng-form .drag-move {
   width: 100%;
+  float: left;
 }
 
 </style>
