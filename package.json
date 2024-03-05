@@ -1,7 +1,7 @@
 {
   "name": "ng-form-elementplus",
   "private": false,
-  "version": "2.1.0",
+  "version": "2.1.2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

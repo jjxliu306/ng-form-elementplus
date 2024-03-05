@@ -28,7 +28,8 @@
           </el-form-item>
           <template v-if="selectItem.options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
-            <Linkage v-model="selectItem.options.linkData" />
+          
+            <Linkage  :value="selectItem.options.linkData" />
           </template>
       </el-form>
     </el-collapse-item>

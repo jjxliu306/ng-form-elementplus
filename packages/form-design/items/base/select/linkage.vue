@@ -5,14 +5,15 @@
 <template>
   <div class="ng-properties-linkage"> 
     <el-row  :gutter="8">
+     
       <span v-for="(val, index) in value" :key="index">
         <div class="linkage-box"  >
           <el-col :span="21" >
-            <template>
+            
               {{index+1}}、
               <el-radio v-model="val.vtype" :label="1">{{t('ngform.item.local')}}</el-radio>
               <el-radio v-model="val.vtype" :label="2">{{t('ngform.item.remote')}}</el-radio>
-            </template>
+            
           </el-col>
           <el-col :span="21" >
             <el-input size="small" v-model="val.model" :placeholder="t('ngform.item.linkage_column')">
@@ -38,7 +39,7 @@
           <!--   <el-input size="small"  v-else-if="val.vtype == 2" type="textarea" v-model="val.query" placeholder="远程搜索添加查询条件,eg:key=$.sex" /> -->
           </el-col>
           <el-col :span="3" >
-            <div @click="handleDelete(index)" class="option-delete-box">
+            <div @click="handleDelete(index)" class="option-delete-box pointer">
               <el-icon><Delete /></el-icon>
             </div>
           </el-col>
@@ -70,30 +71,40 @@ export default {
   methods: {
      
     handleAdd() {
-      if(!this.value) {
-        this.value = []
-      }
-      let addData = [
-        ...this.value,
-        {
-          vtype: 1,
+      
+
+      this.value.push({
+         vtype: 1,
           //validator: 'validatorFiled',
           model: "",
           script: "",
           queryKey: "",
           queryValue: ""
-        }
-      ]; 
-      this.$emit("input", addData);
+      })
+ 
+      this.$emit("update:value", this.value); 
     },
     handleDelete(deleteIndex) {
-      // 删除
+      this.value.splice(deleteIndex,1)
       this.$emit(
-        "input",
-        this.value.filter((val, index) => index !== deleteIndex)
-      );
+        "update:value",
+        this.value
+      )
+      
     },
       
   }
 };
 </script> 
+<style>
+.ng-properties-linkage .el-col {
+  float: left;
+}
+
+
+.ng-properties-linkage .option-delete-box {
+  line-height: 100px;
+  color: red;
+}
+
+</style>

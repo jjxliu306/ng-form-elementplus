@@ -12,6 +12,7 @@
       	:hide-required-asterisk="formTemplate.config.hideRequiredMark" 
       	:label-suffix="formTemplate.config.labelSuffix"
       	ref="form" 
+      	:models="models"
       	:style="formTemplate.config.customStyle" 
       	:size="formTemplate.config.size"
     	>  
@@ -38,6 +39,7 @@
 				        		class="drag-move"  
 				            	:record="element"
 				            	:isDrag="true"
+				            	:models="models"
 				            	:config="formTemplate.config"
 				            	:selectItem="selectItem"
 				            	@handleSelectItem="handleSelectItem"
@@ -69,7 +71,8 @@ export default {
 	},
 	data(){
 		return {
-			 formKey: '1'
+			 formKey: '1',
+			 models: {}
 		}
 	},
 	props: {

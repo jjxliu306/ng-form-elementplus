@@ -33,9 +33,13 @@ const NgFormElementPlus = {
     components.forEach((item) => {
       App.component(item.name, item);
     });
-
-    locale.use(opts.locale);
-    locale.i18n(opts.i18n);
+    if(opts && opts.locale) {
+      locale.use(opts.locale);
+    }
+    if(opts && opts.i18n) {
+      locale.i18n(opts.i18n);
+    }
+     
   },
 };
 

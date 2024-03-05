@@ -262,10 +262,10 @@ export default {
   			if(!type) {
   				
   				if(this.maxLevel == 1){
-  					this.$emit("input", v);
+  					this.$emit("update:value", v);
   				}
   				else {
-  					this.$emit("input", '');
+  					this.$emit("update:value", '');
   				}
   			}
 			
@@ -286,9 +286,9 @@ export default {
 				if(!type) {
 				 
 					if(this.maxLevel == 2){
-						this.$emit("input", v);
+						this.$emit("update:value", v);
 					} else {
-						this.$emit("input", '');
+						this.$emit("update:value", '');
 					}
 
 				}
@@ -296,7 +296,7 @@ export default {
   			} else {
   				this.districts = [] 
   				if(!type) {
-  					this.$emit("input", '');
+  					this.$emit("update:value", '');
   				}
   				
   			}
@@ -307,10 +307,10 @@ export default {
   			if(v) {
   			 
   				if(this.maxLevel == 3) {
-  					this.$emit("input", v);
+  					this.$emit("update:value", v);
   				}
   			} else {
-  				this.$emit("input", '');
+  				this.$emit("update:value", '');
   			}
   		}
 	},

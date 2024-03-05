@@ -1,5 +1,5 @@
 <template>  
-  <div v-if="!preview">  
+  <div v-if="!preview" :style="`width:${record.width}`">  
      <el-select 
       v-if="record.options.multiple"
         v-model="models[record.model]"
@@ -60,7 +60,7 @@
         </template> 
       </el-select>  
   </div>
-  <span v-else>
+  <span v-else :style="`width:${record.width}`">
     {{models[record.model+'_label']}}  
   </span>
 </template>

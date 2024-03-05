@@ -114,6 +114,9 @@ export default {
   color: #fff;
 }
 
+.ng-form-kvlist .el-col { 
+  float: left;
+}
 
 </style>
 <!-- <style lang="scss">

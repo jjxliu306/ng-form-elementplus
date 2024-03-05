@@ -273,6 +273,10 @@ export default {
   cursor: pointer;
 }
 
+.ng-form .el-row .el-col { 
+  float: left;
+}
+
 </style>
 <!-- <style lang="scss">
 .node-item {
