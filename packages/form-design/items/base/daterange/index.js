@@ -99,7 +99,7 @@ obj.options = {
         {
           label: $t('ngform.item.date.date_format'),//'日期格式',
           prop: 'format',
-          default: 'yyyy-MM-dd',
+          default: 'YYYY-MM-DD',
           span: 24
         },
         // {
