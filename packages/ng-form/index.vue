@@ -148,7 +148,7 @@
               <el-row :span="24">
                 <el-col :span="22">
                  <!--   -->
-                 <el-color-picker v-model="model[column.prop][index]" :placeholder="getLabel(column.placeholder)"/> 
+                 <el-color-picker show-alpha v-model="model[column.prop][index]" :placeholder="getLabel(column.placeholder)"/> 
                 </el-col>
                 <el-col :span="2" style="padding-left: 5px">
                   <el-button text icon="Close" @click="removeData(model,column.prop, index)"></el-button>
@@ -157,7 +157,7 @@
             </div>
             <el-button text icon="Plus" @click="addData(model , column.prop, column.type)"></el-button>
           </template>
-          <el-color-picker v-else-if="column.type == 'color'" v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)"></el-color-picker>   
+          <el-color-picker v-else-if="column.type == 'color'" show-alpha v-model="model[column.prop]" :placeholder="getLabel(column.placeholder)"></el-color-picker>   
             
           <KvList v-else-if="column.type == 'kv'" :value="model[column.prop]" :keyNumber="column.keyNumber"/>
          

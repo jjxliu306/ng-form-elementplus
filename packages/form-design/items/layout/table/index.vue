@@ -70,7 +70,7 @@ export default {
   border-collapse: collapse;
 }
 
-.ng-table-controller .form-table.bordered tr td {
+.ng-table-controller .form-table tr td.td-bordered {
   border: 1px solid #e8e8e8 !important;
 }
 
