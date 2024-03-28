@@ -23,6 +23,7 @@
         }"
         :force-fallback="true"
         :list="item.list"
+         :model-value="null"
         @add="dragEnd($event, item.list)" 
         :move="()=>{}"
         > 

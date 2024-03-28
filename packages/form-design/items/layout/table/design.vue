@@ -30,6 +30,7 @@
           }"
           :force-fallback="true"
           :list="tdItem.list"
+          :model-value="null"
           item-key="key"
           @add="dragEnd($event, tdItem.list)" 
           :move="()=>{}"
