@@ -2,14 +2,16 @@
 <div>
   <el-collapse-item name="data" :title="t('ngform.item.datasource')">
     <DatasourceConfig :selectItem="selectItem">
-      <template slot="defaultValue" >
+      <template #defaultValue >
+       
         <el-form-item v-if="selectItem && selectItem.options.dynamic == 0" :label="t('ngform.item.default_value')">
-          <template slot="label">
+          <template #label>
             <span>{{t('ngform.item.default_value')}}</span>
                <!--
           添加清空默认值
         --> 
-            <el-button :title="t('ngform.item.radio.clear_default_tip')" type="text" icon="el-icon-delete" style="color: red;" @click="selectItem.options.defaultValue = ''"></el-button>
+          <!--   <el-button :title="t('ngform.item.radio.clear_default_tip')" type="text" icon="el-icon-delete" style="color: red;" @click="selectItem.options.defaultValue = ''"></el-button> -->
+          <el-button :title="t('ngform.item.radio.clear_default_tip')" type="text" icon="Delete" circle  style="color: red;"  @click="selectItem.options.defaultValue = ''"/>
           </template>
           <!-- 判断当前是否多选 -->
           <el-radio-group
@@ -48,10 +50,13 @@
 import DatasourceConfig from '../select/datasource-config.vue'
 import Linkage from '../select/linkage.vue'
 import LocalMixin from '../../../../locale/mixin.js'
+import { 
+  Delete 
+} from '@element-plus/icons-vue'
 export default {
   mixins: [LocalMixin],
   components: {
-    DatasourceConfig , Linkage
+    DatasourceConfig , Linkage , Delete
   },
   props: {
     selectItem: {
