@@ -92,13 +92,15 @@ export default {
         from: 'customC',
         default: ()=>[]
       },
-      // 表单全局config配置
-      config: {
-          from: 'configC',
-          default: ()=>({})
-      } 
-  },
+      // 表单全局config配置 
+      configInject: {
+          from: 'configC' 
+      }
+  }, 
   computed: {  
+    config() {
+      return this.configInject() || {}
+    },
     // 是否布局组件 但钱不需要验证的哪种
     isLayout() {
       return this.record.layout 

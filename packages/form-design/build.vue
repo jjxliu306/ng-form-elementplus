@@ -111,7 +111,7 @@ export default {
 	provide: function () {
     	return {
      		customC: this.customComponents ,
-     		configC: this.templateConfig,
+     		configC: ()=>this.templateConfig,
      		//dictsC: this.dicts,
      		httpConfigC: this.httpConfig,
      		ngConfig: this.config

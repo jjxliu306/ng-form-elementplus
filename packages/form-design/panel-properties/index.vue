@@ -48,15 +48,12 @@ export default {
 			active: 'item',
 			formKey: '12',
 		}
-	},
-	inject: { 
-	    // 表单全局config配置
-	    config: {
-	        from: 'configC',
-	        default: ()=>({})
-	    }
-	},
+	}, 
+	inject: ['configC'], // 表单全局config配置 
 	computed: {
+		config() {
+			return this.configC() || {}
+		},
 		selectItemKey() {
 			if(this.selectItem && this.selectItem.key){
 				return this.selectItem.key
