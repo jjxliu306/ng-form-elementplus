@@ -24,7 +24,7 @@ obj.options = {
     {
       label: $t('ngform.item.label'),
       prop: 'label',
-      default: $t('ngform.item.date.name'),//'多选框',
+      default: '地市',//'多选框',
       span: 24
     },
     {

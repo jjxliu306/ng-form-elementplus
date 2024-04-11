@@ -20,9 +20,7 @@ export function getCustomConfig() {
 export function getAllConfig() {
     const item1 = config.itemConfig || {}
     const item2 = config.customConfig || {}
-
-    console.log('item1' , item1)
-    console.log('item2' , item2)
+ 
 
     // 合并
     let all = item1 
