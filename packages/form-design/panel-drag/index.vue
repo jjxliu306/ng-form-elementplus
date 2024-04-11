@@ -97,7 +97,7 @@ export default {
 
 				items.push({
 					type: 'custom',
-					name: '自定义组件',
+					name: this.$t('ngform.item.custom_components') ,//'自定义组件',
 					list: this.customComponents
 				})
 

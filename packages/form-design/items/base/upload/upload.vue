@@ -169,10 +169,12 @@ export default {
 		// 1、只上传一个时有文件则不显示 多个时导致门限也不现实
 		// 2、预览时不显示
 		uploadVisible() {
-			if(!this.uploadAutoHidden) return true
+			
 			if(this.preview || this.disabled) return false 	
 			if(!this.multiple && this.value && this.value.length > 0) return false 
 			if(this.multiple && this.value && this.value.length >= this.limit) return false
+
+			if(!this.uploadAutoHidden) return true
 
 			return true 
 		},
@@ -211,6 +213,14 @@ export default {
 			if(this.record && this.record.options && this.record.options.responseFileUrl) {
 				 
 				return this.record.options.responseFileUrl 
+			} 
+
+			return null
+		},
+		uploadResponseFileId() {
+			if(this.record && this.record.options && this.record.options.responseFileId) {
+				 
+				return this.record.options.responseFileId 
 			} 
 
 			return null
@@ -268,19 +278,25 @@ export default {
 	 	 
 			if(fileUrl) {
 				// 重新组合
-				const f_ = {name: file.name , size: file.size , url: fileUrl}
-
+				 
+				const uploadData = {
+					name: file.name , size: file.size , url: fileUrl
+				}
+			  
+			  // 文件id 
+				if(this.uploadResponseFileId) {
+					const fileId = objectPath.get(response, this.uploadResponseFileId)
+					 
+					uploadData['id'] = fileId
+				}
 			 
-			  this.value.push(f_)
+			  this.value.push(uploadData)
 		 
 			    
 			  this.$emit("update:value", this.value);
 			  file.url = fileUrl
 
-			}
-
-			
-		 
+			} 
 		},
 		handleRemove(file , fileList) {
 			//console.log('remove file' , file)
