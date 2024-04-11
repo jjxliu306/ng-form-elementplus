@@ -11,13 +11,15 @@ import NgFormItemNode from './form-design/items/node.vue'
 import NgForm  from './ng-form/index.vue'
 
 import mixin from './form-design/items/mixin.js'
+import * as utils from './utils/index.js'
 
+import { addCustomConfig } from './constants.js'
 // 国际化
 import locale from './locale';
 import LocalMixin from './locale/mixin.js'
  
 export {
- mixin,LocalMixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
+ addCustomConfig , utils , locale , mixin,LocalMixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
 }
 
 
@@ -38,6 +40,11 @@ const NgFormElementPlus = {
     }
     if(opts && opts.i18n) {
       locale.i18n(opts.i18n);
+    }
+    console.log('opts.components' , opts.components)
+    if(opts.components) {
+      App.config.globalProperties.$ngofrm_components = opts.components 
+      App.provide('$ngofrm_components',  opts.components)
     }
      
   },

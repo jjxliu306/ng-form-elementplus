@@ -140,6 +140,18 @@ export default {
       }
       return null
       
+    },
+     // 自定义组件
+    components() {
+      if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
+        return this.$config.$ngofrm_components
+      } else if ( this.$ngofrm_components &&  this.$ngofrm_components.length > 0) {
+        return  this.$ngofrm_components
+      } else if (this.customComponents && this.customComponents.length > 0) {
+        return this.customComponents
+      }
+
+      return undefined
     }
   },
   watch: {
@@ -153,15 +165,17 @@ export default {
   },
   provide: function () {
     return {
-     customC: this.customComponents ,
+     customC: this.components ,
      configC: ()=>this.templateConfig,
      
      httpConfigC: this.httpConfig,
      ngConfig: this.config
     }
   },
+  inject: ['$ngofrm_components'],
   created() { 
-
+    console.log('this.$config' , this.$config)
+    console.log('$ngofrm_components' , this.$ngofrm_components)
     if(this.httpConfig) {
       window.nghttpConfig = this.httpConfig;
     }

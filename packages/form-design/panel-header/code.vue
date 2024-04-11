@@ -6,7 +6,7 @@
     :title="t('ngform.header.template_data')" 
     v-model="visible"
     :append-to-body="true"
-    style="top:20px;"
+     
     width="850px"
   >  
      <div class="json-box"> 

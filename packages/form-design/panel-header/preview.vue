@@ -2,7 +2,7 @@
   <el-dialog
     :title="t('ngform.header.preview')"
     v-model="visible" 
-    style="top:20px;"
+    
     :append-to-body="true"
     class="design-preview" 
     :close-on-click-modal="false"

@@ -91,13 +91,25 @@ export default {
 	    //   return null
 	    // },
 	    // 配置中的http配置
-	    httpConfig() {
+	  httpConfig() {
 	      if(this.config && this.config.httpConfig ) {
 	        return this.config.httpConfig
 	      }
 	      return null
 	      
-	    }
+	  },
+	   // 自定义组件
+    components() {
+      if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
+        return this.$config.$ngofrm_components
+      } else if ( this.$ngofrm_components &&  this.$ngofrm_components.length > 0) {
+        return  this.$ngofrm_components
+      } else if (this.customComponents && this.customComponents.length > 0) {
+        return this.customComponents
+      }
+
+      return undefined
+    }
 	},
 	watch: {
 	   	httpConfig: {
@@ -110,7 +122,7 @@ export default {
 	},
 	provide: function () {
     	return {
-     		customC: this.customComponents ,
+     		customC: this.components ,
      		configC: ()=>this.templateConfig,
      		//dictsC: this.dicts,
      		httpConfigC: this.httpConfig,

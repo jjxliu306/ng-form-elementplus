@@ -170,7 +170,7 @@ import itemIndex from "../items/index.js";
 import { dynamicFun , cloneDeep } from '../../utils/index.js' 
 //import cloneDeep from 'lodash/cloneDeep'
 import Bus from '../../utils/bus.js'
-import NgConstants from '../../constants'
+import { getAllConfig , getCustomConfig } from '../../constants'
 import LocalMixin from '../../locale/mixin.js'
 export default {
   mixins: [LocalMixin],
@@ -286,7 +286,7 @@ export default {
 		},
 		initFormOptions () {
 	      const currentType = this.selectItem.type
-	      const configs = NgConstants.itemConfig
+	      const configs = getAllConfig() //NgConstants.itemConfig
 	      if (configs && configs[currentType]) {
 	        const tformOptions = cloneDeep(configs[currentType].options)
 	      	
@@ -338,7 +338,8 @@ export default {
 
 	    	// 判断如果是自定义组件 
 	        // 判断自定义组件
-			if(this.isCustomComponent && this.selectItem) {
+	        // 2024-04-11 lyf 如果是自定义组件也要判断该自定义组件是否完全托管给ng-form来绘制属性配置
+				if(this.isCustomComponent && this.selectItem) {
 				 // 如果没有数据 则可能是自定义组件过来的，补充
 		        // 标签，标签宽度，要素宽度，栅格数量，
 
@@ -368,7 +369,7 @@ export default {
 		        	//this.$set(this.selectItem, 'span', span_)
 		        }
 
-		        return {
+		        let defaultCustemOptions = {
 		        	config: {
 		        		size: 'small',
 	      				labelWidth: 80
@@ -406,11 +407,31 @@ export default {
 		            }
 		        	]
 		        } 
+
+		        // 判断该自定义组件是否托管
+		        const customItems = getCustomConfig()
+		        
+		        if(customItems && customItems[this.selectItem.type] && customItems[this.selectItem.type].options && customItems[this.selectItem.type].options.columns) {
+		        	// 合并数据
+		        	const customItemsColumn = customItems[this.selectItem.type].options.columns
+		         
+		        	customItemsColumn.forEach(t=> {
+		        		const cprop = t.prop 
+		        		const fcolumns = defaultCustemOptions.column.filter(n=>n.prop == cprop)
+		        		if(!fcolumns || fcolumns.length == 0) {
+		        			defaultCustemOptions.column.push(t)
+		        		}
+		        	})
+		        	 
+		        }
+
+
+		        return defaultCustemOptions
 	        
 			}
 	    	  // 2023-01-03 lyf 判断是否有单独的columns 不依赖分组信息
 	        const currentType = this.selectItem.type
-	      	const configs = NgConstants.itemConfig
+	      	const configs = getAllConfig() //NgConstants.itemConfig
 	      	if (configs && configs[currentType]) {
 	        	const tformOptions = cloneDeep(configs[currentType].options)
 	        	
