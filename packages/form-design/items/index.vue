@@ -117,8 +117,13 @@ export default {
         labelWidth = this.record.labelWidth
       }
 
-      if(labelWidth > 0) {
-        return this.getLabel(this.record.label) 
+      if(labelWidth > 0) { 
+        // 这里判断以下是否打开了动态标签
+        if(this.record.dynamicLabel) {
+          return this.getDynamicLabel(this.record.label , this.models)
+        } else {
+          return this.getLabel(this.record.label)
+        } 
       }
       
       return null  

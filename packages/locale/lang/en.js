@@ -92,6 +92,7 @@ export default {
     },
 
     item: {
+      dynamicLabel: 'Dynamic Label' ,
       label: 'Label',
       label_width: 'Label width',
       width: 'Width',
