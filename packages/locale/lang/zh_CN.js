@@ -73,7 +73,8 @@ export default {
       data_config: '数据配置' ,
       method_post_tip: 'post请求需要携带的数据(JSON格式)' ,
       script: '表达式',
-      add: '新增'
+      add: '新增',
+      edit_hidden: '编辑时隐藏'
     },
 
     rules: {

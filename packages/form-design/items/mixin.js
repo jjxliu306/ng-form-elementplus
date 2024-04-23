@@ -1,5 +1,5 @@
 
-import { dynamicFun , cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
+import { dynamicFun , cloneDeep , cloneDeepAndFormat ,dateFormater} from '../../utils/index.js'
 
 import LocalMixin from '../../locale/mixin.js'
 import request from '../../utils/request.js'
@@ -135,9 +135,12 @@ export default {
 					!Object.prototype.hasOwnProperty.call(this.models,this.record.model)
 					|| this.models[this.record.model] == undefined) 
 				) {
-				const defaultValue = this.record.options.defaultValue
+				let defaultValue = this.record.options.defaultValue
 				if(defaultValue != null && defaultValue != undefined) {
-					//this.$set(this.models , this.record.model , defaultValue)
+					// 日期类型比较特殊 如果是now 则回填当前日期
+					if((this.record.type == 'date' || this.record.type == 'time' || this.record.type == 'datePicker' ) && defaultValue == 'now') { 
+						defaultValue = dateFormater(new Date() ,this.record.options.format)
+				    }  
 					this.models[this.record.model] = cloneDeep(defaultValue)
 				} else {
 					//this.$set(this.models , this.record.model , '')

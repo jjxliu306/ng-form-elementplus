@@ -75,7 +75,8 @@ export default {
       data_config: 'Config Data' ,
       method_post_tip: 'Post Data (JSON)' ,
       script: 'Script',
-      add: 'Add'
+      add: 'Add',
+      edit_hidden: 'Edit Hidden'
     },
 
     rules: {

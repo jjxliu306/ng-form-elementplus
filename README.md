@@ -102,5 +102,4 @@ app.use(NgFormElementPlus)
   
  
 # 交流
-点击链接加入qq群聊，可以直接提问及反馈bug 【交流群：203205848】 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=vNN2AMPxXjojpwYu66DOGNtL2dFYh6Q-&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="vue-form-design" title="vue-form-design"></a>
- 
+点击链接加入qq群聊，可以直接提问及反馈bug 【交流群：152592057】 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=-IJ8iFaTmbg1eLDZgwkN94iDMyESakD0&jump_from=webapi&authKey=t3os6edZmmisocCa+H6TGJwI6+zK3hJaChKjGUj04rZGWPIrcIh9hPr3DQ+nxRrB"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="ng-form2群" title="ng-form2群"></a>

@@ -3,21 +3,25 @@
   -->
 <template>   
   <ItemNode 
-    v-if="isLayout && recordVisible"
+    v-if="isLayout"
+    :key="record.key"
     :record="record"
     :disabled="disabled" 
     :preview="preview"
     :isDragPanel="isDragPanel"
     :selectItem="selectItem" 
+    :style="{'display': recordVisible ? '' : 'none'}"
     :prop-prepend="propPrepend"
     :models="models" 
     @handleSelectItem="handleSelectItem" 
     /> 
   <el-form-item 
-    v-else-if="recordVisible"
+    v-else
     :label="label" 
+    :style="{'display': recordVisible ? '' : 'none'}"
     :rules="recordRules"
     :prop="recordProps"
+    :key="record.key"
     :required="recordRequired" 
     :id="record.model" 
     :name="record.model"
@@ -164,15 +168,32 @@ export default {
 
       return mark 
     },
+     // 2024--4-23 lyf 组件通过display：none来隐藏
+    // recrodHidden() {
+    //   if(this.isDragPanel) {
+    //         return true
+    //   }
+
+    //   // 判断组件是否自己设置了隐藏
+    //   if(this.record.options && this.record.options.hidden) {
+    //     return true
+    //   }
+
+    //   return false 
+    // },
     // 动态显示
     // 返回true 显示 false 不显示
     recordVisible() {
-      if(this.isDragPanel) {
+        if(this.isDragPanel) {
             return true
         }
 
         // 判断组件是否自己设置了隐藏
         if(this.record.options && this.record.options.hidden) {
+          return false
+        }
+         // 判断是否编辑时隐藏
+        if(!this.preview && this.record.options.editHidden) {
           return false
         }
           
@@ -190,6 +211,10 @@ export default {
       
     }, 
     recordRules(){
+       // 如果隐藏了直接返回空
+      if(!this.recordVisible){
+        return []
+      }
       // 2020-07-29 如果是预览 不需要规则验证
       if(/*this.isDragPanel || this.preview || */!this.record.rules || this.record.rules.length == 0) {
         return []
@@ -235,6 +260,10 @@ export default {
     },
     // 2022-10-06 lyf 判断组件是否必填 动态
     recordRequired() {
+       // 如果隐藏了直接返回false
+      if(!this.recordVisible){
+        return false
+      }
       if(this.config.hideRequiredMark || !this.config.syncLabelRequired) {
         return false
       }
