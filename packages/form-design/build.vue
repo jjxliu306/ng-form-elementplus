@@ -179,13 +179,14 @@ export default {
 	      if(!this.formTemplate.config || !this.formTemplate.config.outputHidden) {
 	       
 	        const formdesign = document.getElementById(this.randomId)
-	       	console.log('formdesign' , formdesign)
+	       	 
 	        // 循环当前数据 非P 开头的统一不深入第二层
 	        for(let key in data) {
 	          if(key.indexOf('_label') > 0) continue 
 	          //  判断key的id是否还在
+	          // 2024-05-18 lyf 目前采用隐藏的手段，修改之前判断在不在的方法为判断是否隐藏
 	          const key_div = formdesign.querySelector('#' + key) 
-	          if(!key_div) {
+	          if(!key_div || (key_div.style && key_div.style.display == 'none' )) {
 	            // 删除
 	            delete data[key]
 	            delete data[key + '_label']
