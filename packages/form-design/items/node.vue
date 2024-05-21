@@ -115,9 +115,9 @@ export default {
     },
     // 数据监听中要监听的数据，先通过计算属性计算 然后通过watch监听变化
     listenModelValue() {
-      if(!this.isDragPanel && this.record.options.listenModel && this.record.options.listenModelData) {
+      if(!this.isDragPanel && this.record?.options?.listenModel && this.record?.options?.listenModelData) {
                
-              const lmodels = this.record.options.listenModelData.split(',')
+              const lmodels = this.record?.options?.listenModelData?.split(',') || []
               let vs = []
               for(let i = 0 ; i < lmodels.length ; i++) {
                 // 判断类型 vtype=1 本地搜索 vtype=2 远程过滤
@@ -139,9 +139,9 @@ export default {
           if(this.isDragPanel 
             || (!val && !oldVal)
             || !this.models
-            || !this.record.options.listenModel 
-            || !this.record.options.listenModelData
-            || !this.record.options.listenModelScript )
+            || !this.record?.options?.listenModel
+            || !this.record?.options?.listenModelData
+            || !this.record?.options?.listenModelScript )
             return 
 
            //2023-09-10 lyf 确保当前组件的model在models中已经被挂载在执行
