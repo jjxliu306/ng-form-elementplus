@@ -18,7 +18,7 @@
           handle: '.drag-move'
         }"
         item-key="key"
-        :force-fallback="true"
+ 
         :list="record.list"
         @add="dragEnd($event, record.list)"  
         :move="()=>{}"

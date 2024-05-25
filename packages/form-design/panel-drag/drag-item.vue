@@ -9,8 +9,7 @@
         animation: 180,
         ghostClass: 'moving'
       }"
-      item-key="key"
-      :force-fallback="true" 
+      item-key="key" 
       @start="handleStart($event,list)"
       @end="handleEnd($event, list)">  
         <template #item="{element}">

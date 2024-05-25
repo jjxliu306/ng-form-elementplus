@@ -28,7 +28,7 @@
             animation: 180,
             handle: '.drag-move'
           }"
-          :force-fallback="true"
+   
           :list="tdItem.list"
           :model-value="null"
           item-key="key"

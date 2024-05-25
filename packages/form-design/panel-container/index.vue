@@ -25,8 +25,7 @@
 	            ghostClass: 'moving',
 	            animation: 180,
 	            handle: '.drag-move'
-	        }" 
-			    :force-fallback="true"
+	        }"  
 			    :list="formTemplate.list" 
 			    @add="dragEnd($event)" 
 				data-draggable="true"
