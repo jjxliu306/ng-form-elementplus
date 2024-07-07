@@ -1,5 +1,6 @@
 <template> 
   <el-container class="form-design">
+    
       <el-header class="header" height="40px">
         <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="template" @importData="importData">
           <template #controlButton>
@@ -47,7 +48,7 @@ import ContainerPanel from './panel-container/index.vue'
 import PropertiesPanel from './panel-properties/index.vue'
  
 import { cloneDeep , getUUID } from '../utils/index.js'
- 
+import { setDictCache , setComponentCache } from '../utils/cache.js'
 import { use } from '../locale/index'
 
 import Bus from '../utils/bus.js'
@@ -141,7 +142,12 @@ export default {
       return null
       
     },
-     // 自定义组件
+    configDicts() {
+      if(this.config && this.config.dicts ) {
+        return this.config.dicts
+      }
+      return null
+    } ,
     components() {
       if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
         return this.$config.$ngofrm_components
@@ -158,6 +164,20 @@ export default {
     httpConfig: {
       handler(newVal) { 
         window.nghttpConfig = newVal;
+      },
+      deep: true,
+      immediate: false,
+    },
+    components:{
+      handler(newVal) { 
+        setComponentCache(newVal)
+      },
+      deep: true,
+      immediate: false,
+    },
+    configDicts: {
+      handler(newVal) { 
+         setDictCache(newVal)
       },
       deep: true,
       immediate: false,
@@ -178,6 +198,13 @@ export default {
     console.log('$ngofrm_components' , this.$ngofrm_components)
     if(this.httpConfig) {
       window.nghttpConfig = this.httpConfig;
+    }
+
+    if(this.configDicts) {
+       setDictCache(this.configDicts)
+    }
+     if(this.components) {
+       setComponentCache(this.components)
     }
   },
   methods: {

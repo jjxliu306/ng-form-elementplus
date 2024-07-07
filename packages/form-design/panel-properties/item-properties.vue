@@ -175,6 +175,7 @@ import NgForm from '../../ng-form/index.vue'
 import itemIndex from "../items/index.js";
 
 import { dynamicFun , cloneDeep } from '../../utils/index.js' 
+import { getComponentCache } from '../../utils/cache.js'
 //import cloneDeep from 'lodash/cloneDeep'
 import Bus from '../../utils/bus.js'
 import { getAllConfig , getCustomConfig } from '../../constants'
@@ -199,12 +200,16 @@ export default {
 	},
 	inject: {
     	// 自定义组件
-      	customComponents: {
-        	from: 'customC',
-        	default: ()=>[]
-      	} 
-  	},
+      	// customComponents: {
+       //  	from: 'customC',
+       //  	default: ()=>[]
+      	// } 
+  },
 	computed: {
+		customComponents() {
+        const cms = getComponentCache()
+        return cms 
+    },
 		selectItemKey() {
 			if(this.selectItem && this.selectItem.key){
 				return this.selectItem.key 

@@ -46,6 +46,7 @@
 <script> 
 import FormBuild from '../build.vue' 
 import LocalMixin from '../../locale/mixin.js'
+import { getComponentCache } from '../../utils/cache.js'
 export default {
   mixins: [LocalMixin],
   name: "ng-form-preview",
@@ -67,12 +68,18 @@ export default {
   components: {
     FormBuild
   }, 
+  computed: {
+    customComponents() {
+        const cms = getComponentCache()
+        return cms 
+    }
+  },
   inject: {
     // 自定义组件
-    customComponents: {
-      from: 'customC',
-      default: ()=>[]
-    }, 
+    // customComponents: {
+    //   from: 'customC',
+    //   default: ()=>[]
+    // }, 
     ngConfig: {
       from: 'ngConfig',
       default: ()=> {return {}}
@@ -80,7 +87,7 @@ export default {
   },
   methods: {
     init(data) {
-      console.log('data' , data)
+      //console.log('data' , data)
       this.formTemplate.list = data.list
       this.formTemplate.config = data.config
       this.models = {}

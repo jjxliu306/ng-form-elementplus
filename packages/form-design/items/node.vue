@@ -27,6 +27,7 @@
 import ItemList from './index.js' 
  
 import { dynamicFun , dynamicVoidFun } from '../../utils/index.js'
+import { getComponentCache } from '../../utils/cache.js'
 export default {
   name: "ng-form-item-node", 
   data(){  
@@ -69,10 +70,10 @@ export default {
   }, 
   inject: {
     // 自定义组件
-      customComponents: {
-        from: 'customC',
-        default: ()=>[]
-      },
+      // customComponents: {
+      //   from: 'customC',
+      //   default: ()=>[]
+      // },
       // 表单全局config配置
       configInject: {
         from: 'configC' 
@@ -80,6 +81,11 @@ export default {
 
   },
   computed: { 
+    customComponents() {
+      const cms = getComponentCache()
+      return cms 
+    },
+    
     config() {
       return this.configInject() || {}
     }, 

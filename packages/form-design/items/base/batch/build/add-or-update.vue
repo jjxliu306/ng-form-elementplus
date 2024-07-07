@@ -53,6 +53,7 @@
  
   //import cloneDeep from 'lodash/cloneDeep'
   import LocalMixin from '../../../../../locale/mixin.js'
+  import { getComponentCache } from '../../../../../utils/cache.js'
   import { dynamicFun , cloneDeep } from '../../../../../utils/index' 
   export default {
     mixins: [LocalMixin] , 
@@ -80,7 +81,12 @@
         } else {
           return [];
         }
+      },
+      customComponents() {
+        const cms = getComponentCache()
+        return cms 
       }
+
     },
     props: {
       // 表格内部的配置

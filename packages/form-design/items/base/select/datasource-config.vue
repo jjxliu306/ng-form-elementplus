@@ -4,6 +4,7 @@ cascader没有数据字典
 -->
 <template>
 <el-form   size="small" label-width="80px" label-position="right">
+ 
 	<el-form-item  :label="t('ngform.item.datasource')" >
     <el-select clearable v-model="selectItem.options.dynamic" :placeholder="t('ngform.properties.select')" style="width:100%"> 
 	    <el-option :label="t('ngform.item.datasource_static')" :value="0"></el-option>
@@ -73,6 +74,10 @@ cascader没有数据字典
 import KvList from '../../../../ng-form/kv-list.vue'
 import KvListChildren from '../../../../ng-form/kv-list-children.vue'
 import LocalMixin from '../../../../locale/mixin.js'
+import { getDictCache } from '../../../../utils/cache.js'
+
+
+
 export default {
   mixins: [LocalMixin],
   components: {
@@ -84,8 +89,14 @@ export default {
 		}
 	},
 	computed: {
+    dicts() {
+      const dict = getDictCache()
+      return dict 
+    },
 		hasDict() { 
-      return this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 && this.selectItem && this.selectItem.type != 'cascader'
+      const dict = this.dicts
+
+      return dict && dict.length > 0 && this.selectItem && this.selectItem.type != 'cascader'
     }
 	},
   inject: {
@@ -96,7 +107,9 @@ export default {
   },
   methods: {
     	queryDictSearch(queryString, cb) {
-      		const dicts = this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 ? this.ngConfig.dict : null
+      		//const dicts = this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 ? this.ngConfig.dict : null
+
+          const dicts = this.dicts // getCache('dict')
           
       		if(!dicts || dicts.length == 0) {
         		cb([])

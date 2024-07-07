@@ -1,6 +1,6 @@
 <template> 
 <div class="form-build-panel" >  
-	 
+	  
     <el-form 
     	v-if="formTemplate && formTemplate.config && formTemplate.list"
       	:label-width="formTemplate.config.labelWidth + 'px'" 
@@ -32,7 +32,7 @@
 </template>
 <script> 
 import Node from './panel-container/node.vue'
- 
+import { setDictCache , setComponentCache } from '../utils/cache.js'
 import { cloneDeep } from '../utils/index.js'
 
 export default {
@@ -84,12 +84,12 @@ export default {
 			return {}
 		},
 		// 配置的数据字典
-	    // dicts() {
-	    //   if(this.config && this.config.dict && this.config.dict.length > 0) {
-	    //     return this.config.dict
-	    //   }
-	    //   return null
-	    // },
+	  configDicts() {
+      if(this.config && this.config.dicts ) {
+        return this.config.dicts
+      }
+      return null
+    } ,
 	    // 配置中的http配置
 	  httpConfig() {
 	      if(this.config && this.config.httpConfig ) {
@@ -112,13 +112,27 @@ export default {
     }
 	},
 	watch: {
-	   	httpConfig: {
+	  httpConfig: {
 	      	handler(newVal) { 
 	       		window.nghttpConfig = newVal;
 	      	},
 	      	deep: true,
 	      	immediate: false,
-	    }
+	   },
+	  components:{
+      handler(newVal) { 
+        setComponentCache(newVal)
+      },
+      deep: true,
+      immediate: false,
+    },
+    configDicts: {
+      handler(newVal) { 
+         setDictCache(newVal)
+      },
+      deep: true,
+      immediate: false,
+    } 
 	},
 	provide: function () {
     	return {
@@ -129,11 +143,17 @@ export default {
      		ngConfig: this.config
     	}
   	},
-  	created(){
-  		if(this.httpConfig) {
-     		window.nghttpConfig = this.httpConfig;
-    	}
-  	},
+  created(){
+  	if(this.httpConfig) {
+     	window.nghttpConfig = this.httpConfig;
+    }
+    if(this.configDicts) {
+       setDictCache(this.configDicts)
+    }
+    if(this.components) {
+       setComponentCache(this.components)
+    }
+  },
 	methods: {
 	  	reset() {
 	  		this.$refs.form && this.$refs.form.resetFields()

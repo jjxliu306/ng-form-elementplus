@@ -17,11 +17,12 @@ import { addCustomConfig } from './constants.js'
 // 国际化
 import locale from './locale';
 import LocalMixin from './locale/mixin.js'
+import { setDictCache , setComponentCache } from './utils/cache.js'
+
  
 export {
  addCustomConfig , utils , locale , mixin,LocalMixin , NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgFormItemNode
 }
-
 
  
 
@@ -31,8 +32,9 @@ const components = [ NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgF
  
 
 const NgFormElementPlus = {
-  version: '2.1.3',
+  version: '2.1.4',
   install(App , opts) {
+    console.log('opts' , opts)
     components.forEach((item) => {
       App.component(item.name, item);
     });
@@ -46,9 +48,16 @@ const NgFormElementPlus = {
     if(opts.components) {
       App.config.globalProperties.$ngofrm_components = opts.components 
       App.provide('$ngofrm_components',  opts.components)
+
+      setComponentCache(  opts.components)
+    }
+
+    if(opts.dict) {
+      setDictCache(opts.dict)
     }
      
-  },
+ 
+  }
 };
 
 export default NgFormElementPlus;

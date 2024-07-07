@@ -3,6 +3,7 @@ import { dynamicFun , cloneDeep , cloneDeepAndFormat ,dateFormater} from '../../
 
 import LocalMixin from '../../locale/mixin.js'
 import request from '../../utils/request.js'
+import { getDictCache , getComponentCache} from '../../utils/cache.js'
 //import cloneDeep from 'lodash/cloneDeep'
 import * as objectPath from 'object-path';
 export default {
@@ -53,10 +54,10 @@ export default {
 	},
 	inject: {
 		// 自定义组件
-	    customComponents: {
-	      from: 'customC',
-	      default: ()=>[]
-	    },
+	    // customComponents: {
+	    //   from: 'customC',
+	    //   default: ()=>[]
+	    // },
 	    // 表单全局config配置
 	    configInject: {
           from: 'configC' 
@@ -67,6 +68,10 @@ export default {
       	},
 	},
 	computed: {
+		customComponents() {
+			const cms = getComponentCache()
+			return cms
+		},
 		config() {
       		return this.configInject() || {}
     	}, 
@@ -92,7 +97,9 @@ export default {
 			return false
 		},
 		dicts() {
-			return this.ngConfig ? this.ngConfig.dict: []
+			const dict = getDictCache()
+			return dict 
+			//return this.ngConfig ? this.ngConfig.dict: []
 		}
 	},
 	watch: {

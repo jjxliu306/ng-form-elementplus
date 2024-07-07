@@ -21,7 +21,7 @@
     :style="{'display': recordVisible ? '' : 'none'}"
     :rules="recordRules"
     :prop="recordProps"
-    :key="record.key"
+    :key="record.key + recordVisible"
     :required="recordRequired" 
     :id="record.model" 
     :name="record.model"

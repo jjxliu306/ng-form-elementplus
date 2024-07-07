@@ -1,6 +1,6 @@
  
 <template> 
-		<el-collapse class="drag-panel" v-model="actives" accordion > 
+		<el-collapse class="drag-panel" v-model="actives" accordion :key="refreshKey"> 
 
 			<template v-for="(colItem,colIndex) in dataList"> 
 				<el-collapse-item :key="colIndex + formKey" :title="getLabel(colItem.name)" :name="colIndex + 1" v-if="colItem && colItem.list && colItem.list.length > 0">
@@ -23,6 +23,7 @@ import DragItem from './drag-item.vue'
 //import cloneDeep from 'lodash/cloneDeep' 
 import LocalMixin from '../../locale/mixin.js'
 import { cloneDeep } from '../../utils/index.js'
+import { getComponentCache } from '../../utils/cache.js'
 import Bus from '../../utils/bus.js'
 export default {
   mixins: [LocalMixin],
@@ -104,20 +105,31 @@ export default {
 			}
 
 			return items
+		},
+		customComponents() {
+			const cms = getComponentCache()
+			return cms 
+		}
+		
+	},
+	watch: {
+		customComponents(val) {
+			this.refreshKey++
 		}
 	},
 	inject: {
     	// 自定义组件
-      	customComponents: {
-        	from: 'customC',
-        	default: ()=>[]
-      	} 
+      	// customComponents: {
+       //  	from: 'customC',
+       //  	default: ()=>[]
+      	// } 
   },
 	data(){
 		return {
 			actives:[1], 
 		  startType: "",
 		  formKey: '',
+		  refreshKey: 1 ,
 		    //dataList: itemIndex ,
 		  data: {
 		    list: [],
@@ -165,7 +177,9 @@ export default {
 	      	return nlist
 		},
 		generateKey(list, index) {
-			 
+			 	console.log('list' , list)
+			 	console.log('index' , index )
+			 	if(!index) return 
 			  const key = list[index].type + "_" + new Date().getTime();
 
 	      const nData = cloneDeep(list[index])

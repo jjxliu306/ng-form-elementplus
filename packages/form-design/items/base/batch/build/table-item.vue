@@ -26,6 +26,8 @@
 </template>
 <script> 
 import { dynamicFun} from '../../../../../utils/index' 
+import { getComponentCache } from '../../../../../utils/cache.js'
+
  
 export default {
   name: "TableItem",
@@ -54,9 +56,13 @@ export default {
     }
   },  
   computed: {
+    customComponents() {
+        const cms = getComponentCache()
+        return cms 
+    },
     customList() {
-      if (this.$GSFORM && this.$GSFORM.customComponents) {
-        const customComponents_ = this.$GSFORM.customComponents
+      if (this.customComponents) {
+        const customComponents_ = this.customComponents
         return customComponents_.map(item => item.type);
       } else {
         return [];
