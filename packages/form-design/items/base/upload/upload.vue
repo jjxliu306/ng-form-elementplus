@@ -65,8 +65,11 @@
 	</el-upload> 
 
 	   <!--图片查看-->
-    <el-dialog :append-to-body="true" :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog  :append-to-body="true"  v-model="dialogVisible"  >
+    	<div class="ng-form-image-preview">
+    		 <img width="100%" :src="dialogImageUrl" alt="">
+    	</div>
+     
     </el-dialog>
 </div>
 </template>
@@ -315,7 +318,7 @@ export default {
 		},
 		// 点击下载或者预览
 		handlePreview(file) {
-			//console.log('handlePreview file' , file)
+			console.log('handlePreview file' , file)
 			this.fileDown(file)
 			// 从url中下载
 			// if(file.url) {
@@ -331,13 +334,16 @@ export default {
 		},
 		 // 浏览下载文件
 	    reviewDown (file) {
+	    	console.log('reviewDown' , file)
 	      this.handlePreview(file)
 	    },
 	    
 	    // 图片下载
 	    fileDown (file) {
-	    	//console.log('file' , file)
+	    	console.log('file' , file )
+	    	console.log('fileurl' , file.url)
 	    	if(file.url) {
+	    		console.log('this.image' , this.image)
 					if(this.image) {
 		    		this.dialogVisible = true 
 						this.dialogImageUrl = file.url 
@@ -357,4 +363,18 @@ export default {
 .ng-form-upload.upload .el-upload {
 	display: none;
 }
+
+.ng-form-image-preview{
+	height: 400px;
+  width: 100%;
+  text-align: center;
+	
+}
+
+.ng-form-image-preview   img{
+	height: 400px;
+  width: auto; 
+	
+}
+
 </style>
