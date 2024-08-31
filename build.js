@@ -1,7 +1,7 @@
 const path = require('path')
 const { defineConfig, build } = require('vite')
 const vue = require('@vitejs/plugin-vue')
-const fs = require('fs-extra')  
+const fs = require('fs')
 
 // 添加打包入口文件夹 packages（需要手动创建）
 const entryDir = path.resolve(__dirname, './packages')
@@ -49,7 +49,7 @@ const buildAll = async () => {
 const buildLib = async () => {
   await buildAll()
 
-  fs.copySync('./packages/index.d.ts', './lib/index.d.ts');
+  fs.copyFileSync('./packages/index.d.ts', './lib/index.d.ts');
 }
 
 buildLib()

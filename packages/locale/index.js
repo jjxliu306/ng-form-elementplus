@@ -1,6 +1,6 @@
 import defaultLang from './lang/zh_CN.js';
 //import Vue from 'vue';
-import deepmerge from 'deepmerge';
+// import deepmerge from 'deepmerge';
 import Format from './format';
 
 import zhCn from './lang/zh_CN.js'

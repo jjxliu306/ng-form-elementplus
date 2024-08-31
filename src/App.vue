@@ -1,10 +1,19 @@
  
 <template>
   <ng-form-design ref="formDesign" :template.sync="template">
-  <!-- 	<template #formName> 
+    <!-- 	<template #formName> 
   		<el-input v-model="formName" />
   	</template>   -->
-  	<template #controlButton> 
+    <template #drag>
+      <h1>drag</h1>
+    </template>
+    <template #logo>
+      <h1>logo</h1>
+    </template>
+    <template #formName>
+      <h1>formName</h1>
+    </template>
+    <template #controlButton>
 
   		<el-popover
         placement="bottom-start"
@@ -19,21 +28,30 @@
 
           </el-row>
 
-        </div> 
+        </div>
         <template #reference>
 	       <el-button style="margin: 0px 10px;"  icon="Document" text size="small"   >示例</el-button>
-	      </template> 
+        </template>
       </el-popover>
 
-       <el-select v-model="i18n" style="width: 100px;" placeholder="语言" size="small" @change="changeI18n">
+      <el-select v-model="i18n" style="width: 100px;" placeholder="语言" size="small" @change="changeI18n">
           <el-option
             v-for="item in i18nList"
             :key="item.value"
             :label="item.label"
             :value="item.value">
-          </el-option>
-        </el-select>
-  	</template>
+        </el-option>
+      </el-select>
+    </template>
+    <template #custom-properties="{ selectItem }">
+      <h1>custom-properties {{ selectItem }}</h1>
+    </template>
+    <template #form-extend-properties="{ data }">
+      <h1>form-extend-properties {{ data.config.size }}</h1>
+    </template>
+    <template #extend-tab>
+      <h1>extend-tab</h1>
+    </template>
   </ng-form-design>
 </template>
 <script>
@@ -41,7 +59,7 @@
 	import {  ref , onMounted} from 'vue'
 
 
-export default  ({
+export default  {
   components: {
   },
   setup() {
@@ -140,7 +158,7 @@ export default  ({
       changeI18n
  		}
 	}
-})
+}
 </script>
 <style>
 

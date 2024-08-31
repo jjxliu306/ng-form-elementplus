@@ -3,6 +3,9 @@
     
       <el-header class="header" height="40px">
         <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="template" @importData="importData">
+          <template #logo>
+             <slot name="logo"></slot>
+          </template>
           <template #controlButton>
              <slot name="controlButton"></slot>
           </template>
@@ -25,13 +28,13 @@
           <el-aside :width="arrow ? '0px' : '370px'" class="properties-panel"> 
             <a  :class="[arrow ? 'togglelefts ' : 'togglelefts arrowR']" @click="arrow=!arrow" :style="{right: (arrow ?  '0px': '370px')}" :title="arrow ?  t('ngform.open_properties_panel') : t('ngform.close_properties_panel')"></a>
               <PropertiesPanel :selectItem="selectItem" >
-                  <template slot="custom-properties" >
+                  <template #custom-properties >
                     <slot name="custom-properties" :selectItem="selectItem"></slot>
                   </template>
-                   <template slot="form-extend-properties"  >
+                   <template #form-extend-properties  >
                       <slot name="form-extend-properties" :data="template"></slot>
                   </template>
-                   <template slot="extend-tab" >
+                   <template #extend-tab >
                       <slot name="extend-tab" :data="template"></slot>
                   </template>
               </PropertiesPanel> 

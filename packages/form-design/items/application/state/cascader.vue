@@ -4,7 +4,7 @@
 <template>
  
 <el-cascader
-	v-model="value"
+	:modelValue="value"
     :options="options"
    	@change="valueChange"
     :props="{ checkStrictly: checkStrictly , emitPath: emitPath , value:'v' ,label: 'l' , children: 'c' }"
