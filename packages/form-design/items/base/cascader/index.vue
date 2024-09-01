@@ -65,7 +65,10 @@ export default {
     // 判断如果已经有了值 但没有label 则尝试回填label 
     const value = this.models[this.record.model]
     if(value && value.length > 0) {
-      this.handleChange(value)
+      this.$nextTick(()=> {
+        this.handleChange(value)
+      })
+      
     }
 
   },
@@ -80,18 +83,22 @@ export default {
         datas = []
       } 
 
-      const checkNodes = this.$refs.cascader.getCheckedNodes()
+      if(this.$refs && this.$refs.cascader) {
+        const checkNodes = this.$refs.cascader.getCheckedNodes()
      
-      for(let i = 0 ; i < checkNodes.length ; i++){
-        const v = checkNodes[i] 
+        for(let i = 0 ; i < checkNodes.length ; i++){
+          const v = checkNodes[i] 
 
-        const vText = v.text 
-        if(vText) {
-           labels.push(vText)
-        }  
-      } 
-      const modelLabel = this.record.model + '_label'
-      this.models[modelLabel] = labels.join(',')
+          const vText = v.text 
+          if(vText) {
+             labels.push(vText)
+          }  
+        } 
+        const modelLabel = this.record.model + '_label'
+        this.models[modelLabel] = labels.join(',')
+      }
+
+      
       //this.$set(this.models , modelLabel , labels.join(','))
     }
   }

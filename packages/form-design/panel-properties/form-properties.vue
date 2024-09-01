@@ -61,9 +61,16 @@
         <el-form-item :label="t('ngform.properties.form_style')">
           <el-input  type="textarea" v-model="config.customStyle" />
         </el-form-item>
+
+
+        <slot name="form-extend-properties">
+          
+        </slot>
+
+
         <el-divider></el-divider>
 
-        <slot name="form-extend-properties"></slot>
+        
       
         <el-form-item :label="t('ngform.properties.tip')">
            {{t('ngform.properties.result_tip')}}
