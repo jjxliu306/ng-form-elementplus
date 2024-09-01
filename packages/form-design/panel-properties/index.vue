@@ -7,7 +7,7 @@
 	        </span>
 	      </template>
 	    	<ItemProperties :selectItem="selectItem">
-	    	 	<template slot="custom-properties"  >
+	    	 	<template #custom-properties  >
                     <slot name="custom-properties" :selectItem="selectItem"></slot>
                 </template>
 	    	</ItemProperties>
@@ -18,9 +18,9 @@
 	        </span>
 	      </template>
 	    	<FormProperties :config="config">
-	    	 	<template slot="form-extend-properties"  >
-                    <slot name="form-extend-properties"  ></slot>
-                </template> 
+	    	 	<template #form-extend-properties >
+            <slot name="form-extend-properties"  ></slot>
+          </template> 
 	    	</FormProperties>
 	    </el-tab-pane> 
 

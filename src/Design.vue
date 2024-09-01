@@ -34,6 +34,13 @@
           </el-option>
         </el-select>
   	</template>
+
+    <template #form-extend-properties>
+      <span>表单属性扩展</span>
+    </template>
+    <template #custom-properties>
+      <span>组件属性扩展</span>
+    </template>
   </ng-form-design>
 </template>
 <script>

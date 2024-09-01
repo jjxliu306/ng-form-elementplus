@@ -31,7 +31,9 @@
 	</template>
 
 
-	<slot name="custom-properties"></slot>
+	<slot name="custom-properties">
+		
+	</slot>
 
 	<!-- 
 	循环group 处理在group中但显示在折叠面板中的表单
