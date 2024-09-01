@@ -32,9 +32,9 @@ const components = [ NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgF
  
 
 const NgFormElementPlus = {
-  version: '2.1.4',
-  install(App , opts) {
-    console.log('opts' , opts)
+  version: '2.1.6',
+  install(App , opts = {}) {
+    //console.log('opts' , opts)
     components.forEach((item) => {
       App.component(item.name, item);
     });
@@ -44,15 +44,15 @@ const NgFormElementPlus = {
     if(opts && opts.i18n) {
       locale.i18n(opts.i18n);
     }
-    console.log('opts.components' , opts.components)
-    if(opts.components) {
+    //console.log('opts.components' , opts.components)
+    if(opts && opts.components) {
       App.config.globalProperties.$ngofrm_components = opts.components 
       App.provide('$ngofrm_components',  opts.components)
 
       setComponentCache(  opts.components)
     }
 
-    if(opts.dict) {
+    if(opts && opts.dict) {
       setDictCache(opts.dict)
     }
      
