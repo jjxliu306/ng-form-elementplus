@@ -126,7 +126,10 @@ export default {
   },  
   computed: { 
     config() {
-      return this.configInject() || {}
+      if(this.configInject && this.configInject != null && this.configInject != undefined) {
+        return this.configInject() || {}
+      }
+      return {}
     },
     disabled() {
       return this.record.options.disabled || this.parentDisabled;
@@ -153,7 +156,8 @@ export default {
   inject: {
       // 表单全局config配置
       configInject: {
-          from: 'configC' 
+          from: 'configC',
+          default: null
       }
   },
   mounted(){ 

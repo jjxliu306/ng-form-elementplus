@@ -76,7 +76,8 @@ export default {
       // },
       // 表单全局config配置
       configInject: {
-        from: 'configC' 
+        from: 'configC',
+        default: null
       }
 
   },
@@ -87,7 +88,10 @@ export default {
     },
     
     config() {
-      return this.configInject() || {}
+      if(this.configInject && this.configInject != null && this.configInject != undefined) {
+        return this.configInject() || {}
+      }
+      return {}
     }, 
     customComponent() {
 

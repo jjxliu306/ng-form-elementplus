@@ -98,12 +98,16 @@ export default {
       },
       // 表单全局config配置 
       configInject: {
-          from: 'configC' 
+        from: 'configC',
+        default: null
       }
   }, 
   computed: {  
     config() {
-      return this.configInject() || {}
+      if(this.configInject && this.configInject != null && this.configInject != undefined) {
+        return this.configInject() || {}
+      }
+      return {}
     },
     // 是否布局组件 但钱不需要验证的哪种
     isLayout() {

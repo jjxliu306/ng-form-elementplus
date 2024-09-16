@@ -355,7 +355,7 @@ export default {
 				}
 
 	     
-	    },
+	    }
 	}
 }
 </script>

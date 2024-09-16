@@ -33,7 +33,7 @@
 	        >
 	          <template #item="{element}">
 	               
-	               		<ng-form-node   
+	            <NgFormNode
 						       :key="element.key" 
 				        		class="drag-move"  
 				            	:record="element"
@@ -45,11 +45,9 @@
 				            	@handleCopy="handleCopy(element)"
 				            	@handleDetele="handleDetele(element)"
 				            	>  
-				        		</ng-form-node>
-	               
-	            </template>
-	        </draggable> 
-	     
+				      </NgFormNode>
+	          </template>
+	        </draggable>  
 	    </el-row> 
 	</el-form> 
 </div> 
@@ -59,13 +57,13 @@
 import { cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
 import Bus from '../../utils/bus.js' 
 import draggable from "vuedraggable"
-//import Node from './node.vue'
+import NgFormNode from './node.vue'
 import LocalMixin from '../../locale/mixin.js'
 export default {
 	mixins: [LocalMixin],
 	name: 'ng-form-container' ,
 	components:{
-		//Node,
+		NgFormNode,
 		draggable
 	},
 	data(){
