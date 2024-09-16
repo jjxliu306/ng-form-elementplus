@@ -11,6 +11,7 @@ const request = axios.create({
  */
 request.interceptors.request.use(
   config => {
+    console.log('config' , config)
     // 判断是否有自定义的配置
     if(window.nghttpConfig) {
       let _config = window.nghttpConfig(config)

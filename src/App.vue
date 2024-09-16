@@ -1,5 +1,6 @@
  
 <template>
+ <!--  <Edit /> -->
   <Design />
 </template>
 <script>
