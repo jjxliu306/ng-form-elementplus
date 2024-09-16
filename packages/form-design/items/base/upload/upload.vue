@@ -164,6 +164,8 @@ export default {
 				if(fileListNames != valueNames) {
 					this.fileList = val 
 				} 
+			} else {
+				this.fileList = []
 			}
 		}
 	}, 
