@@ -32,7 +32,7 @@ const components = [ NgForm , NgFormDesign,NgFormBuild,NgFormItem,NgFormNode,NgF
  
 
 const NgFormElementPlus = {
-  version: '2.1.6',
+  version: '2.1.7',
   install(App , opts = {}) {
     //console.log('opts' , opts)
     components.forEach((item) => {
