@@ -64,7 +64,7 @@ export default {
 	},
 	props: {
     	// 表单数组 
-    	value: {
+    	modelValue: {
     		type: String
     	},
     	record: {
@@ -115,7 +115,7 @@ export default {
   		this.init()
   	},
   	watch:{
-  		value(val) {  
+  		modelValue(val) {  
       		 	// 找名称
       	
 
@@ -155,7 +155,7 @@ export default {
       },
       getLabel() {
       	let address = [] 
-      	const val = this.value
+      	const val = this.modelValue
    
         const fs_ = (areas)=> {
           areas.forEach(t=> {
@@ -188,12 +188,12 @@ export default {
 
   			// 判断当前是否有值
   			//const value = this.models[this.record.model]
-  			if(this.value) {
+  			if(this.modelValue) {
 
   				// 省
-  				this.dataForm.province = this.value.substr(0,2) + '0000'
-  				this.dataForm.city  = this.value.substr(0,4) + '00'
-  				this.dataForm.district  = this.value 
+  				this.dataForm.province = this.modelValue.substr(0,2) + '0000'
+  				this.dataForm.city  = this.modelValue.substr(0,4) + '00'
+  				this.dataForm.district  = this.modelValue 
 
   				this.changeProvince(this.dataForm.province , 1)
   				this.changeCity(this.dataForm.city , 1)
@@ -201,7 +201,7 @@ export default {
 
           if(this.record && !this.models[this.record.model + '_label']) {
             this.$nextTick(()=> { 
-              this.updateStateLabel(this.value)
+              this.updateStateLabel(this.modelValue)
             })
             
           }
@@ -262,10 +262,10 @@ export default {
   			if(!type) {
   				
   				if(this.maxLevel == 1){
-  					this.$emit("update:value", v);
+  					this.$emit("update:modelValue", v);
   				}
   				else {
-  					this.$emit("update:value", '');
+  					this.$emit("update:modelValue", '');
   				}
   			}
 			
@@ -286,9 +286,9 @@ export default {
 				if(!type) {
 				 
 					if(this.maxLevel == 2){
-						this.$emit("update:value", v);
+						this.$emit("update:modelValue", v);
 					} else {
-						this.$emit("update:value", '');
+						this.$emit("update:modelValue", '');
 					}
 
 				}
@@ -296,7 +296,7 @@ export default {
   			} else {
   				this.districts = [] 
   				if(!type) {
-  					this.$emit("update:value", '');
+  					this.$emit("update:modelValue", '');
   				}
   				
   			}
@@ -307,10 +307,10 @@ export default {
   			if(v) {
   			 
   				if(this.maxLevel == 3) {
-  					this.$emit("update:value", v);
+  					this.$emit("update:modelValue", v);
   				}
   			} else {
-  				this.$emit("update:value", '');
+  				this.$emit("update:modelValue", '');
   			}
   		}
 	},

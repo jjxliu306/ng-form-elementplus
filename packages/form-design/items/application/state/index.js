@@ -96,7 +96,7 @@ obj.options = {
                     prop: 'selectType',
                     default: 'select',
                     span: 24,
-                    type: 'radioButton',  
+                    type: 'select',  
                     dicData: [
                         {value: 'select' , label: $t('ngform.item.state.select')},
                         {value: 'cascader' , label: $t('ngform.item.state.cascader')}, 
