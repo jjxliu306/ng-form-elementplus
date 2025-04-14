@@ -5,6 +5,7 @@ const cache = {}
 
 const dictCacheKey = 'dict'
 const componentCacheKey = 'components'
+const configCacheKey = 'ngconfig'
 
 export const setDictCache = (value)=> {
 	setCache(dictCacheKey , value)
@@ -14,6 +15,13 @@ export const getDictCache = ()=> {
 	return getCache(dictCacheKey)
 }
 
+export const setConfigCache = (value)=> {
+	setCache(configCacheKey , value)
+}
+
+export const getConfigCache = ()=> {
+	return getCache(configCacheKey)
+}
 
 export const setComponentCache = (value)=> {
 	setCache(componentCacheKey , value)

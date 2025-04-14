@@ -84,32 +84,40 @@ export default {
 			return {}
 		},
 		// 配置的数据字典
-	  configDicts() {
-      if(this.config && this.config.dicts ) {
-        return this.config.dicts
-      }
-      return null
-    } ,
+		configDicts() {
+	      if(this.config && this.config.dicts ) {
+	        return this.config.dicts
+	      }
+	      return null
+	    } ,
 	    // 配置中的http配置
-	  httpConfig() {
+	  	httpConfig() {
 	      if(this.config && this.config.httpConfig ) {
 	        return this.config.httpConfig
 	      }
 	      return null
 	      
-	  },
+	  	},
 	   // 自定义组件
-    components() {
-      if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
-        return this.$config.$ngofrm_components
-      } else if ( this.$ngofrm_components &&  this.$ngofrm_components.length > 0) {
-        return  this.$ngofrm_components
-      } else if (this.customComponents && this.customComponents.length > 0) {
-        return this.customComponents
-      }
+	    components() {
+	      if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
+	        return this.$config.$ngofrm_components
+	      } else if ( this.$ngofrm_components &&  this.$ngofrm_components.length > 0) {
+	        return  this.$ngofrm_components
+	      } else if (this.customComponents && this.customComponents.length > 0) {
+	        return this.customComponents
+	      }
 
-      return undefined
-    }
+	      return undefined
+	    },
+	    ngConfig() { 
+	      const ngofrm_config = this.$config?.$ngofrm_config || {}
+	      // 优先判断内部
+	      if (this.config ) {
+	        return {...this.config ,...ngofrm_config}
+	      }  
+	      return {...ngofrm_config}
+	    },
 	},
 	watch: {
 	  httpConfig: {
@@ -140,7 +148,7 @@ export default {
      		configC: ()=>this.templateConfig,
      		//dictsC: this.dicts,
      		httpConfigC: this.httpConfig,
-     		ngConfig: this.config
+     		ngConfig: this.ngConfig
     	}
   	},
   created(){

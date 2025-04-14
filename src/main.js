@@ -15,9 +15,14 @@ console.log('components' , components)
 
 import NgFormElementPlus from "../packages/index.js"; //导入
  
+const uploadConfig = {
+    uploadUrl: '/common/upload' ,
+    filePath: 'url',
+    fileIdPath: ''
+} 
  
 const app = createApp(App);
-app.use(NgFormElementPlus , {locale: 'zh_CN', components: components}); //注册
+app.use(NgFormElementPlus , {locale: 'zh_CN', components: components , uploadConfig: uploadConfig}); //注册
 app.use(ElementPlus, {locale: zhCn })
 
 

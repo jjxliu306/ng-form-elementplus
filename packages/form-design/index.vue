@@ -161,7 +161,15 @@ export default {
       }
 
       return undefined
-    }
+    },
+    ngConfig() { 
+      const ngofrm_config = this.$config?.$ngofrm_config || {}
+      // 优先判断内部
+      if (this.config ) {
+        return {...this.config ,...ngofrm_config}
+      }  
+      return {...ngofrm_config}
+    },
   },
   watch: {
     httpConfig: {
@@ -192,7 +200,7 @@ export default {
      configC: ()=>this.templateConfig,
      
      httpConfigC: this.httpConfig,
-     ngConfig: this.config
+     ngConfig: this.ngConfig
     }
   },
   inject: ['$ngofrm_components'],

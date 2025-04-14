@@ -17,7 +17,7 @@ import { addCustomConfig } from './constants.js'
 // 国际化
 import locale from './locale';
 import LocalMixin from './locale/mixin.js'
-import { setDictCache , setComponentCache } from './utils/cache.js'
+import { setDictCache , setComponentCache , setConfigCache } from './utils/cache.js'
 
  
 export {
@@ -55,7 +55,15 @@ const NgFormElementPlus = {
     if(opts && opts.dict) {
       setDictCache(opts.dict)
     }
-     
+
+    if(opts && opts.uploadConfig) {
+      App.config.globalProperties.$ngofrm_uploadConfig = opts.uploadConfig
+    }
+
+     App.config.globalProperties.$ngofrm_config = opts 
+     App.provide('$ngofrm_config',  opts)
+
+     setConfigCache(opts)
  
   }
 };
