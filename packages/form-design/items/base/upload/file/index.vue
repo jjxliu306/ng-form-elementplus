@@ -1,6 +1,4 @@
-<template>  
-<div>
-  uploadConfig:{{uploadConfig}}
+<template>   
 <!-- 上传图片 --> 
       <Upload 
       :style="`width:${record.width}`"
@@ -15,8 +13,7 @@
       :limit="record.options.limit" 
         :limit-size="record.options.limitSize"
       :upload-auto-hidden="record.options.uploadHidden"
-    />  
-  </div>
+    />   
 </template>
 <script> 
 import Upload from '../upload.vue'
