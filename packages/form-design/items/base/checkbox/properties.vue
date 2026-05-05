@@ -9,7 +9,7 @@
             :options="selectItem.options.options"
             v-model="selectItem.options.defaultValue"
             >
-            <el-checkbox  v-for="(item, index) in  [].concat(selectItem.options.options)" :label="item.value" :key="item.value + index"> 
+            <el-checkbox  v-for="(item, index) in  [].concat(selectItem.options.options)" :label="item.value" :key="item.value + index">
               {{item.label}}
             </el-checkbox>
           </el-checkbox-group>
@@ -24,7 +24,7 @@
               v-model="selectItem.options.linkage"
               :active-text="t('ngform.item.yes')"
               :inactive-text="t('ngform.item.no')">
-            </el-switch> 
+            </el-switch>
           </el-form-item>
           <template v-if="selectItem.options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
@@ -34,19 +34,26 @@
   </el-collapse-item>
 </div>
 </template>
+
 <script>
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'checkbox-properties'
+})
+</script>
+
+<script setup>
 import DatasourceConfig from '../select/datasource-config.vue'
 import Linkage from '../select/linkage.vue'
-import LocalMixin from '../../../../locale/mixin.js'
-export default {
-  mixins: [LocalMixin],
-  components: {
-    DatasourceConfig,Linkage
-  },
-  props: {
-    selectItem: {
-      type: Object
-    }
+import { useLocale } from '../../../../locale/mixin.js'
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Props
+defineProps({
+  selectItem: {
+    type: Object
   }
-}
+})
 </script>

@@ -29,53 +29,57 @@
 	    </slot> 
 	</el-tabs> 
 </template>
-<script>
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted, inject } from 'vue'
 import FormProperties from './form-properties.vue'
 import ItemProperties from './item-properties.vue'
-import LocalMixin from '../../locale/mixin.js'
+import { useLocale } from '../../locale/mixin.js'
 import Bus from '../../utils/bus.js'
-export default {
-	mixins: [LocalMixin],
-	components: {
-		FormProperties , ItemProperties
-	},
-	props: { 
-		selectItem: { 
-		}
-	},
-	data() {
-		return {
-			active: 'item',
-			formKey: '12',
-		}
-	}, 
-	inject: ['configC'], // 表单全局config配置 
-	computed: {
-		config() {
-			return this.configC() || {}
-		},
-		selectItemKey() {
-			if(this.selectItem && this.selectItem.key){
-				return this.selectItem.key
-			}
-			return null
-		}
-	},
-	mounted() {
-    
-    Bus.on('i18nRefresh', () => { 
-      this.formKey = new Date().getTime()
-       
-    });
-  },
-	watch: {
-		selectItemKey(val){
-			if(val) {
-				this.active = 'item'
-			}
-		}
-	}
-}
+
+// Props
+const props = defineProps({
+  selectItem: {}
+})
+
+// Injects
+const configC = inject('configC', null)
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Data
+const active = ref('item')
+const formKey = ref('12')
+
+// Computed
+const config = computed(() => {
+  return configC ? configC() : {}
+})
+
+const selectItemKey = computed(() => {
+  if (props.selectItem && props.selectItem.key) {
+    return props.selectItem.key
+  }
+  return null
+})
+
+// Watch
+watch(selectItemKey, (val) => {
+  if (val) {
+    active.value = 'item'
+  }
+})
+
+// Lifecycle
+onMounted(() => {
+  Bus.on('i18nRefresh', () => {
+    formKey.value = new Date().getTime()
+  })
+})
+
+onUnmounted(() => {
+  Bus.off('i18nRefresh')
+})
 </script>
 <style>
 .design-properties div, .design-properties label, .design-properties span {

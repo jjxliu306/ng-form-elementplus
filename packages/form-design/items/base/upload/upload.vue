@@ -1,394 +1,330 @@
 <template>
-<div> 
-	<div v-if="preview || disabled">
-		<!-- 判断图片还是文件列表 -->
-		<div v-if="accept && accept.indexOf('image') >= 0 && listType && listType.indexOf('picture-card') >= 0" >
-        <ul > 
-          <li style="float:left;margin-right:20px;list-style: none;" v-for="(item,index) in fileList"  :key="index">
+	<div>
+		<div v-if="preview || disabled">
+			<!-- 判断图片还是文件列表 -->
+			<div v-if="accept && accept.indexOf('image') >= 0 && listType && listType.indexOf('picture-card') >= 0">
+				<ul>
+					<li style="float:left;margin-right:20px;list-style: none;" v-for="(item,index) in fileList" :key="index">
+						<img @click="reviewDown(item)" :src="item.url" :class="[direction == null || direction == false?'avatar':'vertical']" style="max-height: 150px;max-width: 150px;cursor: pointer;">
+					</li>
+				</ul>
+			</div>
 
-            <img  @click="reviewDown(item)"   :src="item.url" :class="[direction == null || direction == false?'avatar':'vertical']" style="max-height: 150px;max-width: 150px;cursor: pointer;">
-            
-          </li>
+			<ul v-else class="el-upload-list el-upload-list--text">
+				<li v-for="(item,index) in fileList" :key="index" :tabindex="index" class="el-upload-list__item pointer" style="cursor: pointer;"
+					@click="fileDown(item)">
+					<a class="el-upload-list__item-name " style="cursor: pointer;">
+						<el-icon><Document /></el-icon>{{item.name}}
+					</a>
 
-        </ul>
+					<label class="el-upload-list__item-status-label">
+						<el-icon><SuccessFilled /></el-icon>
+					</label>
+				</li>
+			</ul>
+		</div>
+		<el-upload
+			v-else
+			class="ng-form-upload"
+			:class="{'upload': !uploadVisible}"
+			:action="uploadAction"
+			:drag="drag"
+			:disabled="disabled"
+			:multiple="false"
+			:limit="limit"
+			:headers="uploadHeader"
+			:accept="accept"
+			:list-type="listType"
+			:with-credentials="withCredentials"
+			:before-upload="beforeUpload"
+			:on-success="handleSuccess"
+			:on-remove="handleRemove"
+			:on-preview="handlePreview"
+			:auto-upload="autoUpload"
+			:file-list="fileList">
 
-      </div>
+			<template #trigger v-if="uploadVisible">
+				<el-button v-if="listType != 'picture-card'" :disabled="disabled" size="small" type="primary">选取文件</el-button>
+				<el-icon v-else><Plus /></el-icon>
+			</template>
+			<template #tip v-if="tip != undefined">
+				<div class="el-upload__tip">{{tip}}</div>
+			</template>
+		</el-upload>
 
-      <ul v-else class="el-upload-list el-upload-list--text">
-        <li v-for="(item,index) in fileList" :key="index" :tabindex="index" class="el-upload-list__item pointer"  style="cursor: pointer;"
-            @click="fileDown(item)"><!---->
-          <a class="el-upload-list__item-name "  style="cursor: pointer;">
-           
-            <el-icon><Document /></el-icon>{{item.name}}
-          </a>
-
-          <label class="el-upload-list__item-status-label">
-           <!--  <i class="el-icon-upload-success el-icon-circle-check"></i> -->
-            <el-icon><SuccessFilled /></el-icon>
-          </label>
-
-          <!---->
-        </li>
-      </ul>
+		<!--图片查看-->
+		<el-dialog :append-to-body="true" v-model="dialogVisible">
+			<div class="ng-form-image-preview">
+				<img width="100%" :src="dialogImageUrl" alt="">
+			</div>
+		</el-dialog>
 	</div>
-	<el-upload
-	  v-else 
-	  class="ng-form-upload"
-	  :class="{'upload': !uploadVisible}"
-	  :action="uploadAction"
-	  :drag="drag"
-	  :disabled="disabled"
-	  :multiple="false"
-	  :limit="limit"
-	  :headers="uploadHeader"
-	  :accept="accept"
-	  :list-type="listType"
-	  :with-credentials="withCredentials"
-	  :before-upload="beforeUpload"
-	  :on-success="handleSuccess"
-	  :on-remove="handleRemove"
-	  :on-preview="handlePreview"
-	  :auto-upload="autoUpload"
-	  :file-list="fileList">
-	   
-	  		<template #trigger v-if="uploadVisible">
-	  		 
-	  			<el-button slot="trigger" v-if="listType != 'picture-card'"  :disabled="disabled" size="small" type="primary">选取文件</el-button>
-	  			<!-- <i v-else class="el-icon-plus"></i> -->
-	  			<el-icon v-else><Plus /></el-icon> 
-	  		</template> 
-	   		<template #tip v-if="tip != undefined">
-	   			<div   class="el-upload__tip">{{tip}}</div>
-	   		</template>
-	  	
-	  
-	</el-upload> 
-
-	   <!--图片查看-->
-    <el-dialog  :append-to-body="true"  v-model="dialogVisible"  >
-    	<div class="ng-form-image-preview">
-    		 <img width="100%" :src="dialogImageUrl" alt="">
-    	</div>
-     
-    </el-dialog>
-</div>
 </template>
-<script>
-import   objectPath   from 'object-path'
-import LocalMixin from '../../../../locale/mixin.js'
-export default {
-	mixins: [LocalMixin],
-	name: 'ng-form-upload',
-	data() {
-		return { 
-			dialogVisible: false,
-			dialogImageUrl: '',
-			fileList: []
-		}
+
+<script setup>
+import { ref, computed, watch, onMounted, inject } from 'vue'
+import { useLocale } from '../../../../locale/mixin.js'
+import objectPath from 'object-path'
+
+// Props
+const props = defineProps({
+	value: {
+		type: Array,
+		default: () => { return [] }
 	},
-	props: {
-	    value: {
-	      type: Array,
-	      default: ()=> {return []} 
-	    },
-	    action: {
-	      type: String 
-	    },
-	    disabled: {
-	      type: Boolean,
-	      default: false
-	    },
-	    // 是否可以多选
-	    multiple: {
-	      type: Boolean ,
-	      default: false
-	    },
-	    // 文件接收类型
-	    accept: {
-	    	type: String
-	    },
-	    image: {
-	    	type: Boolean,
-	    	default: false
-	    },
-	    listType: {
-	    	type: String,
-	    	default: 'text'
-	    },
-	    // 最多上传几个
-	    limit: {
-	    	type: Number
-	    },
-	    // 是否支持发送cookie信息
-	    withCredentials: {
-	    	type: Boolean ,
-	    	default: false
-	    },
-	    // 是否自动上传
-	    autoUpload: {
-	    	type: Boolean,
-	    	default: true
-	    },
-	    // 提示说明文字
-	    tip: {
-	    	type: String
-	    },
-	    // 是否启用拖拽上传
-	    drag: {
-	    	type: Boolean,
-	    	default: false
-	    },
-	    record: {
-	    	type: Object
-	    },
-	    preview: {
-	    	type: Boolean,
-	    	default: false
-	    },
-	    imgDownBut: {
-	    	type: Boolean,
-	    	default: true
-	    }, 
-	    // 2023-8-27 lyf 文件上传后自动隐藏上传按钮 默认关闭
-	    uploadAutoHidden: {
-	    	type: Boolean ,
-	    	default: false
-	    }
+	action: {
+		type: String
 	},
-	watch: {
-		value(val) {
-			if(val && val.length > 0) {
-				const valueNames = val.map(t=>t.name).join(',');
-				const fileListNames = this.fileList.map(t=>t.name).join(',')
-				//console.log('valueNames' , valueNames , fileListNames)
-				if(fileListNames != valueNames) {
-					this.fileList = val 
-				} 
-			} else {
-				this.fileList = []
-			}
-		}
-	}, 
-	computed: {
-		// 上传地址 2024-09-16 lyf 判断是否配置了baseURL
-		uploadAction() {
-			let uploadUrl = this.action
-			if(window.nghttpConfig) {
-				const uconfig = window.nghttpConfig({headers: {}})
-				if(uconfig.baseURL) {
-					return uconfig.baseURL + uploadUrl
-				}
-			}
-
-			return uploadUrl
-		},
-		// 上传按钮显示条件 
-		// 1、只上传一个时有文件则不显示 多个时导致门限也不现实
-		// 2、预览时不显示
-		uploadVisible() {
-			
-			if(this.preview || this.disabled) return false 	
-			if(!this.multiple && this.value && this.value.length > 0) return false 
-			if(this.multiple && this.value && this.value.length >= this.limit) return false
-
-			if(!this.uploadAutoHidden) return true
-
-			return true 
-		},
-		// 需要携带的头数据
-		uploadHeader() {
-			let hs = {} 
-			if(this.record && this.record.options && this.record.options.headers) {
-				
-				this.record.options.headers.forEach(t=> {
-					hs[t.label] = t.value
-				})
- 
-			} 
-
-		/*	// 2023-03-04 lyf强制性走一次httpConfig
-			if(this.httpConfig) {
-				const config = {headers: {}}
-
-				this.httpConfig(config)
-
-				hs = {...hs , ...config.headers}
-			}*/
-			// 2023-03-04 lyf强制性走一次httpConfig
-			const nghttpConfig = window.nghttpConfig
-			if(nghttpConfig) {
-				const config = {headers: {}}
-
-				nghttpConfig(config)
-
-				hs = {...hs , ...config.headers}
-			}
-			return hs
-		},
-		// 文件上传成功后文件的url路径
-		uploadResponseFileUrl() {
-			if(this.record && this.record.options && this.record.options.responseFileUrl) {
-				 
-				return this.record.options.responseFileUrl 
-			} 
-
-			return null
-		},
-		uploadResponseFileId() {
-			if(this.record && this.record.options && this.record.options.responseFileId) {
-				 
-				return this.record.options.responseFileId 
-			} 
-
-			return null
-		}
+	disabled: {
+		type: Boolean,
+		default: false
 	},
-	mounted() {
-		if(this.value == null || this.value == undefined) {
-			//this.$emit("input", []);
-			this.fileList = []
-		} else {
-			this.fileList = this.value
+	multiple: {
+		type: Boolean,
+		default: false
+	},
+	accept: {
+		type: String
+	},
+	image: {
+		type: Boolean,
+		default: false
+	},
+	listType: {
+		type: String,
+		default: 'text'
+	},
+	limit: {
+		type: Number
+	},
+	withCredentials: {
+		type: Boolean,
+		default: false
+	},
+	autoUpload: {
+		type: Boolean,
+		default: true
+	},
+	tip: {
+		type: String
+	},
+	drag: {
+		type: Boolean,
+		default: false
+	},
+	record: {
+		type: Object
+	},
+	preview: {
+		type: Boolean,
+		default: false
+	},
+	imgDownBut: {
+		type: Boolean,
+		default: true
+	},
+	uploadAutoHidden: {
+		type: Boolean,
+		default: false
+	}
+})
+
+// Emits
+const emit = defineEmits(['update:value'])
+
+// Injects
+const ngConfig = inject('$ngofrm_config', {})
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Data
+const dialogVisible = ref(false)
+const dialogImageUrl = ref('')
+const fileList = ref([])
+
+// Computed
+const uploadAction = computed(() => {
+	let uploadUrl = props.action
+	if (window.nghttpConfig) {
+		const uconfig = window.nghttpConfig({ headers: {} })
+		if (uconfig.baseURL) {
+			return uconfig.baseURL + uploadUrl
 		}
-	}, 
-	methods: {
-		beforeUpload(file) {
-			const fileName = file.name;
-	       
-	      	const ltSize = file.size / 1024 / 1024  
+	}
+	return uploadUrl
+})
 
-	      	const index1 = fileName.lastIndexOf(".");
+const uploadVisible = computed(() => {
+	if (props.preview || props.disabled) return false
+	if (!props.multiple && props.value && props.value.length > 0) return false
+	if (props.multiple && props.value && props.value.length >= props.limit) return false
 
-	      	const index2 = fileName.length;
-	      	const fileSuffix = fileName.substring(index1 + 1, index2); // 后缀名
- 
-	      	// console.log('file' , file)
-	      	const fileType = file.type;
-	      	if (
-		        this.accept &&
-		        this.accept.indexOf("image") >= 0 &&
-		        !this.isAssetTypeAnImage(fileSuffix)
-		    ) {
-		         this.$message.error(this.t('ngform.item.upload.error_img_filetype') + "[png,jpg,jpeg,bmp]");
-		        return false;
-		    }
+		if (!props.uploadAutoHidden) return true
 
-	      	if (this.record.options.limitSize && ltSize > this.record.options.limitSize) {
-	        	this.$message.error( this.t('ngform.item.upload.error_max_size') + (this.record.options.limitSize) + "MB!" )
+		return true
+})
 
-	        	return false
-	         
-	      	}
-	      return true;
-		},
-		isAssetTypeAnImage(ext) {
-      		return ["png", "jpg", "jpeg", "bmp"].indexOf(ext.toLowerCase()) !== -1;
-    	},
-		handleSuccess(response , file , fileList) {
-		 	//console.log('file' , file)
-		 	//console.log('fileList' , fileList.value)
-			// 根据返回结果的url来获取实际文件的url
-			const responseFileUrl = this.uploadResponseFileUrl 
-  
-			//const objectPath = require("object-path")
-			const fileUrl = objectPath.get(response, responseFileUrl)
-	 	 
-			if(fileUrl) {
-				// 重新组合
-				 
-				const uploadData = {
-					name: file.name , size: file.size , url: fileUrl
-				}
-			  
-			  // 文件id 
-				if(this.uploadResponseFileId) {
-					const fileId = objectPath.get(response, this.uploadResponseFileId)
-					 
-					uploadData['id'] = fileId
-				}
-			 
-			  this.value.push(uploadData)
-		 
-			    
-			  this.$emit("update:value", this.value);
-			  file.url = fileUrl
+const uploadHeader = computed(() => {
+	let hs = {}
+	if (props.record && props.record.options && props.record.options.headers) {
+		props.record.options.headers.forEach(t => {
+			hs[t.label] = t.value
+		})
+	}
 
-			} 
-		},
-		handleRemove(file , fileList) {
-			//console.log('remove file' , file)
-			//console.log('remove fileList' , fileList)
+	const nghttpConfig = window.nghttpConfig
+	if (nghttpConfig) {
+		const config = { headers: {} }
+		nghttpConfig(config)
+		hs = { ...hs, ...config.headers }
+	}
+	return hs
+})
 
-			// 根据文件名删除文件
-			const name = file.name  
-			const deleteIndex = fileList.findIndex(t=> t.name == name)
-			 
-			this.value.splice(deleteIndex,1)
-      this.$emit(
-        "update:value",
-        this.value
-      )
-			 
-		},
-		// 点击下载或者预览
-		handlePreview(file) {
-			console.log('handlePreview file' , file)
-			this.fileDown(file)
-			// 从url中下载
-			// if(file.url) {
-				 
+const uploadResponseFileUrl = computed(() => {
+	if (props.record && props.record.options && props.record.options.responseFileUrl) {
+		return props.record.options.responseFileUrl
+	}
+	return null
+})
 
-			// 	this.dialogVisible = true 
-			// 	this.dialogImageUrl = file.url 
-			// 	//window.location.href = file.url
-			// } else {
-			// 	this.$message.error('找不到文件下载路径')
-			// }
+const uploadResponseFileId = computed(() => {
+	if (props.record && props.record.options && props.record.options.responseFileId) {
+		return props.record.options.responseFileId
+	}
+	return null
+})
 
-		},
-		 // 浏览下载文件
-	    reviewDown (file) {
-	    	console.log('reviewDown' , file)
-	      this.handlePreview(file)
-	    },
-	    
-	    // 图片下载
-	    fileDown (file) {
-	    	console.log('file' , file )
-	    	console.log('fileurl' , file.url)
-	    	if(file.url) {
-	    		console.log('this.image' , this.image)
-					if(this.image) {
-		    		this.dialogVisible = true 
-						this.dialogImageUrl = file.url 
-		    	} else {
-		    		window.open(file.url)
-		    	}
-				} else {
-					this.$message.error(this.t('ngform.item.upload.error_not_found_file'))
-				}
+const direction = computed(() => {
+	// 可以根据需要添加方向逻辑
+	return null
+})
 
-	     
-	    }
+// Watch
+watch(() => props.value, (val) => {
+	if (val && val.length > 0) {
+		const valueNames = val.map(t => t.name).join(',')
+		const fileListNames = fileList.value.map(t => t.name).join(',')
+		if (fileListNames != valueNames) {
+			fileList.value = val
+		}
+	} else {
+		fileList.value = []
+	}
+})
+
+// Methods
+const beforeUpload = (file) => {
+	const fileName = file.name
+	const ltSize = file.size / 1024 / 1024
+
+	const index1 = fileName.lastIndexOf(".")
+	const index2 = fileName.length
+	const fileSuffix = fileName.substring(index1 + 1, index2)
+
+	const fileType = file.type
+	if (
+		props.accept &&
+		props.accept.indexOf("image") >= 0 &&
+		!isAssetTypeAnImage(fileSuffix)
+	) {
+		// ElMessage.error 需要从 element-plus 引入
+		console.error(t('ngform.item.upload.error_img_filetype') + "[png,jpg,jpeg,bmp]")
+		return false
+	}
+
+	if (props.record.options.limitSize && ltSize > props.record.options.limitSize) {
+		console.error(t('ngform.item.upload.error_max_size') + (props.record.options.limitSize) + "MB!")
+		return false
+	}
+	return true
+}
+
+const isAssetTypeAnImage = (ext) => {
+	return ["png", "jpg", "jpeg", "bmp"].indexOf(ext.toLowerCase()) !== -1
+}
+
+const handleSuccess = (response, file, fileList_param) => {
+	const responseFileUrl_val = uploadResponseFileUrl.value
+	const fileUrl = objectPath.get(response, responseFileUrl_val)
+
+	if (fileUrl) {
+		const uploadData = {
+			name: file.name,
+			size: file.size,
+			url: fileUrl
+		}
+
+		// 文件id
+		if (uploadResponseFileId.value) {
+			const fileId = objectPath.get(response, uploadResponseFileId.value)
+			uploadData['id'] = fileId
+		}
+
+		props.value.push(uploadData)
+		emit("update:value", props.value)
+		file.url = fileUrl
 	}
 }
+
+const handleRemove = (file, fileList_param) => {
+	const name = file.name
+	const deleteIndex = fileList_param.findIndex(t => t.name == name)
+
+	props.value.splice(deleteIndex, 1)
+	emit("update:value", props.value)
+}
+
+const handlePreview = (file) => {
+	console.log('handlePreview file', file)
+	fileDown(file)
+}
+
+const reviewDown = (file) => {
+	console.log('reviewDown', file)
+	handlePreview(file)
+}
+
+const fileDown = (file) => {
+	console.log('file', file)
+	console.log('fileurl', file.url)
+	if (file.url) {
+		console.log('this.image', props.image)
+		if (props.image) {
+			dialogVisible.value = true
+			dialogImageUrl.value = file.url
+		} else {
+			window.open(file.url)
+		}
+	} else {
+		console.error(t('ngform.item.upload.error_not_found_file'))
+	}
+}
+
+// Lifecycle
+onMounted(() => {
+	if (props.value == null || props.value == undefined) {
+		fileList.value = []
+	} else {
+		fileList.value = props.value
+	}
+})
 </script>
+
 <style>
 .ng-form-upload.upload .el-upload {
 	display: none;
 }
 
-.ng-form-image-preview{
+.ng-form-image-preview {
 	height: 400px;
-  width: 100%;
-  text-align: center;
-	
+	width: 100%;
+	text-align: center;
 }
 
-.ng-form-image-preview   img{
+.ng-form-image-preview img {
 	height: 400px;
-  width: auto; 
-	
+	width: auto;
 }
-
 </style>

@@ -1,7 +1,7 @@
 <template> 
 <div class="form-panel" > 
      
-    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0" :class="[arrow ? 'arrow_open' : 'arrow_hidden']" :key="formKey">
+    <p class="no-data-text" v-if="!formTemplate || !formTemplate.list || formTemplate.list.length === 0" :class="[arrow ? 'arrow_open' : 'arrow_hidden']" :key="i18nKeyValue">
       <!-- 从左侧选择组件添加 -->
       {{t('ngform.select_item')}}
     </p>
@@ -34,7 +34,7 @@
 	          <template #item="{element}">
 	               
 	            <NgFormNode
-						       :key="element.key" 
+						       :key="element.key + i18nKeyValue"
 				        		class="drag-move"  
 				            	:record="element"
 				            	:isDrag="true"
@@ -52,87 +52,83 @@
 	</el-form> 
 </div> 
 </template>
-<script> 
-//import cloneDeep from 'lodash/cloneDeep'
-import { cloneDeep , cloneDeepAndFormat } from '../../utils/index.js'
-import Bus from '../../utils/bus.js' 
-import draggable from "vuedraggable"
+<script setup>
+import { ref, onMounted, onUnmounted, inject, computed } from 'vue'
+import { cloneDeep, cloneDeepAndFormat } from '../../utils/index.js'
+import Bus from '../../utils/bus.js'
+import draggable from 'vuedraggable'
 import NgFormNode from './node.vue'
-import LocalMixin from '../../locale/mixin.js'
-export default {
-	mixins: [LocalMixin],
-	name: 'ng-form-container' ,
-	components:{
-		NgFormNode,
-		draggable
-	},
-	data(){
-		return {
-			 formKey: '1',
-			 models: {}
-		}
-	},
-	props: {
-		formTemplate: {
-			type: Object ,
-			required: true
-		},
-		selectItem: {
-			type: Object
-		},
-		arrow: {
-			type: Boolean,
-			default: false
-		}
-	}, 
-	mounted() {
-    
-    Bus.on('i18nRefresh', () => { 
-      this.formKey = new Date().getTime()
-       
-    });
+import { useLocale } from '../../locale/mixin.js'
+
+// Props
+const props = defineProps({
+  formTemplate: {
+    type: Object,
+    required: true
   },
-	methods: {
-	 	dragEnd(evt, list) {   
-	 		// 复制一遍
-	 		const clone = cloneDeepAndFormat(this.formTemplate.list[evt.newIndex] , evt)
-	 		delete clone.icon 
-	 		this.formTemplate.list[evt.newIndex] = clone
+  selectItem: {
+    type: Object
+  },
+  arrow: {
+    type: Boolean,
+    default: false
+  }
+})
 
-	 		 
- 			this.$emit("update:formTemplate", this.formTemplate);
-		  // 拖拽结束,自动选择拖拽的控件项 
-		  this.handleSelectItem(this.formTemplate.list[evt.newIndex])
-	  },
-	  	handleSelectItem(record) {
-	    	this.$emit('handleSelectItem' , record)
-	  	},
-	  	handleCopy(item){ 
-	  		const nitem = cloneDeepAndFormat(item)
-	  		const key = item.type + "_" + new Date().getTime() 
-	  		nitem.key = key
-	  		nitem.model = key
- 
-	  		// 找到index 插入
-	  		const oindex = this.formTemplate.list.findIndex(t=>t.key == item.key)
-	   
-	  		if(oindex >= 0) {
-	  			// insert 
-	  			this.formTemplate.list.splice(oindex + 1 , 0, nitem)
+// Emits
+const emit = defineEmits(['handleSelectItem', 'update:formTemplate'])
 
-	  		}
+// Inject i18nKey from parent
+const i18nKey = inject('i18nKey', ref('default'))
 
-	  	},
-	  	handleDetele(item) {
-	  		const oindex = this.formTemplate.list.findIndex(t=>t.key == item.key)
-	  		if(oindex >= 0) {
-	  			this.formTemplate.list.splice(oindex , 1);
+// Computed
+const i18nKeyValue = computed(() => i18nKey.value)
 
-	  			// 当前selectItem重置
-	  			this.handleSelectItem(undefined)
-	  		}
-	  	}
-	}
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Data
+const models = ref({})
+
+// Methods
+const dragEnd = (evt, list) => {
+  // 复制一遍
+  const clone = cloneDeepAndFormat(props.formTemplate.list[evt.newIndex], evt)
+  delete clone.icon
+  props.formTemplate.list[evt.newIndex] = clone
+
+  emit("update:formTemplate", props.formTemplate)
+  // 拖拽结束,自动选择拖拽的控件项
+  handleSelectItem(props.formTemplate.list[evt.newIndex])
+}
+
+const handleSelectItem = (record) => {
+  emit('handleSelectItem', record)
+}
+
+const handleCopy = (item) => {
+  const nitem = cloneDeepAndFormat(item)
+  const key = item.type + "_" + new Date().getTime()
+  nitem.key = key
+  nitem.model = key
+
+  // 找到index 插入
+  const oindex = props.formTemplate.list.findIndex(t => t.key == item.key)
+
+  if (oindex >= 0) {
+    // insert
+    props.formTemplate.list.splice(oindex + 1, 0, nitem)
+  }
+}
+
+const handleDetele = (item) => {
+  const oindex = props.formTemplate.list.findIndex(t => t.key == item.key)
+  if (oindex >= 0) {
+    props.formTemplate.list.splice(oindex, 1)
+
+    // 当前selectItem重置
+    handleSelectItem(undefined)
+  }
 }
 </script>
 <style>

@@ -1,10 +1,11 @@
-<template>  
-<div 
+<template>
+<div
   :class="[
-    'ng-base-batch', 
-    record.options.customClass ? record.options.customClass : '' 
-  ]" 
-  :style="record.options.customStyle" 
+    'ng-base-batch',
+    record.options.customClass ? record.options.customClass : ''
+  ]"
+  :style="record.options.customStyle"
+  :key="'batch-' + record.key + localeKey"
   >
   <template v-if="isDragPanel">
     <el-row :gutter="20">
@@ -44,55 +45,95 @@
   </template> 
 </div>
 </template>
-<script> 
-import { defineComponent } from 'vue';
+<script setup>
+import { onBeforeMount, inject } from 'vue'
+import { useFormItem } from '../../mixin.js'
+import { useLocale } from '../../../../locale/mixin.js'
 import TableBuild from './build/index.vue'
-//import cloneDeep from 'lodash/cloneDeep'
-import { cloneDeep } from '../../../../utils/index.js'
-import draggable from "vuedraggable"
-import mixin from '../../mixin.js'
-export default defineComponent({
-	mixins: [mixin] , 
-  components: {
-    TableBuild,draggable
+import draggable from 'vuedraggable'
+
+// Props
+const props = defineProps({
+  record: {
+    type: Object,
+    required: true
   },
-  created() {
-    // 赋予一个空的默认值
-     this.updateArrayDefaultValue()
+  models: {
+    type: Object,
+    default: () => { return {} }
   },
-  methods: {
-    dragEnd(evt, list) {   
-      // 拖拽结束,自动选择拖拽的控件项
-      //this.handleSelectItem(list[evt.newIndex])
-      const clone = this.cloneDeepAndFormat(list[evt.newIndex])
-      
-      list[evt.newIndex] = clone
-     // this.$set(list , evt.newIndex , clone)
-      this.handleSelectItem(clone)
-    },
-    handleCopy(item){ 
-      const nitem = this.cloneDeepAndFormat(item)
-      const key = item.type + "_" + new Date().getTime() 
-      nitem.key = key
-      nitem.model = key
-
-      // 找到index 插入
-      const oindex = this.record.list.findIndex(t=>t.key == item.key)
-     
-      if(oindex >= 0) {
-        // insert 
-        this.record.list.splice(oindex + 1 , 0, nitem)
-
-      }
-
-    },
-    handleDetele(item) {
-      const oindex = this.record.list.findIndex(t=>t.key == item.key)
-      if(oindex >= 0) {
-        this.record.list.splice(oindex , 1);
-      }
-    }
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  preview: {
+    type: Boolean,
+    default: false
+  },
+  isDragPanel: {
+    type: Boolean,
+    default: false
+  },
+  selectItem: {
+    type: Object
+  },
+  propPrepend: {
+    type: String
   }
+})
+
+// Emits
+const emit = defineEmits(['handleSelectItem', 'handleBlur', 'handleFocus'])
+
+// Injects
+const configInject = inject('configC', null)
+const ngConfig = inject('$ngofrm_config', {})
+
+// 使用 useLocale 获取 locale key 用于响应式语言切换
+const { locale } = useLocale()
+const localeKey = locale
+
+// 使用 useFormItem composable
+const {
+  cloneDeepAndFormat,
+  updateArrayDefaultValue,
+  handleSelectItem
+} = useFormItem(props, props.models, emit)
+
+// Methods
+const dragEnd = (evt, list) => {
+  // 拖拽结束,自动选择拖拽的控件项
+  const clone = cloneDeepAndFormat(list[evt.newIndex])
+  list[evt.newIndex] = clone
+  handleSelectItem(clone)
+}
+
+const handleCopy = (item) => {
+  const nitem = cloneDeepAndFormat(item)
+  const key = item.type + "_" + new Date().getTime()
+  nitem.key = key
+  nitem.model = key
+
+  // 找到index 插入
+  const oindex = props.record.list.findIndex(t => t.key == item.key)
+
+  if (oindex >= 0) {
+    // insert
+    props.record.list.splice(oindex + 1, 0, nitem)
+  }
+}
+
+const handleDetele = (item) => {
+  const oindex = props.record.list.findIndex(t => t.key == item.key)
+  if (oindex >= 0) {
+    props.record.list.splice(oindex, 1)
+  }
+}
+
+// Lifecycle
+onBeforeMount(() => {
+  // 赋予一个空的默认值
+  updateArrayDefaultValue()
 })
 </script>
 <!-- <style lang="scss">

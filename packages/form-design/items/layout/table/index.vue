@@ -1,12 +1,13 @@
 <!-- 弹性容器 -->
-<template>  
+<template>
   <div
         :class="[
-          'ng-table-controller', 
+          'ng-table-controller',
           record.options.customClass ? record.options.customClass : '' ,
           record.options && record.options.bordered ? 'controller-bordered' : ''
-        ]" 
-        :style="record.options.customStyle" 
+        ]"
+        :style="record.options.customStyle"
+        :key="'table-' + record.key + localeKey"
       >
      
         
@@ -33,29 +34,64 @@
         
   </div>
 </template>
-<script>
- 
+<script setup>
+import { ref, inject } from 'vue'
+import { useFormItem } from '../../mixin.js'
+import { useLocale } from '../../../../locale/mixin.js'
 import Build from './build.vue'
-import Design from './design.vue' 
-import mixin from '../../mixin.js'
-export default {
-	mixins: [mixin] ,
-  components: {
-    Build , Design
-  },
-  data() {
-    return {
-      showRightMenu: false,
-      selectControlIndex: undefined
-    }
-  }, 
-  methods: {
-    handleSelectItem(item) { 
+import Design from './design.vue'
 
-      this.$emit('handleSelectItem' , item)
-    },
-   
+// Props
+const props = defineProps({
+  record: {
+    type: Object,
+    required: true
+  },
+  models: {
+    type: Object,
+    default: () => { return {} }
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  preview: {
+    type: Boolean,
+    default: false
+  },
+  isDragPanel: {
+    type: Boolean,
+    default: false
+  },
+  selectItem: {
+    type: Object
+  },
+  propPrepend: {
+    type: String
   }
+})
+
+// Emits
+const emit = defineEmits(['handleSelectItem', 'handleBlur', 'handleFocus'])
+
+// Injects
+const configInject = inject('configC', null)
+const ngConfig = inject('$ngofrm_config', {})
+
+// 使用 useLocale 获取 locale key 用于响应式语言切换
+const { locale } = useLocale()
+const localeKey = locale
+
+// 使用 useFormItem composable
+const {} = useFormItem(props, props.models, emit)
+
+// Data
+const showRightMenu = ref(false)
+const selectControlIndex = ref(undefined)
+
+// Methods
+const handleSelectItem = (item) => {
+  emit('handleSelectItem', item)
 }
 </script>
 <style>

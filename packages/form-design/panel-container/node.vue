@@ -4,13 +4,13 @@
    >  
     <div :class="{ 'active': selectItem && record.key === selectItem.key , 'drag-box': isDrag , 'node-item': isDrag}"  @click.stop="handleSelectItem(record)">
       <div  class="form-item-box" style="height: 100%;width: 100%;">
-        <Item 
+        <Item
           :models="models"
           :record="record"
-          :isDragPanel="isDrag"    
+          :isDragPanel="isDrag"
           :selectItem="selectItem"
           :preview="preview"
-          :key="refreshKey" 
+          :key="refreshKey + locale"
           :prop-prepend="propPrepend"
           @submit="$emit('submit')"
           @reset="$emit('reset')"
@@ -46,79 +46,100 @@
     </div>
   </el-col>
 </template>
-<script> 
- 
-import Item from "../items/index.vue"
-import LocalMixin from '../../locale/mixin.js' 
-export default {
-  name: 'ng-form-node',
-  mixins: [LocalMixin],
-  components: {
-    Item 
-  },
-  props: {    
-    record: {
-      type: Object,
-      required: true
-    },
-    selectItem: {
-      type: Object,
-      default: () => {}
-    }, 
-    // 当前是否拖拽面板
-    isDrag: {
-      type: Boolean,
-      default: true
-    },
-    preview: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    models: {
-      type: Object ,
-      default: ()=>{return {}}
-    }, 
-    propPrepend: {
-      type: String,
-      default: ''
-    }
-  },
-  data(){
-    return { 
-      refreshKey: 1    
-    }
-  }, 
-  computed: {
-     
-  },
-  created(){
-    if(this.record.type == 'controller' && !this.record.list) {
-      //this.$set(this.record , 'list' , [])
-      this.record['list'] = []
-    }
-  },
-  activated() {     
-     
-  },
-  mounted(){
-   
-    
-  },
-  methods: {  
-    handleSelectItem(rec,index) {
-    
-      this.$emit('handleSelectItem' , rec , index+1)
-    },
-    handleRefresh(){
-      this.refreshKey++
-    } 
-  }
 
-};
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ng-form-node'
+})
+</script>
+
+<script setup>
+import { ref, onBeforeMount, onMounted, onActivated, onUnmounted } from 'vue'
+import Item from "../items/index.vue"
+import { useLocale } from '../../locale/mixin.js'
+import Bus from '../../utils/bus.js'
+
+// Props
+const props = defineProps({
+  record: {
+    type: Object,
+    required: true
+  },
+  selectItem: {
+    type: Object,
+    default: () => ({})
+  },
+  // 当前是否拖拽面板
+  isDrag: {
+    type: Boolean,
+    default: true
+  },
+  preview: {
+    type: Boolean,
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  models: {
+    type: Object,
+    default: () => { return {} }
+  },
+  propPrepend: {
+    type: String,
+    default: ''
+  }
+})
+
+// Emits
+const emit = defineEmits(['handleSelectItem', 'handleCopy', 'handleDetele', 'submit', 'reset'])
+
+// 使用 useLocale composable，获取 locale 用于强制刷新
+const { t, locale } = useLocale()
+
+// Data
+const refreshKey = ref(1)
+
+// 监听 i18nRefresh 事件
+const handleI18nRefresh = () => {
+  refreshKey.value++
+}
+
+// Lifecycle
+onMounted(() => {
+  Bus.on('i18nRefresh', handleI18nRefresh)
+})
+
+onUnmounted(() => {
+  Bus.off('i18nRefresh', handleI18nRefresh)
+})
+
+// Lifecycle
+onBeforeMount(() => {
+  if (props.record.type == 'controller' && !props.record.list) {
+    props.record['list'] = []
+  }
+})
+
+onActivated(() => {
+  // activated 逻辑
+})
+
+onMounted(() => {
+  // mounted 逻辑
+})
+
+// Methods
+const handleSelectItem = (rec, index) => {
+  emit('handleSelectItem', rec, index + 1)
+}
+
+const handleRefresh = () => {
+  refreshKey.value++
+}
 </script>
 <style>
 .node-item {

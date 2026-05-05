@@ -31,87 +31,96 @@
 		</el-col> 
 	</el-row>	 
 
-  <Preview v-if="previewVisible" ref="preview" />
-  <Code v-if="codeVisible" ref="code" @imp="importData" />
+  <Preview v-if="previewVisible" ref="previewRef" />
+  <Code v-if="codeVisible" ref="codeRef" @imp="importData" />
 </div>
 </template>
-<script>
+<script setup>
+import { ref, nextTick } from 'vue'
+import { ElMessageBox } from 'element-plus'
 import Preview from './preview.vue'
 import Code from './code.vue'
-import LocalMixin from '../../locale/mixin.js'
-export default{
-	mixins: [LocalMixin],
-	components: {
-		Preview,
-		Code
-	},
-	data() {
-		return {
-			previewVisible: false,
-			codeVisible: false
-		}
-	},
-	props: {
-		formTemplate: {
-			type: Object
-		},
-		// 按钮显示隐藏 
-	  clear: {
-	    type: Boolean ,
-	    default: true
-	  },
-	  preview: {
-	    type: Boolean ,
-	    default: true
-	  },
-	  reder: {
-	    type: Boolean ,
-	    default: true
-	  },
-	  imp: {
-	    type: Boolean ,
-	    default: true
-	  },
-	  exp: {
-	    type: Boolean ,
-	    default: true
-	  }
-	},
-	methods: {
-		handleClear() {
-			this.$confirm(this.t('ngform.header.clear_prompt'), this.t('ngform.header.prompt'), {
-          confirmButtonText: this.t('ngform.confirm'),
-          cancelButtonText: this.t('ngform.cancel'),
-          type: 'warning'
-      }).then(() => {
-        //this.$set(this.formTemplate , 'list' , [])
-        this.formTemplate['list'] = []
-      })
-			
-		},
-		handlePreview() {
-			this.previewVisible = true 
-			this.$nextTick(()=> {
-				this.$refs.preview.init(this.formTemplate)
-			})
-		},
-		handleImport() {
-			this.codeVisible = true 
-			this.$nextTick(()=> {
-				this.$refs.code.init(this.formTemplate , true)
-			})
-		},
-		// 外部导入
-		importData(codes) {
-			this.$emit('importData' , codes)
-		},
-		handleExport() {
-			this.codeVisible = true 
-			this.$nextTick(()=> {
-				this.$refs.code.init(this.formTemplate)
-			})
-		}
-	}
+import { useLocale } from '../../locale/mixin.js'
+
+// Props
+const props = defineProps({
+  formTemplate: {
+    type: Object
+  },
+  // 按钮显示隐藏
+  clear: {
+    type: Boolean,
+    default: true
+  },
+  preview: {
+    type: Boolean,
+    default: true
+  },
+  reder: {
+    type: Boolean,
+    default: true
+  },
+  imp: {
+    type: Boolean,
+    default: true
+  },
+  exp: {
+    type: Boolean,
+    default: true
+  }
+})
+
+// Emits
+const emit = defineEmits(['importData'])
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Data
+const previewVisible = ref(false)
+const codeVisible = ref(false)
+const previewRef = ref(null)
+const codeRef = ref(null)
+
+// Methods
+const handleClear = () => {
+  ElMessageBox.confirm(
+    t('ngform.header.clear_prompt'),
+    t('ngform.header.prompt'),
+    {
+      confirmButtonText: t('ngform.confirm'),
+      cancelButtonText: t('ngform.cancel'),
+      type: 'warning'
+    }
+  ).then(() => {
+    props.formTemplate['list'] = []
+  })
+}
+
+const handlePreview = () => {
+  previewVisible.value = true
+  nextTick(() => {
+    previewRef.value.init(props.formTemplate)
+  })
+}
+
+const handleImport = () => {
+  codeVisible.value = true
+  nextTick(() => {
+    codeRef.value.init(props.formTemplate, true)
+  })
+}
+
+// 外部导入
+const importData = (codes) => {
+  emit('importData', codes)
+}
+
+const handleExport = () => {
+  codeVisible.value = true
+  nextTick(() => {
+    codeRef.value.init(props.formTemplate)
+  })
 }
 </script>
 <style>

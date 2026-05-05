@@ -4,9 +4,9 @@ cascader没有数据字典
 -->
 <template>
 <el-form   size="small" label-width="80px" label-position="right">
- 
+
 	<el-form-item  :label="t('ngform.item.datasource')" >
-    <el-select clearable v-model="selectItem.options.dynamic" :placeholder="t('ngform.properties.select')" style="width:100%"> 
+    <el-select clearable v-model="selectItem.options.dynamic" :placeholder="t('ngform.properties.select')" style="width:100%">
 	    <el-option :label="t('ngform.item.datasource_static')" :value="0"></el-option>
       <el-option :label="t('ngform.item.datasource_api')" :value="1"></el-option>
       <el-option :label="t('ngform.item.datasource_dict')"  :value="2" v-if="hasDict"></el-option>
@@ -20,14 +20,14 @@ cascader没有数据字典
       </el-radio-group>
     </el-form-item>
     <el-form-item  :label="t('ngform.properties.data')"  v-if="selectItem.options.methodType == 'post'">
-      <el-input type="textarea" :placeholder="t('ngform.properties.method_post_tip')" size="small" v-model="selectItem.options.dynamicPostData"> 
+      <el-input type="textarea" :placeholder="t('ngform.properties.method_post_tip')" size="small" v-model="selectItem.options.dynamicPostData">
       </el-input>
     </el-form-item>
   </template>
- <el-divider>{{t('ngform.properties.data_config')}}</el-divider> 
+ <el-divider>{{t('ngform.properties.data_config')}}</el-divider>
 
   <el-form-item label-width="0px" >
-    <!-- 远程赋值配置 --> 
+    <!-- 远程赋值配置 -->
     <div v-if="selectItem.options.dynamic == 1">
       <el-input size="small" v-model="selectItem.options.remoteFunc">
         <template #prepend>{{t('ngform.item.datasource_api')}}</template>
@@ -40,13 +40,13 @@ cascader没有数据字典
       </el-input>
       <el-input size="small" v-model="selectItem.options.remoteLabel">
         <template #prepend>{{t('ngform.item.filed_label')}}</template>
-      </el-input> 
+      </el-input>
       <el-input size="small" v-if="selectItem.type == 'cascader'" v-model="selectItem.options.remoteChildren">
         <template #prepend>{{t('ngform.item.filed_children')}}</template>
-      </el-input> 
-    </div>  
+      </el-input>
+    </div>
     <div v-else-if="selectItem.options.dynamic == 2">
-      <el-autocomplete 
+      <el-autocomplete
         v-model="selectItem.options.dictType"
         :fetch-suggestions="queryDictSearch"
         value-key="type"
@@ -55,82 +55,85 @@ cascader没有数据字典
       >
         <template #prepend>{{t('ngform.item.dict_type')}}</template>
         <template #default="{ item }">
-          <span class="name">{{ item.type }}</span> 
+          <span class="name">{{ item.type }}</span>
         </template>
       </el-autocomplete>
     </div>
     <!-- 本地赋值 -->
-    <template v-if="selectItem.options.dynamic == 0" >  
+    <template v-if="selectItem.options.dynamic == 0" >
       <KvListChildren v-if="selectItem.type == 'cascader'" :value="selectItem.options.options" />
-      <KvList v-else :value="selectItem.options.options" /> 
+      <KvList v-else :value="selectItem.options.options" />
     </template>
-    
+
   </el-form-item>
   <slot name="defaultValue"> </slot>
-  <el-divider></el-divider> 
+  <el-divider></el-divider>
 </el-form>
 </template>
+
 <script>
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'datasource-config'
+})
+</script>
+
+<script setup>
+import { inject, computed } from 'vue'
 import KvList from '../../../../ng-form/kv-list.vue'
 import KvListChildren from '../../../../ng-form/kv-list-children.vue'
-import LocalMixin from '../../../../locale/mixin.js'
+import { useLocale } from '../../../../locale/mixin.js'
 import { getDictCache } from '../../../../utils/cache.js'
 
+// 使用 useLocale composable
+const { t } = useLocale()
 
+// Props
+const props = defineProps({
+	selectItem: {
+		type: Object
+	}
+})
 
-export default {
-  mixins: [LocalMixin],
-  components: {
-    KvList , KvListChildren
-  },
-	props: {
-		selectItem: {
-			type: Object
-		}
-	},
-	computed: {
-    dicts() {
-      const dict = getDictCache()
-      return dict 
-    },
-		hasDict() { 
-      const dict = this.dicts
+// Inject
+const ngConfig = inject('ngConfig', {})
 
-      return dict && dict.length > 0 && this.selectItem && this.selectItem.type != 'cascader'
-    }
-	},
-  inject: {
-    ngConfig: {
-      from: 'ngConfig',
-      default: ()=> ({})
-    },
-  },
-  methods: {
-    	queryDictSearch(queryString, cb) {
-      		//const dicts = this.ngConfig && this.ngConfig.dict && this.ngConfig.dict.length > 0 ? this.ngConfig.dict : null
+// Computed
+const dicts = computed(() => {
+  const dict = getDictCache()
+  return dict
+})
 
-          const dicts = this.dicts // getCache('dict')
-          
-      		if(!dicts || dicts.length == 0) {
-        		cb([])
-      		}
+const hasDict = computed(() => {
+  const dict = dicts.value
+  return dict && dict.length > 0 && props.selectItem && props.selectItem.type != 'cascader'
+})
 
-      		const ls = {}
-      		const types = []
-      		dicts.forEach(t=> {
-        		const type = t.type 
-        		if(!ls[type]) {
-          			ls[type] = type  
-          			types.push(t)
-        		} 
-      		})
+// Methods
+const queryDictSearch = (queryString, cb) => {
+  const dictsLocal = dicts.value
 
-      		// 关键字过滤
-      		const fs = types.filter(t=> t.type.indexOf(queryString) >= 0)
-      
-      		cb(fs)
-
-    	},
+  if (!dictsLocal || dictsLocal.length == 0) {
+    cb([])
   }
+
+  const ls = {}
+  const types = []
+  dictsLocal.forEach(t => {
+    const type = t.type
+    if (!ls[type]) {
+      ls[type] = type
+      types.push(t)
+    }
+  })
+
+  // 关键字过滤
+  const fs = types.filter(t => t.type.indexOf(queryString) >= 0)
+
+  cb(fs)
+}
+
+const handleDictSelect = (item) => {
+  // 可以在这里处理选择后的逻辑
 }
 </script>

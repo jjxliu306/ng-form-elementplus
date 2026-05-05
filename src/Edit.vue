@@ -1,19 +1,19 @@
-
 <template>
-    <div style="padding: 20px;">  
-        <ng-form-build  ref="formBuild" :models="models" :config="config" :formTemplate="form" />
+	<div style="padding: 20px;">
+		<ng-form-build ref="formBuild" :models="models" :config="config" :formTemplate="form" />
 
-        <div style="text-align: center;"> 
-      		<el-button type="primary" size="mini" @click="dataFormSubmit()">提交</el-button>
-        </div>
-    </div> 
+		<div style="text-align: center;">
+			<el-button type="primary" size="mini" @click="dataFormSubmit()">提交</el-button>
+		</div>
+	</div>
 </template>
-<script>
-export default { 
-   	data() {
-    	return { 
-    		form: {
-	 		 
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const formBuild = ref(null)
+
+const form = ref({
 	"list": [
 		{
 			"type": "input",
@@ -34,9 +34,7 @@ export default {
 				{
 					"required": false,
 					"message": "必填项",
-					"trigger": [
-						"blur"
-					]
+					"trigger": ["blur"]
 				}
 			],
 			"dynamicLabel": false
@@ -73,9 +71,7 @@ export default {
 				{
 					"required": false,
 					"message": "必填项",
-					"trigger": [
-						"blur"
-					]
+					"trigger": ["blur"]
 				}
 			],
 			"dynamicLabel": false
@@ -91,22 +87,20 @@ export default {
 		"labelSuffix": "",
 		"customStyle": ""
 	}
- 
-			},
+})
 
-    		config: {
-    			httpConfig: (config)=>{ 
-    				config.baseURL = 'https://www.netopt.net/netopt-admin'
-    				if(config.headers) {
-    					config.headers['aaaa'] = 'bbbb'
-    				}
-		          	
-		          	return config 
-		        },
-    		},
-    		// 标记历史数据 
-    		models: {
+const config = ref({
+	httpConfig: (config) => {
+		config.baseURL = 'https://www.netopt.net/netopt-admin'
+		if(config.headers) {
+			config.headers['aaaa'] = 'bbbb'
+		}
+		return config
+	},
+})
 
+// 标记历史数据
+const models = ref({
 	"aaa": "111",
 	"bbb": [
 		{
@@ -115,30 +109,22 @@ export default {
 			"url": "https://www.netopt.net/group1/M00/01/0A/rBEADGbnkJGAQFsXAAAJ9SlyAXg279.png"
 		}
 	]
- 
-    		}
-    	} 
-    },
-    created(){
-    	 
+})
 
-    	const this_ = this 
-    	setTimeout(()=> {
-    		const ms = {
-    			   aaa: '2222',
-    			   bbb: []
-    		}
+// 生命周期 - created → onMounted
+onMounted(() => {
+	setTimeout(() => {
+		const ms = {
+			aaa: '2222',
+			bbb: []
+		}
+		models.value = ms
+	}, 2000)
+})
 
-    		this_.models = ms
-
-    	} , 2000)
-    },
-    methods: {
-    	dataFormSubmit() {
-    		const models = this.$refs.formBuild.getData()
-
-    		console.log('表单提交:' , JSON.stringify(models))
-    	}
-    }
+// 方法
+const dataFormSubmit = () => {
+	const formData = formBuild.value.getData()
+	console.log('表单提交:', JSON.stringify(formData))
 }
 </script>

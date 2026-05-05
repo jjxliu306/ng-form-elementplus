@@ -3,17 +3,17 @@
 -->
 
 <template>
-  <div class="ng-properties-linkage"> 
+  <div class="ng-properties-linkage">
     <el-row  :gutter="8">
-     
+
       <span v-for="(val, index) in value" :key="index">
         <div class="linkage-box"  >
           <el-col :span="21" >
-            
+
               {{index+1}}、
               <el-radio v-model="val.vtype" :label="1">{{t('ngform.item.local')}}</el-radio>
               <el-radio v-model="val.vtype" :label="2">{{t('ngform.item.remote')}}</el-radio>
-            
+
           </el-col>
           <el-col :span="21" >
             <el-input size="small" v-model="val.model" :placeholder="t('ngform.item.linkage_column')">
@@ -22,11 +22,11 @@
           </el-col>
           <el-col :span="21">
             <template v-if="val.vtype == 1">
-               {{t('ngform.properties.script')}}: 
+               {{t('ngform.properties.script')}}:
               <el-input size="small"   type="textarea" v-model="val.script" placeholder="表达式,eg: $item.value>$.age . 其中$item表示当前数据中具体一条数据,$表示当前整个表单数据" />
 
             </template>
-           
+
             <el-row v-else-if="val.vtype == 2">
               <el-col :span="12">
                 <el-input size="small" v-model="val.queryKey" placeholder="query key" />
@@ -47,55 +47,60 @@
       </span>
       <el-col v-if="!disabled" :span="24"><el-button type="primary" size="small" @click="handleAdd">{{t('ngform.properties.add')}}</el-button></el-col>
     </el-row>
-     
+
   </div>
 </template>
-<script>
-import LocalMixin from '../../../../locale/mixin.js' 
-export default {
-  mixins: [LocalMixin],
-  name: "ng-properties-linkage",
-  props: {
-    value: {
-      type: Array,
-      default: ()=> [],
-      required: true
-    },
-     
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    
-  },
-  methods: {
-     
-    handleAdd() {
-      
 
-      this.value.push({
-         vtype: 1,
-          //validator: 'validatorFiled',
-          model: "",
-          script: "",
-          queryKey: "",
-          queryValue: ""
-      })
- 
-      this.$emit("update:value", this.value); 
-    },
-    handleDelete(deleteIndex) {
-      this.value.splice(deleteIndex,1)
-      this.$emit(
-        "update:value",
-        this.value
-      )
-      
-    },
-      
+<script>
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'ng-properties-linkage'
+})
+</script>
+
+<script setup>
+import { Delete } from '@element-plus/icons-vue'
+import { useLocale } from '../../../../locale/mixin.js'
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Props
+const props = defineProps({
+  value: {
+    type: Array,
+    default: () => [],
+    required: true
+  },
+
+  disabled: {
+    type: Boolean,
+    default: false
   }
-};
-</script> 
+})
+
+// Emits
+const emit = defineEmits(['update:value'])
+
+// Methods
+const handleAdd = () => {
+  props.value.push({
+     vtype: 1,
+      model: "",
+      script: "",
+      queryKey: "",
+      queryValue: ""
+  })
+
+  emit("update:value", props.value)
+}
+
+const handleDelete = (deleteIndex) => {
+  props.value.splice(deleteIndex, 1)
+  emit("update:value", props.value)
+}
+</script>
+
 <style>
 .ng-properties-linkage .el-col {
   float: left;

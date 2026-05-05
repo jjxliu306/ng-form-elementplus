@@ -1,10 +1,10 @@
-<template>  
-  <div v-if="!preview" :style="`width:${record.width}`">  
+<template>
+  <div v-if="!preview" :style="`width:${record.width || '100%'}`" :key="'select-' + record.key + localeKey">  
      <el-select 
       v-if="record.options.multiple"
         v-model="models[record.model]"
         :value-key="itemValue"
-        :style="`width:${record.width}`"
+        :style="`width:${record.width || '100%'}`"
         :loading="loading"
         :remote="showRemote"
         :remote-method="remoteFilterMethod"
@@ -64,106 +64,165 @@
     {{models[record.model+'_label']}}  
   </span>
 </template>
-<script>
-import mixin from './datasource-mixin.js'
-export default {
-  mixins: [mixin],
-  data() {
-    return {
-      loading: false,
-      itemProp: {
-            children: 'children',
-            value: 'value',
-            label: 'label',
-            multiple: this.record.options.multiple 
-      },
-      // 2021-03-13 如果该字段带有本地数据过滤,则这里保存本地过滤的过滤条件
-      localFilter: [],
-    }
+<script setup>
+import { ref, computed, onBeforeMount, inject } from 'vue'
+import { useDataSource } from './datasource-mixin.js'
+import { useLocale } from '../../../../locale/mixin.js'
+
+// Props
+const props = defineProps({
+  record: {
+    type: Object,
+    required: true
   },
-  computed: {
-    itemValue() {
-      if(!this.itemProp.value) return 'value'
-      return this.itemProp.value
-    },
-    itemLabel() {
-      if(!this.itemProp.label) return 'label'
-      return this.itemProp.label
-    },
-    selectList() {
-      if(this.record.options.dynamic == 1 && this.record.options.remoteFunc) {
-        return this.checkValues
-      } else if(this.record.options.dynamic == 2 && this.record.options.dictType) {
-        return this.checkValues
-      } else {
-        return this.record.options.options
-      }
-      // (record.options.dynamic == 1 && record.options.remoteFunc) || (record.options.dynamic == 2 && record.options.dictType) ? checkValues : record.options.options
-    },
-    showRemote() {
-      if(this.record.options.onlineSearch && this.record.options.showSearch && this.record.options.onlineSearchQuery){
-        return true
-      } else {
-        return false
-      }
-      
-    }
+  models: {
+    type: Object,
+    default: () => { return {} }
   },
-  created () { 
-    //this.updateSimpleDefaultValue()
-    if(!this.record.options) return 
-    // 初始化一个绑定空值 
-    if(this.record.options.multiple) {
-      this.updateArrayDefaultValue()
-    } else {
-      this.updateSimpleDefaultValue()
-    }
-
-
-    // 判断如果是远程方法的话 远程请求数据
-    this.initDynamicValue()
-
-    // 判断是否有联动关联需要处理 
-    if(this.linkageData) {
-      this.linkageDataHandle(false)
-    }
-
-    // 判断如果已经有了值 但没有label 则尝试回填label 
-    const value = this.models[this.record.model]
-    if(value && value.length > 0) {
-      this.handleChange(value)
-    }
+  disabled: {
+    type: Boolean,
+    default: false
   },
-  methods: {
-     remoteFilterMethod(queryValue) {
-      if (queryValue) {
-          
+  preview: {
+    type: Boolean,
+    default: false
+  },
+  isDragPanel: {
+    type: Boolean,
+    default: false
+  },
+  selectItem: {
+    type: Object
+  },
+  propPrepend: {
+    type: String
+  }
+})
 
-          if(!this.record || !this.record.options) return
-          let queryParam = this.record.options.onlineSearchQuery
+// Emits
+const emit = defineEmits(['handleSelectItem', 'handleBlur', 'handleFocus'])
 
-          //this.loading = true;
- 
-          // this.$set(this.remoteFilter , queryParam , queryValue )
-          this.remoteFilter[queryParam] = queryValue
+// Injects
+const configInject = inject('configC', null)
+const ngConfig = inject('$ngofrm_config', {})
 
-          this.getRemoteData()
+// 使用 useLocale 获取 locale key 用于响应式语言切换
+const { locale } = useLocale()
+const localeKey = locale
 
-        
-      } 
-    },
-     // select 清除后回调
-    clearChange() {
-      // 2021-05-08 lyf 判断是否有清除后回调
-      if(!this.record.options.clearCb) {
-        return
-      }
+// 使用 useDataSource composable
+const {
+  recordDisabled,
+  checkValues,
+  updateArrayDefaultValue,
+  updateSimpleDefaultValue,
+  initDynamicValue,
+  handleFocus,
+  handleBlur,
+  linkageData,
+  linkageDataHandle,
+  handleChange,
+  itemVisible,
+  itemDisabled,
+  remoteFilter,
+  getRemoteData,
+  localFilter
+} = useDataSource(props, props.models, emit)
 
-      const cbScript = this.record.options.clearCb
-      const func =  '{' + cbScript + '}'
-      const Fn = new Function('$' , 'data', func)
-      Fn(this.models, this.data)
-    }
+// Data
+const loading = ref(false)
+const data = ref({})
+
+// Computed
+const itemProp = computed(() => ({
+  children: 'children',
+  value: 'value',
+  label: 'label',
+  multiple: props.record.options.multiple
+}))
+
+const itemValue = computed(() => {
+  if (!itemProp.value.value) return 'value'
+  return itemProp.value.value
+})
+
+const itemLabel = computed(() => {
+  if (!itemProp.value.label) return 'label'
+  return itemProp.value.label
+})
+
+const selectList = computed(() => {
+  if (props.record.options.dynamic == 1 && props.record.options.remoteFunc) {
+    return checkValues.value
+  } else if (props.record.options.dynamic == 2 && props.record.options.dictType) {
+    return checkValues.value
+  } else {
+    return props.record.options.options
+  }
+})
+
+const showRemote = computed(() => {
+  if (props.record.options.onlineSearch && props.record.options.showSearch && props.record.options.onlineSearchQuery) {
+    return true
+  } else {
+    return false
+  }
+})
+
+const getLabel = (v) => {
+  if (typeof v === 'function') {
+    return v()
+  }
+  return v
+}
+
+// Methods
+const remoteFilterMethod = (queryValue) => {
+  if (queryValue) {
+    if (!props.record || !props.record.options) return
+    const queryParam = props.record.options.onlineSearchQuery
+
+    remoteFilter.value[queryParam] = queryValue
+    getRemoteData()
   }
 }
+
+// select 清除后回调
+const clearChange = () => {
+  // 2021-05-08 lyf 判断是否有清除后回调
+  if (!props.record.options.clearCb) {
+    return
+  }
+
+  const cbScript = props.record.options.clearCb
+  const func = '{' + cbScript + '}'
+  const Fn = new Function('$', 'data', func)
+  Fn(props.models, data.value)
+}
+
+// Lifecycle
+onBeforeMount(() => {
+  if (!props.record.options) return
+
+  // 初始化一个绑定空值
+  if (props.record.options.multiple) {
+    updateArrayDefaultValue()
+  } else {
+    updateSimpleDefaultValue()
+  }
+
+  // 判断如果是远程方法的话 远程请求数据
+  initDynamicValue()
+
+  // 判断是否有联动关联需要处理
+  if (linkageData.value) {
+    linkageDataHandle(false)
+  }
+
+  // 判断如果已经有了值 但没有label 则尝试回填label
+  const value = props.models[props.record.model]
+  if (value && value.length > 0) {
+    handleChange(value)
+  }
+})
 </script>

@@ -1,5 +1,5 @@
-<template>  
-<el-row class="ng-layout-row" :gutter="record.options.gutter">
+<template>
+<el-row class="ng-layout-row" :gutter="record.options.gutter" :key="'grid-' + record.key + localeKey">
   <el-col
     class="ng-layout-col"
     v-for="(item, index) in record.columns"
@@ -52,60 +52,87 @@
   </el-col>
 </el-row>
 </template>
-<script>
-//import cloneDeep from 'lodash/cloneDeep'
-import { cloneDeep } from '../../../../utils/index.js'
-import draggable from "vuedraggable"
-import mixin from '../../mixin.js'
-export default {
-	mixins: [mixin] ,
-  components: {
-    draggable
+<script setup>
+import { inject } from 'vue'
+import { useFormItem } from '../../mixin.js'
+import { useLocale } from '../../../../locale/mixin.js'
+import draggable from 'vuedraggable'
+
+// Props
+const props = defineProps({
+  record: {
+    type: Object,
+    required: true
   },
-  data() {
-    return { 
-    }
+  models: {
+    type: Object,
+    default: () => { return {} }
   },
-  created() {
-     
+  disabled: {
+    type: Boolean,
+    default: false
   },
-  methods: {
-    dragEnd(evt, columns) {   
-    
-      // 拖拽结束,自动选择拖拽的控件项
-      const nitem = this.cloneDeepAndFormat(columns[evt.newIndex] , evt)
-      // delete nitem.icon 
-      // const key = nitem.type + "_" + new Date().getTime() 
-      // nitem.key = key
-      // nitem.model = key
+  preview: {
+    type: Boolean,
+    default: false
+  },
+  isDragPanel: {
+    type: Boolean,
+    default: false
+  },
+  selectItem: {
+    type: Object
+  },
+  propPrepend: {
+    type: String
+  }
+})
 
-      columns[evt.newIndex] = nitem
+// Emits
+const emit = defineEmits(['handleSelectItem', 'handleBlur', 'handleFocus'])
 
+// Injects
+const configInject = inject('configC', null)
+const ngConfig = inject('$ngofrm_config', {})
 
-      this.handleSelectItem(nitem)
-    },
-    handleCopy(item , list){ 
-      const nitem = this.cloneDeepAndFormat(item)
-      const key = item.type + "_" + new Date().getTime() 
-      nitem.key = key
-      nitem.model = key
+// 使用 useLocale 获取 locale key 用于响应式语言切换
+const { locale } = useLocale()
+const localeKey = locale
 
-      // 找到index 插入
-      const oindex = list.findIndex(t=>t.key == item.key)
-      console.log('copy' , item)
-      if(oindex >= 0) {
-        // insert 
-        list.splice(oindex + 1 , 0, nitem)
+// 使用 useFormItem composable
+const {
+  cloneDeepAndFormat,
+  handleSelectItem
+} = useFormItem(props, props.models, emit)
 
-      }
+// Methods
+const dragEnd = (evt, columns) => {
+  // 拖拽结束,自动选择拖拽的控件项
+  const nitem = cloneDeepAndFormat(columns[evt.newIndex], evt)
 
-    },
-    handleDetele(item , list) {
-      const oindex = list.findIndex(t=>t.key == item.key)
-      if(oindex >= 0) {
-        list.splice(oindex , 1);
-      }
-    }
+  columns[evt.newIndex] = nitem
+  handleSelectItem(nitem)
+}
+
+const handleCopy = (item, list) => {
+  const nitem = cloneDeepAndFormat(item)
+  const key = item.type + "_" + new Date().getTime()
+  nitem.key = key
+  nitem.model = key
+
+  // 找到index 插入
+  const oindex = list.findIndex(t => t.key == item.key)
+  console.log('copy', item)
+  if (oindex >= 0) {
+    // insert
+    list.splice(oindex + 1, 0, nitem)
+  }
+}
+
+const handleDetele = (item, list) => {
+  const oindex = list.findIndex(t => t.key == item.key)
+  if (oindex >= 0) {
+    list.splice(oindex, 1)
   }
 }
 </script>

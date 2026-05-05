@@ -27,45 +27,46 @@
   </div>
   
 </template>
-<script>
-import { getItemIcon } from '../../utils/icons.js'
-import LocalMixin from '../../locale/mixin.js'
+<script setup>
 import draggable from "vuedraggable"
-export default {
-  name: "dragItem",
-  mixins: [LocalMixin],
-  props: {
-    list: {
-      type: Array,
-      default: ()=> []
-    }
-  },
-  components: {
-    draggable
-  },
-  methods: { 
-    handleEnd(e, list){ 
-      const index = e.oldIndex
-      const key = list[index].type + "_" + new Date().getTime();
+import { useLocale } from '../../locale/mixin.js'
+import { getItemIcon } from '../../utils/icons.js'
 
-      list[index].key = key 
-      list[index].model = key 
-
-      this.$emit('dragend' ,list,  e.oldIndex)
-    },
-    handleStart(e , list) {
-      
-         
-    },
-    //组件图标
-    weightIcon(item) {
-      // 先判断全局是否有配置 或者是自定义组件 
-      if(item.icon) return item.icon
-      //return item.icon  
-      return getItemIcon(item.type)
-    }
+// Props
+const props = defineProps({
+  list: {
+    type: Array,
+    default: () => []
   }
-};
+})
+
+// Emits
+const emit = defineEmits(['dragend'])
+
+// 使用 useLocale composable
+const { getLabel } = useLocale()
+
+// Methods
+const handleEnd = (e, list) => {
+  const index = e.oldIndex
+  const key = list[index].type + "_" + new Date().getTime()
+
+  list[index].key = key
+  list[index].model = key
+
+  emit('dragend', list, e.oldIndex)
+}
+
+const handleStart = (e, list) => {
+  // handle start logic
+}
+
+//组件图标
+const weightIcon = (item) => {
+  // 先判断全局是否有配置 或者是自定义组件
+  if (item.icon) return item.icon
+  return getItemIcon(item.type)
+}
 </script>
 <style>
 .drag-item {

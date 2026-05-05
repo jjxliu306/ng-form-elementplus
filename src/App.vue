@@ -1,18 +1,9 @@
- 
 <template>
- <!--  <Edit /> -->
-  <Design />
+	<!-- <Edit /> -->
+	<Design />
 </template>
-<script>
-	
+
+<script setup>
 import Design from './Design.vue'
 import Edit from './Edit.vue'
-
-export default  ({
-  components: {
-    Design , Edit
-  },
-   
-})
 </script>
- 

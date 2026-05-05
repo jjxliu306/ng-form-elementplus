@@ -1,6 +1,6 @@
-<template> 
+<template>
   <el-container class="form-design">
-    
+
       <el-header class="header" height="40px">
         <HeaderPanel :clear="clear" :preview="preview" :imp="imp" :exp="exp" :formTemplate="template" @importData="importData">
           <template #logo>
@@ -44,215 +44,225 @@
   </el-container> 
 </template>
 
-<script> 
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ng-form-design'
+})
+</script>
+
+<script setup>
+import { ref, computed, watch, provide, inject, onBeforeMount } from 'vue'
 import HeaderPanel from './panel-header/index.vue'
 import DragPanel from './panel-drag/index.vue'
 import ContainerPanel from './panel-container/index.vue'
 import PropertiesPanel from './panel-properties/index.vue'
- 
-import { cloneDeep , getUUID } from '../utils/index.js'
-import { setDictCache , setComponentCache } from '../utils/cache.js'
+import { useLocale } from '../locale/mixin.js'
+import { cloneDeep, getUUID } from '../utils/index.js'
+import { setDictCache, setComponentCache } from '../utils/cache.js'
 import { use } from '../locale/index'
-
 import Bus from '../utils/bus.js'
-import LocalMixin from '../locale/mixin.js'
-export default {
-  mixins: [LocalMixin],
-  name: 'ng-form-design',
-  components: {
-    HeaderPanel,
-    DragPanel,
-    ContainerPanel,
-    PropertiesPanel
-  },
-  data(){
-    return {
-      arrow: false,
-      selectItem: {},
-      i18nkey: getUUID(),
-      template: {
-        list: [],
-        config: {
-          labelPosition: "left",
-          labelWidth: 100, 
-          size: 'default',
-          outputHidden: true ,//  是否输出隐藏字段的值 默认打开,所有字段都输出
-          hideRequiredMark: false ,
-          syncLabelRequired: true,
-          labelSuffix: '',
-          customStyle: ""
-        }
-      }
-    }
-  },
-  props:{ 
-    customComponents: {
-      type: Array,
-      default: ()=>[]
-    }, 
-    // 按钮显示隐藏 
-    clear: {
-      type: Boolean ,
-      default: true
-    },
-    preview: {
-      type: Boolean ,
-      default: true
-    }, 
-    imp: {
-      type: Boolean ,
-      default: true
-    },
-    exp: {
-      type: Boolean ,
-      default: true
-    },
-    // 外部属性配置
-    config: {
-      type: Object
-    },
-    //基础组件是否要展示或待选组件列表集合
-    basicItem: {
-      type: [Array,Boolean],
-      default: true
-    },
-    //装饰组件是否要展示或待选组件列表集合
-    decorateItem: {
-      type: [Array,Boolean],
-      default: true
-    }, 
-    //布局组件是否要展示或待选组件列表集合
-    layoutItem: {
-      type: [Array,Boolean],
-      default: true
-    },
-    //应用组件是否要展示或待选组件列表集合
-    applicationItem: {
-      type: [Array,Boolean],
-      default: true
-    },
-  },   
-  computed: { 
-    templateConfig() {
-      if(this.template) return this.template.config 
-      return {}
-    }, 
-    // 配置中的http配置
-    httpConfig() {
-      if(this.config && this.config.httpConfig ) {
-        return this.config.httpConfig
-      }
-      return null
-      
-    },
-    configDicts() {
-      if(this.config && this.config.dicts ) {
-        return this.config.dicts
-      }
-      return null
-    } ,
-    components() {
-      if (this.$config && this.$config.$ngofrm_components && this.$config.$ngofrm_components.length > 0) {
-        return this.$config.$ngofrm_components
-      } else if ( this.$ngofrm_components &&  this.$ngofrm_components.length > 0) {
-        return  this.$ngofrm_components
-      } else if (this.customComponents && this.customComponents.length > 0) {
-        return this.customComponents
-      }
 
-      return undefined
-    },
-    ngConfig() { 
-      const ngofrm_config = this.$config?.$ngofrm_config || {}
-      // 优先判断内部
-      if (this.config ) {
-        return {...this.config ,...ngofrm_config}
-      }  
-      return {...ngofrm_config}
-    },
+// Props
+const props = defineProps({
+  customComponents: {
+    type: Array,
+    default: () => []
   },
-  watch: {
-    httpConfig: {
-      handler(newVal) { 
-        window.nghttpConfig = newVal;
-      },
-      deep: true,
-      immediate: false,
-    },
-    components:{
-      handler(newVal) { 
-        setComponentCache(newVal)
-      },
-      deep: true,
-      immediate: false,
-    },
-    configDicts: {
-      handler(newVal) { 
-         setDictCache(newVal)
-      },
-      deep: true,
-      immediate: false,
-    } 
+  // 按钮显示隐藏
+  clear: {
+    type: Boolean,
+    default: true
   },
-  provide: function () {
-    return {
-     customC: this.components ,
-     configC: ()=>this.templateConfig,
-     
-     httpConfigC: this.httpConfig,
-     ngConfig: this.ngConfig
-    }
+  preview: {
+    type: Boolean,
+    default: true
   },
-  inject: ['$ngofrm_components'],
-  created() { 
-    console.log('this.$config' , this.$config)
-    console.log('$ngofrm_components' , this.$ngofrm_components)
-    if(this.httpConfig) {
-      window.nghttpConfig = this.httpConfig;
-    }
-
-    if(this.configDicts) {
-       setDictCache(this.configDicts)
-    }
-     if(this.components) {
-       setComponentCache(this.components)
-    }
+  imp: {
+    type: Boolean,
+    default: true
   },
-  methods: {
-    handleSelectItem(record) {
-      this.selectItem = record
-    },
-    // 返回编辑好的模板
-    getModel() {
-      const model = cloneDeep(this.template)
+  exp: {
+    type: Boolean,
+    default: true
+  },
+  // 外部属性配置
+  config: {
+    type: Object
+  },
+  //基础组件是否要展示或待选组件列表集合
+  basicItem: {
+    type: [Array, Boolean],
+    default: true
+  },
+  //装饰组件是否要展示或待选组件列表集合
+  decorateItem: {
+    type: [Array, Boolean],
+    default: true
+  },
+  //布局组件是否要展示或待选组件列表集合
+  layoutItem: {
+    type: [Array, Boolean],
+    default: true
+  },
+  //应用组件是否要展示或待选组件列表集合
+  applicationItem: {
+    type: [Array, Boolean],
+    default: true
+  }
+})
 
-      return model 
-    },
-    // 初始化模板
-    initModel(formTemplate) {
-      //this.formTemplate = cloneDeep(formTemplate)
-      const modelData = cloneDeep(formTemplate)
+// Injects
+const $config = inject('$config', null)
+const $ngofrm_components = inject('$ngofrm_components', [])
 
-      this.importData(modelData)
-    },
-    // 从模板处导入json表单模板
-    importData(formTemplate = {}) {
-      //this.formTemplate = formTemplate
-      this.template.list = formTemplate.list;
+// 使用 useLocale composable，获取 locale 响应式变量
+const { t, locale } = useLocale()
 
-      for(let k in formTemplate.config) {
-        this.template.config[k] = formTemplate.config[k]
-      }
+// Data
+const arrow = ref(false)
+const selectItem = ref({})
 
-      //this.template.config = formTemplate.config;
-    },
-    useLocale(val) {
-      use(val)
-      this.i18nkey = getUUID()
-      Bus.emit('i18nRefresh') 
-    },
+// i18nkey 用于强制刷新组件，当语言变化时更新它
+const i18nkeySuffix = ref(getUUID())
+const i18nkey = computed(() => locale.value + '_' + i18nkeySuffix.value)
+
+// Watch locale 变化，更新 i18nkey 以触发组件刷新
+watch(locale, () => {
+  i18nkeySuffix.value = getUUID()
+})
+const template = ref({
+  list: [],
+  config: {
+    labelPosition: "left",
+    labelWidth: 100,
+    size: 'default',
+    outputHidden: true,
+    hideRequiredMark: false,
+    syncLabelRequired: true,
+    labelSuffix: '',
+    customStyle: ""
+  }
+})
+
+// Computed
+const templateConfig = computed(() => {
+  if (template.value) return template.value.config
+  return {}
+})
+
+// 配置中的http配置
+const httpConfig = computed(() => {
+  if (props.config && props.config.httpConfig) {
+    return props.config.httpConfig
+  }
+  return null
+})
+
+const configDicts = computed(() => {
+  if (props.config && props.config.dicts) {
+    return props.config.dicts
+  }
+  return null
+})
+
+const components = computed(() => {
+  if ($config && $config.$ngofrm_components && $config.$ngofrm_components.length > 0) {
+    return $config.$ngofrm_components
+  } else if ($ngofrm_components && $ngofrm_components.length > 0) {
+    return $ngofrm_components
+  } else if (props.customComponents && props.customComponents.length > 0) {
+    return props.customComponents
+  }
+  return undefined
+})
+
+const ngConfig = computed(() => {
+  const ngofrm_config = $config ? $config.$ngofrm_config || {} : {}
+  // 优先判断内部
+  if (props.config) {
+    return { ...props.config, ...ngofrm_config }
+  }
+  return { ...ngofrm_config }
+})
+
+// Watch
+watch(httpConfig, (newVal) => {
+  window.nghttpConfig = newVal
+}, { deep: true })
+
+watch(components, (newVal) => {
+  setComponentCache(newVal)
+}, { deep: true })
+
+watch(configDicts, (newVal) => {
+  setDictCache(newVal)
+}, { deep: true })
+
+// Provide
+provide('customC', components)
+provide('configC', () => templateConfig.value)
+provide('httpConfigC', httpConfig)
+provide('ngConfig', ngConfig)
+// 提供 i18nkey 给子组件用于语言切换时刷新
+provide('i18nKey', i18nkey)
+
+// Lifecycle
+onBeforeMount(() => {
+  console.log('this.$config', $config)
+  console.log('$ngofrm_components', $ngofrm_components)
+  if (httpConfig.value) {
+    window.nghttpConfig = httpConfig.value
+  }
+
+  if (configDicts.value) {
+    setDictCache(configDicts.value)
+  }
+  if (components.value) {
+    setComponentCache(components.value)
+  }
+})
+
+// Methods
+const handleSelectItem = (record) => {
+  selectItem.value = record
+}
+
+// 返回编辑好的模板
+const getModel = () => {
+  const model = cloneDeep(template.value)
+  return model
+}
+
+// 初始化模板
+const initModel = (formTemplate) => {
+  const modelData = cloneDeep(formTemplate)
+  importData(modelData)
+}
+
+// 从模板处导入json表单模板
+const importData = (formTemplate = {}) => {
+  template.value.list = formTemplate.list
+
+  for (let k in formTemplate.config) {
+    template.value.config[k] = formTemplate.config[k]
   }
 }
+
+const useLocaleMethod = (val) => {
+  use(val)
+  // i18nkey 会通过 watch 自动更新，不需要手动赋值
+  Bus.emit('i18nRefresh')
+}
+
+// 暴露给外部的方法
+defineExpose({
+  getModel,
+  initModel,
+  importData,
+  useLocale: useLocaleMethod
+})
 </script>
 <style>
 .form-design {

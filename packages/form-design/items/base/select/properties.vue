@@ -1,5 +1,5 @@
 <template>
-<div>  
+<div>
     <el-collapse-item name="data" :title="t('ngform.item.datasource')">
       <DatasourceConfig :selectItem="selectItem">
         <template #defaultValue>
@@ -24,55 +24,55 @@
               v-model="selectItem.options.linkage"
                :active-text="t('ngform.item.yes')"
               :inactive-text="t('ngform.item.no')">
-            </el-switch> 
+            </el-switch>
           </el-form-item>
           <template v-if="selectItem.options.linkage">
             <!-- 联动关联中如果事本地数据则只有脚本关联,如果是远程数据则包含远程搜索 -->
-          
+
             <Linkage  :value="selectItem.options.linkData" />
           </template>
       </el-form>
     </el-collapse-item>
-</div>   
+</div>
 </template>
+
 <script>
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'select-properties'
+})
+</script>
+
+<script setup>
+import { computed, watch } from 'vue'
 import DatasourceConfig from './datasource-config.vue'
 import Linkage from './linkage.vue'
-import LocalMixin from '../../../../locale/mixin.js'
-export default {
-  mixins: [LocalMixin],
-  components: {
-    DatasourceConfig , Linkage
-  },
-  data() {
-    return {
-      
-    }
-  },
-	props: {
-		selectItem: {
-			type: Object
-		}
-	},
-  computed: {
-    multiple() {
-      if(this.selectItem && this.selectItem.options)
-        return this.selectItem.options.multiple
-      return undefined
-    }
-  },
-  watch: {
-    multiple(val) {
-      if(val == undefined) return 
-      if(val) {
-        this.selectItem.options['defaultValue'] = []
-        //this.$set(this.selectItem.options , 'defaultValue' , [])
-      } else {
-        this.selectItem.options['defaultValue'] = ''
-        //this.$set(this.selectItem.options , 'defaultValue' , '')
-      }
-    }
+import { useLocale } from '../../../../locale/mixin.js'
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Props
+const props = defineProps({
+	selectItem: {
+		type: Object
+	}
+})
+
+// Computed
+const multiple = computed(() => {
+  if (props.selectItem && props.selectItem.options)
+    return props.selectItem.options.multiple
+  return undefined
+})
+
+// Watch
+watch(multiple, (val) => {
+  if (val == undefined) return
+  if (val) {
+    props.selectItem.options['defaultValue'] = []
+  } else {
+    props.selectItem.options['defaultValue'] = ''
   }
-}
+})
 </script>
- 

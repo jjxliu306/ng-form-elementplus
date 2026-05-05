@@ -12,31 +12,36 @@
                   </el-col>
                    <el-col :span="12">
                      <el-input  :placeholder="t('ngform.item.width')" v-model="selectItem.options.colWidth[item.model]" />
-                  </el-col> 
-                </el-row> 
+                  </el-col>
+                </el-row>
 
               </el-checkbox-group>
-  </el-form-item>  
+  </el-form-item>
 </el-form>
 </el-collapse-item>
 </template>
-<script>  
-import LocalMixin from '../../../../locale/mixin.js'
-export default {
-  mixins: [LocalMixin],
-  components: {
-     
-  },
-	props: {
-		selectItem: {
-			type: Object
-		}
-	},
-  methods: {
-    
-  }
-}
+
+<script>
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'batch-properties'
+})
 </script>
+
+<script setup>
+import { useLocale } from '../../../../locale/mixin.js'
+
+// 使用 useLocale composable
+const { t } = useLocale()
+
+// Props
+defineProps({
+	selectItem: {
+		type: Object
+	}
+})
+</script>
+
 <style>
 .ng-batch-properties {
   padding: 10px;
