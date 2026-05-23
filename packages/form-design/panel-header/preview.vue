@@ -36,7 +36,7 @@
       width="600px"
     >
     <div class="json-box">
-      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;" autosize  readonly ref="dataJson" type="textarea" :value="dataJson">
+      <el-input style="min-height:300px;height: 300px;max-height: 290px;overflow: auto;" autosize  readonly ref="dataJsonRef" type="textarea" v-model="dataJson">
       </el-input>
     </div>
   </el-dialog>
@@ -96,6 +96,8 @@ const init = (data) => {
 
 const handleGetData = () => {
   const models_ = formBuild.value?.getData(true)
+
+  console.log('表单数据:', models_)
   dataJson.value = JSON.stringify(models_, null, "\t")
   dataVisible.value = true
 }
