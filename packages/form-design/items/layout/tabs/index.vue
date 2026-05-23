@@ -16,6 +16,7 @@
         v-if="isDragPanel"
         tag="div"
         class="draggable-box"
+        item-key="key"
         v-bind="{
           group: 'form-draggable',
           ghostClass: 'moving',
