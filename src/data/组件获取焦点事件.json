@@ -107,7 +107,7 @@
 	"config": {
 		"labelPosition": "left",
 		"labelWidth": 70,
-		"size": "mini",
+		"size": "small",
 		"outputHidden": true,
 		"hideRequiredMark": false,
 		"customStyle": ""

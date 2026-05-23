@@ -56,10 +56,10 @@
             <el-button text icon="Plus" @click="addData(model, column.prop, column.type)"></el-button>
           </template>
           <el-radio-group v-else-if="column.type == 'radio'" v-model="model[column.prop]">
-            <el-radio :label="rv.value" v-for="(rv, idx2) in column.dicData" :key="'radio' + idx2">{{ getLabel(rv.label) }}</el-radio>
+            <el-radio :value="rv.value" v-for="(rv, idx2) in column.dicData" :key="'radio' + idx2">{{ getLabel(rv.label) }}</el-radio>
           </el-radio-group>
           <el-radio-group v-else-if="column.type == 'radioButton'" v-model="model[column.prop]">
-            <el-radio-button :label="rv.value" v-for="(rv, idx2) in column.dicData" :key="'radioB' + idx2">{{ getLabel(rv.label) }}</el-radio-button>
+            <el-radio-button :value="rv.value" v-for="(rv, idx2) in column.dicData" :key="'radioB' + idx2">{{ getLabel(rv.label) }}</el-radio-button>
           </el-radio-group>
           <el-switch v-else-if="column.type == 'switch'" v-model="model[column.prop]"></el-switch>
           <el-date-picker
@@ -97,10 +97,10 @@
               >
               </el-slider>
               <el-radio-group style="width: 100%;" v-model="model[column.prop]" v-else>
-                <el-radio-button :label="6">25%</el-radio-button>
-                <el-radio-button :label="12">50%</el-radio-button>
-                <el-radio-button :label="18">75%</el-radio-button>
-                <el-radio-button :label="24">100%</el-radio-button>
+                <el-radio-button :value="6">25%</el-radio-button>
+                <el-radio-button :value="12">50%</el-radio-button>
+                <el-radio-button :value="18">75%</el-radio-button>
+                <el-radio-button :value="24">100%</el-radio-button>
               </el-radio-group>
             </el-col>
             <el-col :span="2"></el-col>

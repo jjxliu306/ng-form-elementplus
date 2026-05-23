@@ -15,8 +15,8 @@ cascader没有数据字典
   <template v-if="selectItem.options.dynamic == 1">
     <el-form-item   :label="t('ngform.item.method_type')">
       <el-radio-group v-model="selectItem.options.methodType">
-        <el-radio label="get">get</el-radio>
-        <el-radio label="post">post</el-radio>
+        <el-radio value="get">get</el-radio>
+        <el-radio value="post">post</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item  :label="t('ngform.properties.data')"  v-if="selectItem.options.methodType == 'post'">

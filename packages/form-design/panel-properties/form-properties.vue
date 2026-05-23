@@ -7,9 +7,9 @@
       <el-form label-position="left" size="small" :key="formKey" >
         <el-form-item :label="t('ngform.properties.label_position')">
           <el-radio-group v-model="config.labelPosition">
-            <el-radio-button label="left">{{t('ngform.properties.left')}}</el-radio-button>
-            <el-radio-button label="right">{{t('ngform.properties.right')}}</el-radio-button>
-            <el-radio-button label="top">{{t('ngform.properties.top')}}</el-radio-button>
+            <el-radio-button value="left">{{t('ngform.properties.left')}}</el-radio-button>
+            <el-radio-button value="right">{{t('ngform.properties.right')}}</el-radio-button>
+            <el-radio-button value="top">{{t('ngform.properties.top')}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-divider></el-divider>
@@ -25,9 +25,9 @@
         <el-form-item :label="t('ngform.properties.size')">
           <!--'large'| 'default'| 'small-->
           <el-radio-group v-model="config.size">
-            <el-radio-button label="large">large</el-radio-button>
-            <el-radio-button label="default">default</el-radio-button>
-            <el-radio-button label="small">small</el-radio-button>
+            <el-radio-button value="large">large</el-radio-button>
+            <el-radio-button value="default">default</el-radio-button>
+            <el-radio-button value="small">small</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-divider></el-divider>

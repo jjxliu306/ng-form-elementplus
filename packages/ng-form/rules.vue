@@ -17,10 +17,10 @@
         <el-row   :gutter="8">
 
 
-              <el-radio v-model="val.vtype" :label="1" :title="t('ngform.rules.regular_tip')">
+              <el-radio v-model="val.vtype" :value="1" :title="t('ngform.rules.regular_tip')">
                 {{t('ngform.rules.regular')}}
               </el-radio>
-              <el-radio v-model="val.vtype" :label="2" :title="t('ngform.rules.script_tip')">
+              <el-radio v-model="val.vtype" :value="2" :title="t('ngform.rules.script_tip')">
                 {{t('ngform.rules.script')}}
               </el-radio>
 

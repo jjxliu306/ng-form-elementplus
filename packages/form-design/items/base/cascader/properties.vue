@@ -20,7 +20,7 @@
             v-model="selectItem.options.defaultValue"
             >
            <!--  defaultValue:{{selectItem.options.defaultValue}} -->
-            <el-radio   v-for="(item, index) in  [].concat(selectItem.options.options)" :label="item.value" :key="index" >
+            <el-radio   v-for="(item, index) in  [].concat(selectItem.options.options)" :value="item.value" :key="index" >
               {{item.label}}
             </el-radio>
            </el-radio-group>

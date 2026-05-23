@@ -11,8 +11,8 @@
           <el-col :span="21" >
 
               {{index+1}}、
-              <el-radio v-model="val.vtype" :label="1">{{t('ngform.item.local')}}</el-radio>
-              <el-radio v-model="val.vtype" :label="2">{{t('ngform.item.remote')}}</el-radio>
+              <el-radio v-model="val.vtype" :value="1">{{t('ngform.item.local')}}</el-radio>
+              <el-radio v-model="val.vtype" :value="2">{{t('ngform.item.remote')}}</el-radio>
 
           </el-col>
           <el-col :span="21" >

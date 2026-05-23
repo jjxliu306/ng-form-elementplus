@@ -20,7 +20,7 @@ obj.listen_ = false
 // 补充配置样式
 obj.options = {
   config: {
-    size: 'mini',
+    size: 'small',
     labelWidth: 80
   },
   columns: [
