@@ -292,13 +292,14 @@ defineExpose({
 }
 
 .form-design .center-panel {
-  height: 100%;
+  height: auto;
   overflow-y: auto;
+  min-height: 0px;
   overflow-x: hidden;
 }
 
 .form-design .properties-panel {
-  height: 100%;
+  height: auto;
   box-shadow: -3px 0 6px rgba(48, 65, 86, 0.35);
 }
 
